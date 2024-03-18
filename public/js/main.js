@@ -1,4 +1,4 @@
-// FRONT-END (CLIENT) JAVASCRIPT HERE
+// FRONT-END (CLIENT) JAVASCRIPT HERE.
 
 const submit = async function( event ) {
   // stop form submission from trying to load
