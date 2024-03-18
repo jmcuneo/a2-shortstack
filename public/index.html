@@ -11,8 +11,31 @@
   </head>
   <body>
     <form>
-      <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
+      <label for="firstVal">First Value: </label>
+      <input type="number" id="firstVal">
+      <br>
+      <label for="secVal">Second Value: </label>
+      <input type="number" id="secVal">
+      <br>
+      <h3>Choose an operator:</h3>
+      <input type="radio" name="operator" id="opA" value="add">
+      <label for="opA">+</label>
+      <br>
+      <input type="radio" name="operator" id="opS" value="subtract">
+      <label for="opS">-</label>
+      <br>
+      <input type="radio" name="operator" id="opD" value="divide">
+      <label for="opD">/</label>
+      <br>
+      <input type="radio" name="operator" id="opM" value="multiply">
+      <label for="opM">*</label>
+      <br>
+
+      <label for="guess">Guess (Optional): </label>
+      <input type="number" id="guess">
+      <br>
+
+      <button>Submit</button>
     </form>
   </body>
 </html>
