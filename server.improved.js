@@ -9,9 +9,9 @@ const http = require( "http" ),
       port = 3000
 
 const appdata = [
-  { "name": "Duolian", "race": "Earth Genasi", "class": "Paladin" },
-  { "name": "Kaede", "race": "Wood Elf", "class": "Monk" },
-  { "name": "Thaddeus Thunderclap", "race": "Gnome", "class": "Wizard"}
+  { "name": "Duolian", "race": "Earth Genasi", "class": "Paladin", "modifier": "Charisma"},
+  { "name": "Kaede", "race": "Wood Elf", "class": "Monk", "modifier": "Dexterity" },
+  { "name": "Thaddeus Thunderclap", "race": "Gnome", "class": "Wizard", "modifier": "Intelligence"}
 ]
 
 const server = http.createServer( function( request,response ) {
@@ -46,7 +46,32 @@ const handlePost = function( request, response ) {
 
     let myDataJSON = JSON.parse( dataString )
 
-    appdata.push({"name": myDataJSON.charname, "race": myDataJSON.charrace, "class": myDataJSON.charclass})
+    let charModifier = "unknown"
+
+    console.log("class :", myDataJSON.charclass)
+
+    switch(myDataJSON.charclass.toString().toLowerCase()){
+      case "artificer" || "wizard":
+        charModifier = "Intelligence"
+        break;
+      case "druid" || "ranger" || "cleric":
+        charModifier = "Wisdom"
+        break;
+      case "paladin" || "bard" || "sorcerer" || "warlock":
+        charModifier = "Charisma"
+        break;
+      case "monk" || "rogue":
+        charModifier = "Dexterity"
+        break;
+      case "barbarian" || "fighter":
+        charModifier = "Strength"
+        break;
+      default:
+        charModifier = "unknown"
+        break;
+    }
+
+    appdata.push({"name": myDataJSON.charname, "race": myDataJSON.charrace, "class": myDataJSON.charclass, "modifier": charModifier})
 
     console.log(appdata)
 
