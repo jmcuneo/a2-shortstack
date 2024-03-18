@@ -11,6 +11,7 @@ const submit = async function( event ) {
         json = { yourname: input.value },
         body = JSON.stringify( json )
 
+  //Asynchronous network request
   const response = await fetch( "/submit", {
     method:"POST",
     body 

@@ -8,11 +8,40 @@ const http = require( "http" ),
       dir  = "public/",
       port = 3000
 
-const appdata = [
-  { "model": "toyota", "year": 1999, "mpg": 23 },
-  { "model": "honda", "year": 2004, "mpg": 30 },
-  { "model": "ford", "year": 1987, "mpg": 14} 
-]
+var appdata = [
+  {
+    "name":"undertale",
+    "gram0":"nude alert",
+    "gram1":"unrelated",
+    "gram2":"delta rune",
+    "gram3":"nut dealer",
+    "gram4":"elate rund"
+  }
+];
+
+const dictionary = fs.readFileSync("dictionary.txt").split("\n");
+/*
+  Anagram algorithm:
+    Filter dictionary, removing words that it cannot form. 
+      Maybe remove this because it's covered by DFS
+    Shuffle filtered dictionary
+    do a DFS search through the list. 
+      Keep track of which letters remain
+      If you find a word that works, add it and go down another layer. Start looking for another
+      If you get to the end of the dict with no words, go back up a layer.
+      To make things more interesting... possibly
+        perhaps prioritize words of higher length? Put them earlier in the list so they'll be chosen more?
+*/
+
+const letters = new Set("ABCDEFGHIJKLMNOPQRSTUVWXYZ".split(""))
+function getLetterData(string){
+  
+}
+
+//letter data is an object of letter:num occurrences
+function getAnagramWord(letterData){
+
+}
 
 const server = http.createServer( function( request,response ) {
   if( request.method === "GET" ) {
@@ -43,6 +72,7 @@ const handlePost = function( request, response ) {
     console.log( JSON.parse( dataString ) )
 
     // ... do something with the data here!!!
+    // Make a random anagram of the name?
 
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
     response.end("test")
