@@ -14,11 +14,11 @@ const submit = async function( event ) {
   const response = await fetch( "/submit", {
     method:"POST",
     body 
-  })
-
-  const text = await response.text()
-
-  console.log( "text:", text )
+  }).then(
+    response => {
+      console.log(json)
+    }
+  )
 }
 
 window.onload = function() {
