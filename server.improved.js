@@ -34,11 +34,11 @@ const handleGet = function( request, response ) {
 
 const handlePost = function( request, response ) {
   let dataString = ""
-
+  //Concats data as it is recieved
   request.on( "data", function( data ) {
       dataString += data 
   })
-
+  //data reaches its end
   request.on( "end", function() {
     console.log( JSON.parse( dataString ) )
 
@@ -48,7 +48,7 @@ const handlePost = function( request, response ) {
     response.end("test")
   })
 }
-
+  //sends file back to client(callback)
 const sendFile = function( response, filename ) {
    const type = mime.getType( filename ) 
 
