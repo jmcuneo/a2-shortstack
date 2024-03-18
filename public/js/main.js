@@ -7,8 +7,12 @@ const submit = async function( event ) {
   // remains to this day
   event.preventDefault()
   
-  const input = document.querySelector( "#yourname" ),
-        json = { yourname: input.value },
+  const charname = document.querySelector( "#charname" ),
+        charrace = document.querySelector( "#charrace" ),
+        charclass = document.querySelector( "#charclass" ),
+        json = { "charname": charname.value,
+        "charrace": charrace.value,
+        "charclass": charclass.value},
         body = JSON.stringify( json )
 
   const response = await fetch( "/submit", {
