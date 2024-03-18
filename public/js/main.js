@@ -1,10 +1,25 @@
 console.log("javascript loaded");
 
+let clientTodos = [];
+
 // fetch current to-dos from the server
-const getTodos = async () => {
+const syncTodos = async () => {
   const response = await fetch("/todos");
-  const todos = await response.json();
-  return todos;
+  const todosFromServer = await response.json();
+  clientTodos = todosFromServer;
 };
 
-console.log(getTodos());
+// update current todos
+const updateTodos = async () => {
+  await syncTodos();
+  console.log(clientTodos);
+  const todosList = document.getElementById("todos-list");
+  todosList.innerHTML = "";
+  clientTodos.forEach((todo) => {
+    const todoItem = document.createElement("li");
+    todoItem.innerHTML = todo.title;
+    todosList.appendChild(todoItem);
+  });
+};
+
+updateTodos();
