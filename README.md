@@ -12,7 +12,7 @@ Baseline Requirements
 There is a large range of application areas and possibilities that meet these baseline requirements. 
 Try to make your application do something useful! A todo list, storing / retrieving high scores for a very simple game... have a little fun with it.
 
-Your application is required to implement the following functionalities(4 pts each, total 20 pts):
+Your application is required to implement the following functionalities (4 pts each, total 20 pts):
 
 - a `Server` which not only serves files, but also maintains a tabular dataset with 3 or more fields related to your application
 - a `Results` functionality which shows the entire dataset residing in the server's memory
@@ -54,9 +54,9 @@ Deliverables
 2. (60 pts, detailed above) Implement your project with the above requirements.
 3. Test your project to make sure that when someone goes to your main page, it displays correctly.
 4. (5 pts) Deploy your project to Glitch, and fill in the appropriate fields in your package.json file.
-5. (5 pts) Ensure that your project has the proper naming scheme `a2-yourGithubUsername` so we can find it.
+5. (5 pts) Ensure that your project has the proper naming scheme `a2-FirstnameLastname` so we can find it.
 6. (5 pts) Modify the README to the specifications below, and delete all of the instructions originally found in this README.
-7. (5 pts) Create and submit a Pull Request to the original repo. Label the pull request as follows: a2-gitusername-firstname-lastname
+7. (5 pts) Create and submit a Pull Request to the original repo. Be sure to include your name in the pull request.
 
 Acheivements
 ---
