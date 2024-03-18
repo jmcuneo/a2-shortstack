@@ -33,9 +33,40 @@ const dictionary = fs.readFileSync("dictionary.txt").split("\n");
         perhaps prioritize words of higher length? Put them earlier in the list so they'll be chosen more?
 */
 
-const letters = new Set("ABCDEFGHIJKLMNOPQRSTUVWXYZ".split(""))
+//Creates a set of all allowed letters.
+const lettersString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const lettersSet = new Set(lettersString.split(""))
+/*
+Given a string, returns the upper case version with only the letters. 
+This will help to build the letter data object.
+*/
+function sanitize(string){
+  var newString = "";
+  for(var i = 0; i < string.length; i++){
+    var letter = string.charAt(i).toUpperCase();
+    if(lettersSet.contains(letter)){
+      newString+=letter;
+    }
+  }
+  return newString;
+}
+
+/*
+Returns a JSON object with keys corresponding to each letter and values corresponding to the number of
+times each letter occurs in the string.
+
+Assumes string is already sanitized. If not it will throw an error.
+*/
 function getLetterData(string){
-  
+  var obj = {};
+  for(var i = 0; i < lettersString.length; i++){
+    var letter = lettersString.charAt(i);
+    obj[letter]=0;
+  }
+  for(var i = 0; i < string.length; i++){
+    obj[string.charAt(i)]++;
+  }
+  return obj;
 }
 
 //letter data is an object of letter:num occurrences
