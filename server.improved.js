@@ -27,7 +27,11 @@ const handleGet = function( request, response ) {
 
   if( request.url === "/" ) {
     sendFile( response, "public/index.html" )
-  }else{
+  }else if (request.url === "/api/appdata") {
+    response.writeHead(200, { "Content-Type": "application/json" });
+    response.end(JSON.stringify(appdata));
+  }
+  else{
     sendFile( response, filename )
   }
 }
@@ -78,7 +82,7 @@ const handlePost = function( request, response ) {
 
 
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
-    response.end("test")
+    response.end("Character Information Received")
   })
 }
 
