@@ -1,29 +1,48 @@
 /* Element selectors */
 body {
-  font-family: 'Roboto', sans-serif; /* Example of using a Google Font */
+  font-family: 'Roboto', sans-serif;
+  /* Example of using a Google Font */
   margin: 20px;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 600px; /* Adjust this value as needed */
+  min-width: 600px;
+  /* Adjust this value as needed */
 }
 
 
 
-.model-column { min-width: 100px;
-max-width: 100px; }
-.year-column { min-width: 50px;
-  max-width: 50px; }
-.mpg-column { min-width: 50px;
-  max-width: 50px; }
-.gallons-column { min-width: 70px; 
-  max-width: 70px;}
-.range-column { min-width: 70px;
-max-width: 70px; }
-.action-column { min-width: 120px;
-max-width: 120px; }
+.model-column {
+  min-width: 100px;
+  max-width: 100px;
+}
+
+.year-column {
+  min-width: 50px;
+  max-width: 50px;
+}
+
+.mpg-column {
+  min-width: 50px;
+  max-width: 50px;
+}
+
+.gallons-column {
+  min-width: 70px;
+  max-width: 70px;
+}
+
+.range-column {
+  min-width: 70px;
+  max-width: 70px;
+}
+
+.action-column {
+  min-width: 120px;
+  max-width: 120px;
+}
 
 
 
@@ -38,7 +57,8 @@ max-width: 120px; }
 
 /* Class selectors */
 .button {
-  background-color: #4CAF50; /* Green */
+  background-color: #4CAF50;
+  /* Green */
   border: none;
   color: white;
   padding: 10px 20px;
@@ -58,7 +78,8 @@ max-width: 120px; }
 }
 
 /* Table styling */
-th, td {
+th,
+td {
   border: 1px solid black;
   padding: 8px;
   text-align: left;
@@ -66,45 +87,57 @@ th, td {
 
 /* Button styling */
 .delete-button {
-  background-color: #f44336; /* Red */
+  background-color: #f44336;
+  /* Red */
   color: white;
   border: none;
   padding: 5px 10px;
   cursor: pointer;
-  border-radius: 5px; 
+  border-radius: 5px;
 }
 
 
 .update-button {
-  background-color: #3a3a3a; /* Red */
+  background-color: #3a3a3a;
+  /* Red */
   color: white;
   border: none;
   padding: 5px 10px;
   cursor: pointer;
-  border-radius: 5px; 
+  border-radius: 5px;
 }
 
 
 #refresh-button {
   /* CSS properties for styling the button */
-  background-color: #4CAF50; /* Example background color */
-  color: white; /* Text color */
-  padding: 10px 20px; /* Padding around the text */
-  border: none; /* No border */
-  border-radius: 5px; /* Rounded corners */
-  cursor: pointer; /* Change cursor to pointer when hovering over the button */
-  font-size: 16px; /* Font size */
-  margin-top: 10px; /* Margin at the top of the button */
+  background-color: #4CAF50;
+  /* Example background color */
+  color: white;
+  /* Text color */
+  padding: 10px 20px;
+  /* Padding around the text */
+  border: none;
+  /* No border */
+  border-radius: 5px;
+  /* Rounded corners */
+  cursor: pointer;
+  /* Change cursor to pointer when hovering over the button */
+  font-size: 16px;
+  /* Font size */
+  margin-top: 10px;
+  /* Margin at the top of the button */
 }
 
 
 .action-cell {
   text-align: center;
-  white-space: nowrap; /* Prevents wrapping of buttons to the next line */
+  white-space: nowrap;
+  /* Prevents wrapping of buttons to the next line */
 }
 
 .action-cell button {
-  margin: 0 5px; /* Adds 5px margin to the left and right of each button */
+  margin: 0 5px;
+  /* Adds 5px margin to the left and right of each button */
 }
 
 
@@ -112,8 +145,10 @@ th, td {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex-wrap: wrap; /* Allows the form to wrap on smaller screens */
-  background-color: #f2f2f2; /* Light grey background */
+  flex-wrap: wrap;
+  /* Allows the form to wrap on smaller screens */
+  background-color: #f2f2f2;
+  /* Light grey background */
   padding: 20px;
   border-radius: 5px;
   margin-bottom: 20px;
@@ -149,9 +184,11 @@ th, td {
     flex-direction: column;
   }
 
-  #data-form input, #data-form button {
+  #data-form input,
+  #data-form button {
     margin-bottom: 10px;
-    width: 100%; /* Full width on small screens */
+    width: 100%;
+    /* Full width on small screens */
   }
 }
 

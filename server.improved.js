@@ -8,10 +8,10 @@ const port = 3000;
 const appdata = [
   { model: "Toyota", year: 1999, mpg: 23, gallons: 15 },
   { model: "Honda", year: 2004, mpg: 30, gallons: 12 },
-  { model: "Ford", year: 1987, mpg: 14, gallons: 19}
+  { model: "Ford", year: 1987, mpg: 14, gallons: 19 }
 ];
 
-const server = http.createServer(function(request, response) {
+const server = http.createServer(function (request, response) {
   if (request.method === "GET") {
     handleGet(request, response);
   } else if (request.method === "POST") {
@@ -19,14 +19,14 @@ const server = http.createServer(function(request, response) {
   }
 });
 
-const handleGet = function(request, response) {
+const handleGet = function (request, response) {
   const filename = dir + (request.url.slice(1) || "index.html");
 
   if (request.url === "/data") {  // Change this line from "/results" to "/data"
     response.writeHead(200, { "Content-Type": "application/json" });
     response.end(JSON.stringify(appdata));
   } else {
-    fs.readFile(filename, function(err, content) {
+    fs.readFile(filename, function (err, content) {
       if (err) {
         response.writeHead(404, { "Content-Type": "text/plain" });
         response.end("404 Error: File Not Found");
@@ -40,14 +40,14 @@ const handleGet = function(request, response) {
 
 
 
-const handlePost = function(request, response) {
+const handlePost = function (request, response) {
   let dataString = "";
 
-  request.on("data", function(data) {
+  request.on("data", function (data) {
     dataString += data;
   });
 
-  request.on("end", function() {
+  request.on("end", function () {
     const incomingData = JSON.parse(dataString);
 
     if (request.url === '/add') {
@@ -82,6 +82,6 @@ const handlePost = function(request, response) {
 
 
 
-server.listen(port, function() {
+server.listen(port, function () {
   console.log(`Server is listening on port ${port}`);
 });

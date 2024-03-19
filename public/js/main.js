@@ -3,14 +3,14 @@
 const refreshData = async () => {
   const response = await fetch('/data');
   const data = await response.json();
-  
+
   const tableBody = document.querySelector('#data-table tbody');
   tableBody.innerHTML = ''; // Clear existing rows
-  
+
   data.forEach((item, index) => {
     // Calculate the range for each car
     const range = item.mpg * item.gallons;
-    
+
     const row = document.createElement('tr');
     row.innerHTML = `
       <td contenteditable="true">${item.model}</td>
@@ -30,18 +30,18 @@ const refreshData = async () => {
 
 const addCar = async (event) => {
   event.preventDefault();
-  
+
   const model = document.querySelector('#model').value;
   const year = document.querySelector('#year').value;
   const mpg = document.querySelector('#mpg').value;
   const gallons = document.querySelector('#gallons').value;
-  
+
   const response = await fetch('/add', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ model, year, mpg, gallons })
   });
-  
+
   if (response.ok) {
     refreshData();
   }
@@ -81,13 +81,13 @@ const deleteCar = async (index) => {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ index })
   });
-  
+
   if (response.ok) {
     refreshData();
   }
 };
 
-window.onload = function() {
+window.onload = function () {
   document.querySelector('#data-form').onsubmit = addCar;
   document.querySelector('#refresh-button').onclick = refreshData;
   refreshData(); // Load initial data
