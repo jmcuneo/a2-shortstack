@@ -10,9 +10,42 @@
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
   <body>
-    <form>
-      <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
-    </form>
+    <header>
+      <h1>Course Logging System</h1>
+      <p>A simple system to log all the courses you've ever taken. Ever. The trick? There is no user access, so you better hope this is only being used by one person.</p>
+    </header>
+
+    <section>
+      <h2>Log Course</h2>
+      <form>
+        <label for="cID">Course ID</label>
+        <input type="number" name="cID" id="cID" >
+        <label for="cName">Course Name</label>
+        <input type="text" name="cName" id="cName" >
+        <label for="prof">Professor</label>
+        <input type="text" name="prof" id="prof">
+        <button id="log">Log</button>
+      </form>
+    </section>
+
+    <section>
+      <h2>Remove Course</h2>
+      <form>
+        <label for="removeCID">Course ID</label>
+        <input type="number" name="removeCID" id="removeCID" >
+        <button id="remove">Remove</button>
+      </form>
+    </section>
+
+    <section>
+      <h2>View Courses</h2>
+      <table>
+        <tr>
+          <th>Course ID</th>
+          <th>Course Name</th>
+        </tr>
+      </table>
+    </section>
+  
   </body>
 </html>
