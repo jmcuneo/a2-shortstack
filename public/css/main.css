@@ -1,4 +1,74 @@
 body {
   background:black;
   color:white;
+  font-family: "Inconsolata", monospace;
+  size: 120%;
+}
+
+.container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+}
+
+header {
+  width: 100%;
+  text-align: center;
+  padding-bottom: 4%;
+}
+
+.forms {
+  width: 40%;
+  text-align: left;
+}
+
+input[type=number], select {
+  width: 10%;
+  padding: 2px 2px;
+  margin: 8px 0;
+  border: 1px solid #000000;
+  border-radius: 4px;
+}
+
+input[type=number]:hover {
+  background-color: rgba(205, 227, 255);
+}
+
+/* .opForm {
+  text-align: left;
+} */
+
+button {
+  background-color: #420563;
+  color: white;
+  padding: 7px 15px;
+  margin: 8px 0;
+  border: 2px solid rgb(83, 30, 111);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #69089d;
+}
+
+.sTable {
+  width: 50%;
+}
+
+table {
+  border-collapse: collapse;
+  width: 95%;
+}
+
+td, th {
+  border: 1px solid rgb(66, 65, 65);
+  padding: 8px;
+}
+
+.tableLabels {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #021536;
 }
