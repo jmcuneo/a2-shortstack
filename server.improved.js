@@ -51,9 +51,8 @@ const handlePost = function(request, response) {
     const incomingData = JSON.parse(dataString);
 
     if (request.url === '/add') {
-      // Add a derived field 'age' to the incoming data
-      const currentYear = new Date().getFullYear();
-      incomingData.age = currentYear - incomingData.year;
+      // Add a derived field 'range' to the incoming data
+      incomingData.range = incomingData.mpg * incomingData.gallons;
 
       // Integrate the incoming data with the existing dataset
       appdata.push(incomingData);
@@ -63,6 +62,14 @@ const handlePost = function(request, response) {
       if (index >= 0 && index < appdata.length) {
         appdata.splice(index, 1);
       }
+    } else if (request.url === '/update') {
+      // Update the item at the specified index
+      const index = incomingData.index;
+      if (index >= 0 && index < appdata.length) {
+        appdata[index] = { ...appdata[index], ...incomingData.updatedData };
+        // Recalculate the range for the updated car
+        appdata[index].range = appdata[index].mpg * appdata[index].gallons;
+      }
     }
 
     // Send a response with the updated dataset
@@ -70,6 +77,8 @@ const handlePost = function(request, response) {
     response.end(JSON.stringify(appdata));
   });
 };
+
+
 
 
 
