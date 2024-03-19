@@ -1,5 +1,13 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 
+function radioValue () {
+  var elem = document.getElementsByName("operator");
+ 
+  for (let i = 0; i < elem.length; i++) {
+      if (elem[i].checked){ return elem[i].value }
+  }
+}
+
 const submit = async function( event ) {
   // stop form submission from trying to load
   // a new .html page for displaying results...
@@ -9,9 +17,9 @@ const submit = async function( event ) {
   
   const val1 = document.querySelector( "#firstVal" ),
         val2 = document.querySelector( "#secVal" ),
-        op = document.getElementsByName( "operator" ),
+        op = radioValue(),
         guess = document.querySelector( "#guess" ),
-        json = { val1: val1.input, val2: val2.input, op: op.input, guess: guess.input},
+        json = { val1: val1.value, val2: val2.value, op: op, guess: guess.value},
         body = JSON.stringify( json )
 
   const response = await fetch( "/submit", {
@@ -19,12 +27,16 @@ const submit = async function( event ) {
     body 
   })
 
-  const text = await response.text()
+  const resp = await response.json()
 
-  console.log( "text:", text )
+  console.log( "text:", resp)
 }
 
 window.onload = function() {
    const button = document.querySelector("button");
   button.onclick = submit;
+}
+
+function displayData(data) {
+  document.getElementById("serverTable")
 }

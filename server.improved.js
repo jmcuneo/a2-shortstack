@@ -41,12 +41,20 @@ const handlePost = function( request, response ) {
   })
 
   request.on( "end", function() {
-    console.log( JSON.parse( dataString ) )
+    let data = JSON.parse(dataString)
+    console.log(data)
 
-    // ... do something with the data here!!!
-
-    response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
-    response.end("test")
+    let output = eval(data.val1 + data.op + data.val2) //Switch out of eval to switch case or something
+    let guess = false;
+    if(data.guess == output){
+      guess = true;
+    }
+    
+    appdata.push({val1: parseInt(data.val1), val2: parseInt(data.val2), op: data.op, output, guess})
+    //console.log(appdata)
+    
+    response.writeHead( 200, "OK", {"Content-Type": "text/json" })
+    response.end(JSON.stringify(appdata))
   })
 }
 
