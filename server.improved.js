@@ -9,9 +9,9 @@ const http = require( "http" ),
       port = 3000
 
 const appdata = [
-  { "model": "toyota", "year": 1999, "mpg": 23 },
-  { "model": "honda", "year": 2004, "mpg": 30 },
-  { "model": "ford", "year": 1987, "mpg": 14} 
+  { "name": "Jack", "birthday": "05/24/2002", "preferredCake": "chocolate", "age": 21, "id": 0 },
+  { "name": "Jim", "birthday": "10/13/1938", "preferredCake": "vanilla", "age": 85, "id": 1 },
+  { "name": "John", "birthday": "07/18/1967", "preferredCake": "swirl", "age": 56, "id": 2 } 
 ]
 
 const server = http.createServer( function( request,response ) {
@@ -19,6 +19,8 @@ const server = http.createServer( function( request,response ) {
     handleGet( request, response )    
   }else if( request.method === "POST" ){
     handlePost( request, response ) 
+  }else if( request.method === "DELETE") {
+    handleDelete( request, response )
   }
 })
 
@@ -27,7 +29,9 @@ const handleGet = function( request, response ) {
 
   if( request.url === "/" ) {
     sendFile( response, "public/index.html" )
-  }else{
+  } else if( request.url === "/appdata" ) {
+    sendData( response )
+  } else {
     sendFile( response, filename )
   }
 }
@@ -40,12 +44,53 @@ const handlePost = function( request, response ) {
   })
 
   request.on( "end", function() {
-    console.log( JSON.parse( dataString ) )
+
+    var entry = JSON.parse( dataString );
+    console.log( entry )
 
     // ... do something with the data here!!!
+    const bdayString = entry.birthday;
+    const bdayParts = bdayString.split("/");
+    const bday = new Date(parseInt(bdayParts[2]), parseInt(bdayParts[1]) - 1, parseInt(bdayParts[0]));
+    const today = new Date();
+
+    const age = today.getFullYear() - bday.getFullYear();
+    entry.age = age;
+
+    const id = appdata.length;
+    entry.id = id;
+
+    appdata.push(entry);
 
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
-    response.end("test")
+    response.end("successfully added new entry")
+  })
+}
+
+const handleDelete = function( request, response ) {
+  let dataString = ""
+
+  request.on( "data", function( data ) {
+      dataString += data 
+  })
+
+  request.on( "end", function() {
+
+    var entry = JSON.parse( dataString );
+    console.log( entry )
+
+    const id = entry.id;
+
+    if(id > -1 & id < appdata.length) {
+      appdata.splice(id, 1);
+      resetIDs();
+      response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
+      response.end("successfully removed entry")
+    } else {
+      response.writeHeader( 404 )
+      response.end( "404 Error: Entry Not Found" )
+    }
+
   })
 }
 
@@ -69,6 +114,21 @@ const sendFile = function( response, filename ) {
 
      }
    })
+}
+
+const sendData = function( response ) {
+
+  response.writeHeader( 200, { "Content-Type": "Text" })
+  response.end(JSON.stringify(appdata));
+
+}
+
+const resetIDs = async function() {
+  const len = appdata.length;
+  for(let i = 0; i < len; i++) {
+    var cur = appdata[i];
+    cur.id = i;
+  }
 }
 
 server.listen( process.env.PORT || port )
