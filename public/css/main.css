@@ -36,6 +36,10 @@ td {
   padding: 10px 20px;
 }
 
+td#idcell:hover {
+  border-left: solid 3px #08889B;
+}
+
 tr {
   border-bottom: 1px solid #2F2F2F;
   margin: 10px
