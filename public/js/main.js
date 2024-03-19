@@ -42,10 +42,15 @@ async function fillTable(text) {
 
     var row = table.insertRow();
     var idcell = row.insertCell();
+    idcell.id = "idcell";
     var namecell = row.insertCell();
+    namecell.id = "namecell";
     var agecell = row.insertCell();
+    agecell.id = "agecell";
     var bdaycell = row.insertCell();
+    bdaycell.id = "bdaycell";
     var cakecell = row.insertCell();
+    cakecell.id = "cakecell";
     var del = document.createElement('button');
     del.type = "button";
     del.innerHTML = "delete";
@@ -57,6 +62,8 @@ async function fillTable(text) {
     agecell.innerHTML = elt.age;
     bdaycell.innerHTML = elt.birthday;
     cakecell.innerHTML = elt.preferredCake;
+
+    idcell.onclick = (function(elt) {return function() {fillEntry(elt);}})(elt);
   }
 }
 
@@ -74,8 +81,47 @@ const delEntry = async function(elt) {
   loadData()
 }
 
+const fillEntry = async function(elt) {
+  const id = document.querySelector( "#id" ),
+        name = document.querySelector( "#name" ),
+        age = document.querySelector( "#age" ),
+        bday = document.querySelector( "#bday" ),
+        cake = document.querySelector( "#cake" )
+
+
+  console.log(elt);
+  id.value = elt.id
+  name.value = elt.name
+  age.value = elt.age
+  bday.value = elt.birthday
+  cake.value = elt.preferredCake
+}
+
+const updateEntry = async function( event ) {
+  event.preventDefault();
+
+  const id = document.querySelector( "#id" ),
+        name = document.querySelector( "#name" ),
+        age = document.querySelector( "#age" ),
+        bday = document.querySelector( "#bday" ),
+        cake = document.querySelector( "#cake" ),
+        json = { id: id.value, name: name.value, age: age.value, birthday: bday.value, preferredCake: cake.value},
+        body = JSON.stringify( json )
+  console.log(json)
+
+  const response = await fetch( "", {
+    method:"PATCH",
+    body 
+  })
+  const text = await response.text()
+  console.log("updated data")
+  loadData()
+}
+
 window.onload = function() {
-  const button = document.querySelector("button");
-  button.onclick = submit;
+  const submitBtn = document.querySelector("button#submit");
+  submitBtn.onclick = submit;
+  const updateBtn = document.querySelector("button#update");
+  updateBtn.onclick = updateEntry;
   loadData();
 }

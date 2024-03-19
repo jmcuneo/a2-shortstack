@@ -21,6 +21,8 @@ const server = http.createServer( function( request,response ) {
     handlePost( request, response ) 
   }else if( request.method === "DELETE") {
     handleDelete( request, response )
+  }else if( request.method === "PATCH") {
+    handlePatch( request, response )
   }
 })
 
@@ -93,6 +95,43 @@ const handleDelete = function( request, response ) {
 
   })
 }
+
+const handlePatch = function ( request, response ) {
+
+  let dataString = ""
+
+  request.on( "data", function( data ) {
+      dataString += data 
+  })
+
+  request.on( "end", function() {
+
+    var entry = JSON.parse( dataString );
+    console.log( entry )
+
+    const id = entry.id;
+
+    if(id > -1 & id < appdata.length) {
+      appdata[id] = entry;
+
+      const bdayString = entry.birthday;
+      const bdayParts = bdayString.split("/");
+      const bday = new Date(parseInt(bdayParts[2]), parseInt(bdayParts[1]) - 1, parseInt(bdayParts[0]));
+      const today = new Date();
+
+      const age = today.getFullYear() - bday.getFullYear();
+      appdata[id].age = age;
+
+      response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
+      response.end("successfully updated entry")
+    } else {
+      response.writeHeader( 404 )
+      response.end( "404 Error: Entry Not Found" )
+    }
+
+  })
+}
+
 
 const sendFile = function( response, filename ) {
    const type = mime.getType( filename ) 
