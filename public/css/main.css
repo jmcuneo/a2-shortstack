@@ -1,12 +1,11 @@
 body {
   color:#2F2F2F;
   background:#E8E8E8;
-  font-family: 'Open Sans';
+  display: flex;
+  flex-direction: column;
 }
 
 form {
-  margin-left: 25%;
-  margin-right: 25%;
   margin-top: 10px;
   margin-bottom: 20px;
   background: #B8B8B8;
@@ -14,11 +13,12 @@ form {
 }
 
 h1 {
+  font-family: 'Open Sans';
   text-align: center;
   color:#2F2F2F;
 }
 
-table {
+#datatable {
   align-self: center;
   border-collapse: collapse;
   margin-top: 20px;
@@ -30,6 +30,7 @@ table {
 }
 
 td {
+  font-family: 'Open Sans';
   color:#2F2F2F;
   margin: 0px 0px;
   padding: 10px 20px;
@@ -41,14 +42,33 @@ tr {
 }
 
 input {
+  font-family: 'Open Sans';
   width: 100%;
   margin-bottom: 20px;
 }
 
 label {
+  font-family: 'Open Sans';
   display: inline-block;
+  color:#2F2F2F;
+  font-size: 15px;
 }
 
-h3 {
-  margin-left: 20%;
+.form-header {
+  font-family: 'Open Sans';
+  margin-left: 0px;
+  color:#2F2F2F;
+  font-size: 25px;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.form-container {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
 }

@@ -18,7 +18,7 @@ const submit = async function( event ) {
     body 
   })
   const text = await response.text()
-  console.log("submitted data")
+  console.log(text)
   loadData()
 }
 
@@ -88,8 +88,6 @@ const fillEntry = async function(elt) {
         bday = document.querySelector( "#bday" ),
         cake = document.querySelector( "#cake" )
 
-
-  console.log(elt);
   id.value = elt.id
   name.value = elt.name
   age.value = elt.age
@@ -105,7 +103,7 @@ const updateEntry = async function( event ) {
         age = document.querySelector( "#age" ),
         bday = document.querySelector( "#bday" ),
         cake = document.querySelector( "#cake" ),
-        json = { id: id.value, name: name.value, age: age.value, birthday: bday.value, preferredCake: cake.value},
+        json = { id: parseInt(id.value), name: name.value, age: parseInt(age.value), birthday: bday.value, preferredCake: cake.value},
         body = JSON.stringify( json )
   console.log(json)
 
@@ -114,7 +112,7 @@ const updateEntry = async function( event ) {
     body 
   })
   const text = await response.text()
-  console.log("updated data")
+  console.log(text)
   loadData()
 }
 
