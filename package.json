@@ -1,12 +1,17 @@
 {
-  "name": "",
-  "version": "",
-  "description": "",
+  "name": "a2-shortstack",
+  "description": "Assignment 2 - Short Stack: Basic Two-tier Web Application using HTML/CSS/JS and Node.js   ===",
   "author": "",
   "scripts": {
     "start": "node server.improved.js"
   },
   "dependencies": {
-    "mime": "^2.4.4"
-  }
+    "http": "^0.0.1-security",
+    "mime": "^2.6.0"
+  },
+  "version": "1.0.0",
+  "main": "server.improved.js",
+  "devDependencies": {},
+  "keywords": [],
+  "license": "ISC"
 }
