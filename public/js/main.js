@@ -8,17 +8,17 @@ const submit = async function( event ) {
   event.preventDefault()
   
   const input = document.querySelector( "#yourname" ),
-        json = { yourname: input.value },
+        json = { "yourname": input.value },
         body = JSON.stringify( json )
 
   const response = await fetch( "/submit", {
     method:"POST",
     body 
-  }).then(
-    response => {
-      console.log(json)
-    }
-  )
+  })
+
+  const text = await response.text()
+  console.log( "text:", text )
+  document.querySelector("#output").innerText = text;
 }
 
 window.onload = function() {
