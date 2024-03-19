@@ -28,6 +28,7 @@ const submit = async function( event ) {
   })
 
   const resp = await response.json()
+  displayData(resp)
 
   console.log( "text:", resp)
 }
@@ -38,5 +39,18 @@ window.onload = function() {
 }
 
 function displayData(data) {
-  document.getElementById("serverTable")
+  var table = document.getElementById("serverTable")
+  for(var i = 0; i < data.length; i++){
+    if(document.getElementById("data" + i) == null) { //Modify this later to make sure the data is the same
+      var tr = document.createElement("tr")
+      tr.id = "data" + i;
+      table.appendChild(tr)
+      for (let key in data[i]) {
+        var td = document.createElement("td")
+        var line = data[i]
+        td.innerHTML = line[key]
+        tr.appendChild(td)
+      }
+    }
+  }
 }
