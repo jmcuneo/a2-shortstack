@@ -9,22 +9,26 @@
     <!-- get rid of favicon error -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
+
   <body>
+    <div class="header">What To Bring</div>
     <form>
       <input type="text" id="yourname" value="" placeholder="Enter Name">
       <input type="text" id="youritem" value="" placeholder="Enter Item">
       <input type="text" id="numItems" value="" placeholder="Enter Quanitity"> <!--placeholder allows user to type directly without deleting valuetag first-->
       <button>submit</button>
     </form>
-    <div id="output1"></div>
-    <div id="output2"></div>
-    <div id="output3"></div>
-    <div id="output4"></div>
     <div>
-      <h1>Fetch API GET REQUEST</h1>
+      <h2>Who's Bringing What:</h2>
 
       <!-- Table to display fetched user data -->
-      <table id="table"></table>
+      <table id="table">
+        <tr>
+          <th>Name</th>
+          <th>Item</th>
+          <th>Quanitity</th>
+        </tr>
+      </table>
     </div>
 
     <ul id="list"></ul>
