@@ -33,8 +33,21 @@ const submit = async function( event ) {
   console.log( "text:", resp)
 }
 
+function initialLoad(){
+  let body = null;
+
+  fetch( "/refresh", {
+    method:"POST",
+    body
+  }).then( (response) => {
+      response.json().then((resp) => {displayData(resp)})
+    }
+  )
+}
+
 window.onload = function() {
-   const button = document.querySelector("button");
+  initialLoad();
+  const button = document.querySelector("button");
   button.onclick = submit;
 }
 

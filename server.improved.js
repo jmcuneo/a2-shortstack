@@ -1,3 +1,5 @@
+const { send } = require("process")
+
 const http = require( "http" ),
       fs   = require( "fs" ),
       // IMPORTANT: you must run `npm install` in the directory for this assignment
@@ -19,7 +21,12 @@ const server = http.createServer( function( request,response ) {
   if( request.method === "GET" ) {
     handleGet( request, response )    
   }else if( request.method === "POST" ){
-    handlePost( request, response ) 
+    if (request.url === "/submit") {
+      handlePost( request, response ) 
+    } else {
+      sendData(response);
+    }
+    
   }
 })
 
@@ -53,8 +60,7 @@ const handlePost = function( request, response ) {
     appdata.push({val1: parseInt(data.val1), val2: parseInt(data.val2), op: data.op, output, guess})
     //console.log(appdata)
     
-    response.writeHead( 200, "OK", {"Content-Type": "text/json" })
-    response.end(JSON.stringify(appdata))
+    sendData(response)
   })
 }
 
@@ -81,3 +87,8 @@ const sendFile = function( response, filename ) {
 }
 
 server.listen( process.env.PORT || port )
+
+function sendData(response) {
+  response.writeHead( 200, "OK", {"Content-Type": "text/json" })
+  response.end(JSON.stringify(appdata))
+}
