@@ -5,15 +5,23 @@ const submit = async function( event ) {
   // a new .html page for displaying results...
   // this was the original browser behavior and still
   // remains to this day
-  event.preventDefault()
-  
-  const input = document.querySelector( "#yourname" ),
-        json = { yourname: input.value },
-        body = JSON.stringify( json )
+
+  var inputs = document.querySelectorAll("input[required]");
+  var isValid = true;
+
+  inputs.forEach(function(input) {
+    if(!input.value.trim()){
+      isValid = false;
+    }
+  });
+  if(!isValid){
+    event.preventDefault();
+    alert("Please fill out all required fields");
+  }
 
   const response = await fetch( "/submit", {
     method:"POST",
-    body 
+    body
   })
 
   const text = await response.text()
