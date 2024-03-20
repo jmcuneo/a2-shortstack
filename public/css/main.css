@@ -1,4 +1,12 @@
 body {
-  background:black;
-  color:white;
+  background: black;
+  color: white;
+}
+
+table {
+    width: 400px;
+}
+
+th, td {
+    text-align: center;
 }

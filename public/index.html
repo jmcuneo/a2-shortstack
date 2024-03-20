@@ -1,18 +1,28 @@
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <title>CS4241 Assignment 2</title>
-    <meta charset="utf-8">
+    <meta charset="utf-8"/>
     <script src="js/main.js"></script>
-    <link rel="stylesheet" href="css/main.css">
-    
+    <link rel="stylesheet" href="css/main.css"/>
+
     <!-- get rid of favicon error -->
-    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
-  </head>
-  <body>
+    <link rel="icon" href="data:;base64,iVBORw0KGgo="/>
+</head>
+
+<body>
     <form>
-      <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
+        <input type="text" id="name" placeholder="Recipe Name"/>
+        <input type="text" id="prep" placeholder="Prep Time"/>
+        <input type="text" id="cook" placeholder="Cook Time"/>
+        <button id="submit">Submit</button>
     </form>
-  </body>
+    <form>
+        <input type="text" class="delete" placeholder="Recipe Name"/>
+        <button class="delete">Delete</button>
+    </form>
+    <table></table>
+</body>
+
 </html>
