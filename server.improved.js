@@ -9,9 +9,9 @@ const http = require( "http" ),
       port = 3000
 
 const appdata = [
-  { "model": "toyota", "year": 1999, "mpg": 23 },
-  { "model": "honda", "year": 2004, "mpg": 30 },
-  { "model": "ford", "year": 1987, "mpg": 14} 
+  { "task": "A1 HW", "class": "CS4241", "duedate": "4/1/24", "priority": 1},
+  { "task": "HW 1", "class": "CS4342", "duedate": "4/2/24", "priority": 2 },
+  { "task": "Lecture notes", "class": "ECE3849", "duedate": "4/3/24", "priority": 3} 
 ]
 
 const server = http.createServer( function( request,response ) {
@@ -42,9 +42,13 @@ const handlePost = function( request, response ) {
   request.on( "end", function() {
     console.log( JSON.parse( dataString ) )
 
-    // ... do something with the data here!!!
+    //TODO ... do something with the data here!!!
+    appdata.push({ "task": dataString.substring(dataString.indexOf(":")+2, dataString.length - 2), "class": "CS4241", "duedate": "4/4/24", "priority": 4} )
+    // response.end("HELLO")
+    printData()
 
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
+    //TODO what can I put here
     response.end("test")
   })
 }
@@ -69,6 +73,12 @@ const sendFile = function( response, filename ) {
 
      }
    })
+}
+
+const printData = function() {
+  for (let i = 0; i < appdata.length; i++) {
+    console.log(appdata[i].task + " " + appdata[i].class + " " + appdata[i].duedate + " " + appdata[i].priority)
+  }
 }
 
 server.listen( process.env.PORT || port )
