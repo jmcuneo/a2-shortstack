@@ -1,44 +1,65 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 
+var taskData = [];
+
+const initial = async function() {
+  // const response = await fetch({method:"GET"});
+  // const text = await response.text();
+
+
+  // Construct URL with data appended as query parameters
+  const url = `/taskData/`;
+  //?task=${encodeURIComponent(task)}&class=${encodeURIComponent(classx)}&duedate=${encodeURIComponent(duedate)}&importance=${encodeURIComponent(importance)}`
+
+  const response = await fetch(url);
+  
+  // Handle the response data as needed
+  const responseData = await response.json();
+  console.log("Response Data:", responseData);
+}
+
+//initial();
+
+
 const submit = async function( event ) {
   // stop form submission from trying to load
   // a new .html page for displaying results...
   // this was the original browser behavior and still
   // remains to this day
   event.preventDefault()
-  
-  const input = document.querySelector( "#task" ),
-        json = {task: input.value},
-        body = JSON.stringify( json )
+  if(validateForm()) {
+    var task = document.querySelector( "#task" );
+    var classx = document.querySelector( "#class" );
+    var duedate = document.querySelector( "#duedate" );
+    var importance = document.querySelector( "#importance" );
+    //const input = {task,classx,duedate,importance};
+    const json = {id: -1, task: task.value, class: classx.value, duedate: duedate.value, importance: importance.value, priority: 0};
+    const body = JSON.stringify( json );
 
-  const response = await fetch( "/submit", {
-    method:"POST",
-    body
-  })
+    const response = await fetch( "/submit", {
+      method:"POST",
+      body
+    })
 
-  const text = await response.text()
+    taskData = JSON.parse(await response.text());
 
-  console.log( "text:", text )
+    displayResults();
+  }
 }
 
 window.onload = function() {
-  const button = document.querySelector("button");
+  const button = document.querySelector("#submit-button");
   button.onclick = submit;
 }
 
-
-
-const taskData = [
-  { "id": 1, "task": "A1 HW", "class": "CS4241", "duedate": "03/20/2024", "important": "Yes", "priority": 0},
-  { "id": 2, "task": "HW 1", "class": "CS4342", "duedate": "03/22/2024", "important": "No", "priority": 0},
-  { "id": 3, "task": "Lecture notes", "class": "ECE3849", "duedate": "03/24/2024", "important": "Yes", "priority": 0},
-  { "id": 4, "task": "Hello", "class": "ECE3849", "duedate": "04/03/2024", "important": "Yes", "priority": 0}
-]
+// async function updateTaskData() {
+//   const response = await fetch( "/submit", {method:"GET"})
+// }
 
 // Determine priority at beginning and display the results
-taskData.forEach(element => {
-  determinePriority(element);
-});
+// taskData.forEach(element => {
+//   determinePriority(element);
+// });
 displayResults();
 
 // Displays up to date results in the table
@@ -67,10 +88,10 @@ function displayResults() {
     duedateCell.textContent = data.duedate;
     row.appendChild(duedateCell);
 
-    var importantCell = document.createElement("td");
-    importantCell.className = "table-center";
-    importantCell.textContent = data.important;
-    row.appendChild(importantCell);
+    var importanceCell = document.createElement("td");
+    importanceCell.className = "table-center";
+    importanceCell.textContent = data.importance;
+    row.appendChild(importanceCell);
 
     var priorityCell = document.createElement("td");
     priorityCell.className = "table-center";
@@ -136,16 +157,15 @@ function determinePriority(data) {
   var diffDays = Math.floor(Math.abs(utcDate2 - utcDate1) / (1000 * 60 * 60 * 24));
 
   // Determine priority
-  if((diffDays <= 2 && data.important == "Yes") || (diffDays <= 1 && data.important == "No")) {
+  if((diffDays <= 2 && data.importance == "Yes") || (diffDays <= 1 && data.importance == "No")) {
     data.priority = 1;
-  } else if((diffDays <= 3 && data.important == "Yes") || (diffDays <= 2 && data.important == "No")) {
+  } else if((diffDays <= 3 && data.importance == "Yes") || (diffDays <= 2 && data.importance == "No")) {
     data.priority = 2;
-  } else if((diffDays <= 4 && data.important == "Yes") || (diffDays <= 3 && data.important == "No")) {
+  } else if((diffDays <= 4 && data.importance == "Yes") || (diffDays <= 3 && data.importance == "No")) {
     data.priority = 3;
   } else {
     data.priority = 4;
   }
-
 }
 
 // Deletes the specified element
@@ -159,7 +179,7 @@ function editElement(data) {
   document.getElementById("task").value = data.task;
   document.getElementById("class").value = data.class;
   document.getElementById("duedate").value = data.duedate;
-  document.getElementById("importance").value = data.important;
+  document.getElementById("importance").value = data.importance;
 
 
 }
