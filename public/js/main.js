@@ -7,40 +7,24 @@ const submit = async function (event) {
   // remains to this day
   event.preventDefault();
 
-  //This code works - addding additional fields
-  /*
-  const input = document.querySelector( "#yourname" ),
-        json = { "yourname": input.value },
-        body = JSON.stringify( json )
-
-  const response = await fetch( "/submit", {
-    method:"POST",
-    body 
-  })
-*/
-
   const nameInput = document.querySelector("#yourname");
   const namejson = { yourname: nameInput.value };
-  //const namebody = JSON.stringify(namejson);
 
   const itemInput = document.querySelector("#youritem");
   const itemjson = { youritem: itemInput.value };
-  //const itembody = JSON.stringify(itemjson);
 
   const qtyInput = document.querySelector("#numItems");
   const qtyjson = { numItems: qtyInput.value };
-  //const itembody = JSON.stringify(itemjson);
+
+  const newEntry = createEntry(nameInput.value, itemInput.value, qtyInput.value);
 
   const response = await fetch("/submit", {
     method: "POST",
-    body: JSON.stringify(namejson, itemjson, qtyjson),
-  });
-
-  const text = await response.text();
+    body: JSON.stringify(newEntry),
+  })
+  const text = await response.json();
   console.log("text:", text);
-  //document.querySelector("#output").innerHTML = body;
-
-  createEntry(nameInput.value, itemInput.value, qtyInput.value);
+  const lastLogged = addToTable(newEntry);
 };
 
 const createEntry = function (name, item, qty) {
@@ -53,6 +37,16 @@ const createEntry = function (name, item, qty) {
   document.querySelector("#output3").innerHTML = entry.qty;
 
   return entry;
+};
+
+const addToTable = function(entry){
+  const table = document.getElementById("table");
+  const row = `<tr>
+                <td>${entry.name}</td>
+                <td>${entry.item}</td>
+                <td>${entry.qty}</td>
+              </tr>`;
+  table.insertAdjacentHTML('beforeend', row);
 };
 
 window.onload = function () {
