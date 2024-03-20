@@ -60,6 +60,11 @@ header {
     background-color: var(--white);
 }
 
+#submit-area {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
 
 @media screen and (min-width: 800px) {
   .IntroWrapper {
@@ -126,5 +131,5 @@ tbody > tr:nth-of-type(odd) {
 }
 
 .text-field {
-  width: 250px;
+  width: 300px;
 }

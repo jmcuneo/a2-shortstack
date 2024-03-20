@@ -29,17 +29,20 @@ window.onload = function() {
 
 
 const taskData = [
-  { "id": 1, "task": "A1 HW", "class": "CS4241", "duedate": "4/1/24", "priority": 3},
-  { "id": 2, "task": "HW 1", "class": "CS4342", "duedate": "4/2/24", "priority": 2 },
-  { "id": 3, "task": "Lecture notes", "class": "ECE3849", "duedate": "4/3/24", "priority": 1},
-  { "id": 4, "task": "Hello", "class": "ECE3849", "duedate": "4/3/24", "priority": 4}
+  { "id": 1, "task": "A1 HW", "class": "CS4241", "duedate": "03/20/2024", "important": "Yes", "priority": 0},
+  { "id": 2, "task": "HW 1", "class": "CS4342", "duedate": "03/22/2024", "important": "No", "priority": 0},
+  { "id": 3, "task": "Lecture notes", "class": "ECE3849", "duedate": "03/24/2024", "important": "Yes", "priority": 0},
+  { "id": 4, "task": "Hello", "class": "ECE3849", "duedate": "04/03/2024", "important": "Yes", "priority": 0}
 ]
 
+// Determine priority at beginning and display the results
+taskData.forEach(element => {
+  determinePriority(element);
+});
 displayResults();
 
-
+// Displays up to date results in the table
 function displayResults() {
-  // For adding the data into the table
   var tbody = document.querySelector("#data-table tbody");
   // Clear tbody by setting to an empty string
   tbody.innerHTML = "";
@@ -55,12 +58,19 @@ function displayResults() {
     row.appendChild(taskCell);
 
     var classCell = document.createElement("td");
+    classCell.className = "table-center";
     classCell.textContent = data.class;
     row.appendChild(classCell);
 
     var duedateCell = document.createElement("td");
+    duedateCell.className = "table-center";
     duedateCell.textContent = data.duedate;
     row.appendChild(duedateCell);
+
+    var importantCell = document.createElement("td");
+    importantCell.className = "table-center";
+    importantCell.textContent = data.important;
+    row.appendChild(importantCell);
 
     var priorityCell = document.createElement("td");
     priorityCell.className = "table-center";
@@ -73,7 +83,7 @@ function displayResults() {
     editButton.type = "button";
     editButton.className = "button";
     editButton.value = "Edit";
-    //editButton.onclick = 
+    //editButton.onclick = function() {editElement(data.id);};
     editCell.appendChild(editButton);
 
     var deleteButton = document.createElement("input");
@@ -94,7 +104,7 @@ function displayResults() {
       var i = 0;
       var check = true;
       while(check && i < tbody.children.length) {
-        if(Number(tbody.children[i].children[3].textContent) >= Number(row.children[3].textContent)) {
+        if(Number(tbody.children[i].children[4].textContent) >= Number(row.children[4].textContent)) {
           tbody.insertBefore(row, tbody.children[i]);
           check = false;
         }      
@@ -110,6 +120,33 @@ function displayResults() {
 }
 
 
+// Determines the priority based on duedate, importance, and the current date
+function determinePriority(data) {
+  var currentDate = new Date();
+
+  //turn duedate into a date object
+  var parts = data.duedate.split("/");
+  var dueDate = new Date(parts[2], parts[0] - 1, parts[1]);
+
+  // Convert both dates to UTC
+  var utcDate1 = Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
+  var utcDate2 = Date.UTC(dueDate.getFullYear(), dueDate.getMonth(), dueDate.getDate());
+
+  // Calculate different in ms and then convert to days
+  var diffDays = Math.floor(Math.abs(utcDate2 - utcDate1) / (1000 * 60 * 60 * 24));
+
+  // Determine priority
+  if((diffDays <= 2 && data.important == "Yes") || (diffDays <= 1 && data.important == "No")) {
+    data.priority = 1;
+  } else if((diffDays <= 3 && data.important == "Yes") || (diffDays <= 2 && data.important == "No")) {
+    data.priority = 2;
+  } else if((diffDays <= 4 && data.important == "Yes") || (diffDays <= 3 && data.important == "No")) {
+    data.priority = 3;
+  } else {
+    data.priority = 4;
+  }
+
+}
 
 function deleteElement(id) {
   console.log(id);
@@ -117,6 +154,12 @@ function deleteElement(id) {
   taskData.splice(taskData.findIndex((element) => element.id == id), 1);
   printData();
   displayResults();
+}
+
+function editElement(id) {
+  const data = taskData.find((element) => element.id == id);
+
+
 }
 
 
