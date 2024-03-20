@@ -32,10 +32,6 @@ const createEntry = function (name, item, qty) {
   entry.name = name;
   entry.item = item;
   entry.qty = qty;
-  document.querySelector("#output1").innerHTML = entry.name;
-  document.querySelector("#output2").innerHTML = entry.item;
-  document.querySelector("#output3").innerHTML = entry.qty;
-
   return entry;
 };
 
