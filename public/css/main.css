@@ -1,5 +1,15 @@
-p{
-    background-color: red;
+@import url("https://fonts.googleapis.com/css?family=Oswald");
+body {
+  font-family: "Oswald", serif;
+  background-color: #6D8BA6;
+}
+
+.header {
+    background-color: #698C35;
+    text-align: center;
+    color: #F2AE30;
+    font-size: 30px;
+    font-weight: bold;
 }
 
 table {
@@ -10,7 +20,8 @@ table {
   
   td,
   th {
-    border: 1px solid #32424B;
+    border: 3px solid #ad6b31;
+    background-color: #ad6b31;
     text-align: left;
     font-weight: bold;
     padding: 8px;
@@ -18,5 +29,33 @@ table {
   
   th {
     color: #CECFD9;
-    background-color: #32424bb1;
+    background-color: #698C35;
   }
+
+button{
+    display: inline-block;
+    text-decoration: none; /* remove underline */
+    border-radius: 10px;  /* rounded corners */
+    margin: 3px;
+    padding: 3px;
+    color: #222;
+    font-weight: bold;
+ 
+    /* nice gradient shade on the buttons */
+    background-image: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,1));
+ 
+    border: 1px solid #666; /* dark outline */
+ }
+ 
+button:active {
+     background-color: #ccc;
+     background-image: none;
+     box-shadow: inset 0 3px 3px rgba(0, 0, 0, .2);
+ }
+
+ form{
+    padding-top: 5px;
+    display: block;
+    width: 590px;
+    margin: auto;
+ }
