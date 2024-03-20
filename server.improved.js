@@ -53,8 +53,8 @@ const handlePost = function (request, response) {
 
 		console.log(appData);
 
-		response.writeHead(200, "OK", { "Content-Type": "text/plain" })
-		response.end("test");
+		response.writeHead(200, "OK", { "Content-Type": "application/json" })
+		response.end(JSON.stringify(appData));
 	})
 }
 
@@ -77,8 +77,8 @@ const handleDelete = function (request, response) {
 			console.log("course does not exist");
 		}
 
-		response.writeHead(200, "OK", { "Content-Type": "text/plain" })
-		response.end("test")
+		response.writeHead(200, "OK", { "Content-Type": "application/json" });
+		response.end(JSON.stringify(appData));
 	})
 }
 
