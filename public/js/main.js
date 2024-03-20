@@ -83,7 +83,7 @@ function displayResults() {
     editButton.type = "button";
     editButton.className = "button";
     editButton.value = "Edit";
-    //editButton.onclick = function() {editElement(data.id);};
+    editButton.onclick = function() {editElement(data);};
     editCell.appendChild(editButton);
 
     var deleteButton = document.createElement("input");
@@ -155,21 +155,27 @@ function deleteElement(data) {
 }
 
 // Allows edits to the spcified element
-// function editElement(data) {
+function editElement(data) {
+  document.getElementById("task").value = data.task;
+  document.getElementById("class").value = data.class;
+  document.getElementById("duedate").value = data.duedate;
+  document.getElementById("importance").value = data.important;
 
 
-// }
+}
 
-
+// Validates the format of the submission before submitting
 function validateForm() {
   var dateInput = document.getElementById("duedate");
   var datePattern = /^\d{2}\/\d{2}\/\d{4}$/;
-
   var importanceInput = document.getElementById("importance");
+  // Checks date format
   if (!datePattern.test(dateInput.value)) {
     alert("Please enter the date in MM/DD/YYYY format.");
     return false;
   }
+
+  // Checks importance input
   if(!(importanceInput.value == "No" || importanceInput.value == "Yes")) {
     alert("Please enter 'Yes' or 'No'");
     return false;
