@@ -7,24 +7,27 @@ const submit = async function (event) {
   // remains to this day
   event.preventDefault();
 
+  //declare object -> used let because const must be initialized
+  //assign input values to -Input variables
   const nameInput = document.querySelector("#yourname");
-  const namejson = { yourname: nameInput.value };
-
   const itemInput = document.querySelector("#youritem");
-  const itemjson = { youritem: itemInput.value };
-
   const qtyInput = document.querySelector("#numItems");
-  const qtyjson = { numItems: qtyInput.value };
-
+/*
+  if(isEmpty(nameInput.value) || isEmpty(itemInput.value) || isEmpty(qtyInput.value)){
+    alert("Please fill out all fields.");
+  }
+*/
   const newEntry = createEntry(nameInput.value, itemInput.value, qtyInput.value);
 
+  //Fetch - send to server
   const response = await fetch("/submit", {
     method: "POST",
     body: JSON.stringify(newEntry),
   })
+  //promise
   const text = await response.json();
   console.log("text:", text);
-  const lastLogged = addToTable(newEntry);
+  addToTable(newEntry);
 };
 
 const createEntry = function (name, item, qty) {
@@ -35,14 +38,27 @@ const createEntry = function (name, item, qty) {
   return entry;
 };
 
+//adds row to html table
 const addToTable = function(entry){
   const table = document.getElementById("table");
   const row = `<tr>
                 <td>${entry.name}</td>
                 <td>${entry.item}</td>
                 <td>${entry.qty}</td>
+                <td><button>Remove</button></td>
               </tr>`;
   table.insertAdjacentHTML('beforeend', row);
+  resetTextBoxes();
+};
+
+const resetTextBoxes = function(){
+  document.querySelector("#yourname").value = "";
+  document.querySelector("#youritem").value = "";
+  document.querySelector("#numItems").value = "";
+
+}
+function isEmpty(str) {
+  return (!str || str.length === 0 );
 };
 
 window.onload = function () {
