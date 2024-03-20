@@ -34,11 +34,8 @@ input[type=number]:hover {
   background-color: rgba(205, 227, 255);
 }
 
-/* .opForm {
-  text-align: left;
-} */
 
-button {
+.submitButton {
   background-color: #420563;
   color: white;
   padding: 7px 15px;
@@ -48,8 +45,17 @@ button {
   cursor: pointer;
 }
 
-button:hover {
+.submitButton:hover {
   background-color: #69089d;
+}
+
+.deleteButton {
+  background-color: #6f0303;
+  color: rgb(212, 208, 208);
+  padding: 5px 10px;
+  margin: 4px 0;
+  border: 1px solid rgb(133, 8, 8);
+  border-radius: 4px;
 }
 
 .sTable {

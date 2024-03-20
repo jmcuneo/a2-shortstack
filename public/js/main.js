@@ -57,13 +57,22 @@ function displayData(data) {
     if(document.getElementById("data" + i) == null) { //Modify this later to make sure the data is the same
       var tr = document.createElement("tr")
       tr.id = "data" + i;
-      table.appendChild(tr)
+
       for (let key in data[i]) {
         var td = document.createElement("td")
         var line = data[i]
         td.innerHTML = line[key]
         tr.appendChild(td)
       }
+
+      var buttonTd = document.createElement("td")
+      var button = document.createElement("button")
+      button.className = "deleteButton"
+      button.innerHTML = "Delete"
+      buttonTd.appendChild(button)
+      tr.appendChild(buttonTd)
+
+      table.appendChild(tr)
     }
   }
 }
