@@ -16,9 +16,22 @@ const submit = async function( event ) {
     body 
   })
 
-  const text = await response.text()
+  const text = await response.text();
   console.log( "text:", text )
-  document.querySelector("#output").innerText = text;
+  //document.querySelector("#output").innerHTML = body;
+
+  createEntry(input.value);
+  //call create entry function??
+}
+
+//add later -> const createEntry = function(name, item, numItems){
+const createEntry = function(name){
+  const entry = {};
+  entry.name = name;
+  //entry.item = item;
+  //entry.qty = qty;
+  document.querySelector("#output").innerHTML = entry.name;
+  return entry;
 }
 
 window.onload = function() {
