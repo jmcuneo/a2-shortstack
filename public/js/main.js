@@ -140,37 +140,15 @@ function displayResults() {
   });
 }
 
-
-// Determines the priority based on duedate, importance, and the current date
-function determinePriority(data) {
-  var currentDate = new Date();
-
-  //turn duedate into a date object
-  var parts = data.duedate.split("/");
-  var dueDate = new Date(parts[2], parts[0] - 1, parts[1]);
-
-  // Convert both dates to UTC
-  var utcDate1 = Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
-  var utcDate2 = Date.UTC(dueDate.getFullYear(), dueDate.getMonth(), dueDate.getDate());
-
-  // Calculate different in ms and then convert to days
-  var diffDays = Math.floor(Math.abs(utcDate2 - utcDate1) / (1000 * 60 * 60 * 24));
-
-  // Determine priority
-  if((diffDays <= 2 && data.importance == "Yes") || (diffDays <= 1 && data.importance == "No")) {
-    data.priority = 1;
-  } else if((diffDays <= 3 && data.importance == "Yes") || (diffDays <= 2 && data.importance == "No")) {
-    data.priority = 2;
-  } else if((diffDays <= 4 && data.importance == "Yes") || (diffDays <= 3 && data.importance == "No")) {
-    data.priority = 3;
-  } else {
-    data.priority = 4;
-  }
-}
-
 // Deletes the specified element
-function deleteElement(data) {
-  taskData.splice(data, 1);
+const deleteElement = async function(data) {
+  const body = JSON.stringify( data );
+  const response = await fetch( "/delete", {
+    method:"POST",
+    body
+  })
+
+  taskData = JSON.parse(await response.text());
   displayResults();
 }
 

@@ -50,21 +50,35 @@ const handlePost = function( request, response ) {
   request.on( "end", function() {
 
     var taskObject = JSON.parse( dataString );
-    
-    // Update id
-    taskObject.id = taskData[taskData.length-1].id + 1;
 
-    // Update priority
-    determinePriority(taskObject);
+    var deleteTask = false;
+    var i = 0;
+    while(deleteTask == false && i < taskData.length) {
+      if(taskData[i].id == taskObject.id) {
+        deleteTask = true;
+        i--;
+      }
+      i++;
+    }
 
-    // Push new object to taskData array
-    taskData.push(taskObject);
+    if(deleteTask) {
+      taskData.splice(i, 1);
+    } else {
+      // Update id
+      taskObject.id = taskData[taskData.length-1].id + 1;
 
-    console.log(taskObject);
+      // Update priority
+      determinePriority(taskObject);
+
+      // Push new object to taskData array
+      taskData.push(taskObject);
+
+      //console.log(taskObject);
+    }
     printData()
-
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" });
     response.end(JSON.stringify(taskData));
+    
   })
 }
 
