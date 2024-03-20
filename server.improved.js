@@ -27,7 +27,11 @@ const handleGet = function( request, response ) {
 
   if( request.url === "/" ) {
     sendFile( response, "public/index.html" )
-  }else{
+  }
+  else if(request.url === "/instructions"){
+    sendFile( response, "public/instructions.html" )
+  }
+  else{
     sendFile( response, filename )
   }
 }

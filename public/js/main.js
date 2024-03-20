@@ -7,7 +7,7 @@ const submit = async function( event ) {
   // remains to this day
   event.preventDefault()
   
-  const input = document.querySelector( "#yourname" ),
+  const input = document.querySelector( "#productname" ),
         json = { yourname: input.value },
         body = JSON.stringify( json )
 

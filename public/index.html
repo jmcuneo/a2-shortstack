@@ -1,18 +1,67 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <title>CS4241 Assignment 2</title>
-    <meta charset="utf-8">
-    <script src="js/main.js"></script>
-    <link rel="stylesheet" href="css/main.css">
-    
-    <!-- get rid of favicon error -->
-    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
-  </head>
-  <body>
-    <form>
-      <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
-    </form>
-  </body>
+    <head>
+        <title>CS4241 Assignment 2</title>
+        <meta charset="utf-8">
+        <script src="js/main.js"></script>
+        <link rel="stylesheet" href="css/main.css">
+
+        <!-- get rid of favicon error -->
+        <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+        <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
+
+    </head>
+    <body>
+        <div class="top-nav">
+            <div class="top-links">
+                <a href="/instructions">INSTRUCTIONS</a>
+            </div>
+            <h1 class="title">Billing System</h1>
+        </div>
+
+        <div class="flex-container">
+            <div class="flex-item inside-form">
+                <form>
+                    <label>Product Name</label>
+                    <br>
+                    <input autofocus autocomplete="off" type="text" id="productname" placeholder="Enter product name">
+                    <br>
+                    <label>Date Of Purchase</label>
+                    <br>
+                    <input autocomplete="off" type="date" id="purchasedate" value="purchase date" placeholder="Enter purchase date">
+                    <br>
+                    <label>Product Cost</label>
+                    <br>
+                    <input autocomplete="off" type="number" id="cost" value="cost" placeholder="Enter cost">
+                    <br>
+                    <label>Product Category</label>
+                    <br>
+                    <select>
+                        <option disabled selected>Choose Category</option>
+                        <option value="food">Food</option>
+                        <option value="electronics">Electronics</option>
+                        <option value="furniture">Furniture</option>
+                        <option value="clothing">Clothing</option>
+                        <option value="kitchen">Kitchen</option>
+                        <option value="living-bedroom">Living/Bedroom space</option>
+                        <option value="other">Other</option>
+                    </select>
+                    <br>
+                    <label>Product Description</label>
+                    <br>
+                    <input autocomplete="off" type="text" id="description" placeholder="Enter any product description">
+                    <br>
+                    <button class="submit-btn">submit</button>
+                </form>
+            </div>
+            <div class="flex-item display-results">
+                <h1>hello</h1>
+            </div>
+        </div>
+
+        <div class="footer">
+            <footer><b>Copyright &#169; Sai Teja Sunku, 2024</b></footer>
+        </div>
+
+    </body>
 </html>

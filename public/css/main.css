@@ -1,4 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+
 body {
-  background:black;
-  color:white;
+    background: #E0FFFF;
+    font-family: "Nunito Sans", sans-serif; /* Applying Google Font for entire body*/
+    margin: 0;
+}
+
+.top-nav{
+    background-image: linear-gradient(140deg, #EADEDB 0%, #FF7F50 50%, #BFD641 75%);
+    text-align: center;
+    color: white;
+    top: 0;
+    left: 0;
+    height: 10%;
+    width: 100%;
+    position: absolute;
+    z-index: 999;
+}
+
+.title{
+    margin: 5px 0 0 0;
+}
+
+.top-links a{
+    cursor: pointer;
+    background: #EADEDB;
+    border-radius: 25px;
+    color: white;
+    padding: 10px 10px 10px 10px;
+    margin: 5px 0 0 0;
+    text-decoration: none;
+    float: right;
+}
+
+
+label{
+    font-weight: bold;
+}
+
+input[type=text], input[type=number], input[type=date], select{
+    width: 50%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    border: none;
+    background: #f1f1f1;
+}
+
+input[type=date], input[type=number]{
+    width: 20% !important;
+}
+
+.flex-container{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    /*flex-wrap: wrap;*/
+    /*align-content: space-between;   */
+}
+
+.flex-item{
+    margin: 100px 10px 10px 10px;
+}
+
+.inside-form{
+    border: 2px solid #ced4da;
+    width: 50%;
+    padding: 20px;
+}
+
+.display-results{
+    border: 2px solid #ced4da;
+}
+
+.submit-btn{
+    background: #66CDAA;
+    color: #fff;
+    padding: 15px 20px;
+    border: 2px solid #fff;
+    cursor: pointer;
+    width: 25%;
+    border-radius: 25px;
+}
+
+.footer{
+    color: white;
+    padding: 15px 0 15px 0;
+    text-align: center;
+    background-image: linear-gradient(140deg, #EADEDB 0%, #FF7F50 50%, #BFD641 75%);
+    z-index: 999;
+    position: absolute;
+    width: 100%;
 }
