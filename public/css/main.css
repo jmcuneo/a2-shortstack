@@ -1,3 +1,13 @@
+@font-face {
+    font-family: "Truculenta";
+    src: url(Truculenta-Regular.ttf) format("truetype");
+}
+
+* {
+    font-family: "Truculenta";
+    font-size: large;
+}
+
 body {
   background: black;
   color: white;
@@ -5,6 +15,7 @@ body {
 
 table {
     width: 400px;
+    font-size: x-large;
 }
 
 th, td {
