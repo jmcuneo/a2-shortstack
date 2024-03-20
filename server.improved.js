@@ -39,6 +39,8 @@ const handlePost = function( request, response ) {
     console.log( JSON.parse( dataString ) )
     appdata.push(dataString);
     console.log(appdata);
+    console.log(appdata.length);
+
     // ... do something with the data here!!!
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
     //response.end("test")
