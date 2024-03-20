@@ -8,11 +8,13 @@ const http = require( "http" ),
       dir  = "public/",
       port = 3000
 
-const appdata = [
-  { "model": "toyota", "year": 1999, "mpg": 23 },
-  { "model": "honda", "year": 2004, "mpg": 30 },
-  { "model": "ford", "year": 1987, "mpg": 14} 
-]
+// const appdata = [
+//   { "model": "toyota", "year": 1999, "mpg": 23 },
+//   { "model": "honda", "year": 2004, "mpg": 30 },
+//   { "model": "ford", "year": 1987, "mpg": 14}
+// ]
+
+let billingData = []
 
 const server = http.createServer( function( request,response ) {
   if( request.method === "GET" ) {
@@ -38,18 +40,40 @@ const handleGet = function( request, response ) {
 
 const handlePost = function( request, response ) {
   let dataString = ""
-
+  let discount = 0
+  let afterDiscount = 0
+  let finalPrice = 0
   request.on( "data", function( data ) {
       dataString += data 
   })
 
   request.on( "end", function() {
-    console.log( JSON.parse( dataString ) )
+    //console.log( JSON.parse( dataString ) )
+    const bilingObj = JSON.parse(dataString)
+
+    //calculating discount
+    if(bilingObj.cost > 50){
+      discount = 0.10 //10%
+    }
+    else if(bilingObj.cost <= 50 && bilingObj.cost > 100){
+      discount = 0.20 //20%
+    }
+    else if(bilingObj.cost <= 100 && bilingObj.cost > 500){
+      discount = 0.30 //30%
+    }
+    else if(bilingObj.cost >= 500){
+      discount = 0.40 //40%
+    }
+
+    afterDiscount = discount*bilingObj.cost
+    finalPrice = (bilingObj.cost - afterDiscount)*bilingObj.quantity //final price including quantity
 
     // ... do something with the data here!!!
+    billingData.push(JSON.parse( dataString ))
+    console.log(bilingObj.cost)
 
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
-    response.end("test")
+    response.end(JSON.stringify(dataString))
   })
 }
 

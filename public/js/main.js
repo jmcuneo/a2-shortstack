@@ -7,13 +7,23 @@ const submit = async function( event ) {
   // remains to this day
   event.preventDefault()
   
-  const input = document.querySelector( "#productname" ),
-        json = { yourname: input.value },
+    const input = document.querySelector( "#productname" ),
+        purchasedate = document.getElementById("purchasedate"),
+        cost = document.getElementById("cost"),
+        quantity = document.getElementById("quantity"),
+        category = document.getElementById("category"),
+        description = document.getElementById("description"),
+        json = {productname: input.value,
+            purchasedate: purchasedate.value,
+            cost: cost.value,
+            quantity: quantity.value,
+            category: category.value,
+            description: description.value},
         body = JSON.stringify( json )
 
   const response = await fetch( "/submit", {
-    method:"POST",
-    body 
+      method:"POST",
+      body,
   })
 
   const text = await response.text()
@@ -22,6 +32,6 @@ const submit = async function( event ) {
 }
 
 window.onload = function() {
-   const button = document.querySelector("button");
-  button.onclick = submit;
+    const button = document.querySelector("button");
+    button.onclick = submit;
 }

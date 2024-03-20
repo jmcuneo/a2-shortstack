@@ -27,16 +27,17 @@
                     <input autofocus autocomplete="off" type="text" id="productname" placeholder="Enter product name">
                     <br>
                     <label>Date Of Purchase</label>
-                    <br>
                     <input autocomplete="off" type="date" id="purchasedate" value="purchase date" placeholder="Enter purchase date">
                     <br>
                     <label>Product Cost</label>
+                    <input autocomplete="off" type="number" id="cost" value="cost" placeholder="Enter cost for single">
                     <br>
-                    <input autocomplete="off" type="number" id="cost" value="cost" placeholder="Enter cost">
+                    <label>Product Quantity</label>
+                    <input autocomplete="off" type="number" id="quantity" value="quantity" placeholder="Enter quantity">
                     <br>
                     <label>Product Category</label>
                     <br>
-                    <select>
+                    <select id="category">
                         <option disabled selected>Choose Category</option>
                         <option value="food">Food</option>
                         <option value="electronics">Electronics</option>
@@ -56,6 +57,63 @@
             </div>
             <div class="flex-item display-results">
                 <h1>hello</h1>
+                <table class="table-info"> <!-- creating a table for different categories of experiences like school, projects, clubs -->
+                    <thead> <!-- for table heading columns, 1st row -->
+                    <tr>
+                        <th>Product Details</th>
+                        <th>Final Price</th>
+                    </tr>
+                    </thead>
+                    <tbody> <!-- for table body with all rows/cells filled with data -->
+                    <tr>
+                        <td> <!-- each cell will have unordered/ordered list. Only 1 row created because each cell is a list of elements-->
+                            <ul>
+                                <li>Name: Cookie</li>
+                                <li>DOP: 3/19/24</li>
+                                <li>Cost: 20</li>
+                                <li>Quantity: 5</li>
+                                <li>Category: Food</li>
+                                <li>Description: Edible</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul>
+                                <li>Total price = 5*20 = 100</li>
+                                <li>Discount = 20%</li>
+                                <li>After Discount = 80</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td> <!-- each cell will have unordered/ordered list. Only 1 row created because each cell is a list of elements-->
+                            <ul>
+                                <li>Name: Bread</li>
+                                <li>DOP: 3/19/24</li>
+                                <li>Cost: 20</li>
+                                <li>Quantity: 5</li>
+                                <li>Category: Food</li>
+                                <li>Description: Edible</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul>
+                                <li>Total price = 5*20 = 100</li>
+                                <li>Discount = 20%</li>
+                                <li>After Discount = 80</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            TOTAL
+                        </td>
+                        <td>
+                            160
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
             </div>
         </div>
 

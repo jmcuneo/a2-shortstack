@@ -47,13 +47,14 @@ input[type=text], input[type=number], input[type=date], select{
 }
 
 input[type=date], input[type=number]{
-    width: 20% !important;
+
 }
 
 .flex-container{
     display: flex;
     justify-content: space-around;
     align-items: center;
+    flex-direction: row;
     /*flex-wrap: wrap;*/
     /*align-content: space-between;   */
 }
@@ -70,6 +71,24 @@ input[type=date], input[type=number]{
 
 .display-results{
     border: 2px solid #ced4da;
+    padding: 20px;
+}
+
+/* to form a perfect table*/
+.table-info{
+    border-collapse: collapse; /* removes borders */
+    margin: 0 0 0 10px;
+}
+
+.table-info td{ /* for columns */
+    border: 1px solid #000; /* add border */
+}
+
+.table-info th{ /* for columns heads */
+    padding: 0 100px 0 100px;
+    border: 1px solid #000;
+    background: #61F2A7;
+    text-align: center;
 }
 
 .submit-btn{
