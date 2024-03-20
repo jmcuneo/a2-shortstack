@@ -20,31 +20,28 @@
           <div class="IntroWrapper" id="submit-area">
             <div>        
               <p class="inter-font">Enter task: </p>
-              <input class="text-field" type="text" id="task" value="">
-              <!-- <button class="button">Submit</button> -->
+              <input class="text-field" type="text" id="task">
             </div>
             <div>
               <p class="inter-font">Enter class: </p>
-              <input class="text-field" type="text" id="class" value="">
-              <!-- <button class="button">Submit</button> -->
+              <input class="text-field" type="text" id="class">
             </div>
           </div>
           <div class="IntroWrapper" id="submit-area">
             <div>
-              <p class="inter-font">Enter due date: </p>
-              <input class="text-field" type="text" id="duedate" value="">
-              <!-- <button class="button">Submit</button> -->
+              <p class="inter-font">Enter due date (MM/DD/YYYY): </p>
+              <input class="text-field" type="text" id="duedate" pattern="(0[1-9]|1[0-2])/(0[1-9]|[12][0-9]|3[01])/\d{4}" required>
             </div>
             <div>
-              <p class="inter-font">Enter priority: </p>
-              <input class="text-field" type="text" id="priority" value="">
-              <!-- <button class="button">Submit</button> -->
+              <p class="inter-font">Enter importance ('Yes' or 'No'): </p>
+              <input class="text-field" type="text" id="importance">
             </div>
           </div>
           <button class="button" id="submit-area" style="margin-left: 0px">Submit</button>
         </div>
       </form>
 
+      <button class="button style" onclick="return validateForm()">Temp Validate</button>
       <h2>Results</h2>
       <table class="inter-font" id="data-table">
         <thead>

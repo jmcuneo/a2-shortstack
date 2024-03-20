@@ -90,7 +90,7 @@ function displayResults() {
     deleteButton.type = "button";
     deleteButton.className = "button";
     deleteButton.value = "Delete";
-    deleteButton.onclick = function() {deleteElement(data.id);};
+    deleteButton.onclick = function() {deleteElement(data);};
     editCell.appendChild(deleteButton);
 
     row.appendChild(editCell);
@@ -148,18 +148,33 @@ function determinePriority(data) {
 
 }
 
-function deleteElement(id) {
-  console.log(id);
-  printData();
-  taskData.splice(taskData.findIndex((element) => element.id == id), 1);
-  printData();
+// Deletes the specified element
+function deleteElement(data) {
+  taskData.splice(data, 1);
   displayResults();
 }
 
-function editElement(id) {
-  const data = taskData.find((element) => element.id == id);
+// Allows edits to the spcified element
+// function editElement(data) {
 
 
+// }
+
+
+function validateForm() {
+  var dateInput = document.getElementById("duedate");
+  var datePattern = /^\d{2}\/\d{2}\/\d{4}$/;
+
+  var importanceInput = document.getElementById("importance");
+  if (!datePattern.test(dateInput.value)) {
+    alert("Please enter the date in MM/DD/YYYY format.");
+    return false;
+  }
+  if(!(importanceInput.value == "No" || importanceInput.value == "Yes")) {
+    alert("Please enter 'Yes' or 'No'");
+    return false;
+  }
+  return true;
 }
 
 
