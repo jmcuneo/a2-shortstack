@@ -61,6 +61,15 @@ header {
 }
 
 
+@media screen and (min-width: 800px) {
+  .IntroWrapper {
+      display: flex;
+      gap: 0 20px;
+      flex: 1 1 auto;
+      align-items: center;
+  }
+}
+
 
 /* Table styling */
 table {
@@ -81,8 +90,13 @@ td {
   padding: 8px 10px;
 }
 
-td:last-of-type {
+.table-center {
   text-align: center;
+  align-items: center;
+}
+
+#buttons-cell {
+  gap: 0 20px;
 }
 
 tbody > tr:nth-of-type(even) {
@@ -90,4 +104,27 @@ tbody > tr:nth-of-type(even) {
 }
 tbody > tr:nth-of-type(odd) {
   background-color: var(--accent6);
+}
+
+
+
+/* Button styling */
+.button {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings: "slnt" 0;
+  color: var(--black);
+
+  background-color: var(--accent2);
+  border-color: var(--accent4);
+  border-style: solid;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding: 5px;
+}
+
+.text-field {
+  width: 250px;
 }

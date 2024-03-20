@@ -15,7 +15,7 @@ Try to make your application do something useful! A todo list, storing / retriev
 Your application is required to implement the following functionalities (4 pts each, total 20 pts):
 
 - a `Server` which not only serves files, but also maintains a tabular dataset with 3 or more fields related to your application
-- a `Results` functionality which shows the entire dataset residing in the server's memory
+- DONE a `Results` functionality which shows the entire dataset residing in the server's memory
 - a `Form/Entry` functionality which allows a user to add or delete data items residing in the server's memory
 - a `Server Logic` which, upon receiving new or modified "incoming" data, includes and uses a function that adds at least one additional derived field to this incoming data before integrating it with the existing dataset
 - the `Derived field` for a new row of data must be computed based on fields already existing in the row. 
@@ -25,19 +25,19 @@ Your application is required to demonstrate the use of the following concepts:
 
 HTML (4 pts each, total 16 pts):
 - One or more [HTML Forms](https://developer.mozilla.org/en-US/docs/Learn/HTML/Forms), with any combination of form tags appropriate for the user input portion of the application
-- A results page displaying all data currently available on the server. You will most likely use a `<table>` tag for this, but `<ul>` or `<ol>` could also work and might be simpler to work with. Alternatively, you can create a single-page app (see Technical Acheivements) but this is not a requirement.
+- DONE A results page displaying all data currently available on the server. You will most likely use a `<table>` tag for this, but `<ul>` or `<ol>` could also work and might be simpler to work with. Alternatively, you can create a single-page app (see Technical Acheivements) but this is not a requirement.
 - All pages should [validate](https://validator.w3.org)
 - If your app contains multple pages, they should all be accessible from the homepage (index.html)
 
 CSS (4 pts each, total 16 pts):
-- CSS styling of the primary visual elements in the application
-- Various CSS Selector functionality must be demonstrated:
+- DONE CSS styling of the primary visual elements in the application
+- DONE Various CSS Selector functionality must be demonstrated:
     - Element selectors
     - ID selectors
     - Class selectors
 - CSS positioning and styling of the primary visual elements in the application:
     - Use of either a CSS grid or flexbox for layout
-    - Rules defining fonts for all text used; no default fonts! Be sure to use a web safe font or a font from a web service like [Google Fonts](http://fonts.google.com/)
+    - DONE Rules defining fonts for all text used; no default fonts! Be sure to use a web safe font or a font from a web service like [Google Fonts](http://fonts.google.com/)
 - CSS defined in a maintainable, readable form, in external stylesheets 
 
 JavaScript (4 pts):
@@ -64,7 +64,7 @@ Acheivements
 Below are suggested technical and design achievements. You can use these to help customize the assignment to your personal interests. These are recommended acheivements, but feel free to create/implement your own... just make sure you thoroughly describe what you did in your README and why it was challenging. ALL ACHIEVEMENTS MUST BE DESCRIBED IN YOUR README IN ORDER TO GET CREDIT FOR THEM. Remember, the highest grade you can get on any individual assignment is a 100%.
 
 *Technical*
-- (5 points) Create a single-page app that both provides a form for users to submit data and always shows the current state of the server-side data. To put it another way, when the user submits data, the server should respond sending back the updated data (including the derived field calculated on the server) and the client should then update its data display.
+- DONE (5 points) Create a single-page app that both provides a form for users to submit data and always shows the current state of the server-side data. To put it another way, when the user submits data, the server should respond sending back the updated data (including the derived field calculated on the server) and the client should then update its data display.
 
 - (5 points) In addition to a form enabling adding and deleting data on the server, also add the ability to modify existing data.
 

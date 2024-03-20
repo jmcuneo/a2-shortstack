@@ -16,13 +16,33 @@
     <div class="Main">
       <h2>Submit Data</h2>
       <form>
-        <input type="text" id="task" value="">
-        <button>Submit</button>
-        <input type="text" id="class" value="">
-        <button>Submit</button>
+        <div class="IntroWrapper">
+          <div>        
+            <p class="inter-font">Enter task: </p>
+            <input class="text-field" type="text" id="task" value="">
+            <button class="button">Submit</button>
+          </div>
+          <div>
+            <p class="inter-font">Enter class: </p>
+            <input class="text-field" type="text" id="class" value="">
+            <button class="button">Submit</button>
+          </div>
+        </div>
+        <div class="IntroWrapper">
+          <div>
+            <p class="inter-font">Enter due date: </p>
+            <input class="text-field" type="text" id="class" value="">
+            <button class="button">Submit</button>
+          </div>
+          <div>
+            <p class="inter-font">Enter priority: </p>
+            <input class="text-field" type="text" id="class" value="">
+            <button class="button">Submit</button>
+          </div>
+        </div>
       </form>
 
-      <h2>Table</h2>
+      <h2>Results</h2>
       <table class="inter-font" id="data-table">
         <thead>
           <tr>
@@ -30,10 +50,10 @@
             <th>Class</th>
             <th>Due Date</th>
             <th>Priority</th>
-            <th>Class ID</th>
+            <th>Edit</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="data-tbody">
         </tbody>
       </table>
     </div>
