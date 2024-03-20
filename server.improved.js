@@ -44,14 +44,17 @@ const handlePost = function (request, response) {
 
 	request.on("end", function () {
 		course = JSON.parse(dataString);
-		// console.log( JSON.parse( dataString ) );
 
-		appData.push(course);
-		console.log(appData)
+		if (appData.some(data => data.cID === course.cID)) {
+			console.log("course already exists");
+		} else {
+			appData.push(course);
+		}
 
+		console.log(appData);
 
 		response.writeHead(200, "OK", { "Content-Type": "text/plain" })
-		response.end("test")
+		response.end("test");
 	})
 }
 
@@ -66,9 +69,13 @@ const handleDelete = function (request, response) {
 		cid = JSON.parse(dataString);
 		console.log( JSON.parse( dataString ) );
 
-		// appData.push(course);
-		// console.log(appData)
-
+		if (appData.some(data => data.cID === cid.cID)) {
+			console.log("course exists. deleting");
+			const index = appData.findIndex(data => data.cID === cid.cID);
+			appData.splice(index, 1)
+		} else {
+			console.log("course does not exist");
+		}
 
 		response.writeHead(200, "OK", { "Content-Type": "text/plain" })
 		response.end("test")
