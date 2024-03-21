@@ -9,16 +9,29 @@ const http = require( "http" ),
       port = 3000
 
 const appdata = [
-  { "model": "toyota", "year": 1999, "mpg": 23 },
-  { "model": "honda", "year": 2004, "mpg": 30 },
-  { "model": "ford", "year": 1987, "mpg": 14} 
+  {
+    taskName: "Review Code Changes",
+    priority: 3,
+    creation_date: "2024-03-18",
+    days_not_done: 0,
+  },
+  {
+    taskName: "Schedule Team Meeting",
+    priority: 2,
+    creation_date: "2024-03-10",
+    days_not_done: 8,
+  }
 ]
 
 const server = http.createServer( function( request,response ) {
   if( request.method === "GET" ) {
     handleGet( request, response )    
   }else if( request.method === "POST" ){
-    handlePost( request, response ) 
+    handlePost( request, response )
+  }else if( request.method === "PUT" ){
+    handlePut( request, response )
+  }else if( request.method === "DELETE" ){
+    handleDelete( request, response )
   }
 })
 
@@ -27,12 +40,19 @@ const handleGet = function( request, response ) {
 
   if( request.url === "/" ) {
     sendFile( response, "public/index.html" )
-  }else{
+  } else if ( request.url === "/tasks" ) {
+    response.writeHead( 200, "OK", {"Content-Type": "application/json"})
+    response.end( JSON.stringify( appdata ) )
+  } else {
     sendFile( response, filename )
   }
 }
 
 const handlePost = function( request, response ) {
+  if( request.url !== "/tasks" ) {
+    return
+  }
+
   let dataString = ""
 
   request.on( "data", function( data ) {
@@ -40,12 +60,72 @@ const handlePost = function( request, response ) {
   })
 
   request.on( "end", function() {
-    console.log( JSON.parse( dataString ) )
+    // console.log( JSON.parse( dataString ) )
 
     // ... do something with the data here!!!
+    const task = JSON.parse( dataString )
+    task.days_not_done = Math.floor((new Date() - new Date(task.creation_date)) / (1000 * 60 * 60 * 24))
 
-    response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
-    response.end("test")
+    appdata.push( task )
+    console.log( appdata )
+
+    response.writeHead( 200, "OK", {"Content-Type": "application/json"})
+    response.end( JSON.stringify( appdata ) )
+  })
+}
+
+const handlePut = function( request, response ) {
+  if( request.url !== "/tasks" ) {
+    return
+  }
+
+  let dataString = ""
+
+  request.on( "data", function( data ) {
+    dataString += data
+  })
+
+  request.on( "end", function() {
+    // console.log( JSON.parse( dataString ) )
+
+    // ... do something with the data here!!!
+    const json = JSON.parse( dataString )
+    const task = {
+      taskName: json.taskName,
+      priority: json.priority,
+      creation_date: json.creation_date,
+      days_not_done: Math.floor((new Date() - new Date(json.creation_date)) / (1000 * 60 * 60 * 24)),
+    }
+
+    appdata[json.index] = task
+    // console.log( appdata )
+
+    response.writeHead( 200, "OK", {"Content-Type": "application/json"})
+    response.end( JSON.stringify( appdata ) )
+  })
+}
+
+const handleDelete = function( request, response ) {
+  if( request.url !== "/tasks" ) {
+    return
+  }
+
+  let dataString = ""
+
+  request.on( "data", function( data ) {
+    dataString += data
+  })
+
+  request.on( "end", function() {
+    // console.log( JSON.parse( dataString ) )
+
+    // ... do something with the data here!!!
+    const info = JSON.parse( dataString )
+    appdata.splice( info.index, 1 )
+    console.log( appdata )
+
+    response.writeHead( 200, "OK", {"Content-Type": "application/json"})
+    response.end( JSON.stringify( appdata ) )
   })
 }
 
