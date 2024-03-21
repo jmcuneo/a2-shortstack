@@ -83,7 +83,7 @@ const handlePost = function( request, response ) {
     // for an entry we need to parse the bday string and then calculate age
     const bdayString = entry.birthday;
     const bdayParts = bdayString.split("/");
-    const bday = new Date(parseInt(bdayParts[2]), parseInt(bdayParts[1]) - 1, parseInt(bdayParts[0]));
+    const bday = new Date(parseInt(bdayParts[2]), parseInt(bdayParts[0]) - 1, parseInt(bdayParts[1]));
     const today = new Date();
 
     const age = today.getFullYear() - bday.getFullYear();
@@ -173,7 +173,7 @@ const handlePatch = function ( request, response ) {
       // recalculate age
       const bdayString = entry.birthday;
       const bdayParts = bdayString.split("/");
-      const bday = new Date(parseInt(bdayParts[2]), parseInt(bdayParts[1]) - 1, parseInt(bdayParts[0]));
+      const bday = new Date(parseInt(bdayParts[2]), parseInt(bdayParts[0]) - 1, parseInt(bdayParts[1]));
       const today = new Date();
 
       const age = today.getFullYear() - bday.getFullYear();
