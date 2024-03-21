@@ -12,7 +12,7 @@ const http = require("http"),
 
 const appData = [
 	// * below is an example of how course objects will look
-	// { "cID": 1, "cName": "Test", "prof": "Cuneo"},
+	// { "cID": 3013, "cName": "Operating Systems", "prof": "Andrews", "term" : "A"},
 ]
 
 const server = http.createServer(function (request, response) {
@@ -46,7 +46,9 @@ const handlePost = function (request, response) {
 		course = JSON.parse(dataString);
 
 		if (appData.some(data => data.cID === course.cID)) {
-			console.log("course already exists");
+			// course already exists, let's update the record :)
+			const courseIndex = appData.findIndex(data => data.cID === course.cID);
+			appData[courseIndex] = course;
 		} else {
 			appData.push(course);
 		}

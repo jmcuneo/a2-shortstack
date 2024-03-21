@@ -8,9 +8,10 @@ const logCourse = async function (event) {
 	event.preventDefault()
 
 	const cID = document.querySelector("#cID"),
+		cTerm = document.querySelector("#cTerm"),
 		cName = document.querySelector("#cName"),
 		prof = document.querySelector("#prof"),
-		json = { cID: parseInt(cID.value), cName: cName.value, prof: prof.value },
+		json = { cID: parseInt(cID.value), cName: cName.value, prof: prof.value, crn: cTerm.value.concat("-", cID.value) },
 		body = JSON.stringify(json);
 
 	const response = await fetch("/submit", {
@@ -19,7 +20,6 @@ const logCourse = async function (event) {
 	})
 
 	const jsn = await response.json();
-	// const jsn = JSON.parse(text);
 	renderCourses(jsn);
 }
 
@@ -40,10 +40,7 @@ const deleteCourse = async function (event) {
 	})
 
 	const text = await response.json()
-	// const jsn = JSON.parse(text);
 	renderCourses(text)
-
-	// console.log("text:", text)
 }
 
 const renderCourses = function (json) {
@@ -59,10 +56,12 @@ const renderCourses = function (json) {
 			let idCell = newRow.insertCell(0);
 			let nameCell = newRow.insertCell(1);
 			let profCell = newRow.insertCell(2);
+			let crnCell = newRow.insertCell(3);
 			
 			idCell.appendChild(document.createTextNode(element.cID));
 			nameCell.appendChild(document.createTextNode(element.cName));
 			profCell.appendChild(document.createTextNode(element.prof));
+			crnCell.appendChild(document.createTextNode(element.crn));
 
 		});
 
