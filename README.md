@@ -14,3 +14,6 @@ Every year, my fraternity Beta Theta Pi runs our Beta Theta Pies event, where we
 - **Google Poppins Font**: This website uses the Google Poppins font throughout the website for a more elegant display.
 - **Pizza Creator**: The pizza creator is a fun tool for users to create their own pizza and see it displayed on the screen. The original pizza creator was created by Tim Winters, a former Beta and CS student at WPI at the original and now defunct [Beta Theta Pies Website](https://github.com/betathetapiwpi/BetaThetaPies). I refactored some of his code and changed the display of it so that would work better and more properly for this website. I only used some of the original HTML, CSS, and SVGs, the integration of these elements to the server is my original code, and this is the only part of the website that was not originally written by me.
 - **Official Styling**: This project utilies the official Beta Theta Pi colors from the [Beta Theta Pi Graphic Standards Manual](https://issuu.com/betathetapiao/docs/beta_theta_pi_graphic_standards_manual). See Page 7, the primary colors in this website are the delicate shades of pink and blue.
+
+### HCI Think-Aloud Study
+- Please view the results doc [here](https://docs.google.com/document/d/1cKwlBHIz2PCnkXg2B8-sr1y2mpUdyRH5TRaiYGZX4b4/edit?usp=sharing)
