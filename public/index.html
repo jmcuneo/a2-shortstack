@@ -8,6 +8,9 @@
     
     <!-- get rid of favicon error -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@100..900&display=swap" rel="stylesheet">
   </head>
   <body>
     <header>
@@ -18,13 +21,13 @@
     <section id="logForm">
       <h2>Log Course</h2>
       <form>
-        <label for="cID">Course ID</label>
+        <label for="cID">Course ID</label> <br>
         <input type="number" name="cID" id="cID" > <br>
-        <label for="cTerm">Term</label>
+        <label for="cTerm">Term</label> <br>
         <input type="text" name="cTerm" id="cTerm" > <br>
-        <label for="cName">Course Name</label>
+        <label for="cName">Course Name</label> <br>
         <input type="text" name="cName" id="cName" > <br>
-        <label for="prof">Professor</label>
+        <label for="prof">Professor</label> <br>
         <input type="text" name="prof" id="prof"> <br>
         <button id="log">Log</button>
       </form>
@@ -33,8 +36,8 @@
     <section id="removeForm"">
       <h2>Remove Course</h2>
       <form>
-        <label for="removeCID">Course ID</label>
-        <input type="number" name="removeCID" id="removeCID" >
+        <label for="removeCID">Course ID</label> <br>
+        <input type="number" name="removeCID" id="removeCID" > <br>
         <button id="remove">Remove</button>
       </form>
     </section>
@@ -47,7 +50,7 @@
             <th>Course ID</th>
             <th>Course Name</th>
             <th>Professor</th>
-            <th>Identifier</th>
+            <th>CRN</th>
           </tr>
         </thead>
         <tbody>

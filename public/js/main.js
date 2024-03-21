@@ -7,6 +7,7 @@ const logCourse = async function (event) {
 	// remains to this day
 	event.preventDefault()
 
+	// define fields to receive from submission, and convert to json
 	const cID = document.querySelector("#cID"),
 		cTerm = document.querySelector("#cTerm"),
 		cName = document.querySelector("#cName"),
@@ -14,12 +15,16 @@ const logCourse = async function (event) {
 		json = { cID: parseInt(cID.value), cName: cName.value, prof: prof.value, crn: cTerm.value.concat("-", cID.value) },
 		body = JSON.stringify(json);
 
+	// send the json as post request
 	const response = await fetch("/submit", {
 		method: "POST",
 		body
 	})
 
+	// server responds with updated collection of appdata (all courses)
 	const jsn = await response.json();
+
+	// render courses to page
 	renderCourses(jsn);
 }
 
@@ -30,15 +35,18 @@ const deleteCourse = async function (event) {
 	// remains to this day
 	event.preventDefault()
 
+	// define fields to receive from removal, convert to json
 	const cID = document.querySelector("#removeCID"),
 		json = { cID: parseInt(cID.value) },
 		body = JSON.stringify(json)
 
+	// perform delete request using fields
 	const response = await fetch("/delete", {
 		method: "DELETE",
 		body
 	})
 
+	// wait for server to respond, being an updated collection of data.
 	const text = await response.json()
 	renderCourses(text)
 }
@@ -46,6 +54,9 @@ const deleteCourse = async function (event) {
 const renderCourses = function (json) {
 	count = json.length;
 	
+	// go through all the courses, and render them to the tbody of the table.
+	// essentially, we create a new tbody, put the data in new tbody and replace
+	// the new tbody with the old tbody.
 	if (count >= 1) {
 		const courses = document.getElementById("courses");
 		let oldTbody = courses.querySelector("tbody");
@@ -69,7 +80,7 @@ const renderCourses = function (json) {
 	}
 }
 
-
+// bind buttons to respective functions
 window.onload = function () {
 	const log = document.querySelector("#log");
 	const remove = document.querySelector("#remove");

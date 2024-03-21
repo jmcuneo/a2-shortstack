@@ -12,10 +12,11 @@ const http = require("http"),
 
 const appData = [
 	// * below is an example of how course objects will look
-	// { "cID": 3013, "cName": "Operating Systems", "prof": "Andrews", "term" : "A"},
+	// { "cID": 3013, "cName": "Operating Systems", "prof": "Andrews", "crn" : "A-3013"},
 ]
 
 const server = http.createServer(function (request, response) {
+	// subscribe to proper REST method based on request
 	if (request.method === "GET") {
 		handleGet(request, response);
 	} else if (request.method === "POST") {
@@ -26,6 +27,7 @@ const server = http.createServer(function (request, response) {
 })
 
 const handleGet = function (request, response) {
+	// if GET request, send the page
 	const filename = dir + request.url.slice(1)
 
 	if (request.url === "/") {
@@ -36,6 +38,11 @@ const handleGet = function (request, response) {
 }
 
 const handlePost = function (request, response) {
+	// we only accept POST requests from the log form.
+	// this describes how to log a new course, by receiving the data
+	// and then adding it to stored memory. if the course already exists,
+	// the server updates the existing record of it.
+	// then, the server responds with all records of the courses.
 	let dataString = ""
 
 	request.on("data", function (data) {
@@ -61,6 +68,11 @@ const handlePost = function (request, response) {
 }
 
 const handleDelete = function (request, response) {
+	// we only accept DELETE requests from the remove form.
+	// this describes how to delete a course,  by receiving the course id.
+	// if the cid is not found in the memory, we cant delete anything.
+	// if the course is found, we remove it.
+	
 	let dataString = ""
 
 	request.on("data", function (data) {

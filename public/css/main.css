@@ -1,7 +1,8 @@
 body {
   background:#2c3e50;
   color:white;
-  font-family: Verdana;
+  font-family: "Lexend Giga", sans-serif;
+  font-optical-sizing: auto;
   display: grid;
   grid-template-columns: auto auto auto auto;
   justify-content: space-evenly;
@@ -27,3 +28,6 @@ header {
   grid-column: 1 / span 4;
 }
 
+th, td {
+  padding: 0% 5px;
+}
