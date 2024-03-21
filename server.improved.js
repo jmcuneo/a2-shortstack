@@ -25,7 +25,7 @@ const dictionary = fs.readFileSync("dictionary.txt", { encoding: 'utf8', flag: '
   Anagram algorithm:
     Filter dictionary, removing words that it cannot form. 
       Maybe remove this because it's covered by DFS
-    Shuffle filtered dictionary
+    Shuffle filtered dictionary -- TODO
     do a DFS search through the list. 
       Keep track of which letters remain
       If you find a word that works, add it and go down another layer. Start looking for another
@@ -89,26 +89,48 @@ function buildLetterDictionary(dict){
   return output;
 }
 
+function isEmpty(letterData){
+  for(const letter in letterData){
+    if(letterData[letter]>0){
+      return false;
+    }
+  }
+  return true;
+}
+
 const letterDataDict = buildLetterDictionary(dictionary);
 
 //letter data is an object of letter:num occurrences
-function getAnagramsRecursive(letterData, dict, rsf, maxNum){
+function getAnagramsRecursive(letterData, dict, maxNum){
   let dictCopy = [...dict];
+  var rsf = [];
   while(dictCopy.length > 0){
     // console.log(dictCopy[0]);
     // console.log(letterData);
     let match = getLetterDataMatch(letterData,dictCopy[0].ld);
     if(match){
       //TODO: Do a recursive call using match instead of letter data.
-      return dictCopy[0];
+      
+      if(isEmpty(match)){
+        return [dictCopy[0].word];
+      }
+      console.log(dictCopy.length);
+      var call = getAnagramsRecursive(match,dictCopy,maxNum);
+      if(call.length === 0){
+        //This letter should be ignored.
+
+      }else{
+        //Found an anagram that ends with the call result.
+        return [dictCopy[0].word].concat(call);
+      }
     }
     dictCopy.splice(0,1);
   }
   //This is not right
-  return rsf;
+  return [];
 }
 
-console.log(getAnagramsRecursive(getLetterData(sanitize('aaaaa')),letterDataDict,[],12));
+console.log(getAnagramsRecursive(getLetterData(sanitize('undertle')),letterDataDict,12));
 
 const server = http.createServer( function( request,response ) {
   if( request.method === "GET" ) {
