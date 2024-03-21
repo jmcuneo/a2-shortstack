@@ -32,6 +32,10 @@ const dictionary = fs.readFileSync("dictionary.txt", { encoding: 'utf8', flag: '
       If you get to the end of the dict with no words, go back up a layer.
       To make things more interesting... possibly
         perhaps prioritize words of higher length? Put them earlier in the list so they'll be chosen more?
+
+    DFS is actually a bad idea, because it's less fun! You'll get similar anagrams rather than new ones.
+    Should re-shuffle array every time.
+    Maybe try removing already-used words to guarantee no overlap.
 */
 
 //Creates a set of all allowed letters.
@@ -116,11 +120,8 @@ function getAnagramsRecursive(letterData, dict, maxNum){
       }
       console.log(dictCopy.length);
       var call = getAnagramsRecursive(match,dictCopy,maxNum);
-      if(call.length === 0){
-        //This letter should be ignored.
-
-      }else{
-        //Found an anagram that ends with the call result.
+      if(call.length !== 0){
+        //Found an anagram that works.
         return [dictCopy[0].word].concat(call);
       }
     }
