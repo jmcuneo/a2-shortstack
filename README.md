@@ -137,8 +137,6 @@ Include a very brief summary of your project here. Be sure to include the CSS po
 - **Design Achievement 5**: Maintainable and Readable CSS
   - The CSS is organized in an external stylesheet (`main.css`), making it easy to maintain and read. The stylesheet is well-structured with comments separating different sections, and styles are grouped logically.
 
-## Evaluation Achievments:
-
 ## Evaluation Achievements:
 
 ### Participants:
