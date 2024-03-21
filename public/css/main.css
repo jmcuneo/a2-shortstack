@@ -1,4 +1,7 @@
 body {
-  background:black;
+  background:white;
   color:white;
+}
+input{
+  display: block;
 }

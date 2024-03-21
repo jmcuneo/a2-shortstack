@@ -9,9 +9,9 @@ const http = require( "http" ),
       port = 3000
 
 const appdata = [
-  { "model": "toyota", "year": 1999, "mpg": 23 },
-  { "model": "honda", "year": 2004, "mpg": 30 },
-  { "model": "ford", "year": 1987, "mpg": 14} 
+  {"Id": 1, "model": "toyota", "year": 1999, "mpg": 23, "fuelLoad": 12, "tillEmpty": 23*12},
+  {"Id": 2, "model": "honda", "year": 2004, "mpg": 30,"fuelLoad": 15, "tillEmpty": 30*15 },
+  {"Id": 3, "model": "ford", "year": 1987, "mpg": 14,"fuelLoad": 10,"tillEmpty": 14*10  } // 0 is placeholder
 ]
 
 const server = http.createServer( function( request,response ) {
@@ -26,11 +26,29 @@ const server = http.createServer( function( request,response ) {
 })
 
 const handleGet = function( request, response ) {
-  const filename = dir + request.url.slice( 1 ) 
+  const filename = dir + request.url.slice( 1 )
 
   if( request.url === "/" ) {
     sendFile( response, "public/index.html" )
-  }else{
+  } else if(request.url === "/data"){
+    let dataString = ""
+
+    request.on( "data", function( data ) {
+      dataString += data
+    })
+
+    request.on( "end", function() {
+      // ... do something with the data here!!!
+      console.log("made it here")
+
+      //console.log(typeof Object.values(JSON.parse( dataString ))[0] === 'string')
+      console.log(appdata)
+      var jsonArray = JSON.stringify(appdata)
+      response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
+        response.end(jsonArray)
+    })
+  }
+  else{
     sendFile( response, filename )
   }
 }
@@ -48,16 +66,25 @@ const handlePost = function( request, response ) {
     // ... do something with the data here!!!
     console.log("made it here")
 
-    if(isNaN(Object.values(JSON.parse( dataString ))[1]) || isNaN(Object.values(JSON.parse( dataString ))[2])){
-    console.log("it broke")
+    if(isNaN(parseInt(Object.values(JSON.parse( dataString ))[1])) ||
+        isNaN(parseInt(Object.values(JSON.parse( dataString ))[2])) ||
+        isNaN(parseInt(Object.values(JSON.parse( dataString ))[3]))
+    ){
+      console.log("it broke")
     } else{
-      appdata.push({ "model": Object.values(JSON.parse( dataString ))[0], "year": parseInt(Object.values(JSON.parse( dataString ))[1]), "mpg": parseInt(Object.values(JSON.parse( dataString ))[2]) })
+      appdata.push({ "model": Object.values(JSON.parse( dataString ))[0],
+        "year": parseInt(Object.values(JSON.parse( dataString ))[1]),
+        "mpg": parseInt(Object.values(JSON.parse( dataString ))[2]),
+      "fuelLoad": parseInt(Object.values(JSON.parse( dataString ))[3]),
+      "tillEmpty": parseInt(Object.values(JSON.parse( dataString ))[2]) *
+          parseInt(Object.values(JSON.parse( dataString ))[3])})
     }
 
     //console.log(typeof Object.values(JSON.parse( dataString ))[0] === 'string')
     console.log(appdata)
+    var jsonArray = JSON.stringify(appdata)
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
-    response.end("test")
+    response.end(jsonArray)
   })
 }
 
@@ -74,7 +101,10 @@ const handleDelete = function(request, response){
     // ... do something with the data here!!!
     console.log("made it here to delete")
 
-    if(isNaN(Object.values(JSON.parse( dataString ))[1]) || isNaN(Object.values(JSON.parse( dataString ))[2])){
+    if(isNaN(parseInt(Object.values(JSON.parse( dataString ))[2])) ||
+        isNaN(parseInt(Object.values(JSON.parse( dataString ))[3])) ||
+        isNaN(parseInt(Object.values(JSON.parse( dataString ))[4]))
+    ){
       console.log("it broke")
     } else{
       for(let i = 0; i < appdata.length; i++){ //TODO Make a delete that does one item at a time
@@ -88,8 +118,9 @@ const handleDelete = function(request, response){
 
     //console.log(typeof Object.values(JSON.parse( dataString ))[0] === 'string')
     console.log(appdata)
+    var jsonArray = JSON.stringify(appdata)
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
-    response.end("test")
+    response.end(jsonArray)
   })
 }
 const sendFile = function( response, filename ) {
