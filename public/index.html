@@ -7,24 +7,31 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
+  <header>
+  Powerlifting Database
+  </header>
   <body>
       <form id="powerliftingEntry" action="/powerlifting-database" method="post">
         <ul>
           <li>
+            <label for="name">Lifter Name:</label>
+            <input type="text" id="name" required>
+          </li>
+          <li>
             <label for="bodyWeight">Body Weight:</label>
-            <input type="number" id="bodyWeight" name="body weight" min="1" required>
+            <input type="number" id="bodyWeight" min="1" required>
           </li>
           <li>
             <label for="squat">Squat Attempt:</label>
-            <input type="number" id="squat" name="squat" min="1" required >
+            <input type="number" id="squat" min="1" required >
           </li>
           <li>
             <label for="benchPress">Bench Press Attempt:</label>
-            <input type="number" id="benchPress" name="bench press" min="1" required>
+            <input type="number" id="benchPress" min="1" required>
           </li>
           <li>
             <label for="deadLift">Dead Lift Attempt:</label>
-            <input type="number" id="deadLift" name="dead lift" min="1" required>
+            <input type="number" id="deadLift" min="1" required>
           </li>
         </ul>
       <button>Submit</button>
