@@ -1,97 +1,20 @@
 Assignment 2 - Short Stack: Basic Two-tier Web Application using HTML/CSS/JS and Node.js  
 ===
 
-Due: March 24th, by 11:59 PM.
+Jack Lafond 
 
-This assignment aims to introduce you to creating a prototype two-tiered web application. 
-Your application will include the use of HTML, CSS, JavaScript, and Node.js functionality, with active communication between the client and the server over the life of a user session.
+http://a2-jacklafond.glitch.me
 
-Baseline Requirements
----
+## Bday Tracker
+For my project I created a web app that stores birthday information about people. This inlcudes a person's name, their birthday, and their favorite type of cake. Along with this I included 2 dervied fields, ID - an id for each entry so that they can be uniquely identified, and Age - calculated based on the birthday field entered. My app shows the up to date app data in a table at the top of the page. A user can submit new entries using the form on the left. A user can also update/modify existing entries. To do this, click on the ID of the entry in the table that you want to update. The udpate form will be filled with the corresponding entry values and you can edit the values in that form then update it (except for id and age as those are handled by the server). An entry can also be removed. In the table each entry has a delete button that can be used to remove that entry. After each change to the data, the table is updated for the user to see the most recent changes. 
 
-There is a large range of application areas and possibilities that meet these baseline requirements. 
-Try to make your application do something useful! A todo list, storing / retrieving high scores for a very simple game... have a little fun with it.
-
-Your application is required to implement the following functionalities (4 pts each, total 20 pts):
-
-- a `Server` which not only serves files, but also maintains a tabular dataset with 3 or more fields related to your application
-- a `Results` functionality which shows the entire dataset residing in the server's memory
-- a `Form/Entry` functionality which allows a user to add or delete data items residing in the server's memory
-- a `Server Logic` which, upon receiving new or modified "incoming" data, includes and uses a function that adds at least one additional derived field to this incoming data before integrating it with the existing dataset
-- the `Derived field` for a new row of data must be computed based on fields already existing in the row. 
-For example, a `todo` dataset with `task`, `priority`, and `creation_date` may generate a new field `deadline` by looking at `creation_date` and `priority`
-
-Your application is required to demonstrate the use of the following concepts:
-
-HTML (4 pts each, total 16 pts):
-- One or more [HTML Forms](https://developer.mozilla.org/en-US/docs/Learn/HTML/Forms), with any combination of form tags appropriate for the user input portion of the application
-- A results page displaying all data currently available on the server. You will most likely use a `<table>` tag for this, but `<ul>` or `<ol>` could also work and might be simpler to work with. Alternatively, you can create a single-page app (see Technical Acheivements) but this is not a requirement.
-- All pages should [validate](https://validator.w3.org)
-- If your app contains multple pages, they should all be accessible from the homepage (index.html)
-
-CSS (4 pts each, total 16 pts):
-- CSS styling of the primary visual elements in the application
-- Various CSS Selector functionality must be demonstrated:
-    - Element selectors
-    - ID selectors
-    - Class selectors
-- CSS positioning and styling of the primary visual elements in the application:
-    - Use of either a CSS grid or flexbox for layout
-    - Rules defining fonts for all text used; no default fonts! Be sure to use a web safe font or a font from a web service like [Google Fonts](http://fonts.google.com/)
-- CSS defined in a maintainable, readable form, in external stylesheets 
-
-JavaScript (4 pts):
-- At minimum, a small amount of front-end JavaScript to get / fetch data from the server; a sample is provided in this repository.
-
-Node.js (4 pts):
-- An HTTP Server that delivers all necessary files and data for the application, and also creates the required `Derived Fields` in your data. 
-A starting point is provided in this repository.
-
-Deliverables
----
-
-1. (5 pts) Fork the starting project code repo. The starter code in the repo may be used or discarded as needed.
-2. (60 pts, detailed above) Implement your project with the above requirements.
-3. Test your project to make sure that when someone goes to your main page, it displays correctly.
-4. (5 pts) Deploy your project to Glitch, and fill in the appropriate fields in your package.json file.
-5. (5 pts) Ensure that your project has the proper naming scheme `a2-FirstnameLastname` so we can find it.
-6. (5 pts) Modify the README to the specifications below, and delete all of the instructions originally found in this README.
-7. (5 pts) Create and submit a Pull Request to the original repo. Be sure to include your name in the pull request.
-
-Acheivements
----
-
-Below are suggested technical and design achievements. You can use these to help customize the assignment to your personal interests. These are recommended acheivements, but feel free to create/implement your own... just make sure you thoroughly describe what you did in your README and why it was challenging. ALL ACHIEVEMENTS MUST BE DESCRIBED IN YOUR README IN ORDER TO GET CREDIT FOR THEM. Remember, the highest grade you can get on any individual assignment is a 100%.
-
-*Technical*
-- (5 points) Create a single-page app that both provides a form for users to submit data and always shows the current state of the server-side data. To put it another way, when the user submits data, the server should respond sending back the updated data (including the derived field calculated on the server) and the client should then update its data display.
-
-- (5 points) In addition to a form enabling adding and deleting data on the server, also add the ability to modify existing data.
-
-*Design/UX*
-- (5 points per person, with a max of 10 points) Test your user interface with other students in the class. Define a specific task for them to complete (ideally something short that takes <10 minutes), and then use the [think-aloud protocol](https://en.wikipedia.org/wiki/Think_aloud_protocol) to obtain feedback on your design (talk-aloud is also fine). Important considerations when designing your study:
-
-1. Make sure you start the study by clearly stating the task that you expect your user to accomplish.
-2. You shouldn't provide any verbal instructions on how to use your interface / accomplish the task you give them. Make sure that your interface is clear enough that users can figure it out without any instruction, or provide text instructions from within the interface itself. 
-3. If users get stuck to the point where they give up, you can then provde instruction so that the study can continue, but make sure to discuss this in your README. You won't lose any points for this... all feedback is good feedback!
-
-You'll need to use sometype of collaborative software that will enable you both to see the test subject's screen and listen to their voice as they describe their thoughts, or conduct the studies in person. After completing each study, briefly (one to two sentences for each question) address the following in your README:
-
-1. Provide the last name of each student you conduct the evaluation with.
-2. What problems did the user have with your design?
-3. What comments did they make that surprised you?
-4. What would you change about the interface based on their feedback?
-
-*You do not need to actually make changes based on their feedback*. This acheivement is designed to help gain experience testing user interfaces. If you run two user studies, you should answer two sets of questions. 
-
-Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
----
-
-## Your Web Application Title
-Include a very brief summary of your project here. Be sure to include the CSS positioning technique you used, and any required instructions to use your application.
+For CSS I used element, class, and id identifiers. I used multiple nested flex-boxes in order to achieve this layout. I first used a flex with column direction in order to diplay the table, the first flex item, above the form container which was the second flex item. I then used a flex container with a row direction in order to place the two forms next to each other. I used the space-evenly attribute in order space them nicely on the page. Finally for each form I used a flex container with a column direction in order to place the form titles above the forms themselves. 
 
 ## Technical Achievements
-- **Tech Achievement 1**: Using a combination of...
 
-### Design/Evaluation Achievements
-- **Design Achievement 1**: 
+- **Create a single-page app ...** - My webpage displays the most up to date dataset. After adding new values or deleting some the table is updated for the user to see the most recent changes.
+- **Enabling the ability to modify existing data** - In my webpage I also include an update/modify form. A user can click on the id of an entry that they want to update. This will fill the update form and a user can change any of the name, birthday, and cake values. After clicking update, the server updates the data and sends the dataset back. The table then displays the up to date data with the most recent changes.
+
+## Design Achievements
+
+
