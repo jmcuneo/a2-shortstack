@@ -52,7 +52,8 @@
                     <br>
                     <input autocomplete="off" type="text" id="description" placeholder="Enter any product description">
                     <br>
-                    <button class="submit-btn">submit</button>
+                    <button id="submit" class="submit-btn">submit</button>
+                    <button type="reset" class="submit-btn">RESET</button>
                 </form>
             </div>
             <div class="flex-item display-results">
@@ -62,58 +63,67 @@
                     <tr>
                         <th>Product Details</th>
                         <th>Final Price</th>
+                        <th>Modify</th>
                     </tr>
                     </thead>
-                    <tbody> <!-- for table body with all rows/cells filled with data -->
-                    <tr>
-                        <td> <!-- each cell will have unordered/ordered list. Only 1 row created because each cell is a list of elements-->
-                            <ul>
-                                <li>Name: Cookie</li>
-                                <li>DOP: 3/19/24</li>
-                                <li>Cost: 20</li>
-                                <li>Quantity: 5</li>
-                                <li>Category: Food</li>
-                                <li>Description: Edible</li>
-                            </ul>
-                        </td>
-                        <td>
-                            <ul>
-                                <li>Total price = 5*20 = 100</li>
-                                <li>Discount = 20%</li>
-                                <li>After Discount = 80</li>
-                            </ul>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td> <!-- each cell will have unordered/ordered list. Only 1 row created because each cell is a list of elements-->
-                            <ul>
-                                <li>Name: Bread</li>
-                                <li>DOP: 3/19/24</li>
-                                <li>Cost: 20</li>
-                                <li>Quantity: 5</li>
-                                <li>Category: Food</li>
-                                <li>Description: Edible</li>
-                            </ul>
-                        </td>
-                        <td>
-                            <ul>
-                                <li>Total price = 5*20 = 100</li>
-                                <li>Discount = 20%</li>
-                                <li>After Discount = 80</li>
-                            </ul>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            TOTAL
-                        </td>
-                        <td>
-                            160
-                        </td>
-                    </tr>
+                    <tbody id='table-body'> <!-- for table body with all rows/cells filled with data -->
+                    <!--                    <tr>-->
+<!--                        <td> &lt;!&ndash; each cell will have unordered/ordered list. Only 1 row created because each cell is a list of elements&ndash;&gt;-->
+<!--                            <ul>-->
+<!--                                <li id="test"></li>-->
+<!--                                <li>DOP: 3/19/24</li>-->
+<!--                                <li>Cost: 20</li>-->
+<!--                                <li>Quantity: 5</li>-->
+<!--                                <li>Category: Food</li>-->
+<!--                                <li>Description: Edible</li>-->
+<!--                            </ul>-->
+<!--                        </td>-->
+<!--                        <td>-->
+<!--                            <ul>-->
+<!--                                <li>Total price = 5*20 = 100</li>-->
+<!--                                <li>Discount = 20%</li>-->
+<!--                                <li>After Discount = 80</li>-->
+<!--                            </ul>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td> &lt;!&ndash; each cell will have unordered/ordered list. Only 1 row created because each cell is a list of elements&ndash;&gt;-->
+<!--                            <ul>-->
+<!--                                <li>Name: Bread</li>-->
+<!--                                <li>DOP: 3/19/24</li>-->
+<!--                                <li>Cost: 20</li>-->
+<!--                                <li>Quantity: 5</li>-->
+<!--                                <li>Category: Food</li>-->
+<!--                                <li>Description: Edible</li>-->
+<!--                            </ul>-->
+<!--                        </td>-->
+<!--                        <td>-->
+<!--                            <ul>-->
+<!--                                <li>Total price = 5*20 = 100</li>-->
+<!--                                <li>Discount = 20%</li>-->
+<!--                                <li>After Discount = 80</li>-->
+<!--                            </ul>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td>-->
+<!--                            TOTAL-->
+<!--                        </td>-->
+<!--                        <td>-->
+<!--                            160-->
+<!--                        </td>-->
+<!--                    </tr>-->
                     </tbody>
                 </table>
 
+            </div>
+        </div>
+
+        <div id="popup-box" class="modal">
+            <div class="content">
+                <h1 class="subtitle">My Work</h1>
+
+                <a href="#" class="box-close"></a>
             </div>
         </div>
 

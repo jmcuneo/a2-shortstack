@@ -22,6 +22,9 @@ const server = http.createServer( function( request,response ) {
   }else if( request.method === "POST" ){
     handlePost( request, response ) 
   }
+  else if(request.method === "DELETE"){
+    handleDelete(request, response)
+  }
 })
 
 const handleGet = function( request, response ) {
@@ -40,6 +43,7 @@ const handleGet = function( request, response ) {
 
 const handlePost = function( request, response ) {
   let dataString = ""
+  let totalPrice = 0
   let discount = 0
   let afterDiscount = 0
   let finalPrice = 0
@@ -49,31 +53,61 @@ const handlePost = function( request, response ) {
 
   request.on( "end", function() {
     //console.log( JSON.parse( dataString ) )
-    const bilingObj = JSON.parse(dataString)
+    let bilingObj = JSON.parse(dataString)
+    totalPrice = bilingObj.cost*bilingObj.quantity
 
     //calculating discount
-    if(bilingObj.cost > 50){
+    if(totalPrice > 50){
       discount = 0.10 //10%
     }
-    else if(bilingObj.cost <= 50 && bilingObj.cost > 100){
+    else if(totalPrice <= 50 && totalPrice > 100){
       discount = 0.20 //20%
     }
-    else if(bilingObj.cost <= 100 && bilingObj.cost > 500){
+    else if(totalPrice <= 100 && totalPrice > 500){
       discount = 0.30 //30%
     }
-    else if(bilingObj.cost >= 500){
+    else if(totalPrice >= 500){
       discount = 0.40 //40%
     }
 
-    afterDiscount = discount*bilingObj.cost
-    finalPrice = (bilingObj.cost - afterDiscount)*bilingObj.quantity //final price including quantity
+    afterDiscount = discount*totalPrice
+    finalPrice = totalPrice - afterDiscount //final price including quantity
+
+    bilingObj.totalprice = totalPrice
+    bilingObj.discount = discount
+    bilingObj.afterdiscount = finalPrice
+
+    billingData.push(bilingObj)
 
     // ... do something with the data here!!!
-    billingData.push(JSON.parse( dataString ))
-    console.log(bilingObj.cost)
+
+    console.log(billingData)
 
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
-    response.end(JSON.stringify(dataString))
+    // if(billingData.length > 1){
+    //   console.log(billingData[billingData.length-1])
+    //   response.end(JSON.stringify(billingData[billingData.length-1]))
+    // }
+    // else{
+      response.end(JSON.stringify(billingData))
+    //}
+
+  })
+}
+
+const handleDelete = function( request, response ) {
+  let dataString = ""
+
+  request.on( "data", function( data ) {
+    dataString += data
+  })
+
+  request.on( "end", function() {
+    console.log( JSON.parse( dataString ) )
+
+    response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
+    response.end(JSON.stringify(billingData))
+
   })
 }
 
