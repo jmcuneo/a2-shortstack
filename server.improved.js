@@ -86,7 +86,11 @@ const handlePost = function( request, response ) {
     const bday = new Date(parseInt(bdayParts[2]), parseInt(bdayParts[0]) - 1, parseInt(bdayParts[1]));
     const today = new Date();
 
-    const age = today.getFullYear() - bday.getFullYear();
+    let age = today.getFullYear() - bday.getFullYear();
+    const month = today.getMonth() - bday.getMonth();
+    if(month < 0 || (month === 0 && today.getDate() < bday.getDate())) {
+      age--;
+    }
     entry.age = age;
 
     // set id to length since it will be the latest entry
@@ -176,7 +180,11 @@ const handlePatch = function ( request, response ) {
       const bday = new Date(parseInt(bdayParts[2]), parseInt(bdayParts[0]) - 1, parseInt(bdayParts[1]));
       const today = new Date();
 
-      const age = today.getFullYear() - bday.getFullYear();
+      let age = today.getFullYear() - bday.getFullYear();
+      const month = today.getMonth() - bday.getMonth();
+      if(month < 0 || (month === 0 && today.getDate() < bday.getDate())) {
+        age--;
+      }
       appdata[id].age = age;
 
       // send back response
