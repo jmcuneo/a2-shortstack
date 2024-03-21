@@ -16,4 +16,4 @@ Every year, my fraternity Beta Theta Pi runs our Beta Theta Pies event, where we
 - **Official Styling**: This project utilies the official Beta Theta Pi colors from the [Beta Theta Pi Graphic Standards Manual](https://issuu.com/betathetapiao/docs/beta_theta_pi_graphic_standards_manual). See Page 7, the primary colors in this website are the delicate shades of pink and blue.
 
 ### HCI Think-Aloud Study
-- Please view the results doc [here](https://docs.google.com/document/d/1cKwlBHIz2PCnkXg2B8-sr1y2mpUdyRH5TRaiYGZX4b4/edit?usp=sharing)
+- Please view the [results document](https://docs.google.com/document/d/1cKwlBHIz2PCnkXg2B8-sr1y2mpUdyRH5TRaiYGZX4b4/edit?usp=sharing)
