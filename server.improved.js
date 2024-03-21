@@ -14,6 +14,10 @@ const appdata = [
   { "model": "ford", "year": 1987, "mpg": 14} 
 ]
 
+const gpaData = [
+  
+]
+
 const server = http.createServer( function( request,response ) {
   if( request.method === "GET" ) {
     handleGet( request, response )    
@@ -40,12 +44,13 @@ const handlePost = function( request, response ) {
   })
 
   request.on( "end", function() {
-    console.log( JSON.parse( dataString ) )
+    console.log("Data: ", JSON.parse( dataString ) )
 
     // ... do something with the data here!!!
+    gpaData[gpaData.length] = JSON.parse(dataString);
 
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
-    response.end("test")
+    response.end(JSON.stringify(gpaData[gpaData.length - 1]));
   })
 }
 
