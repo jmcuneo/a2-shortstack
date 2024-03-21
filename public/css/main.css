@@ -1,4 +1,30 @@
 body {
-  background:black;
+  background:lightcoral;
   color:white;
+}
+input{
+  display: inline-block;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding-top: 20px;
+}
+
+button{
+  background: rgba(255, 0, 0, 0.89);
+  color: white;
+  margin-top: 25px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 10px;
+  font-family: Outfit
+}
+.outfit-inside-buttons-font{
+  font-family: "Outfit", sans-serif;
+  font-optical-sizing: auto;
+  font-size: 20px;
+  font-weight: bold;
+  text-decoration: black;
+  font-style: normal;
 }
