@@ -1,7 +1,7 @@
 {
   "name": "a2-shortstack",
-  "description": "Assignment 2 - Short Stack: Basic Two-tier Web Application using HTML/CSS/JS and Node.js   ===",
-  "author": "",
+  "description": "Assignment 2 - Car Table Website: Basic Two-tier Web Application using HTML/CSS/JS and Node.js   ===",
+  "author": "Hanzalah Qamar",
   "scripts": {
     "start": "node server.improved.js"
   },
