@@ -40,26 +40,34 @@ const submit = async function( event ) {
   // remains to this day
   event.preventDefault()
   if(validateForm()) {
-    var task = document.querySelector( "#task" );
-    var classi = document.querySelector( "#class" );
-    var duedate = document.querySelector( "#duedate" );
-    var importance = document.querySelector( "#importance" );
+    let task = document.querySelector( "#task" );
+    let classi = document.querySelector( "#class" );
+    let duedate = document.querySelector( "#duedate" );
+    let importance = document.querySelector( "#importance" );
 
-    var json = {};
+    let json = {};
     if(editMode > 0) {
       json = {id: editMode, mode: 1, task: task.value, class: classi.value, duedate: duedate.value, importance: importance.value, priority: 0};
+      const body = JSON.stringify( json );
+      const response = await fetch( "/submit", {
+        method:"PATCH",
+        body
+      })
+      taskData = JSON.parse(await response.text());
     } else {
       json = {id: editMode, mode: 0, task: task.value, class: classi.value, duedate: duedate.value, importance: importance.value, priority: 0};
+      const body = JSON.stringify( json );
+      const response = await fetch( "/submit", {
+        method:"POST",
+        body
+      })
+      taskData = JSON.parse(await response.text());
     }
 
-    const body = JSON.stringify( json );
-
-    const response = await fetch( "/submit", {
-      method:"POST",
-      body
-    })
-
-    taskData = JSON.parse(await response.text());
+    // .then(function(response) {
+    //   debugger
+    //   return response.json();
+    // })
 
     // Clear inputs
     document.getElementById("task").value = "";
@@ -81,50 +89,50 @@ displayResults();
 
 // Displays up to date results in the table
 function displayResults() {
-  var tbody = document.querySelector("#data-table tbody");
+  let tbody = document.querySelector("#data-table tbody");
   // Clear tbody by setting to an empty string
   tbody.innerHTML = "";
 
   // Iterate over the list of objects
   taskData.forEach(function(data) {
     // Create a new table row
-    var row = document.createElement("tr");
+    let row = document.createElement("tr");
 
     // Create table cells and fill them with object properties
-    var taskCell = document.createElement("td");
+    let taskCell = document.createElement("td");
     taskCell.textContent = data.task;
     row.appendChild(taskCell);
 
-    var classCell = document.createElement("td");
+    let classCell = document.createElement("td");
     classCell.className = "table-center";
     classCell.textContent = data.class;
     row.appendChild(classCell);
 
-    var duedateCell = document.createElement("td");
+    let duedateCell = document.createElement("td");
     duedateCell.className = "table-center";
     duedateCell.textContent = data.duedate;
     row.appendChild(duedateCell);
 
-    var importanceCell = document.createElement("td");
+    let importanceCell = document.createElement("td");
     importanceCell.className = "table-center";
     importanceCell.textContent = data.importance;
     row.appendChild(importanceCell);
 
-    var priorityCell = document.createElement("td");
+    let priorityCell = document.createElement("td");
     priorityCell.className = "table-center";
     priorityCell.textContent = data.priority;
     row.appendChild(priorityCell);
 
-    var editCell = document.createElement("td");
+    let editCell = document.createElement("td");
     editCell.className = "table-center";
-    var editButton = document.createElement("input");
+    let editButton = document.createElement("input");
     editButton.type = "button";
     editButton.className = "button";
     editButton.value = "Edit";
     editButton.onclick = function() {editElement(data);};
     editCell.appendChild(editButton);
 
-    var deleteButton = document.createElement("input");
+    let deleteButton = document.createElement("input");
     deleteButton.type = "button";
     deleteButton.className = "button";
     deleteButton.value = "Delete";
@@ -139,8 +147,8 @@ function displayResults() {
     if(tbody.children[0] == null) {
       tbody.appendChild(row);
     } else {
-      var i = 0;
-      var check = true;
+      let i = 0;
+      let check = true;
       while(check && i < tbody.children.length) {
         if(Number(tbody.children[i].children[4].textContent) >= Number(row.children[4].textContent)) {
           tbody.insertBefore(row, tbody.children[i]);
@@ -150,7 +158,7 @@ function displayResults() {
       }
 
       // If the new child is the last element
-      if(check == true) {
+      if(check === true) {
         tbody.appendChild(row);
       }
     }
@@ -162,7 +170,7 @@ const deleteElement = async function(data) {
   data.mode = 2;
   const body = JSON.stringify( data );
   const response = await fetch( "/delete", {
-    method:"POST",
+    method:"DELETE",
     body
   })
 
@@ -183,9 +191,9 @@ function editElement(data) {
 
 // Validates the format of the submission before submitting
 function validateForm() {
-  var dateInput = document.getElementById("duedate");
-  var datePattern = /^\d{2}\/\d{2}\/\d{4}$/;
-  var importanceInput = document.getElementById("importance");
+  let dateInput = document.getElementById("duedate");
+  let datePattern = /^\d{2}\/\d{2}\/\d{4}$/;
+  let importanceInput = document.getElementById("importance");
   // Checks date format
   if (!datePattern.test(dateInput.value)) {
     alert("Please enter the date in MM/DD/YYYY format.");
@@ -193,7 +201,7 @@ function validateForm() {
   }
 
   // Checks importance input
-  if(!(importanceInput.value == "No" || importanceInput.value == "Yes")) {
+  if(!(importanceInput.value === "No" || importanceInput.value === "Yes")) {
     alert("Please enter 'Yes' or 'No'");
     return false;
   }

@@ -25,6 +25,10 @@ const server = http.createServer( function( request,response ) {
     handleGet( request, response )    
   }else if( request.method === "POST" ){
     handlePost( request, response ) 
+  } else if( request.method === "DELETE") {
+    handleDelete(request, response)
+  } else if (request.method === "PATCH") {
+    handlePatch(request, response)
   }
 })
 
@@ -49,14 +53,14 @@ const handlePost = function( request, response ) {
 
   request.on( "end", function() {
 
-    var taskObject = JSON.parse( dataString );
+    let taskObject = JSON.parse( dataString );
 
     // Initial preload mode
-    if(taskObject.mode == 3) {
+    if(taskObject.mode === 3) {
       null;
     } 
     // Add mode
-    else if(taskObject.mode == 0) {
+    else if(taskObject.mode === 0) {
       // Update id
       taskObject.id = taskData[taskData.length-1].id + 1;
 
@@ -65,38 +69,83 @@ const handlePost = function( request, response ) {
 
       // Push new object to taskData array
       taskData.push(taskObject);
-    } else {
-
-      // Find index of task based on ID
-      var foundTask = false;
-      var i = 0;
-      while(foundTask == false && i < taskData.length) {
-        if(taskData[i].id == taskObject.id) {
-          foundTask = true;
-          i--;
-        }
-        i++;
-      }
-
-      // Delete mode
-      if(taskObject.mode == 2) {
-        taskData.splice(i, 1);
-      } 
-      // Edit mode
-      if(taskObject.mode == 1) {
-        // Update priority
-        determinePriority(taskObject);
-        // Update object
-        taskData[i] = taskObject;
-      } 
-
     }
+    response.writeHead( 200, "OK", {"Content-Type": "text/plain" });
+    response.end(JSON.stringify(taskData));
+  })
+}
+
+
+
+const handleDelete = function( request, response ) {
+  let dataString = ""
+
+  request.on( "data", function( data ) {
+      dataString += data 
+  })
+
+  request.on( "end", function() {
+
+    let taskObject = JSON.parse( dataString );
+
+    // TODO MAKE FUNCTION Find index of task based on ID
+    let foundTask = false;
+    let i = 0;
+    while(foundTask === false && i < taskData.length) {
+      if(taskData[i].id === taskObject.id) {
+        foundTask = true;
+        i--;
+      }
+      i++;
+    }
+
+    // Delete mode
+    taskData.splice(i, 1);
 
     ///printData()
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" });
     response.end(JSON.stringify(taskData));
   })
 }
+
+
+
+const handlePatch = function( request, response ) {
+  let dataString = ""
+
+  request.on( "data", function( data ) {
+      dataString += data 
+  })
+
+  request.on( "end", function() {
+
+    let taskObject = JSON.parse( dataString );
+
+    // Find index of task based on ID
+    let foundTask = false;
+    let i = 0;
+    while(foundTask === false && i < taskData.length) {
+      if(taskData[i].id === taskObject.id) {
+        foundTask = true;
+        i--;
+      }
+      i++;
+    }
+
+    // Edit mode
+    // Update priority
+    determinePriority(taskObject);
+    // Update object
+    taskData[i] = taskObject;
+
+    ///printData()
+    response.writeHead( 200, "OK", {"Content-Type": "text/plain" });
+    response.end(JSON.stringify(taskData));
+  })
+}
+
+
+
 
 const sendFile = function( response, filename ) {
    const type = mime.getType( filename ) 
@@ -121,27 +170,30 @@ const sendFile = function( response, filename ) {
 }
 
 
+
+
+
 // Determines the priority based on duedate, importance, and the current date
 function determinePriority(data) {
-  var currentDate = new Date();
+  let currentDate = new Date();
 
   //turn duedate into a date object
-  var parts = data.duedate.split("/");
-  var dueDate = new Date(parts[2], parts[0] - 1, parts[1]);
+  let parts = data.duedate.split("/");
+  let dueDate = new Date(parts[2], parts[0] - 1, parts[1]);
 
   // Convert both dates to UTC
-  var utcDate1 = Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
-  var utcDate2 = Date.UTC(dueDate.getFullYear(), dueDate.getMonth(), dueDate.getDate());
+  let utcDate1 = Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
+  let utcDate2 = Date.UTC(dueDate.getFullYear(), dueDate.getMonth(), dueDate.getDate());
 
   // Calculate different in ms and then convert to days
-  var diffDays = Math.floor(Math.abs(utcDate2 - utcDate1) / (1000 * 60 * 60 * 24));
+  let diffDays = Math.floor(Math.abs(utcDate2 - utcDate1) / (1000 * 60 * 60 * 24));
 
   // Determine priority
-  if((diffDays <= 2 && data.importance == "Yes") || (diffDays <= 1 && data.importance == "No")) {
+  if((diffDays <= 2 && data.importance === "Yes") || (diffDays <= 1 && data.importance === "No")) {
     data.priority = 1;
-  } else if((diffDays <= 3 && data.importance == "Yes") || (diffDays <= 2 && data.importance == "No")) {
+  } else if((diffDays <= 3 && data.importance === "Yes") || (diffDays <= 2 && data.importance === "No")) {
     data.priority = 2;
-  } else if((diffDays <= 4 && data.importance == "Yes") || (diffDays <= 3 && data.importance == "No")) {
+  } else if((diffDays <= 4 && data.importance === "Yes") || (diffDays <= 3 && data.importance === "No")) {
     data.priority = 3;
   } else {
     data.priority = 4;
