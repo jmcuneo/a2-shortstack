@@ -19,7 +19,8 @@ var appdata = [
   }
 ];
 
-const dictionary = fs.readFileSync("dictionary.txt").split("\n");
+const dictionary = fs.readFileSync("dictionary.txt", { encoding: 'utf8', flag: 'r' }).split("\r\n");
+// console.log(dictionary[0]);
 /*
   Anagram algorithm:
     Filter dictionary, removing words that it cannot form. 
@@ -35,7 +36,7 @@ const dictionary = fs.readFileSync("dictionary.txt").split("\n");
 
 //Creates a set of all allowed letters.
 const lettersString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-const lettersSet = new Set(lettersString.split(""))
+const lettersSet = new Set(lettersString.split(""));
 /*
 Given a string, returns the upper case version with only the letters. 
 This will help to build the letter data object.
@@ -44,7 +45,7 @@ function sanitize(string){
   var newString = "";
   for(var i = 0; i < string.length; i++){
     var letter = string.charAt(i).toUpperCase();
-    if(lettersSet.contains(letter)){
+    if(lettersSet.has(letter)){
       newString+=letter;
     }
   }
@@ -69,10 +70,45 @@ function getLetterData(string){
   return obj;
 }
 
-//letter data is an object of letter:num occurrences
-function getAnagramWord(letterData){
-
+function getLetterDataMatch(ldBig,ldSmall){
+  var overlap = {};
+  for(const letter in ldSmall){
+    if(!(letter in ldBig) || ldBig[letter] < ldSmall[letter]){
+      return false;
+    }
+    overlap[letter] = ldBig[letter] - ldSmall[letter];
+  }
+  return overlap;
 }
+
+function buildLetterDictionary(dict){
+  var output = [];
+  for(var i = 0; i < dict.length; i++){
+    output.push({word:dict[i],ld:getLetterData(dict[i])});
+  }
+  return output;
+}
+
+const letterDataDict = buildLetterDictionary(dictionary);
+
+//letter data is an object of letter:num occurrences
+function getAnagramsRecursive(letterData, dict, rsf, maxNum){
+  let dictCopy = [...dict];
+  while(dictCopy.length > 0){
+    // console.log(dictCopy[0]);
+    // console.log(letterData);
+    let match = getLetterDataMatch(letterData,dictCopy[0].ld);
+    if(match){
+      //TODO: Do a recursive call using match instead of letter data.
+      return dictCopy[0];
+    }
+    dictCopy.splice(0,1);
+  }
+  //This is not right
+  return rsf;
+}
+
+console.log(getAnagramsRecursive(getLetterData(sanitize('aaaaa')),letterDataDict,[],12));
 
 const server = http.createServer( function( request,response ) {
   if( request.method === "GET" ) {
