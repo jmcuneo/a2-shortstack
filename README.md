@@ -138,3 +138,39 @@ Include a very brief summary of your project here. Be sure to include the CSS po
   - The CSS is organized in an external stylesheet (`main.css`), making it easy to maintain and read. The stylesheet is well-structured with comments separating different sections, and styles are grouped logically.
 
 ## Evaluation Achievments:
+
+## Evaluation Achievements:
+
+### Participants:
+
+- Peavey : User1
+- Weinstein: User2
+
+### User Feedback and Changes:
+
+### User1 Feedback
+
+**Problems Identified:**
+- **Lack of Discoverability:** Users were not aware that they could input values other than the defaults for the car.
+- **Difficulty in Updating Gallons Value:** Users had trouble updating the gallons value, indicating that the process was not intuitive.
+
+**Surprising Comments:**
+- The placement of the update button was not intuitive, making it difficult for users to understand how to confirm their changes.
+
+**Changes Made:**
+- **Improve Discoverability:** Added clear instructions to indicate that users can input values other than the defaults for the car.
+- **Simplify Updating Process:** Made the update button more prominent and repositioned it closer to the fields that are being updated.
+- **Intuitive Button Placement:** Conducted usability testing to find a more intuitive location for the update button.
+
+#### User2's Feedback:
+
+**Problems Identified:**
+- **Confusion with 'Gallons' Input:** Users were unsure what the "gallons" input field represented, but eventually deduced it referred to the tank size.
+
+**Surprising Comments:**
+- The application's functionality was well-received, but the color scheme was considered too simple.
+
+**Changes Made:**
+- **Clarify Input Labels:** Changed the label of the "gallons" input to "Tank Size" for better clarity.
+- **Enhance Color Scheme:** Added more vibrant colors and varied the color palette to make the interface more visually appealing.
+- **Adjust Sizing:** Reviewed and adjusted the sizing of elements on the interface for better proportion and readability.
