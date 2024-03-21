@@ -1,5 +1,5 @@
 ## Beta Theta Pies
-https://a2-lfoley7.glitch.me/
+https://a2-lukefoley.glitch.me/
 
 Every year, my fraternity Beta Theta Pi runs our Beta Theta Pies event, where we make pizza pies in our kitchen and sell them to campus. I was in charge of running the event this C term, and I wished that I had a website! This was the perfect opportunity to create one, and after making some changes, our fraternity plans to use this site in future years of the event. I used CSS flexbox, as well as rem- and percentage-based positioning and Bootstrap. To use this web application, make sure to fill out all of the required fields and submit your order! From the modal you can make a new order or view all orders. You can also view all orders from the nav. Do not actually Venmo me money as the field asks!
 
