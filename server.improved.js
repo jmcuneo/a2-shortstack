@@ -46,44 +46,45 @@ const handlePost = function( request, response ) {
   request.on( "end", function() {
     // console.log( JSON.parse( dataString ) )
 
-    // ... do something with the data here!!!
-
-    let myDataJSON = JSON.parse( dataString )
-
-    let charModifier = "unknown"
-
-    console.log("class :", myDataJSON.charclass)
-
-    switch(myDataJSON.charclass.toString().toLowerCase()){
-      case "artificer" || "wizard":
-        charModifier = "Intelligence"
-        break;
-      case "druid" || "ranger" || "cleric":
-        charModifier = "Wisdom"
-        break;
-      case "paladin" || "bard" || "sorcerer" || "warlock":
-        charModifier = "Charisma"
-        break;
-      case "monk" || "rogue":
-        charModifier = "Dexterity"
-        break;
-      case "barbarian" || "fighter":
-        charModifier = "Strength"
-        break;
-      default:
-        charModifier = "unknown"
-        break;
+    if (request.url === "/submit") {
+      //handle submit code
+      saveData(dataString);
+    } else if(request.url === "/deleteEntry"){
+      //handle delete code
     }
-
-    appdata.push({"name": myDataJSON.charname, "race": myDataJSON.charrace, "class": myDataJSON.charclass, "modifier": charModifier})
-
-    console.log(appdata)
-
-
 
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
     response.end("Character Information Received")
   })
+}
+
+const saveData = function( jsonData ){
+  let myDataJSON = JSON.parse( jsonData )
+
+  let charModifier = "unknown"
+
+  console.log("class :", myDataJSON.charclass)
+
+  const charClass = myDataJSON.charclass.toString().toLowerCase();
+
+  if (charClass === "artificer" || charClass === "wizard") {
+    charModifier = "Intelligence";
+  } else if (charClass === "druid" || charClass === "ranger" || charClass === "cleric") {
+    charModifier = "Wisdom";
+  } else if (charClass === "paladin" || charClass === "bard" || charClass === "sorcerer" || charClass === "warlock") {
+    charModifier = "Charisma";
+  } else if (charClass === "monk" || charClass === "rogue") {
+    charModifier = "Dexterity";
+  } else if (charClass === "barbarian" || charClass === "fighter") {
+    charModifier = "Strength";
+  } else {
+    charModifier = "unknown";
+  }
+
+
+  appdata.push({"name": myDataJSON.charname, "race": myDataJSON.charrace, "class": myDataJSON.charclass, "modifier": charModifier})
+
+  console.log(appdata)
 }
 
 const sendFile = function( response, filename ) {

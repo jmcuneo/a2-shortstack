@@ -26,6 +26,22 @@ const submit = async function( event ) {
 
   document.getElementById("characterForm").reset()
 
+  await loadTable()
+}
+
+const deleteEntry = async function (deleteName, deleteClass){
+
+    const json = {
+        "deleteName": deleteName,
+        "deleteClass": deleteClass
+    }
+
+    const body = JSON.stringify(json)
+
+    const response = await fetch( "/deleteEntry", {
+        method:"POST",
+        body
+    })
 }
 
 const loadTable = async function (){
@@ -34,47 +50,18 @@ const loadTable = async function (){
     await fetch('/api/appdata')
         .then(response => response.json())
         .then(data => {
-
-            const existingTable = document.getElementById("characterTable");
-            if (existingTable) {
-                existingTable.remove();
+            const existingTableBody = document.getElementById("charTableBody");
+            const tableRows = existingTableBody.getElementsByTagName('tr');
+            const rowCount = tableRows.length;
+            //Remove all non-header rows
+            for (let x=rowCount-1; x>0; x--) {
+                existingTableBody.removeChild(tableRows[x]);
             }
-
             console.log('Appdata from server:', data);
-            // Now you can work with the appdata array here
-            const tbl = document.createElement("table");
-            tbl.setAttribute("id", "characterTable")
-            const tblBody = document.createElement("tbody");
-            for (let i = -1; i < data.length; i++) {
+            for (let i = 0; i < data.length; i++) {
                 // creates a table row
                 const row = document.createElement("tr");
-
-                //Setup Table top row
-                if(i === -1){
-                    for (let j = 0; j < 4; j++) {
-                        const cell = document.createElement("td");
-                        let content = "";
-                        switch(j){
-                            case 0:
-                                content = "Character Name"
-                                break;
-                            case 1:
-                                content = "Character Race"
-                                break;
-                            case 2:
-                                content = "Class"
-                                break;
-                            case 3:
-                                content = "Primary Modifier"
-                                break;
-                        }
-                        const cellText = document.createTextNode(content);
-                        cell.appendChild(cellText);
-                        row.appendChild(cell);
-                    }
-                } else
-
-                for (let j = 0; j < 4; j++) {
+                for (let j = 0; j < 5; j++) {
                     // Create a <td> element and a text node, make the text
                     // node the contents of the <td>, and put the <td> at
                     // the end of the table row
@@ -93,22 +80,25 @@ const loadTable = async function (){
                         case 3:
                             content = data[i].modifier
                             break;
+                        case 4:
+                            const button = document.createElement("button")
+                            button.onclick = () => console.log("button pressed!");
+                            button.id = "deleteButton"
+                            button.textContent = "Delete"
+                            cell.appendChild(button);
+                            row.appendChild(cell);
+                            break;
                     }
-                    const cellText = document.createTextNode(content);
-                    cell.appendChild(cellText);
-                    row.appendChild(cell);
+                    if(j !== 4) {
+                        const cellText = document.createTextNode(content);
+                        cell.appendChild(cellText);
+                        row.appendChild(cell);
+                    }
                 }
 
                 // add the row to the end of the table body
-                tblBody.appendChild(row);
+                existingTableBody.appendChild(row);
             }
-
-            tbl.appendChild(tblBody);
-            // appends <table> into <body>
-            document.body.appendChild(tbl);
-            // sets the border attribute of tbl to '2'
-            tbl.setAttribute("border", "2");
-
         })
         .catch(error => {
             console.error('Error fetching appdata:', error);
@@ -118,6 +108,5 @@ const loadTable = async function (){
 window.onload = function() {
    const submitbutton = document.querySelector("#submitbutton");
     submitbutton.onclick = submit;
-    const tablebutton = document.querySelector("#tablebutton");
-    tablebutton.onclick = loadTable;
+    loadTable();
 }

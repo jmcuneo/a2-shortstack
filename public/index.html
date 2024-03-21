@@ -10,6 +10,8 @@
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
   <body>
+    <header> Dungeons and Dragons Character Storage </header>
+
     <form id="characterForm">
       <input type="text" id="charname" placeholder="character name here" >
       <input type="text" id="charrace" placeholder="character race here" value="">
@@ -32,7 +34,25 @@
       <button id="submitbutton">submit</button>
     </form>
 
-    <button id="tablebutton">Display Table</button>
+    <table id="characterTable" border="2px">
+      <tbody id="charTableBody">
+        <tr>
+          <td>Character Name</td>
+          <td>Character Race</td>
+          <td>Class</td>
+          <td>Primary Modifier</td>
+          <td>More Options</td>
+        </tr>
+      </tbody>
+    </table>
+
+
+    <form id="editForm">
+
+
+    </form>
+
+
 
 
   </body>
