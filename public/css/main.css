@@ -60,10 +60,30 @@ header {
     background-color: var(--white);
 }
 
-#submit-button {
+/* Button styling */
+.button {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings: "slnt" 0;
+  color: var(--black);
+
+  background-color: var(--accent2);
+  border-color: var(--accent4);
+  border-style: solid;
+  margin-left: 10px;
+  margin-right: 10px;
   margin-top: 5px;
   margin-bottom: 5px;
+  padding: 5px;
 }
+
+/* Input field styling */
+.text-field {
+  width: 300px;
+}
+
 
 
 @media screen and (min-width: 800px) {
@@ -113,23 +133,3 @@ tbody > tr:nth-of-type(odd) {
 
 
 
-/* Button styling */
-.button {
-  font-family: "Inter", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
-  font-variation-settings: "slnt" 0;
-  color: var(--black);
-
-  background-color: var(--accent2);
-  border-color: var(--accent4);
-  border-style: solid;
-  margin-left: 10px;
-  margin-right: 10px;
-  padding: 5px;
-}
-
-.text-field {
-  width: 300px;
-}

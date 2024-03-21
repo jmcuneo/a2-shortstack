@@ -14,20 +14,20 @@ Try to make your application do something useful! A todo list, storing / retriev
 
 Your application is required to implement the following functionalities (4 pts each, total 20 pts):
 
-- a `Server` which not only serves files, but also maintains a tabular dataset with 3 or more fields related to your application
+- DONE a `Server` which not only serves files, but also maintains a tabular dataset with 3 or more fields related to your application
 - DONE a `Results` functionality which shows the entire dataset residing in the server's memory
-- a `Form/Entry` functionality which allows a user to add or delete data items residing in the server's memory
-- a `Server Logic` which, upon receiving new or modified "incoming" data, includes and uses a function that adds at least one additional derived field to this incoming data before integrating it with the existing dataset
+- DONE a `Form/Entry` functionality which allows a user to add or delete data items residing in the server's memory
+- DONE a `Server Logic` which, upon receiving new or modified "incoming" data, includes and uses a function that adds at least one additional derived field to this incoming data before integrating it with the existing dataset
 - DONE the `Derived field` for a new row of data must be computed based on fields already existing in the row. 
 For example, a `todo` dataset with `task`, `priority`, and `creation_date` may generate a new field `deadline` by looking at `creation_date` and `priority`
 
 Your application is required to demonstrate the use of the following concepts:
 
 HTML (4 pts each, total 16 pts):
-- One or more [HTML Forms](https://developer.mozilla.org/en-US/docs/Learn/HTML/Forms), with any combination of form tags appropriate for the user input portion of the application
+- DONE One or more [HTML Forms](https://developer.mozilla.org/en-US/docs/Learn/HTML/Forms), with any combination of form tags appropriate for the user input portion of the application
 - DONE A results page displaying all data currently available on the server. You will most likely use a `<table>` tag for this, but `<ul>` or `<ol>` could also work and might be simpler to work with. Alternatively, you can create a single-page app (see Technical Acheivements) but this is not a requirement.
 - All pages should [validate](https://validator.w3.org)
-- If your app contains multple pages, they should all be accessible from the homepage (index.html)
+- DONE If your app contains multple pages, they should all be accessible from the homepage (index.html)
 
 CSS (4 pts each, total 16 pts):
 - DONE CSS styling of the primary visual elements in the application
@@ -35,16 +35,16 @@ CSS (4 pts each, total 16 pts):
     - Element selectors
     - ID selectors
     - Class selectors
-- CSS positioning and styling of the primary visual elements in the application:
-    - Use of either a CSS grid or flexbox for layout
+- DONE CSS positioning and styling of the primary visual elements in the application:
+    - DONE Use of either a CSS grid or flexbox for layout
     - DONE Rules defining fonts for all text used; no default fonts! Be sure to use a web safe font or a font from a web service like [Google Fonts](http://fonts.google.com/)
-- CSS defined in a maintainable, readable form, in external stylesheets 
+- DONE CSS defined in a maintainable, readable form, in external stylesheets 
 
 JavaScript (4 pts):
-- At minimum, a small amount of front-end JavaScript to get / fetch data from the server; a sample is provided in this repository.
+- DONE At minimum, a small amount of front-end JavaScript to get / fetch data from the server; a sample is provided in this repository.
 
 Node.js (4 pts):
-- An HTTP Server that delivers all necessary files and data for the application, and also creates the required `Derived Fields` in your data. 
+- DONE An HTTP Server that delivers all necessary files and data for the application, and also creates the required `Derived Fields` in your data. 
 A starting point is provided in this repository.
 
 Deliverables
@@ -66,7 +66,7 @@ Below are suggested technical and design achievements. You can use these to help
 *Technical*
 - DONE (5 points) Create a single-page app that both provides a form for users to submit data and always shows the current state of the server-side data. To put it another way, when the user submits data, the server should respond sending back the updated data (including the derived field calculated on the server) and the client should then update its data display.
 
-- (5 points) In addition to a form enabling adding and deleting data on the server, also add the ability to modify existing data.
+- DONE (5 points) In addition to a form enabling adding and deleting data on the server, also add the ability to modify existing data.
 
 *Design/UX*
 - (5 points per person, with a max of 10 points) Test your user interface with other students in the class. Define a specific task for them to complete (ideally something short that takes <10 minutes), and then use the [think-aloud protocol](https://en.wikipedia.org/wiki/Think_aloud_protocol) to obtain feedback on your design (talk-aloud is also fine). Important considerations when designing your study:

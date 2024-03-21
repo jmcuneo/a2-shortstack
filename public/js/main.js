@@ -1,24 +1,36 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 
 var taskData = [];
+editMode = -1;
+
+// const initial = async function() {
+//   // const response = await fetch({method:"GET"});
+//   // const text = await response.text();
+
+
+//   // Construct URL with data appended as query parameters
+//   const url = `/taskData/`;
+//   //?task=${encodeURIComponent(task)}&class=${encodeURIComponent(classx)}&duedate=${encodeURIComponent(duedate)}&importance=${encodeURIComponent(importance)}`
+
+//   const response = await fetch(url);
+  
+//   // Handle the response data as needed
+//   const responseData = await response.json();
+//   console.log("Response Data:", responseData);
+// }
 
 const initial = async function() {
-  // const response = await fetch({method:"GET"});
-  // const text = await response.text();
-
-
-  // Construct URL with data appended as query parameters
-  const url = `/taskData/`;
-  //?task=${encodeURIComponent(task)}&class=${encodeURIComponent(classx)}&duedate=${encodeURIComponent(duedate)}&importance=${encodeURIComponent(importance)}`
-
-  const response = await fetch(url);
-  
-  // Handle the response data as needed
-  const responseData = await response.json();
-  console.log("Response Data:", responseData);
+  data = {mode: 3};
+  const body = JSON.stringify( data );
+  const response = await fetch( "/initial", {
+    method:"POST",
+    body
+  })
+  taskData = JSON.parse(await response.text());
+  displayResults();
 }
 
-//initial();
+initial();
 
 
 const submit = async function( event ) {
@@ -29,11 +41,17 @@ const submit = async function( event ) {
   event.preventDefault()
   if(validateForm()) {
     var task = document.querySelector( "#task" );
-    var classx = document.querySelector( "#class" );
+    var classi = document.querySelector( "#class" );
     var duedate = document.querySelector( "#duedate" );
     var importance = document.querySelector( "#importance" );
-    //const input = {task,classx,duedate,importance};
-    const json = {id: -1, task: task.value, class: classx.value, duedate: duedate.value, importance: importance.value, priority: 0};
+
+    var json = {};
+    if(editMode > 0) {
+      json = {id: editMode, mode: 1, task: task.value, class: classi.value, duedate: duedate.value, importance: importance.value, priority: 0};
+    } else {
+      json = {id: editMode, mode: 0, task: task.value, class: classi.value, duedate: duedate.value, importance: importance.value, priority: 0};
+    }
+
     const body = JSON.stringify( json );
 
     const response = await fetch( "/submit", {
@@ -43,7 +61,14 @@ const submit = async function( event ) {
 
     taskData = JSON.parse(await response.text());
 
+    // Clear inputs
+    document.getElementById("task").value = "";
+    document.getElementById("class").value = "";
+    document.getElementById("duedate").value = "";
+    document.getElementById("importance").value = "";
+
     displayResults();
+    editMode = -1;
   }
 }
 
@@ -52,14 +77,6 @@ window.onload = function() {
   button.onclick = submit;
 }
 
-// async function updateTaskData() {
-//   const response = await fetch( "/submit", {method:"GET"})
-// }
-
-// Determine priority at beginning and display the results
-// taskData.forEach(element => {
-//   determinePriority(element);
-// });
 displayResults();
 
 // Displays up to date results in the table
@@ -142,6 +159,7 @@ function displayResults() {
 
 // Deletes the specified element
 const deleteElement = async function(data) {
+  data.mode = 2;
   const body = JSON.stringify( data );
   const response = await fetch( "/delete", {
     method:"POST",
@@ -152,14 +170,15 @@ const deleteElement = async function(data) {
   displayResults();
 }
 
-// Allows edits to the spcified element
+// Allows edits to the specified element
 function editElement(data) {
   document.getElementById("task").value = data.task;
   document.getElementById("class").value = data.class;
   document.getElementById("duedate").value = data.duedate;
   document.getElementById("importance").value = data.importance;
 
-
+  editMode = data.id;
+  data.mode = 1;
 }
 
 // Validates the format of the submission before submitting

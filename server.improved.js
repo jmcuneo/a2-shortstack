@@ -9,10 +9,10 @@ const http = require( "http" ),
       port = 3000
 
 const taskData = [
-  { "id": 1, "task": "A1 HW", "class": "CS4241", "duedate": "03/20/2024", "importance": "Yes", "priority": 0},
-  { "id": 2, "task": "HW 1", "class": "CS4342", "duedate": "03/22/2024", "importance": "No", "priority": 0},
-  { "id": 3, "task": "Lecture notes", "class": "ECE3849", "duedate": "03/24/2024", "importance": "Yes", "priority": 0},
-  { "id": 4, "task": "Lab 1", "class": "ECE3849", "duedate": "04/03/2024", "importance": "Yes", "priority": 0}
+  { "id": 1, "mode" : 0, "task": "A1 HW", "class": "CS4241", "duedate": "03/20/2024", "importance": "Yes", "priority": 0},
+  { "id": 2, "mode" : 0, "task": "HW 1", "class": "CS4342", "duedate": "03/22/2024", "importance": "No", "priority": 0},
+  { "id": 3, "mode" : 0, "task": "Lecture notes", "class": "ECE3849", "duedate": "03/24/2024", "importance": "Yes", "priority": 0},
+  { "id": 4, "mode" : 0, "task": "Lab 1", "class": "ECE3849", "duedate": "04/03/2024", "importance": "Yes", "priority": 0}
 ]
 
 taskData.forEach(element => {
@@ -51,19 +51,12 @@ const handlePost = function( request, response ) {
 
     var taskObject = JSON.parse( dataString );
 
-    var deleteTask = false;
-    var i = 0;
-    while(deleteTask == false && i < taskData.length) {
-      if(taskData[i].id == taskObject.id) {
-        deleteTask = true;
-        i--;
-      }
-      i++;
-    }
-
-    if(deleteTask) {
-      taskData.splice(i, 1);
-    } else {
+    // Initial preload mode
+    if(taskObject.mode == 3) {
+      null;
+    } 
+    // Add mode
+    else if(taskObject.mode == 0) {
       // Update id
       taskObject.id = taskData[taskData.length-1].id + 1;
 
@@ -72,13 +65,36 @@ const handlePost = function( request, response ) {
 
       // Push new object to taskData array
       taskData.push(taskObject);
+    } else {
 
-      //console.log(taskObject);
+      // Find index of task based on ID
+      var foundTask = false;
+      var i = 0;
+      while(foundTask == false && i < taskData.length) {
+        if(taskData[i].id == taskObject.id) {
+          foundTask = true;
+          i--;
+        }
+        i++;
+      }
+
+      // Delete mode
+      if(taskObject.mode == 2) {
+        taskData.splice(i, 1);
+      } 
+      // Edit mode
+      if(taskObject.mode == 1) {
+        // Update priority
+        determinePriority(taskObject);
+        // Update object
+        taskData[i] = taskObject;
+      } 
+
     }
-    printData()
+
+    ///printData()
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" });
     response.end(JSON.stringify(taskData));
-    
   })
 }
 
