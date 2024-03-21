@@ -7,8 +7,11 @@ const submit = async function( event ) {
   // remains to this day
   event.preventDefault()
   
-  const input = document.querySelector( "#yourname" ),
-        json = { yourname: input.value },
+  const val1 = document.querySelector("#chore"),
+        val2 = document.querySelector("#rating"),
+        val3 = document.querySelector("#length"),
+        val4 = document.querySelector("#finished").checked,
+        json = {chore: val1.value, rating: val2.value, length: val3.value, finished: val4},
         body = JSON.stringify( json )
 
   const response = await fetch( "/submit", {
@@ -24,4 +27,8 @@ const submit = async function( event ) {
 window.onload = function() {
    const button = document.querySelector("button");
   button.onclick = submit;
+}
+
+function displayData(text) {
+
 }
