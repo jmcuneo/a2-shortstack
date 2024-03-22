@@ -2,7 +2,7 @@ Assignment 2 - Short Stack: Basic Two-tier Web Application using HTML/CSS/JS and
 
 Alexander Beck [http://a2-alexanderbeck.glitch.me](http://a2-alexanderbeck.glitch.me)
 ## Todo List
-For HTML, created a table to use as a way to display data. Form is used with three elements, as well as a clear button. Clicking on an item allows a user to update existing data (by resubmitting the form). 
+For HTML, created a table to use as a way to display data. Form is used with three elements, as well as a clear button. Clicking on an item allows a user to update existing data (by resubmitting the form). Page validates properly.
 
 For JS, added a frontend initalizer for the current date in the date selector, as well as the table headers. Used JS to update table with data from the Node.js server.
 
