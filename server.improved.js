@@ -9,10 +9,10 @@ const http = require( "http" ),
       port = 3000
 
 const taskData = [
-  { "id": 1, "mode" : 0, "task": "A1 HW", "class": "CS4241", "duedate": "03/20/2024", "importance": "Yes", "priority": 0},
-  { "id": 2, "mode" : 0, "task": "HW 1", "class": "CS4342", "duedate": "03/22/2024", "importance": "No", "priority": 0},
-  { "id": 3, "mode" : 0, "task": "Lecture notes", "class": "ECE3849", "duedate": "03/24/2024", "importance": "Yes", "priority": 0},
-  { "id": 4, "mode" : 0, "task": "Lab 1", "class": "ECE3849", "duedate": "04/03/2024", "importance": "Yes", "priority": 0}
+  { "id": 1, "task": "A1 HW", "class": "CS4241", "duedate": "03/20/2024", "importance": "Yes", "priority": 0},
+  { "id": 2, "task": "HW 1", "class": "CS4342", "duedate": "03/22/2024", "importance": "No", "priority": 0},
+  { "id": 3, "task": "Lecture notes", "class": "ECE3849", "duedate": "03/24/2024", "importance": "Yes", "priority": 0},
+  { "id": 4, "task": "Lab 1", "class": "ECE3849", "duedate": "04/03/2024", "importance": "Yes", "priority": 0}
 ]
 
 taskData.forEach(element => {
@@ -32,113 +32,75 @@ const server = http.createServer( function( request,response ) {
   }
 })
 
+// Get mode
 const handleGet = function( request, response ) {
   const filename = dir + request.url.slice( 1 ) 
-
   if( request.url === "/" ) {
     sendFile( response, "public/index.html" )
   } else if(request.url === "/taskData/") {
-    sendFile ( response, taskData);
+    response.writeHead( 200, "OK", {"Content-Type": "text/plain" });
+    response.end(JSON.stringify(taskData));
   } else {
     sendFile( response, filename );
   }
 }
 
+// Add mode
 const handlePost = function( request, response ) {
   let dataString = ""
-
   request.on( "data", function( data ) {
       dataString += data 
   })
-
   request.on( "end", function() {
-
     let taskObject = JSON.parse( dataString );
 
-    // Initial preload mode
-    if(taskObject.mode === 3) {
-      null;
-    } 
-    // Add mode
-    else if(taskObject.mode === 0) {
-      // Update id
+    // Update id
+    if(taskData.length == 0) {
+      taskObject.id = 1;
+    } else {
       taskObject.id = taskData[taskData.length-1].id + 1;
-
-      // Update priority
-      determinePriority(taskObject);
-
-      // Push new object to taskData array
-      taskData.push(taskObject);
     }
+    
+
+    // Update priority
+    determinePriority(taskObject);
+
+    // Push new object to taskData array
+    taskData.push(taskObject);
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" });
     response.end(JSON.stringify(taskData));
   })
 }
 
 
-
+// Delete mode
 const handleDelete = function( request, response ) {
   let dataString = ""
-
   request.on( "data", function( data ) {
       dataString += data 
   })
 
   request.on( "end", function() {
-
     let taskObject = JSON.parse( dataString );
-
-    // TODO MAKE FUNCTION Find index of task based on ID
-    let foundTask = false;
-    let i = 0;
-    while(foundTask === false && i < taskData.length) {
-      if(taskData[i].id === taskObject.id) {
-        foundTask = true;
-        i--;
-      }
-      i++;
-    }
-
-    // Delete mode
-    taskData.splice(i, 1);
-
-    ///printData()
+    taskData.splice(determineTaskIndex(taskObject), 1);
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" });
     response.end(JSON.stringify(taskData));
   })
 }
 
 
-
+// Edit mode
 const handlePatch = function( request, response ) {
   let dataString = ""
-
   request.on( "data", function( data ) {
       dataString += data 
   })
-
   request.on( "end", function() {
-
     let taskObject = JSON.parse( dataString );
-
-    // Find index of task based on ID
-    let foundTask = false;
-    let i = 0;
-    while(foundTask === false && i < taskData.length) {
-      if(taskData[i].id === taskObject.id) {
-        foundTask = true;
-        i--;
-      }
-      i++;
-    }
-
-    // Edit mode
     // Update priority
     determinePriority(taskObject);
     // Update object
-    taskData[i] = taskObject;
-
-    ///printData()
+    taskData[determineTaskIndex(taskObject)] = taskObject;
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" });
     response.end(JSON.stringify(taskData));
   })
@@ -170,6 +132,20 @@ const sendFile = function( response, filename ) {
 }
 
 
+function determineTaskIndex(taskObject) {
+  let foundTask = false;
+  let i = 0;
+  while(foundTask === false && i < taskData.length) {
+    if(taskData[i].id === taskObject.id) {
+      foundTask = true;
+      i--;
+    }
+    i++;
+  }
+  return i;
+}
+
+
 
 
 
@@ -197,14 +173,6 @@ function determinePriority(data) {
     data.priority = 3;
   } else {
     data.priority = 4;
-  }
-}
-
-
-
-const printData = function() {
-  for (let i = 0; i < taskData.length; i++) {
-    console.log(taskData[i].id + " " + taskData[i].task + " " + taskData[i].class + " " + taskData[i].duedate + " " + taskData[i].importance + " " + taskData[i].priority);
   }
 }
 

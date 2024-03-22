@@ -3,35 +3,17 @@
 var taskData = [];
 editMode = -1;
 
-// const initial = async function() {
-//   // const response = await fetch({method:"GET"});
-//   // const text = await response.text();
-
-
-//   // Construct URL with data appended as query parameters
-//   const url = `/taskData/`;
-//   //?task=${encodeURIComponent(task)}&class=${encodeURIComponent(classx)}&duedate=${encodeURIComponent(duedate)}&importance=${encodeURIComponent(importance)}`
-
-//   const response = await fetch(url);
-  
-//   // Handle the response data as needed
-//   const responseData = await response.json();
-//   console.log("Response Data:", responseData);
-// }
-
-const initial = async function() {
-  data = {mode: 3};
-  const body = JSON.stringify( data );
-  const response = await fetch( "/initial", {
-    method:"POST",
-    body
+const loadData = async function() {
+  const response = await fetch( "/taskData/", {
+    method:"GET"
+  }).then(async function(response) {
+    console.log("HELLO");
+    taskData = JSON.parse(await response.text());
   })
-  taskData = JSON.parse(await response.text());
   displayResults();
 }
 
-initial();
-
+loadData();
 
 const submit = async function( event ) {
   // stop form submission from trying to load
@@ -47,27 +29,25 @@ const submit = async function( event ) {
 
     let json = {};
     if(editMode > 0) {
-      json = {id: editMode, mode: 1, task: task.value, class: classi.value, duedate: duedate.value, importance: importance.value, priority: 0};
+      json = {id: editMode, task: task.value, class: classi.value, duedate: duedate.value, importance: importance.value, priority: 0};
       const body = JSON.stringify( json );
       const response = await fetch( "/submit", {
         method:"PATCH",
         body
+      }).then(async function(response) {
+        taskData = JSON.parse(await response.text());
       })
-      taskData = JSON.parse(await response.text());
+      
     } else {
-      json = {id: editMode, mode: 0, task: task.value, class: classi.value, duedate: duedate.value, importance: importance.value, priority: 0};
+      json = {id: editMode, task: task.value, class: classi.value, duedate: duedate.value, importance: importance.value, priority: 0};
       const body = JSON.stringify( json );
       const response = await fetch( "/submit", {
         method:"POST",
         body
+      }).then(async function(response) {
+        taskData = JSON.parse(await response.text());
       })
-      taskData = JSON.parse(await response.text());
     }
-
-    // .then(function(response) {
-    //   debugger
-    //   return response.json();
-    // })
 
     // Clear inputs
     document.getElementById("task").value = "";
@@ -172,9 +152,9 @@ const deleteElement = async function(data) {
   const response = await fetch( "/delete", {
     method:"DELETE",
     body
+  }).then(async function(response) {
+    taskData = JSON.parse(await response.text());
   })
-
-  taskData = JSON.parse(await response.text());
   displayResults();
 }
 
@@ -206,11 +186,4 @@ function validateForm() {
     return false;
   }
   return true;
-}
-
-
-function printData() {
-  for (let i = 0; i < taskData.length; i++) {
-    console.log(taskData[i].task + " " + taskData[i].class + " " + taskData[i].duedate + " " + taskData[i].priority)
-  }
 }
