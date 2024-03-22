@@ -2,6 +2,9 @@
 This application is used for record player name and their id for Hoyoverse game. The project used grid system in the body to maintain a 
 clean page. The "Server" data is auto calculated based on player's UID.
 
+a2-shimingde.glitch.me
+
+
 ## Technical Achievements
 - **Tech Achievement 1**: The page can update the information on the page when click submit
 
