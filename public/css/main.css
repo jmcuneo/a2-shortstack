@@ -1,23 +1,63 @@
 @font-face {
-    font-family: "Truculenta";
-    src: url(Truculenta-Regular.ttf) format("truetype");
+    font-family: "Flamenco";
+    src: url(Flamenco-Regular.ttf) format("truetype");
 }
 
 * {
-    font-family: "Truculenta";
-    font-size: large;
+    font-family: "Flamenco";
 }
 
 body {
-  background: black;
-  color: white;
+    background: rgb(255, 218, 183);
+    color: rgb(32, 32, 32);
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.item {
+    padding-bottom: 2em;
+    text-align: center;
 }
 
 table {
-    width: 400px;
+    width: 600px;
+    border: solid;
+}
+
+th,
+td {
+    text-align: center;
+    border: solid;
+}
+
+th {
+    font-size: xx-large;
+}
+
+input,
+td {
     font-size: x-large;
 }
 
-th, td {
-    text-align: center;
+button {
+    font-size: x-large;
+    color: white;
+}
+
+#add {
+    background-color: green;
+    
+}
+
+#remove {
+    background-color: red;
+}
+
+#modify {
+    background-color: purple;
 }

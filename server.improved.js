@@ -4,12 +4,6 @@ const http = require("http"),
       dir = "public/",
       port = 3000;
 
-/*const appdata = [
-    {"model": "toyota", "year": 1999, "mpg": 23},
-    {"model": "honda", "year": 2004, "mpg": 30},
-    {"model": "ford", "year": 1987, "mpg": 14}
-];*/
-
 const appdata = [];
 
 const server = http.createServer(function(request, response) {
@@ -43,15 +37,24 @@ const handlePost = function(request, response) {
         console.log(request.url);
 
         // ... do something with the data here!!!
-        if (request.url === "/submit") {
+        if (request.url === "/add") {
             appdata.push({name: data.name,
                           prep: data.prep,
-                          cook: data.cook});
-        } else if (request.url === "/delete") {
-            //appdata.splice(appdata.indexOf({}), 1);
+                          cook: data.cook,
+                          total: parseInt(data.prep) + parseInt(data.cook)});
+        } else if (request.url === "/remove") {
             for (let i in appdata) {
-                if (appdata[i].name === data.name) {
+                if (appdata[i].name.toLowerCase() === data.name.toLowerCase()) {
                     appdata.splice(i, 1);
+                    break;
+                }
+            }
+        } else if (request.url === "/modify") {
+            for (let i in appdata) {
+                if (appdata[i].name.toLowerCase() === data.name.toLowerCase()) {
+                    appdata[i].prep = data.prep;
+                    appdata[i].cook = data.cook;
+                    appdata[i].total = parseInt(data.prep) + parseInt(data.cook);
                     break;
                 }
             }
@@ -63,10 +66,12 @@ const handlePost = function(request, response) {
 const createTable = function(response) {
     let table = "<tr><th>Recipe Name</th><th>Prep Time</th><th>Cook Time</th><th>Total Time</th></tr>";
     for (let data of appdata)
-        table += `<tr><td>${data.name}</td><td>${data.prep}</td><td>${data.cook}</td><td>${parseInt(data.prep) + parseInt(data.cook)}</td></tr>`;
+        table += `<tr><td>${data.name}</td>
+                  <td>${data.prep} min${data.prep == 1 ? "" : "s"}</td>
+                  <td>${data.cook} min${data.cook == 1 ? "" : "s"}</td>
+                  <td>${data.total} min${data.total == 1 ? "" : "s"}</td></tr>`;
     response.writeHeader(200, {"Content-Type": "string"});
     response.end(table);
-    //console.log(response);
 }
 
 const sendFile = function(response, filename) {
