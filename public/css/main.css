@@ -97,7 +97,6 @@ input[type=date], input[type=number]{
     padding: 15px 20px;
     border: 2px solid #fff;
     cursor: pointer;
-    width: 25%;
     border-radius: 25px;
 }
 
@@ -112,36 +111,85 @@ input[type=date], input[type=number]{
 }
 
 /* popup */
-.modal{
-    align-items: center;
-    display: flex;
-    justify-content: center;
+/*.popup-container{*/
+/*    position: absolute;*/
+/*    width: 100%;*/
+/*    height: 100%;*/
+/*    background: seagreen;*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*    opacity: 0;*/
+/*    pointer-events: none;*/
+/*}*/
+
+/*.popup-container.active{*/
+/*    opacity: 1;*/
+/*    pointer-events: auto;*/
+/*    transition: .4s ease;*/
+/*}*/
+
+
+/*.popup-container .popup-box{*/
+/*    width: 500px;*/
+/*    background: #3CB371;*/
+/*    border-radius: 6px;*/
+/*    box-shadow: 0 0 10px rgba(0,0,0,0.1);*/
+/*    padding: 30px;*/
+/*    transform: scale(0);*/
+/*}*/
+
+/*.popup-container.active .popup-box{*/
+/*    transform: scale(1);*/
+/*    transition: .4s ease;*/
+/*    transition-delay: .25s;*/
+/*}*/
+/*.container{*/
+/*    width: 100%;*/
+/*    !*height: 100px;*!*/
+/*    background: linear-gradient(to right, #485563, #29323c);*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*}*/
+
+/*.btn{*/
+/*    padding: 10px 60px;*/
+/*    background: #fff;*/
+/*    border: 0;*/
+/*    outline: none;*/
+/*    cursor: pointer;*/
+/*    font-size: 22px;*/
+/*    font-weight: 500;*/
+/*    border-radius: 10px;*/
+/*    transition: transform 0.2s;*/
+/*}*/
+
+/*.btn:active{*/
+/*    transform: scale(0.95);*/
+/*}*/
+
+.popup{
+    width: 500px;
+    height: 500px;
+    background: #fff;
+    border-radius: 25px;
     position: absolute;
     top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(66, 124, 197, 0.9);
-    transition: all 0.5s;
-    visibility: hidden; /* hiding the popup */
-    opacity: 0;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.1);
+    margin-top: 100px;
+    padding: 0 30px 60px;
+    overflow: scroll;
+    visibility: hidden;
+    transition: all 0.4s ease;
 }
-.content {
-    position: absolute;
-    background: #1A5276;
-    width: 1000px;
-    padding: 20px 30px;
-    border-radius: 10px;
+
+.open-popup{
+    visibility: visible;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(1);
 }
-.modal:target {
-    visibility: visible; /* showing the popup */
-    opacity: 1;
-}
-.box-close { /* for close button of popup */
-    position: absolute;
-    top: 0;
-    right: 15px;
-    color: #3CB371;
-    text-decoration: none;
-    font-size: 30px;
-}
+
+
+

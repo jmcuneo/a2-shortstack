@@ -25,6 +25,9 @@ const server = http.createServer( function( request,response ) {
   else if(request.method === "DELETE"){
     handleDelete(request, response)
   }
+  else if(request.method === "PUT"){
+    handlePut(request, response)
+  }
 })
 
 const handleGet = function( request, response ) {
@@ -35,6 +38,10 @@ const handleGet = function( request, response ) {
   }
   else if(request.url === "/instructions"){
     sendFile( response, "public/instructions.html" )
+  }
+  else if(request.url === "/send_again"){
+    response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
+    response.end(JSON.stringify(billingData))
   }
   else{
     sendFile( response, filename )
@@ -97,13 +104,72 @@ const handlePost = function( request, response ) {
 
 const handleDelete = function( request, response ) {
   let dataString = ""
-
+  console.log(request.url.split('/')[1])
+  //let index = request.url.split('/')[1]
   request.on( "data", function( data ) {
     dataString += data
   })
 
   request.on( "end", function() {
-    console.log( JSON.parse( dataString ) )
+    //console.log("hi")
+    let payload =  JSON.parse( dataString )
+    //console.log("payload = "+dataString)
+
+    billingData.splice(payload.index, 1)
+    response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
+    response.end(JSON.stringify(billingData))
+
+  })
+}
+
+const handlePut = function( request, response ) {
+  let dataString = ""
+  let totalPrice = 0
+  let discount = 0
+  let afterDiscount = 0
+  let finalPrice = 0
+  request.on( "data", function( data ) {
+    dataString += data
+  })
+
+  request.on( "end", function() {
+    //console.log( JSON.parse( dataString ) )
+    let bilingObj = JSON.parse(dataString)
+    totalPrice = bilingObj.cost*bilingObj.quantity
+
+    //calculating discount
+    if(totalPrice > 50){
+      discount = 0.10 //10%
+    }
+    else if(totalPrice <= 50 && totalPrice > 100){
+      discount = 0.20 //20%
+    }
+    else if(totalPrice <= 100 && totalPrice > 500){
+      discount = 0.30 //30%
+    }
+    else if(totalPrice >= 500){
+      discount = 0.40 //40%
+    }
+
+    afterDiscount = discount*totalPrice
+    finalPrice = totalPrice - afterDiscount //final price including quantity
+
+    bilingObj.totalprice = totalPrice
+    bilingObj.discount = discount
+    bilingObj.afterdiscount = finalPrice
+
+    billingData.splice(bilingObj.updindex, 0, bilingObj)
+
+    //billingData.push(bilingObj)
+
+    // ... do something with the data here!!!
+
+    console.log(billingData)
+
+    //let updload =  JSON.parse( dataString )
+    //console.log("payload = "+dataString)
+
+
 
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
     response.end(JSON.stringify(billingData))

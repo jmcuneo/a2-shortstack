@@ -9,7 +9,7 @@
         <!-- get rid of favicon error -->
         <link rel="icon" href="data:;base64,iVBORw0KGgo=">
         <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
-
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     </head>
     <body>
         <div class="top-nav">
@@ -57,8 +57,8 @@
                 </form>
             </div>
             <div class="flex-item display-results">
-                <h1>hello</h1>
-                <table class="table-info"> <!-- creating a table for different categories of experiences like school, projects, clubs -->
+                <h1>Purchase Data</h1>
+                <table id="my-table" class="table-info"> <!-- creating a table for different categories of experiences like school, projects, clubs -->
                     <thead> <!-- for table heading columns, 1st row -->
                     <tr>
                         <th>Product Details</th>
@@ -67,64 +67,51 @@
                     </tr>
                     </thead>
                     <tbody id='table-body'> <!-- for table body with all rows/cells filled with data -->
-                    <!--                    <tr>-->
-<!--                        <td> &lt;!&ndash; each cell will have unordered/ordered list. Only 1 row created because each cell is a list of elements&ndash;&gt;-->
-<!--                            <ul>-->
-<!--                                <li id="test"></li>-->
-<!--                                <li>DOP: 3/19/24</li>-->
-<!--                                <li>Cost: 20</li>-->
-<!--                                <li>Quantity: 5</li>-->
-<!--                                <li>Category: Food</li>-->
-<!--                                <li>Description: Edible</li>-->
-<!--                            </ul>-->
-<!--                        </td>-->
-<!--                        <td>-->
-<!--                            <ul>-->
-<!--                                <li>Total price = 5*20 = 100</li>-->
-<!--                                <li>Discount = 20%</li>-->
-<!--                                <li>After Discount = 80</li>-->
-<!--                            </ul>-->
-<!--                        </td>-->
-<!--                    </tr>-->
-<!--                    <tr>-->
-<!--                        <td> &lt;!&ndash; each cell will have unordered/ordered list. Only 1 row created because each cell is a list of elements&ndash;&gt;-->
-<!--                            <ul>-->
-<!--                                <li>Name: Bread</li>-->
-<!--                                <li>DOP: 3/19/24</li>-->
-<!--                                <li>Cost: 20</li>-->
-<!--                                <li>Quantity: 5</li>-->
-<!--                                <li>Category: Food</li>-->
-<!--                                <li>Description: Edible</li>-->
-<!--                            </ul>-->
-<!--                        </td>-->
-<!--                        <td>-->
-<!--                            <ul>-->
-<!--                                <li>Total price = 5*20 = 100</li>-->
-<!--                                <li>Discount = 20%</li>-->
-<!--                                <li>After Discount = 80</li>-->
-<!--                            </ul>-->
-<!--                        </td>-->
-<!--                    </tr>-->
-<!--                    <tr>-->
-<!--                        <td>-->
-<!--                            TOTAL-->
-<!--                        </td>-->
-<!--                        <td>-->
-<!--                            160-->
-<!--                        </td>-->
-<!--                    </tr>-->
+
                     </tbody>
                 </table>
 
             </div>
         </div>
 
-        <div id="popup-box" class="modal">
-            <div class="content">
-                <h1 class="subtitle">My Work</h1>
-
-                <a href="#" class="box-close"></a>
-            </div>
+        <div class="popup" id="popup">
+            <h2>Form Update</h2>
+            <form>
+                <label>Product Name</label>
+                <br>
+                <input autofocus autocomplete="off" type="text" id="updproductname" placeholder="Enter product name">
+                <br>
+                <label>Date Of Purchase</label>
+                <input autocomplete="off" type="date" id="updpurchasedate" placeholder="Enter purchase date">
+                <br>
+                <label>Product Cost</label>
+                <input autocomplete="off" type="number" id="updcost"  placeholder="Enter cost for single">
+                <br>
+                <label>Product Quantity</label>
+                <input autocomplete="off" type="number" id="updquantity" placeholder="Enter quantity">
+                <br>
+                <label>Product Category</label>
+                <br>
+                <select id="updcategory">
+                    <option disabled selected>Choose Category</option>
+                    <option value="food">Food</option>
+                    <option value="electronics">Electronics</option>
+                    <option value="furniture">Furniture</option>
+                    <option value="clothing">Clothing</option>
+                    <option value="kitchen">Kitchen</option>
+                    <option value="living-bedroom">Living/Bedroom space</option>
+                    <option value="other">Other</option>
+                </select>
+                <br>
+                <label>Product Description</label>
+                <br>
+                <input autocomplete="off" type="text" id="upddescription" placeholder="Enter any product description">
+                <br>
+                <input type="hidden" id="updindex">
+                <button type="button" id="updsubmit" class="submit-btn" onclick="updateRow(); closePopup()">UPDATE</button>
+                <button type="reset" class="submit-btn">RESET</button>
+            </form>
+            <button class="submit-btn" type="button" onclick="closePopup()">CANCEL</button>
         </div>
 
         <div class="footer">
