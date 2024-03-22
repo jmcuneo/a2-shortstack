@@ -19,9 +19,25 @@ const submit = async function( event ) {
   const text = await response.text()
 
   console.log( "text:", text )
+
+  insetElementToTable(text)
+
 }
 
 window.onload = function() {
    const button = document.querySelector("button");
   button.onclick = submit;
+}
+
+
+
+
+//CUSTOM CODE: Add this to the table
+function insetElementToTable(text)
+{
+  const table = document.getElementById("InformationTable")
+  let row = table.insertRow(1)
+  let cell = row.insertCell(0)
+  console.log(text)
+  cell.innerHTML = text;
 }
