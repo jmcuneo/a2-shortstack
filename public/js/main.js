@@ -14,10 +14,6 @@ const submit = async function( event ) {
         body = JSON.stringify( json )
 
 
-  const populateTable = await fetch("/appdata",
-      {
-        method:"GET"
-      })
 
   const response = await fetch( "/submit", {
     method:"POST",
@@ -25,8 +21,6 @@ const submit = async function( event ) {
   })
 
 
-
-  populateTable.then((json) => console.log(json));
 
 
   const text = await response.text()
@@ -39,11 +33,28 @@ const submit = async function( event ) {
 
 }
 
-window.onload = function() {
-   const button = document.querySelector("button");
+window.onload = async function() {
+  const button = document.querySelector("button");
   button.onclick = submit;
-}
 
+
+  //WORKS!
+  const populateTable = await fetch("/appdata",
+      {
+        method:"GET"
+      })
+
+  let data = await populateTable.json();
+
+  console.log(data)
+
+  for(let i = 0; i < data.length; i++)
+  {
+    insetElementToTable(data[i])
+  }
+
+
+}
 
 
 
