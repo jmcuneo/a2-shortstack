@@ -1,5 +1,7 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 
+let currentEditingIndex = null;
+
 const submit = async function( event ) {
     // stop form submission from trying to load
     // a new .html page for displaying results...
@@ -25,7 +27,15 @@ const submit = async function( event ) {
         .catch(error => console.error('Error: ', error)); // for debugging purpose
 }
 
-window.onload = function() {
+window.onload = async function() {
+    try {
+        const response = await fetch("/get-scores"); // Assuming "/get-scores" is an endpoint returning the entire appdata
+        const scores = await response.json();
+        updateScoreToDisplay(scores);
+    } catch (error) {
+        console.error('Error fetching scores:', error);
+    }
+
     const button = document.querySelector("button");
     button.onclick = submit;
 }
@@ -47,7 +57,7 @@ function updateScoreToDisplay(scores){
             `
       Player: ${score.playerName}, Score: ${score.score}, Date: ${score.gameDate}, Ranking: ${score.ranking}
       <button onclick="deleteScore('${score.playerName}')">Delete</button>
-      <button onclick="modifyScore('${score.playerName}', ${index})">Modify</button>
+      <button onclick="showEditForm(${index})">Edit</button>
     `;
         display.appendChild(scoreElement);
     });
@@ -87,4 +97,56 @@ async function modifyScore(playerName, scoreIndex) {
                 updateScoreToDisplay(json);
             });
     }
+}
+
+
+/**
+ * accept the score's index to identify which score to edit
+ */
+async function showEditForm(index) {
+    // Fetch the latest scores array
+    const response = await fetch("/get-scores");
+    const scores = await response.json();
+
+    const score = scores[index];
+    document.querySelector("#editPlayerName").value = score.playerName;
+    document.querySelector("#editScore").value = score.score;
+    document.querySelector("#editGameDate").value = score.gameDate;
+
+    document.querySelector("#editForm").style.display = "block";
+    currentEditingIndex = index; // Keep track of the current editing index globally
+}
+
+/**
+ * function to submit the modify(edit)
+ */
+async function submitEdit() {
+    const playerName = document.querySelector("#editPlayerName").value;
+    const score = document.querySelector("#editScore").value;
+    const gameDate = document.querySelector("#editGameDate").value;
+
+    await fetch("/submit", {
+        method: "POST",
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            action: "modify",
+            playerName,
+            score: Number(score),
+            gameDate,
+            index: currentEditingIndex // Pass this index to the server to identify which score to update
+        })
+    })
+        .then(response => response.json())
+        .then(json => {
+            updateScoreToDisplay(json);
+            document.querySelector("#editForm").style.display = "none";
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+/**
+ * cancel the edit
+ */
+function cancelEdit() {
+    document.querySelector("#editForm").style.display = "none";
 }

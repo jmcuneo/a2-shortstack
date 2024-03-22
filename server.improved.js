@@ -16,9 +16,14 @@ let appdata = [
 ];
 
 const server = http.createServer( function( request,response ) {
-  if( request.method === "GET" ) {
+  if (request.method === "GET" && request.url === "/get-scores") {
+    response.writeHead(200, { "Content-Type": "application/json" });
+    response.end(JSON.stringify(appdata));
+  }
+  else if( request.method === "GET" ) {
     handleGet( request, response )
-  }else if( request.method === "POST" ){
+  }
+  else if( request.method === "POST" ){
     handlePost( request, response )
   }
 })
@@ -56,11 +61,12 @@ const handlePost = function( request, response ) {
 
     // modify a score
     else if (receivedData.action === "modify") {
-      let item = appdata.find(item => item.playerName === receivedData.playerName);
-      if(item) {
-        item.score = receivedData.score;
-        item.gameDate = receivedData.gameDate;
-        // Re-calculate ranking if necessary
+      if (receivedData.index >= 0 && receivedData.index < appdata.length) {
+        const score = appdata[receivedData.index];
+        score.playerName = receivedData.playerName;
+        score.score = receivedData.score;
+        score.gameDate = receivedData.gameDate;
+        // No need to explicitly call recalculateRankings here as it will be called after this block
       }
     }
 

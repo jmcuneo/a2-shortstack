@@ -18,6 +18,13 @@
 </form>
 <div id="scoreDisplay"></div>
 
-<script src="js/main.js"></script>
+<div id="editForm" style="display: none;">
+  <input type="text" id="editPlayerName" placeholder="Edit Player Name">
+  <input type="number" id="editScore" placeholder="Edit Score">
+  <input type="date" id="editGameDate">
+  <button type="button" onclick="submitEdit()">Save Changes</button>
+  <button type="button" onclick="cancelEdit()">Cancel</button>
+</div>
+
 </body>
 </html>
