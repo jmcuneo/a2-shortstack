@@ -26,8 +26,16 @@ const handleGet = function( request, response ) {
   const filename = dir + request.url.slice( 1 ) 
 
   if( request.url === "/" ) {
-    sendFile( response, "public/index.html" )
-  }else{
+    sendFile(response, "public/index.html")
+  }
+    else if (request.url === "/appdata")
+    {
+      let content = JSON.stringify(appdata);
+
+      response.writeHead( 200, "OK", {'Content-Type': 'application/json'})
+      response.end(content)
+    }
+    else{
     sendFile( response, filename )
   }
 }
