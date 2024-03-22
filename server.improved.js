@@ -36,33 +36,17 @@ const handlePost = function( request, response ) {
 
   request.on( "end", function() {
 
-    var entry = JSON.parse( dataString );
-    console.log("POST")
-    console.log( entry )
+    let data = JSON.parse( dataString );
 
-    /* for an entry we need to parse the bday string and then calculate age
-    const bdayString = entry.birthday;
-    const bdayParts = bdayString.split("/");
-    const bday = new Date(parseInt(bdayParts[2]), parseInt(bdayParts[0]) - 1, parseInt(bdayParts[1]));
-    const today = new Date();
+    //calculate derived variables
+    let dob = new Date(data.dob);
+    data.age = Math.abs(new Date(Date.now() - dob.getTime()).getUTCFullYear() - 1970); //javapoint
+    data.fullName = data.firstName + " " + data.lastName;
 
-    let age = today.getFullYear() - bday.getFullYear();
-    const month = today.getMonth() - bday.getMonth();
-    if(month < 0 || (month === 0 && today.getDate() < bday.getDate())) {
-      age--;
-    }*/
-    entry.age = 99;
-    entry.fullName = entry.firstName + " " + entry.lastName;
+    appdata.push(data);
 
-    // set id to length since it will be the latest entry
-    const id = appdata.length;
-    entry.id = id;
-
-    appdata.push(entry);
-
-    //
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
-    response.end("successfully added new entry")
+    response.end("application added")
   })
 }
 

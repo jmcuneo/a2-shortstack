@@ -6,25 +6,39 @@
     <meta charset="utf-8">
     <script src="js/main.js"></script>
     <link rel="stylesheet" href="css/main.css">
-
     <!-- get rid of favicon error -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 </head>
 
 <body>
 <h1>Appointment Application Form</h1>
-<form id="applicationForm"> <!--prev: data-form-->
-    <div><label for="firstName">First Name:</label>
-        <input type="text" id="firstName" name="firstName" required></div>
-
-    <div><label for="lastName">Last Name:</label>
-        <input type="text" id="lastName" name="lastName" required></div> <!--derived field: full name-->
-
-    <div><label for="dob">Date of birth:</label>
-        <input type="date" id="dob" name="dob" required></div> <!--derived field: age-->
-
-    <div><label for="email">Email:</label>
-        <input type="email" id="email" name="email" required></div>
+<h2>Very Real Medical Center, Worcester Massachusetts</h2>
+<form id="applicationForm">
+    <div>
+        <h3>Patient's Basic Information</h3>
+        <label for="firstName">First Name:</label> <!--derived field: full name-->
+        <input type="text" id="firstName" name="firstName" required>
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="lastName" required>
+    </div>
+    <div>
+        <label for="dob">Date of birth:</label> <!--derived field: age-->
+        <input type="date" id="dob" name="dob" required>
+        <label for="sex">Sex on Record</label>
+        <input list="sexMarkers" id="sex" required>
+        <datalist id="sexMarkers">
+            <option value="F"></option>
+            <option value="M"></option>
+            <option value="X"></option>
+        </datalist>
+    </div>
+    <div>
+        <h3>Patient Contact Information</h3>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <label for="phone">Phone Number:</label>
+        <input type="tel" id="phone" name="phone" required>
+    </div>
 
     <button id = "submit">Submit Form</button>
 </form>
