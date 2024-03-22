@@ -158,8 +158,8 @@ const handlePut = function( request, response ) {
     bilingObj.discount = discount
     bilingObj.afterdiscount = finalPrice
 
-    billingData.splice(bilingObj.updindex, 0, bilingObj)
-
+    //billingData.splice(bilingObj.updindex, 0, bilingObj)
+    billingData[bilingObj.updindex] = bilingObj
     //billingData.push(bilingObj)
 
     // ... do something with the data here!!!

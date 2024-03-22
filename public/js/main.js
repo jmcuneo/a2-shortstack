@@ -43,7 +43,7 @@ async function displayRow(row) {
     document.getElementById("updpurchasedate").setAttribute('value', row.getAttribute('data-dop'))
     document.getElementById("updcost").setAttribute('value', row.getAttribute('data-cost'))
     document.getElementById("updquantity").setAttribute('value', row.getAttribute('data-quantity'))
-    document.getElementById("updcategory").setAttribute('value', row.getAttribute('data-category'))
+    document.getElementById("updcategory").value = row.getAttribute('data-category')
     document.getElementById("upddescription").setAttribute('value', row.getAttribute('data-desc'))
 }
 
@@ -87,6 +87,7 @@ const submit = async function( event ) {
 
 function addItem(displayText){
     let table = document.getElementById('table-body')
+    let total = 0
     table.innerHTML = ""
     //if(displayText.length > 1){
         //index = displayText.length-1
@@ -116,11 +117,26 @@ function addItem(displayText){
                     data-category = ${displayText[index].category} data-desc = ${displayText[index].description}>UPDATE</button>
                 </td>
             `
+            total = total + displayText[index].afterdiscount
         // <tr> Complete! Append to table!
         let objTr = `<tr id="delRow">${tds}</tr>`
         table.innerHTML += objTr
 
         }
+
+    tds = `<td>
+                
+                </td>
+                <td>
+                Total Price: ${total}
+                </td>
+                <td>
+                    
+                </td>
+            `
+        let objTr = `<tr id="delRow">${tds}</tr>`
+        table.innerHTML += objTr
+
     //}
     // else{
     //     //for(let i = 0; i<displayText.length; i++){
@@ -223,6 +239,8 @@ function openPopup(){
 }
 
 function closePopup(){
+    document.getElementById("reset").click()
     let popup = document.getElementById('popup')
     popup.classList.remove('open-popup')
+
 }
