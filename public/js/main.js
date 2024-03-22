@@ -47,9 +47,14 @@ const addToTable = function(entry){
                 <td>${entry.name}</td>
                 <td>${entry.item}</td>
                 <td>${entry.qty}</td>
-                <td><button>Remove</button></td>
+                <td><button class="remove">Remove</button></td>
               </tr>`;
   table.insertAdjacentHTML('beforeend', row);
+  //
+  const removeButton = table.querySelector('.remove:last-child');
+  removeButton.addEventListener('click', function(event) {
+    event.preventDefault();
+  });
   resetTextBoxes();
 };
 
@@ -75,8 +80,33 @@ const refreshPage = async function(){
   console.log("done")
 }
 
+const remove = async function(entryIndex){
+  const response = await fetch("/remove", {
+    method: "POST",
+    body: JSON.stringify(entryIndex),
+  })
+  const text = await response.json();
+  //make index a string
+  const entry = text[entryIndex];
+  //removeFromTable(entry);
+  for(let i = 0; i < text.length; i++){
+    addToTable(text[i])
+  }
+  console.log("this is the text: ", entry);
+}
+
+
+
 window.onload = function () {
   refreshPage();
-  const button = document.querySelector("button");
+  const button = document.getElementById("submit");
   button.onclick = submit;
+  document.addEventListener("click", function(event) {
+    event.preventDefault();
+    if (event.target && event.target.classList.contains("remove")) {
+      const entryIndex = event.target.closest('tr').rowIndex - 1; // Subtract 1 because of table header
+      remove.onclick = remove(entryIndex);
+    }
+  });
+
 };
