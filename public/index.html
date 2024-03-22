@@ -1,38 +1,21 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <title>CS4241 Assignment 2</title>
-    <meta charset="utf-8">
-    <script src="js/main.js"></script>
-    <link rel="stylesheet" href="css/main.css">
-    
-    <!-- get rid of favicon error -->
-    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
-  </head>
-  <body>
-    <form>
-      <table id="scoreTable">
-        <thead>
-        <tr>
-          <th>Player</th>
-          <th>Score</th>
-          <th>Date</th>
-          <th>Ranking</th>
-          <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody id="scoreDisplay">
-        <div id="editForm" style="display: none;">
-          <input type="text" id="editPlayerName" placeholder="Player Name">
-          <input type="number" id="editScore" placeholder="Score">
-          <button onclick="updateScore()">Update Score</button>
-        </div>
-      <input type="text" id="playerName" name="playerName" placeholder="Player Name">
-      <input type="number" id="score" name="score" placeholder="Score">
-      <input type="date" id="gameDate" name="gameDate">
-      <button>Submit Score</button>
-        </tbody>
-      </table>
-    </form>
-  </body>
+<head>
+  <title>CS4241 Assignment 2</title>
+  <meta charset="utf-8">
+  <script src="js/main.js"></script>
+  <link rel="stylesheet" href="css/main.css">
+
+  <!-- get rid of favicon error -->
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+</head>
+<body>
+<form>
+  <input type="text" id="playerName" name="playerName" placeholder="Player Name">
+  <input type="number" id="score" name="score" placeholder="Score">
+  <input type="date" id="gameDate" name="gameDate">
+  <button>Submit Score</button>
+</form>
+<div id="scoreDisplay"></div>
+</body>
 </html>
