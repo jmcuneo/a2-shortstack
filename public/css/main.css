@@ -3,5 +3,56 @@ body {
   color:white;
 }
 input{
-  display: block;
+  text-align: center;
+  display: inline-block;
+  margin-bottom: 5px;
 }
+#table{
+  font-family: "Comic Sans MS", serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+div{
+  text-align: center;
+}
+
+th, td{
+  border: 1px solid #000000;
+  font-family: "Comic Sans MS", serif;
+  font-size: large;
+  color: black;
+}
+
+header{
+  font-family: "Honk", sans-serif;
+  font-size: 100px;
+  color: black;
+  text-align: center;
+}
+image{
+  background: white;
+  align-content: center;
+  display: inline-block;
+  max-width: 100%;
+  height: auto;
+}
+
+.grid-container{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: auto;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.grid-table{
+  grid-column-start: 1;
+  grid-column-end: 5;
+}
+form{
+  margin-left: 25%;
+  margin-right:25%;
+  width: 50%;
+}
+
