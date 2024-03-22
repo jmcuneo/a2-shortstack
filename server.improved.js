@@ -64,8 +64,20 @@ const handlePost = function( request, response ) {
       }
     }
 
+    recalculateRankings(); // reorganize the datasets
+
     response.writeHead( 200, "OK", {"Content-Type": "application/json" })
     response.end(JSON.stringify(appdata));
+  });
+}
+
+/**
+ * calculate ranking based on scores and reorganize the datasets
+ */
+function recalculateRankings() {
+  appdata.sort((a, b) => b.score - a.score);
+  appdata.forEach((item, index) => {
+    item.ranking = index + 1;
   });
 }
 
