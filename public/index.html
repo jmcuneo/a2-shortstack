@@ -11,11 +11,28 @@
   </head>
   <body>
     <form>
+      <table id="scoreTable">
+        <thead>
+        <tr>
+          <th>Player</th>
+          <th>Score</th>
+          <th>Date</th>
+          <th>Ranking</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody id="scoreDisplay">
+        <div id="editForm" style="display: none;">
+          <input type="text" id="editPlayerName" placeholder="Player Name">
+          <input type="number" id="editScore" placeholder="Score">
+          <button onclick="updateScore()">Update Score</button>
+        </div>
       <input type="text" id="playerName" name="playerName" placeholder="Player Name">
       <input type="number" id="score" name="score" placeholder="Score">
       <input type="date" id="gameDate" name="gameDate">
       <button>Submit Score</button>
+        </tbody>
+      </table>
     </form>
-    <div id="scoreDisplay"></div>
   </body>
 </html>
