@@ -18,11 +18,31 @@ const submit = async function( event ) {
     headers:{'Content-Type': 'application/json'},
     body 
   }).then(response => response.json())
-      .then(json => console.log(json));
-  // Here need to update the client-side display to show the new dataset
+      .then(json => {
+        console.log(json);
+        updateScoreToDisplay(json); // this will update the new dataset to display
+      });
 }
 
 window.onload = function() {
    const button = document.querySelector("button");
   button.onclick = submit;
+}
+
+/**
+ * a function to render scores inside the '#scoreDisplay' to display
+ * @param scores are the inputted scores
+ */
+function updateScoreToDisplay(scores){
+  const display = document.querySelector('#scoreDisplay');
+
+  // to clear the current content
+  display.innerHTML = '';
+
+  scores.forEach(score => {
+    const scoreElement = document.createElement('div');
+    scoreElement.textContent =
+        `Player: ${score.playerName}, Score: ${score.score}, Date: ${score.gameDate}, Ranking: ${score.ranking}`;
+    display.appendChild(scoreElement);
+  });
 }
