@@ -93,7 +93,7 @@ const handleRemove = function (request, response){
   */
  //!isNaN(dataString) && dataString >= 0 && dataString <= appdata.length
   if (dataString !== 1) {
-    appdata.splice(dataString, 0); // Remove the entry from the array
+    appdata.splice(dataString, 1); // Remove the entry from the array
     console.log("Removed item at index: ", dataString);
     console.log("Updated appdata: ", appdata);
     response.writeHead(200, "OK", {"Content-Type": "text/plain"});
