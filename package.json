@@ -1,12 +1,12 @@
 {
-  "name": "",
-  "version": "",
-  "description": "",
-  "author": "",
+  "name": "assignment2",
+  "version": "1.0.0",
+  "description": "Assignment 2 - Shortstack for Webware",
+  "author": "Alexander Beck",
   "scripts": {
     "start": "node server.improved.js"
   },
   "dependencies": {
-    "mime": "^2.4.4"
+    "mime": "^2.6.0"
   }
 }
