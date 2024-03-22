@@ -50,7 +50,7 @@ const handlePost = function( request, response ) {
 
     // add a score
     if (receivedData.action === "add") {
-      receivedData.ranking = appdata.length + 1; // Example ranking calculation
+      //receivedData.ranking = appdata.length + 1;
       appdata.push(receivedData);
     }
 
@@ -66,11 +66,11 @@ const handlePost = function( request, response ) {
         score.playerName = receivedData.playerName;
         score.score = receivedData.score;
         score.gameDate = receivedData.gameDate;
-        // No need to explicitly call recalculateRankings here as it will be called after this block
       }
     }
 
-    recalculateRankings(); // reorganize the datasets
+    // reorganize the datasets
+    recalculateRankings();
 
     response.writeHead( 200, "OK", {"Content-Type": "application/json" })
     response.end(JSON.stringify(appdata));

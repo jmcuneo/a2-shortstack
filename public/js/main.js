@@ -24,12 +24,13 @@ const submit = async function( event ) {
             console.log(json);
             updateScoreToDisplay(json); // this will update the new dataset to display
         })
-        .catch(error => console.error('Error: ', error)); // for debugging purpose
+        .catch(error => console.error('Error: ', error));
 }
 
 window.onload = async function() {
     try {
-        const response = await fetch("/get-scores"); // Assuming "/get-scores" is an endpoint returning the entire appdata
+        // use this to help me to fetch 'appdata' in server side to client side
+        const response = await fetch("/get-scores");
         const scores = await response.json();
         updateScoreToDisplay(scores);
     } catch (error) {
@@ -78,33 +79,12 @@ async function deleteScore(playerName) {
         });
 }
 
-/**
- * modify the score and display it
- * @param playerName
- * @param scoreIndex
- */
-async function modifyScore(playerName, scoreIndex) {
-    const newScore = prompt('Enter new score:');
-
-    if (newScore) {
-        await fetch('/submit', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({action: 'modify', playerName, score: Number(newScore),
-                gameDate: new Date().toISOString().split('T')[0]})
-        }).then(response => response.json())
-            .then(json => {
-                updateScoreToDisplay(json);
-            });
-    }
-}
-
 
 /**
- * accept the score's index to identify which score to edit
+ * accept the score's index to identify which score to edit and modify
  */
 async function showEditForm(index) {
-    // Fetch the latest scores array
+    // fetch the latest scores array
     const response = await fetch("/get-scores");
     const scores = await response.json();
 
@@ -114,7 +94,8 @@ async function showEditForm(index) {
     document.querySelector("#editGameDate").value = score.gameDate;
 
     document.querySelector("#editForm").style.display = "block";
-    currentEditingIndex = index; // Keep track of the current editing index globally
+    // keep track of the current editing index globally
+    currentEditingIndex = index;
 }
 
 /**
@@ -133,7 +114,7 @@ async function submitEdit() {
             playerName,
             score: Number(score),
             gameDate,
-            index: currentEditingIndex // Pass this index to the server to identify which score to update
+            index: currentEditingIndex // identify which score to update
         })
     })
         .then(response => response.json())
