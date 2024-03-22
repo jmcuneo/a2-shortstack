@@ -50,11 +50,28 @@ const remove = async function(event,index){
   localAppData.splice(searchResult.index,1);
 }
 
+
 const submitButton = document.querySelector("#submit");
 submitButton.onclick = submit;
 const table = document.querySelector("#table");
-
 const localAppData = [];
+
+const updateAllData = async function(){
+  const response = await fetch("/submit",{
+    method:"POST",
+    body: JSON.stringify({
+      type:"getAll"
+    })
+  });
+  const res = await response.json();
+  table.innerHTML = "";
+  for(let i = 0; i < res.length; i++){
+    let item = res[i];
+    let element = addRow([item.string,item.gram0,item.gram1,item.gram2,item.gram3],item.id);
+    item.element=element;
+    localAppData.push(item);
+  }
+}
 
 function addRow(anagrams, index){
   let row = document.createElement('tr');
@@ -72,3 +89,7 @@ function addRow(anagrams, index){
   table.appendChild(row);
   return row;
 }
+
+updateAllData();
+//Refresh the data every 20 seconds.
+setInterval(updateAllData,20000);

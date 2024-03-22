@@ -48,6 +48,9 @@ const handlePost = function( request, response ) {
       case "remove":
         handleRemove(response,data);
         break;
+      case "getAll":
+        handleGetAll(response,data);
+        break;
     }
   })
 }
@@ -97,6 +100,7 @@ const handleNewEntry = function(response,data){
 const handleRemove = function(response, data){
   var removeVal = data.index;
   for(let i = 0; i < appdata.length; i++){
+    //TODO: Check that this handles data that's already been removed. It should, but check.
     if(appdata[i].id === removeVal){
       appdata.splice(i,1);
       break;
@@ -104,6 +108,11 @@ const handleRemove = function(response, data){
   }
   response.writeHead( 200, "OK", {"Content-Type": "text/plain" });
   response.end(JSON.stringify({index:data.index}));
+}
+
+const handleGetAll = function(response,data){
+  response.writeHead( 200, "OK", {"Content-Type": "text/plain" });
+  response.end(JSON.stringify(appdata));
 }
 
 server.listen( process.env.PORT || port )
