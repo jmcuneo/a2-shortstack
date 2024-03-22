@@ -43,7 +43,7 @@ const createEntry = function (name, item, qty) {
 //adds row to html table
 const addToTable = function(entry){
   const table = document.getElementById("table");
-  const row = `<tr>
+  const row = `<tr id="entryRow">
                 <td>${entry.name}</td>
                 <td>${entry.item}</td>
                 <td>${entry.qty}</td>
@@ -88,14 +88,29 @@ const remove = async function(entryIndex){
   const text = await response.json();
   //make index a string
   const entry = text[entryIndex];
-  //removeFromTable(entry);
+  
+  if(text.status === 204){
+    clearTable();
+    return;
+  }else{
+    clearTable();
+    
+    /*
+    for(let i = 0; i < text.length; i++){
+      addToTable(text[i])
+    }*/
+  }
+  /*
   for(let i = 0; i < text.length; i++){
     addToTable(text[i])
-  }
-  console.log("this is the text: ", entry);
+  }*/
+  console.log("Removed Entry: ", entry);
+  
 }
 
-
+const clearTable = function(){
+  document.getElementById("entryRow").remove();
+}
 
 window.onload = function () {
   refreshPage();
