@@ -2,6 +2,7 @@
 body {
   font-family: "Oswald", serif;
   background-color: #6D8BA6;
+  text-transform: capitalize;
 }
 
 .header {
