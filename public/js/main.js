@@ -49,15 +49,15 @@ function insetElementToTable(element)
 
     if(i == 0)
     {
-      cell.innerHTML = element[0];
+      cell.innerHTML = element.model;
     }
     else if(i == 1)
     {
-      cell.innerHTML = element[1];
+      cell.innerHTML = element.year;
     }
     else if(i == 2)
     {
-      cell.innerHTML = element[2];
+      cell.innerHTML = element.mpg;
     }
     else if(i == 3)
     {
