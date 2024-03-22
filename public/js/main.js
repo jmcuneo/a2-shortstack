@@ -26,9 +26,11 @@ const submit = async function (event) {
   })
   //promise
   const text = await response.json();
+  const justAdded = text[text.length - 1];
+  addToTable(justAdded);
   console.log("text:", text);
-  addToTable(newEntry);
 };
+
 
 const createEntry = function (name, item, qty) {
   const entry = {};
@@ -56,12 +58,25 @@ const resetTextBoxes = function(){
   document.querySelector("#youritem").value = "";
   document.querySelector("#numItems").value = "";
 
-}
+};
 function isEmpty(str) {
   return (!str || str.length === 0 );
 };
 
+const refreshPage = async function(){
+  const response = await fetch("/refresh", {
+    method: "POST",
+    body: ""
+  })
+  const text = await response.json();
+  for(let i = 0; i < text.length; i++){
+    addToTable(text[i])
+  }
+  console.log("done")
+}
+
 window.onload = function () {
+  refreshPage();
   const button = document.querySelector("button");
   button.onclick = submit;
 };
