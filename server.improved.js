@@ -50,12 +50,12 @@ const handlePost = function( request, response ) {
     }
 
     // delete a score
-    if (receivedData.action === "delete") {
+    else if (receivedData.action === "delete") {
       appdata = appdata.filter(item => item.playerName !== receivedData.playerName);
     }
 
     // modify a score
-    if (receivedData.action === "modify") {
+    else if (receivedData.action === "modify") {
       let item = appdata.find(item => item.playerName === receivedData.playerName);
       if(item) {
         item.score = receivedData.score;
