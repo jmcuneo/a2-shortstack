@@ -8,11 +8,40 @@
     
     <!-- get rid of favicon error -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+
+    <!-- Add Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Economica:ital,wght@0,400;0,700;1,400;1,700&family=Risque&family=Sarabun:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&family=Stoke:wght@300;400&display=swap" rel="stylesheet">
   </head>
   <body>
-    <form>
-      <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
-    </form>
+    <header>
+      <h1>Alex's TODO: REMOVE THIS BEFORE SUBMITTING</h1>
+      <ul>
+        <li>Add CSS</li>
+        <li>Validate page</li>
+      </ul>
+    </header>
+    <main>
+      <form id="todoForm">
+        <label for="taskname">Task Name:</label>
+        <input type="text" placeholder="Task" name="taskname" id="taskname" data-send>
+        <label for="priority">Priority:</label>
+        <select name="priority" id="priority" data-send>
+          <option value="veryhigh">Very High</option>
+          <option value="high">High</option>
+          <option value="medium">Medium</option>
+          <option value="low">Low</option>
+          <option value="verylow">Very Low</option>
+        </select>
+        <label for="duedate">Due Date:</label>
+        <input type="date" name="duedate" id="duedate" data-send>
+        <button id="submit">Submit</button>
+        <button id="clear">Clear Data</button>
+      </form>
+      <div id="todo">
+        <table></table>
+      </div>
+  </main>
   </body>
 </html>

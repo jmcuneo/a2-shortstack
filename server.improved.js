@@ -8,11 +8,34 @@ const http = require( "http" ),
       dir  = "public/",
       port = 3000
 
-const appdata = [
-  { "model": "toyota", "year": 1999, "mpg": 23 },
-  { "model": "honda", "year": 2004, "mpg": 30 },
-  { "model": "ford", "year": 1987, "mpg": 14} 
-]
+let appdata = []
+
+function sortData() {
+  const MS_TO_HOURS = 1000 * 60 * 60;
+
+  // Rank with priority first. Then, smaller the number, the greater the priority
+  const priorities = {
+    'verylow': 1,
+    'low': 2,
+    'medium': 3,
+    'high': 4,
+    'veryhigh': 5
+  };
+  
+  appdata.sort((a, b) => {
+    let priorityDifference = priorities[b.priority] - priorities[a.priority];
+    if (priorityDifference !== 0) {
+      return priorityDifference;
+    }
+    // They have the same priority, so sort by date instead
+    return Math.floor((new Date(b.duedate).getTime() - new Date(a.duedate).getTime()) / MS_TO_HOURS);
+  });
+
+  // Update recommended order
+  for (let i = 0; i < appdata.length; i++) {
+    appdata[i].ordernum = i;
+  }
+}
 
 const server = http.createServer( function( request,response ) {
   if( request.method === "GET" ) {
@@ -40,12 +63,47 @@ const handlePost = function( request, response ) {
   })
 
   request.on( "end", function() {
-    console.log( JSON.parse( dataString ) )
+    let newData = JSON.parse(dataString);
+    // The page was loaded. Send the data.
+    if (newData.method === "load") {
+      console.log("Data requested");
+      response.writeHead(200, "OK", {"Content-Type": "application/json"});
+      response.end(JSON.stringify(appdata));
+      console.log("Data sent");
+      return;
+    }
 
-    // ... do something with the data here!!!
+    // Clear the data
+    if (newData.method === "clear") {
+      appdata = [];
+      console.log("Cleared data!");
+      response.writeHead( 200, "OK", {"Content-Type": "text/plain" });
+      response.end("Data cleared!");
+      return;
+    }
 
-    response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
-    response.end("test")
+    // Edits the existing value if the name is already there
+    for (let i = 0; i < appdata.length; i++) {
+      if (appdata[i].taskname === newData.taskname) {
+        newData.ordernum = appdata[i].ordernum;
+        // Replace the existing value in appdata with the new data
+        appdata.splice(i, 1, newData);
+        sortData();
+
+        console.log("Updated data!");
+        response.writeHead(200, "OK", {"Content-Type": "application/json"});
+        response.end(JSON.stringify(appdata));
+        return;
+      }
+    }
+
+    // Update all the order nums
+    appdata.push(newData);
+    sortData();
+
+    // // Return the new table
+    response.writeHead(200, "OK", {"Content-Type": "application/json"});
+    response.end(JSON.stringify(appdata));
   })
 }
 
