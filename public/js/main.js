@@ -7,15 +7,15 @@ const submit = async function( event ) {
   // remains to this day
   event.preventDefault()
   
-  const input = document.querySelector( "#yourname" ),
-        json = { yourname: input.value },
+  const input = document.querySelector( "#string" ),
+        json = { string: input.value },
         body = JSON.stringify( json )
 
   //Asynchronous network request
   const response = await fetch( "/submit", {
     method:"POST",
     body 
-  })
+  });
 
   const text = await response.text()
 
@@ -23,6 +23,6 @@ const submit = async function( event ) {
 }
 
 window.onload = function() {
-   const button = document.querySelector("button");
+  const button = document.querySelector("button");
   button.onclick = submit;
 }
