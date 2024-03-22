@@ -17,6 +17,9 @@ const server = http.createServer( function( request,response ) {
   }
 })
 
+var maxId = 0;
+const appdata = [];
+
 const handleGet = function( request, response ) {
   const filename = dir + request.url.slice( 1 ) 
 
@@ -75,27 +78,30 @@ const handleNewEntry = function(response,data){
   var string = data.string;
   var anagrams = anagram.getAnagrams(string,4);
   //Send this back as a unique identifier, which will allow the client to delete entries.
-  let index = appdata.length;
   let nextData = {
+    id:maxId,
     string:string,
     gram0:anagrams[0],
     gram1:anagrams[1],
     gram2:anagrams[2],
     gram3:anagrams[3]
   };
+  maxId++;
   appdata.push(nextData);
   console.log(anagrams);
 
   response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
-  response.end(JSON.stringify({
-    index:index,
-    data:nextData
-  }));
+  response.end(JSON.stringify(nextData));
 }
 
 const handleRemove = function(response, data){
   var removeVal = data.index;
-  appdata.splice(removeVal,1);
+  for(let i = 0; i < appdata.length; i++){
+    if(appdata[i].id === removeVal){
+      appdata.splice(i,1);
+      break;
+    }
+  }
   response.writeHead( 200, "OK", {"Content-Type": "text/plain" });
   response.end(JSON.stringify({index:data.index}));
 }

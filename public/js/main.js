@@ -19,9 +19,18 @@ const submit = async function( event ) {
   });
 
   const res = await response.json();
-  const data = res.data;
-  res.data.element = addRow([data.string,data.gram0,data.gram1,data.gram2,data.gram3],res.index);
-  localAppData.push(res.data);
+  console.log(res);
+  res.element = addRow([res.string,res.gram0,res.gram1,res.gram2,res.gram3],res.id);
+  localAppData.push(res);
+}
+
+function getLocalAppDataEntry(id){
+  for(var i = 0; i < localAppData.length; i++){
+    if(localAppData[i].id===id){
+      return {index:i,entry:localAppData[i]};
+    }
+  }
+  return null;
 }
 
 const remove = async function(event,index){
@@ -36,9 +45,9 @@ const remove = async function(event,index){
   const res = await response.json();
   var rIndex = parseInt(res.index);
   console.log(res);
-  console.log(rIndex);
-  table.removeChild(localAppData[rIndex].element);
-  localAppData.splice(rIndex,1);
+  let searchResult = getLocalAppDataEntry(rIndex);
+  table.removeChild(searchResult.entry.element);
+  localAppData.splice(searchResult.index,1);
 }
 
 const submitButton = document.querySelector("#submit");
