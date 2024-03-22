@@ -22,7 +22,9 @@ const submit = async function( event ) {
 
   console.log( "text:", text )
 
-  insetElementToTable(input.value)
+  let newData = { "model": input.value, "year": 0, "mpg": 100 }
+
+  insetElementToTable(newData)
 
 }
 
@@ -35,7 +37,7 @@ window.onload = function() {
 
 
 //CUSTOM CODE: Add this to the table
-function insetElementToTable(text)
+function insetElementToTable(element)
 {
   tableIndex++;
   const table = document.getElementById("InformationTable")
@@ -47,15 +49,15 @@ function insetElementToTable(text)
 
     if(i == 0)
     {
-      cell.innerHTML = text;
+      cell.innerHTML = element[0];
     }
     else if(i == 1)
     {
-
+      cell.innerHTML = element[1];
     }
     else if(i == 2)
     {
-
+      cell.innerHTML = element[2];
     }
     else if(i == 3)
     {
