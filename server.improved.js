@@ -83,13 +83,27 @@ const handleRemove = function (request, response){
   request.on( "end", function() {
     const dataObject = JSON.parse(dataString);
     //const entryIndex = parseInt(dataObject.index); // Parse index as an integer
-
+/*
     appdata.splice(dataString, 1); // Remove the entry from the array
     console.log("Removed item at index: ", dataString);
     console.log("Updated appdata: ", appdata);
     response.writeHead(200, "OK", {"Content-Type": "text/plain"});
     response.end(JSON.stringify(appdata));
   });
+  */
+ //!isNaN(dataString) && dataString >= 0 && dataString <= appdata.length
+  if (dataString !== 1) {
+    appdata.splice(dataString, 0); // Remove the entry from the array
+    console.log("Removed item at index: ", dataString);
+    console.log("Updated appdata: ", appdata);
+    response.writeHead(200, "OK", {"Content-Type": "text/plain"});
+    response.end(JSON.stringify(appdata));
+  } else {
+    // Invalid index, send an error response
+    response.writeHead(204, "Bad Request", {"Content-Type": "text/plain"});
+    response.end(JSON.stringify("Invalid index"));
+  }
+});
 }
 
 const sendFile = function( response, filename ) {
