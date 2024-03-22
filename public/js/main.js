@@ -49,7 +49,20 @@ function insetElementToTable(text)
     {
       cell.innerHTML = text;
     }
-    cell.innerHTML = text;
+    else if(i == 1)
+    {
+
+    }
+    else if(i == 2)
+    {
+
+    }
+    else if(i == 3)
+    {
+      let curDate = new Date()
+      cell.innerHTML = (curDate.getMonth() + 1) + "/" + curDate.getDate() + "/" + curDate.getFullYear()
+    }
+
   }
 
 
