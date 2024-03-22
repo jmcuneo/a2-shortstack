@@ -43,15 +43,30 @@ const handlePost = function( request, response ) {
   request.on( "end", function() {
     let receivedData = JSON.parse(dataString);
 
-    if (receivedData.playerName && receivedData.score && receivedData.gameDate) {
-      // Simulate ranking calculation
-      receivedData.ranking = appdata.length + 1;
+    // add a score
+    if (receivedData.action === "add") {
+      receivedData.ranking = appdata.length + 1; // Example ranking calculation
       appdata.push(receivedData);
     }
 
+    // delete a score
+    if (receivedData.action === "delete") {
+      appdata = appdata.filter(item => item.playerName !== receivedData.playerName);
+    }
+
+    // modify a score
+    if (receivedData.action === "modify") {
+      let item = appdata.find(item => item.playerName === receivedData.playerName);
+      if(item) {
+        item.score = receivedData.score;
+        item.gameDate = receivedData.gameDate;
+        // Re-calculate ranking if necessary
+      }
+    }
+
     response.writeHead( 200, "OK", {"Content-Type": "application/json" })
-    response.end(JSON.stringify(appdata))
-  })
+    response.end(JSON.stringify(appdata));
+  });
 }
 
 const sendFile = function( response, filename ) {
