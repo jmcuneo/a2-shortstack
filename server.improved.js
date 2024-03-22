@@ -4,64 +4,67 @@ const http = require( "http" ),
     dir  = "public/",
     port = 3000
 
-let appdata = [];
+const appdata = [];
 
-const server = http.createServer(function (request, response) {
+const server = http.createServer( function( request,response ) {
   if (request.method === "GET") {
     handleGet(request, response);
   } else if (request.method === "POST") {
     handlePost(request, response);
   }
-});
+})
 
 const handleGet = function( request, response ) {
   const filename = dir + request.url.slice( 1 )
 
   if( request.url === "/" ) {
     sendFile( response, "public/index.html" )
+  } else if( request.url === "/appdata" ) {
+    response.writeHeader( 200, { "Content-Type": "Text" })
+    response.end(JSON.stringify(appdata));
   } else {
     sendFile( response, filename )
   }
 }
 
-const handlePost = function (request, response) {
-  let dataString = "";
+const handlePost = function( request, response ) {
+  let dataString = ""
 
-  request.on("data", function (data) {
-    dataString += data;
-  });
+  request.on( "data", function( data ) {
+    dataString += data
+  })
 
-  request.on("end", function () {
-    const formData = JSON.parse(dataString);
+  request.on( "end", function() {
 
-    // ... do something with the data here!!!
-    // calculate age - from javapoint.com
-    var dob = formData.dob;
-    //calculate month difference from current date in time
-    var month_diff = Date.now() - dob.getTime();
-    //convert the calculated difference in date format
-    var age_dt = new Date(month_diff);
-    //extract year from date
-    var year = age_dt.getUTCFullYear();
+    var entry = JSON.parse( dataString );
+    console.log("POST")
+    console.log( entry )
 
-    //now calculate the age of the user
-    let age = Math.abs(year - 1970);
-    const month = today.getMonth() - dob.getMonth();
-    if(month < 0 || (month === 0 && today.getDate() < dob.getDate())) {
+    /* for an entry we need to parse the bday string and then calculate age
+    const bdayString = entry.birthday;
+    const bdayParts = bdayString.split("/");
+    const bday = new Date(parseInt(bdayParts[2]), parseInt(bdayParts[0]) - 1, parseInt(bdayParts[1]));
+    const today = new Date();
+
+    let age = today.getFullYear() - bday.getFullYear();
+    const month = today.getMonth() - bday.getMonth();
+    if(month < 0 || (month === 0 && today.getDate() < bday.getDate())) {
       age--;
-    }
+    }*/
+    entry.age = 99;
+    entry.fullName = entry.firstName + " " + entry.lastName;
 
-    //derived variables
-    formData.age = age;
-    formData.fullName = formData.firstName + " " + formData.lastName;
+    // set id to length since it will be the latest entry
+    const id = appdata.length;
+    entry.id = id;
 
-    appdata.push(formData);
+    appdata.push(entry);
 
     //
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
-    response.end("test")
-  });
-};
+    response.end("successfully added new entry")
+  })
+}
 
 const sendFile = function( response, filename ) {
   const type = mime.getType( filename )
@@ -70,36 +73,6 @@ const sendFile = function( response, filename ) {
 
     // if the error = null, then we"ve loaded the file successfully
     if( err === null ) {
-
-      /*ADD DATA HERE*/
-      // get table and empty it
-      var table = document.querySelector(" #data-table ");
-      table.innerHTML = '';
-
-      // parse data
-      const data = JSON.parse(text);
-
-      // add to table - stack overflow
-      for(const elt of data) {
-
-        var row = table.insertRow();
-        var nameCell = row.insertCell();
-        nameCell.id = "nameCell";
-        var dobCell = row.insertCell();
-        dobCell.id = "dobCell";
-        var ageCell = row.insertCell();
-        ageCell.id = "ageCell";
-        var emailCell = row.insertCell();
-        emailCell.id = "emailCell";
-
-        // add new elements and set their values
-        row.appendChild(del);
-
-        nameCell.innerHTML = elt.id;
-        dobCell.innerHTML = elt.name;
-        ageCell.innerHTML = elt.age;
-        emailCell.innerHTML = elt.birthday;
-      }
 
       // status code: https://httpstatuses.com
       response.writeHeader( 200, { "Content-Type": type })

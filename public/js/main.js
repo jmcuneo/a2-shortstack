@@ -1,6 +1,6 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 
-const submit = async (event) => {
+const submit = async function( event ) {
     // stop form submission from trying to load
     // a new .html page for displaying results...
     // this was the original browser behavior and still
@@ -21,20 +21,47 @@ const submit = async (event) => {
     });
 
     const text = await response.text()
+    console.log(text)
+    loadData()
+}
 
-    addData()
-};
 
-async function addData() {
+async function loadData() {
 
-    const response = await fetch( "/", {
+    const response = await fetch( "/appdata", {
         method:"GET"
     })
     const text = await response.text()
-    console.log("text")
+    console.log("loaded data")
+
+    fillTable(text);
 }
 
-window.onload = function () {
-    const button = document.querySelector("#submit");
-    button.onclick = submit;
-};
+async function fillTable(text) {
+    var table = document.querySelector(" #datatable ");
+    table.innerHTML = '';
+    const data = JSON.parse(text);
+
+    // stackoverflow
+    for(const elt of data) {
+        var row = table.insertRow();
+        var nameCell = row.insertCell();
+        nameCell.id = "nameCell";
+        var dobCell = row.insertCell();
+        dobCell.id = "dobCell";
+        var ageCell = row.insertCell();
+        ageCell.id = "ageCell";
+        var emailCell = row.insertCell();
+        emailCell.id = "emailCell";
+
+        nameCell.innerHTML = elt.fullName;
+        dobCell.innerHTML = elt.dob;
+        ageCell.innerHTML = elt.age;
+        emailCell.innerHTML = elt.email;
+    }
+}
+
+window.onload = function() {
+    const submitBtn = document.querySelector("button#submit");
+    submitBtn.onclick = submit;
+}
