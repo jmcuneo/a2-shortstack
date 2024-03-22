@@ -9,16 +9,6 @@ const http = require( "http" ),
       dir  = "public/",
       port = 3000
 
-var appdata = [
-    {
-        "string":"undertale",
-        "gram0":"nude alert",
-        "gram1":"unrelated",
-        "gram2":"delta rune",
-        "gram3":"nut dealer"
-    }
-];
-
 const server = http.createServer( function( request,response ) {
   if( request.method === "GET" ) {
     handleGet( request, response )    
@@ -45,20 +35,17 @@ const handlePost = function( request, response ) {
   })
 
   request.on( "end", function() {
-    var string = JSON.parse(dataString).string;
-
-    var anagrams = anagram.getAnagrams(string,4);
-    appdata.push({
-      string:string,
-      gram0:anagrams[0],
-      gram1:anagrams[1],
-      gram2:anagrams[2],
-      gram3:anagrams[3]
-    });
-    console.log(anagrams);
-
-    response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
-    response.end(JSON.stringify(anagrams));
+    let data = JSON.parse(dataString);
+    var type = data.type;
+    //TODO: Make this handle different url's rather than the type data
+    switch(type){
+      case "anagram":
+        handleNewEntry(response,data);
+        break;
+      case "remove":
+        handleRemove(response,data);
+        break;
+    }
   })
 }
 
@@ -67,7 +54,7 @@ const sendFile = function( response, filename ) {
 
    fs.readFile( filename, function( err, content ) {
 
-     // if the error = null, then we"ve loaded the file successfully
+     // if the error = null, then we've loaded the file successfully
      if( err === null ) {
 
        // status code: https://httpstatuses.com
@@ -82,6 +69,35 @@ const sendFile = function( response, filename ) {
 
      }
    })
+}
+
+const handleNewEntry = function(response,data){
+  var string = data.string;
+  var anagrams = anagram.getAnagrams(string,4);
+  //Send this back as a unique identifier, which will allow the client to delete entries.
+  let index = appdata.length;
+  let nextData = {
+    string:string,
+    gram0:anagrams[0],
+    gram1:anagrams[1],
+    gram2:anagrams[2],
+    gram3:anagrams[3]
+  };
+  appdata.push(nextData);
+  console.log(anagrams);
+
+  response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
+  response.end(JSON.stringify({
+    index:index,
+    data:nextData
+  }));
+}
+
+const handleRemove = function(response, data){
+  var removeVal = data.index;
+  appdata.splice(removeVal,1);
+  response.writeHead( 200, "OK", {"Content-Type": "text/plain" });
+  response.end(JSON.stringify({index:data.index}));
 }
 
 server.listen( process.env.PORT || port )

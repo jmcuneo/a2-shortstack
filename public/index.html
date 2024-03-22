@@ -3,7 +3,7 @@
   <head>
     <title>CS4241 Assignment 2</title>
     <meta charset="utf-8">
-    <script src="js/main.js"></script>
+    <script src="js/main.js" defer></script>
     <link rel="stylesheet" href="css/main.css">
     
     <!-- get rid of favicon error -->
@@ -12,10 +12,29 @@
   <body>
     <form>
       <input type="text" id="string" value="enter a string to anagramize!">
-      <button>submit</button>
+      <button id="submit">submit</button>
     </form>
-    <div id="table">
-      
-    </div>
+    <table id="table">
+      <tr>
+        <th>
+          String
+        </th>
+        <th>
+          Anagram 1
+        </th>
+        <th>
+          Anagram 2
+        </th>
+        <th>
+          Anagram 3
+        </th>
+        <th>
+          Anagram 4
+        </th>
+        <th>
+          Remove
+        </th>
+      </tr>
+    </table>
   </body>
 </html>
