@@ -13,10 +13,21 @@ const submit = async function( event ) {
         json = { yourname: input.value },
         body = JSON.stringify( json )
 
+
+  const populateTable = await fetch("/appdata",
+      {
+        method:"GET"
+      })
+
   const response = await fetch( "/submit", {
     method:"POST",
     body 
   })
+
+
+
+  populateTable.then((json) => console.log(json));
+
 
   const text = await response.text()
 
