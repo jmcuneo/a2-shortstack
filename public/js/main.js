@@ -22,15 +22,18 @@ const submit = async function( event ) {
         json = { val1: val1.value, val2: val2.value, op: op, guess: guess.value},
         body = JSON.stringify( json )
 
-  const response = await fetch( "/submit", {
-    method:"POST",
-    body 
-  })
+  if (val1.value && val2.value && op) {
+    const response = await fetch( "/submit", {
+      method:"POST",
+      body 
+    })
 
-  const resp = await response.json()
-  displayData(resp)
+    const resp = await response.json()
+    displayData(resp)
 
-  console.log( "text:", resp)
+    console.log( "text:", resp)
+  }
+
 }
 
 function deleteItem( event ) {
@@ -45,6 +48,30 @@ function deleteItem( event ) {
       })
     })
 
+}
+
+function modItem ( event ) {
+  let form = document.getElementsByClassName("forms")[0]
+  form.style.display = "none"
+
+  let modform = document.getElementById("modForm")
+  modform.style.display = "block"
+
+  const val1 = document.querySelector( "#newFirst" ),
+        val2 = document.querySelector( "#newSec" ),
+        op = radioValue(),
+        answer = document.querySelector( "#forceAnswer" ),
+        json = {index: event.srcElement.id, val1: val1.value, val2: val2.value, op: op, output: answer.value},
+        body = JSON.stringify( json )
+
+  fetch( "/modify", {
+    method:"POST",
+    body 
+  }).then( (response) => {
+      response.json().then((resp) => {
+        displayData(resp)
+      })
+    })
 }
 
 function initialLoad(){
@@ -65,20 +92,27 @@ window.onload = function() {
   initialLoad();
   const subBtn = document.querySelector(".submitButton");
   subBtn.onclick = submit;
-
-  // const delBtn = document.querySelector(".deleteButton");
-  // delBtn.onclick = deleteItem;
 }
 
 function displayData(data) {
   deleteTable()
-  var table = document.getElementById("serverTable")
+  let modForm = document.getElementById("modForm")
+  modForm.style.display = "none"
+
+  let form = document.getElementsByClassName("forms")[0]
+  form.style.display = "block"
+
+  let table = document.getElementById("serverTable")
   for(let i = 0; i < data.length; i++){
     if(document.getElementById("data" + i) == null) { //Modify this later to make sure the data is the same
       let tr = document.createElement("tr")
       tr.id = "data" + i;
       tr.className = "dataTR"
 
+      let tdID = document.createElement("td")
+      tdID.innerHTML = i
+      tdID.className = "entryID"
+      tr.appendChild(tdID)
       for (let key in data[i]) {
         let td = document.createElement("td")
         let line = data[i]
@@ -90,14 +124,11 @@ function displayData(data) {
         tr.appendChild(td)
       }
 
-      let buttonTd = document.createElement("td")
-      let button = document.createElement("button")
-      button.className = "deleteButton"
-      button.id = i
-      button.innerHTML = "Delete"
-      button.addEventListener("click", deleteItem)
-      buttonTd.appendChild(button)
-      tr.appendChild(buttonTd)
+      let deleteTd = makeButton("deleteButton", "Delete", i, deleteItem)
+      tr.appendChild(deleteTd)
+
+      let modifyTd = makeButton("modButton", "Modify", i, modItem)
+      tr.appendChild(modifyTd)
 
       table.appendChild(tr)
     }
@@ -125,6 +156,13 @@ function deleteTable() {
   // }
 }
 
-function compareData() {
-
+function makeButton(className, inner, id, eventFunc) {
+  let buttonTd = document.createElement("td")
+  let button = document.createElement("button")
+  button.className = className
+  button.id = id
+  button.innerHTML = inner
+  button.addEventListener("click", eventFunc)
+  buttonTd.appendChild(button)
+  return buttonTd
 }

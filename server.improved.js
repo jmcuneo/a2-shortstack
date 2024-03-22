@@ -27,6 +27,8 @@ const server = http.createServer( function( request,response ) {
       sendData(response)
     } else if (request.url === "/delete") {
       deleteData(request, response)
+    } else if (request.url === "/modify") {
+     
     }
     
   }
@@ -111,4 +113,45 @@ function deleteData (request, response) {
     console.log(removed)
     sendData(response)
   } )
+}
+
+function modData (request, response) {
+  let dataString = ""
+
+  request.on( "data", function( data ) {
+      dataString += data 
+  })
+
+  request.on( "end", function() {
+    let data = JSON.parse(dataString)
+    console.log(data)
+
+    let oldData = appdata[data.index]
+
+    if (data.answer != null) {
+      oldData.output = data.answer
+    } else if (data.val1 && data.val2 && data.op) {
+      oldData.output = eval(data.val1 + data.op + data.val2) //Switch out of eval to switch case or something
+      oldData.val1 = parseInt(data.val1)
+      oldData.val2 = parseInt(data.val2)
+      oldData.op = data.op
+    }
+    
+    
+    sendData(response)
+  })
+}
+
+
+function combineData(mod, old) {
+  let newData = {val1: null, val2: null, op: null, output: null, guess: null}
+  if (mod.answer != null) {
+    newData.output = mod.answer
+  }
+
+  if (mod.val1) {
+    newData.val1 = mod.val1
+  } else {
+    newData.val1 = old.val1
+  }
 }

@@ -48,13 +48,43 @@
       <div class="sTable">
         <table id="serverTable">
           <tr class="tableLabels">
+            <th>ID</th>
             <th>First Value</th>
             <th>Second Value</th>
             <th>Operator</th>
-            <th>Output</th>
+            <th>Answer</th>
             <th>Guess Correctness</th>
           </tr>
         </table>
+      </div>
+      <div id="modForm">
+        <form>
+          <label for="newFirst">New 1st Value: </label>
+          <input type="number" id="newFirst">
+          <br>
+          <label for="newSec">New 2nd Value: </label>
+          <input type="number" id="newSec">
+          <br>
+          <div class="opForm">
+            <h3>New Operator:</h3>
+            <input type="radio" name="operator" id="newPlus" value="+">
+            <label for="newPlus">+</label>
+            <br>
+            <input type="radio" name="operator" id="newMinus" value="-">
+            <label for="newMinus">-</label>
+            <br>
+            <input type="radio" name="operator" id="newDiv" value="/">
+            <label for="newDiv">/</label>
+            <br>
+            <input type="radio" name="operator" id="newMult" value="*">
+            <label for="newMult">*</label>
+          </div>
+          <label for="forceAnswer">Assign Correct Answer: </label>
+          <input type="number" id="forceAnswer">
+          <br>
+
+          <button class="saveButton">Save</button>
+        </form>
       </div>
     </div>
   </body>
