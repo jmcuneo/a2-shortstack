@@ -23,8 +23,10 @@ const server = http.createServer( function( request,response ) {
   }else if( request.method === "POST" ){
     if (request.url === "/submit") {
       handlePost( request, response ) 
-    } else {
-      sendData(response);
+    } else if (request.url === "/refresh"){
+      sendData(response)
+    } else if (request.url === "/delete") {
+      deleteData(request, response)
     }
     
   }
@@ -52,9 +54,11 @@ const handlePost = function( request, response ) {
     console.log(data)
 
     let output = eval(data.val1 + data.op + data.val2) //Switch out of eval to switch case or something
-    let guess = false;
+    let guess = false
     if(data.guess == output){
-      guess = true;
+      guess = true
+    } else if (data.guess == ''){
+      guess = null
     }
     
     appdata.push({val1: parseInt(data.val1), val2: parseInt(data.val2), op: data.op, output, guess})
@@ -91,4 +95,20 @@ server.listen( process.env.PORT || port )
 function sendData(response) {
   response.writeHead( 200, "OK", {"Content-Type": "text/json" })
   response.end(JSON.stringify(appdata))
+}
+
+function deleteData (request, response) {
+  let dataString = ""
+
+  request.on( "data", function( data ) {
+      dataString += data 
+  })
+
+  request.on("end", function(){
+    data = JSON.parse(dataString)
+    console.log("Index for deletion: " + data)
+    let removed = appdata.splice(data, 1)
+    console.log(removed)
+    sendData(response)
+  } )
 }
