@@ -4,7 +4,6 @@ const http = require( "http" ),
     dir  = "public/",
     port = 3000
 
-// Array to store postcards
 let postcards = [];
 
 const server = http.createServer( function( request,response ) {

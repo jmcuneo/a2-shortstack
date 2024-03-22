@@ -33,7 +33,7 @@ const savePostcard = () => {
 
     // making the postcard appear physically on site once saved
     const postcardElement = document.createElement("div");
-    postcardElement.classList.add("postcard", "saved"); // Add the 'saved' class
+    postcardElement.classList.add("postcard", "saved");
     postcardElement.innerHTML = `
         <div class="postcard-image">
             <img src="${image}" alt="Postcard Image">
