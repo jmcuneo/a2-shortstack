@@ -1,18 +1,71 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <title>CS4241 Assignment 2</title>
-    <meta charset="utf-8">
-    <script src="js/main.js"></script>
-    <link rel="stylesheet" href="css/main.css">
-    
-    <!-- get rid of favicon error -->
-    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
-  </head>
-  <body>
-    <form>
-      <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
-    </form>
-  </body>
+<head>
+  <title>Virtual Postcard Designer</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+</head>
+<body>
+<h1>Virtual Postcard Designer</h1>
+
+<div id="postcard-design">
+  <h2>Design Your Postcard</h2>
+
+  <!-- Image Selection  -->
+  <select id="background-image-select">
+    <option value="empty">Select a background</option>
+    <option value="backgrounds/img.png">Background 1</option>
+    <option value="backgrounds/img_1.png">Background 2</option>
+    <option value="backgrounds/img_2.png">Background 3</option>
+    <option value="backgrounds/img_3.png">Background 4</option>
+    <option value="backgrounds/img_4.png">Background 5</option>
+    <option value="backgrounds/img_5.png">Background 6</option>
+    <option value="backgrounds/img_6.png">Background 7</option>
+    <option value="backgrounds/img_7.png">Background 8</option>
+  </select>
+
+  <!-- Text box color selection -->
+  <select id="text-box-color-select">
+    <option value="white">White</option>
+    <option value="blue">Blue</option>
+    <option value="red">Red</option>
+    <option value="pink">Pink</option>
+    <option value="black">Black</option>
+    <option value="yellow">Yellow</option>
+    <option value="orange">Orange</option>
+    <option value="purple">Purple</option>
+  </select>
+
+  <!-- Text color selection  -->
+  <select id="text-color-select">
+    <option value="black">Black</option>
+    <option value="blue">Blue</option>
+    <option value="red">Red</option>
+    <option value="pink">Pink</option>
+    <option value="white">White</option>
+    <option value="yellow">Yellow</option>
+    <option value="orange">Orange</option>
+    <option value="purple">Purple</option>
+  </select>
+
+  <!-- Postcard creation -->
+  <div class="postcard">
+    <div class="postcard-image">
+      <img id="postcard-preview" src="" alt="Postcard Preview">
+    </div>
+    <div class="postcard-text">
+      <textarea id="postcard-message" placeholder="Add your message here..."></textarea>
+    </div>
+    <button id="save-postcard">Save Postcard</button>
+  </div>
+</div>
+
+<div id="created-postcards">
+  <h2>Your Created Postcards</h2>
+  <!-- This is handled on main.js -->
+</div>
+
+<script src="js/main.js"></script>
+</body>
 </html>
