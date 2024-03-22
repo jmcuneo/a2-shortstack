@@ -8,7 +8,9 @@ const http = require( "http" ),
       dir  = "public/",
       port = 3000
 
-const appdata = []
+const appdata = [
+
+]
 
 const server = http.createServer( function( request,response ) {
   if( request.method === "GET" ) {
@@ -29,6 +31,25 @@ const handleGet = function( request, response ) {
 }
 
 const handlePost = function( request, response ) {
+  // console.log(`posting ${request.url}`);
+  if(request.url === "/submit"){
+    handleSubmit(request, response);
+  }else if(request.url === "/refresh"){
+    handleRefresh(response);
+  }
+}
+/*
+
+    let arraySize = Object.keys(appdata).length
+    for(let i = 0; i < arraySize; i++){
+      if(appdata[i].item === paresedJSON.item){
+        alert("Item already added");
+      }
+      else{
+        appdata.push(dataString);
+      }
+*/
+const handleSubmit = function (request, response){
   let dataString = ""
 
   request.on( "data", function( data ) {
@@ -36,18 +57,17 @@ const handlePost = function( request, response ) {
   })
 
   request.on( "end", function() {
-    console.log( JSON.parse( dataString ) )
-    appdata.push(dataString);
-    console.log(appdata);
-    console.log(appdata.length);
-
-    // ... do something with the data here!!!
+    const dataObject = JSON.parse(dataString);
+    appdata.push(dataObject);
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
-    //response.end("test")
-    response.end(JSON.stringify(dataString));
+    response.end(JSON.stringify(appdata))
   })
 }
 
+const handleRefresh = function (response){
+  response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
+  response.end(JSON.stringify(appdata))
+}
 const sendFile = function( response, filename ) {
    const type = mime.getType( filename ) 
 
