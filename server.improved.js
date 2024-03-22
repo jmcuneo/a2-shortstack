@@ -9,9 +9,9 @@ const http = require( "http" ),
       port = 3000
 
 const appdata = [
-  { "model": "toyota", "year": 1999, "mpg": 23 },
-  { "model": "honda", "year": 2004, "mpg": 30 },
-  { "model": "ford", "year": 1987, "mpg": 14} 
+  { "game": "Genshin Impact", "name": "Azu", "uid": 999525821,  "server": "Test Server"},
+  { "game": "Genshin Impact", "name": "Jim", "uid": 100000001,  "server": "CN" },
+  { "game": "Genshin Impact", "name": "HelloWorld", "uid": 600000009,  "server": "US"}
 ]
 
 const server = http.createServer( function( request,response ) {
@@ -40,12 +40,31 @@ const handlePost = function( request, response ) {
   })
 
   request.on( "end", function() {
-    console.log( JSON.parse( dataString ) )
+    let data = JSON.parse(dataString)
 
-    // ... do something with the data here!!!
+    switch(data.uid.charAt(0)){
+      case '1':
+        appdata.push({ "game": data.game, "name": data.name, "uid": data.uid, server: "CN"} );
+            break;
+      case '9':
+        appdata.push({ "game": data.game, "name": data.name, "uid": data.uid, server: "Test Server"} );
+        break;
+      case '6':
+        appdata.push({ "game": data.game, "name": data.name, "uid": data.uid, server: "US"} );
+        break;
+      case '7':
+        appdata.push({ "game": data.game, "name": data.name, "uid": data.uid, server: "EU"} );
+        break;
+      default:
+        appdata.push({ "game": data.game, "name": data.name, "uid": data.uid, server: "Other"} );
+        break;
+    }
 
-    response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
-    response.end("test")
+
+
+    console.log(appdata)
+    response.writeHead( 200, "OK", {"Content-Type": "application/json"})
+    response.end(JSON.stringify(appdata))
   })
 }
 
