@@ -8,7 +8,7 @@ const http = require( "http" ),
       dir  = "public/",
       port = 3000
 
-const appdata = [
+let appdata = [
     // I am doing a simple arcade game score tracker
   { "playerName": "Jane", "score": 1800, "gameDate": "2024-03-20", "ranking": 1 },
   { "playerName": "Smith", "score": 1000, "gameDate": "2024-03-21", "ranking": 2 },
