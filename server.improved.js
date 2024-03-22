@@ -9,10 +9,11 @@ const http = require( "http" ),
       port = 3000
 
 const appdata = [
-  { "model": "toyota", "year": 1999, "mpg": 23 },
-  { "model": "honda", "year": 2004, "mpg": 30 },
-  { "model": "ford", "year": 1987, "mpg": 14} 
-]
+    // I am doing a simple arcade game score tracker
+  { "playerName": "Jane", "score": 1800, "gameDate": "2024-03-20", "ranking": 1 },
+  { "playerName": "Smith", "score": 1000, "gameDate": "2024-03-21", "ranking": 2 },
+  { "playerName": "Zesh", "score": 600, "gameDate": "2024-03-21", "ranking": 3 }
+];
 
 const server = http.createServer( function( request,response ) {
   if( request.method === "GET" ) {
@@ -40,12 +41,16 @@ const handlePost = function( request, response ) {
   })
 
   request.on( "end", function() {
-    console.log( JSON.parse( dataString ) )
+    let receivedData = JSON.parse(dataString);
 
-    // ... do something with the data here!!!
+    if (receivedData.playerName && receivedData.score && receivedData.gameDate) {
+      // Simulate ranking calculation
+      receivedData.ranking = appdata.length + 1;
+      appdata.push(receivedData);
+    }
 
-    response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
-    response.end("test")
+    response.writeHead( 200, "OK", {"Content-Type": "application/json" })
+    response.end(JSON.stringify(appdata))
   })
 }
 
