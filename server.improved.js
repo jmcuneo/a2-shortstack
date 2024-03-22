@@ -34,8 +34,12 @@ const handlePost = function( request, response ) {
   // console.log(`posting ${request.url}`);
   if(request.url === "/submit"){
     handleSubmit(request, response);
-  }else if(request.url === "/refresh"){
+  }
+  else if(request.url === "/refresh"){
     handleRefresh(response);
+  }
+  else if(request.url === "/remove"){
+    handleRemove(request, response);
   }
 }
 /*
@@ -68,6 +72,26 @@ const handleRefresh = function (response){
   response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
   response.end(JSON.stringify(appdata))
 }
+
+const handleRemove = function (request, response){
+  let dataString = ""
+
+  request.on( "data", function( data ) {
+      dataString += data 
+  })
+
+  request.on( "end", function() {
+    const dataObject = JSON.parse(dataString);
+    //const entryIndex = parseInt(dataObject.index); // Parse index as an integer
+
+    appdata.splice(dataString, 1); // Remove the entry from the array
+    console.log("Removed item at index: ", dataString);
+    console.log("Updated appdata: ", appdata);
+    response.writeHead(200, "OK", {"Content-Type": "text/plain"});
+    response.end(JSON.stringify(appdata));
+  });
+}
+
 const sendFile = function( response, filename ) {
    const type = mime.getType( filename ) 
 
