@@ -8,31 +8,46 @@ const http = require( "http" ),
       dir  = "public/",
       port = 3000
 
-const appdata = [
-  { "model": "toyota", "year": 1999, "mpg": 23 },
-  { "model": "honda", "year": 2004, "mpg": 30 },
-  { "model": "ford", "year": 1987, "mpg": 14} 
-]
+const studentData = []
 
 const server = http.createServer( function( request,response ) {
   if( request.method === "GET" ) {
-    handleGet( request, response )    
-  }else if( request.method === "POST" ){
+    handleGet(request, response)
+  }
+  else if( request.method === "POST" ){
     handlePost( request, response ) 
   }
+
 })
 
 const handleGet = function( request, response ) {
   const filename = dir + request.url.slice( 1 ) 
 
   if( request.url === "/" ) {
-    sendFile( response, "public/index.html" )
-  }else{
+    sendFile(response, "public/index.html")
+  }
+  else if (request.url === "/studentData"){
+    response.writeHead(200, {'Content-Type': 'application/json'})
+    response.end(JSON.stringify(studentData))
+  }
+  else{
     sendFile( response, filename )
+    // const html = `
+    //   <html><body>
+    //   ${appdata.map(item => JSON.stringify(item))}
+    //   </body>
+    //   </html>
+    // `
+    // response.end(html)
   }
 }
 
 const handlePost = function( request, response ) {
+  if( request.url === "/delete" ) {
+    handleDelete(request, response)
+    return;
+  }
+
   let dataString = ""
 
   request.on( "data", function( data ) {
@@ -40,13 +55,82 @@ const handlePost = function( request, response ) {
   })
 
   request.on( "end", function() {
-    console.log( JSON.parse( dataString ) )
+    //console.log( JSON.parse( dataString ) )
+    const jsonData = JSON.parse(dataString);
+
+    const studentExistsIndex = studentData.findIndex(student => student.yourname === jsonData.yourname)
+    let classStanding, classOf;
+    const credits = parseInt(jsonData.yourcredits);
+
+    if (credits > 108){
+      classStanding = "Senior";
+      classOf = 2024;
+    }
+    else if (credits > 72){
+      classStanding = "Junior";
+      classOf = 2025;
+    }
+    else if (credits > 36){
+      classStanding = "Sophomore";
+      classOf = 2026;
+    }
+    else{
+      classStanding = "Freshman";
+      classOf = 2027;
+    }
+
+    if (studentExistsIndex !== -1){
+      studentData[studentExistsIndex].yourcredits = parseInt(jsonData.yourcredits)
+      studentData[studentExistsIndex].classStanding = classStanding
+      studentData[studentExistsIndex].classOf = classOf
+    }
+    else{
+      const updatedData = {...jsonData, classStanding, classOf};
+      studentData.push(updatedData)
+    }
+
+    console.clear()
+    console.log(studentData)
 
     // ... do something with the data here!!!
+    // const html = `
+    //   <html><body>
+    //   ${appdata.map(item => JSON.stringify(item))}
+    //   </body>
+    //   </html>
+    // `
 
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
-    response.end("test")
+    response.end(JSON.stringify(studentData))
   })
+}
+
+const handleDelete = function(request, response){
+  console.log("Received delete request")
+  let dataString = ""
+
+  request.on("data", function (data){
+    dataString += data;
+  })
+
+  request.on("end", function(){
+
+    console.log("Received delete request data:", dataString)
+    const jsonData = JSON.parse(dataString)
+    const studentIndex = studentData.findIndex(student => student.yourname === jsonData.yourname)
+
+    if (studentIndex !== -1) {
+      studentData.splice(studentIndex, 1)
+    }
+
+    console.clear()
+    console.log(studentData)
+
+    response.writeHead(200, "OK", {"Content-Type": "text/plain"})
+    response.end(JSON.stringify(studentData))
+  })
+
+
 }
 
 const sendFile = function( response, filename ) {
@@ -58,13 +142,13 @@ const sendFile = function( response, filename ) {
      if( err === null ) {
 
        // status code: https://httpstatuses.com
-       response.writeHeader( 200, { "Content-Type": type })
+       response.writeHead( 200, { "Content-Type": type })
        response.end( content )
 
      }else{
 
        // file not found, error code 404
-       response.writeHeader( 404 )
+       response.writeHead( 404 )
        response.end( "404 Error: File Not Found" )
 
      }
