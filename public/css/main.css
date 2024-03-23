@@ -10,13 +10,18 @@ body {
 
 #postcard-design {
   margin-top: 20px;
+  border: none;
+  background: lightgray;
+  border-radius: 6px;
+  padding: 2%;
 }
 
 .postcard {
-  border: 1px solid #ccc;
+  border: 1px solid;
   border-radius: 5px;
   margin-bottom: 20px;
   padding: 10px;
+  border: none;
 }
 
 .postcard-image img {
@@ -105,4 +110,18 @@ body {
   width: 100%;
   padding: 0;
   background-color: inherit;
+  margin-top: -4px;
+}
+
+.postcard-image {
+  position: relative; /* Ensure the container is positioned relatively */
+}
+
+.postcard-title.saved-title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -100%);
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+  font-size: 3em;
 }

@@ -1,10 +1,14 @@
 const savePostcard = () => {
+    const title = document.getElementById("postcard-title").value;
+    const titleColor = document.getElementById("title-color-select").value;
     const message = document.getElementById("postcard-message").value;
     const image = document.getElementById("background-image-select").value;
     const textBoxColor = document.getElementById("text-box-color-select").value;
     const textColor = document.getElementById("text-color-select").value;
 
     const postcardData = {
+        title: title,
+        titleColor: titleColor,
         message: message,
         image: image,
         textBoxColor: textBoxColor,
@@ -35,15 +39,19 @@ const savePostcard = () => {
     const postcardElement = document.createElement("div");
     postcardElement.classList.add("postcard", "saved");
     postcardElement.innerHTML = `
-        <div class="postcard-image">
+        <div class="postcard-image" style="position: relative;">
             <img src="${image}" alt="Postcard Image">
+            <h2 class="postcard-title saved-title" style="color: ${titleColor};">${title}</h2>
         </div>
-        <div class="postcard-text" style=" color: ${textColor}; background-color: ${textBoxColor};">
-            <p style=" color: ${textColor}; background-color: ${textBoxColor}; margin-top: -4px">${message}</p>
+        <div class="postcard-text" style="background-color: ${textBoxColor}; color: ${textColor};">
+            <p style=" color: ${textColor}; background-color: ${textBoxColor};">${message}</p>
         </div>
     `;
     const postcardGallery = document.getElementById("created-postcards");
     postcardGallery.appendChild(postcardElement);
+
+    const deleteButton = createDeleteButton(postcardData.id);
+    postcardElement.appendChild(deleteButton);
 };
 
 
@@ -74,3 +82,32 @@ const updatePostcardPreview = () => {
 
 document.getElementById('background-image-select').addEventListener('change', updatePostcardPreview);
 
+
+const deletePostcard = async (postId) => {
+    try {
+        const response = await fetch(`/delete-postcard/${postId}`, {
+            method: "DELETE",
+        });
+        if (response.ok) {
+            const postcardElement = document.getElementById(`postcard-${postId}`);
+            postcardElement.remove();
+            console.log("Postcard deleted successfully");
+        } else {
+            console.error("Error deleting postcard:", response.statusText);
+        }
+    } catch (error) {
+        console.error("Error deleting postcard:", error);
+    }
+};
+
+
+const createDeleteButton = (postId) => {
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = "Delete";
+    deleteButton.classList.add("delete-button");
+    deleteButton.dataset.postId = postId;
+    deleteButton.addEventListener("click", () => {
+        deletePostcard(postId);
+    });
+    return deleteButton;
+};

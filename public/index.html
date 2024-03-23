@@ -25,37 +25,54 @@
     <option value="backgrounds/img_7.png">Background 8</option>
   </select>
 
-  <!-- Text box color selection -->
-  <select id="text-box-color-select">
-    <option value="white">White</option>
-    <option value="blue">Blue</option>
-    <option value="red">Red</option>
-    <option value="pink">Pink</option>
-    <option value="black">Black</option>
-    <option value="yellow">Yellow</option>
-    <option value="orange">Orange</option>
-    <option value="purple">Purple</option>
-  </select>
-
-  <!-- Text color selection  -->
-  <select id="text-color-select">
-    <option value="black">Black</option>
-    <option value="blue">Blue</option>
-    <option value="red">Red</option>
-    <option value="pink">Pink</option>
-    <option value="white">White</option>
-    <option value="yellow">Yellow</option>
-    <option value="orange">Orange</option>
-    <option value="purple">Purple</option>
-  </select>
-
   <!-- Postcard creation -->
   <div class="postcard">
     <div class="postcard-image">
       <img id="postcard-preview" src="" alt="Postcard Preview">
     </div>
+
+    <div class="title">
+      <input type="text" id="postcard-title" placeholder="Enter title...">
+      <!-- Text color selection for title -->
+      <select id="title-color-select">
+        <option value="white">White</option>
+        <option value="blue">Blue</option>
+        <option value="red">Red</option>
+        <option value="pink">Pink</option>
+        <option value="black">Black</option>
+        <option value="yellow">Yellow</option>
+        <option value="orange">Orange</option>
+        <option value="purple">Purple</option>
+      </select>
+    </div>
+
     <div class="postcard-text">
       <textarea id="postcard-message" placeholder="Add your message here..."></textarea>
+      <!-- Text box color selection -->
+      <label for="text-box-color-select">Text Box Color:</label>
+      <select id="text-box-color-select">
+        <option value="white">White</option>
+        <option value="blue">Blue</option>
+        <option value="red">Red</option>
+        <option value="pink">Pink</option>
+        <option value="black">Black</option>
+        <option value="yellow">Yellow</option>
+        <option value="orange">Orange</option>
+        <option value="purple">Purple</option>
+      </select>
+
+      <!-- Text color selection  -->
+      <label for="text-box-color-select">Font Color:</label>
+      <select id="text-color-select">
+        <option value="black">Black</option>
+        <option value="blue">Blue</option>
+        <option value="red">Red</option>
+        <option value="pink">Pink</option>
+        <option value="white">White</option>
+        <option value="yellow">Yellow</option>
+        <option value="orange">Orange</option>
+        <option value="purple">Purple</option>
+      </select>
     </div>
     <button id="save-postcard">Save Postcard</button>
   </div>
