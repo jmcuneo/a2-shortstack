@@ -9,17 +9,17 @@ This project is a website that implements client-server functionality where we o
 The CSS styling I used, had Google Fonts for headers, and for layout, I used a grid. Almost every part has some CSS incorporated for alignment, text, fonts etc. 
 My application uses three forms which can be found in the HTML. These forms are separated to be insert, delete and modify data respectively. For insert, you must fill in all the data correctly with first field as any string and the rest are integers. Delete requires one integer. And modify also uses both integers and a string however, to actually modify you need to fill the first field with a number and then the next fields can be optional but must be correct types. For example, you can modify ID 2 and only modify miles per gallon by putting a integer in that field.
 
-**Field**
-Car Model, Year, Miles per Gallon(MPG), Fuel Tank Size in Gallons
+**Field**:
+- Car Model, Year, Miles per Gallon(MPG), Fuel Tank Size in Gallons
 
-**Derived Field**
-Total Miles the car can drive on a full tank
-MPG * Fuel Tank
+**Derived Field**:
+- Total Miles the car can drive on a full tank
+- MPG * Fuel Tank
 
-**CSS**
-Grid
-Uses element, id and class selectors
-Google Font: Honk
+**CSS**:
+- Grid
+- Uses element, id and class selectors
+- Google Font: Honk
 
 
 ## Technical Achievements
