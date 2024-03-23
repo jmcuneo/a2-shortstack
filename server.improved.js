@@ -40,10 +40,15 @@ const handlePost = function (request, response) {
         const postData = JSON.parse(dataString);
         postData.id = nextPostcardId++;
         console.log("Received data:", postData);
+
+        // Concatenate first name and last name to create fromText
+        const fromText = `from ${postData.firstName} ${postData.lastName}`;
+        postData.fromText = fromText;
+
         postcards.push(postData);
 
         response.writeHead(200, "OK", { "Content-Type": "application/json" });
-        response.end(JSON.stringify({ message: "Postcard saved successfully!" }));
+        response.end(JSON.stringify({ message: "Postcard saved successfully!", fromText: fromText }));
       } catch (error) {
         console.error("Error parsing JSON:", error);
         response.writeHead(400, { "Content-Type": "text/plain" });
@@ -67,8 +72,6 @@ const handleDelete = function (request, response) {
     response.end("Error: Postcard not found");
   }
 };
-
-
 
 const sendFile = function (response, filename) {
   const type = mime.getType(filename);

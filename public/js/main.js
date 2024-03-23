@@ -1,4 +1,6 @@
 const savePostcard = () => {
+    const firstName = document.getElementById("first-name").value;
+    const lastName = document.getElementById("last-name").value;
     const title = document.getElementById("postcard-title").value;
     const titleColor = document.getElementById("title-color-select").value;
     const message = document.getElementById("postcard-message").value;
@@ -7,6 +9,8 @@ const savePostcard = () => {
     const textColor = document.getElementById("text-color-select").value;
 
     const postcardData = {
+        firstName: firstName,
+        lastName: lastName,
         title: title,
         titleColor: titleColor,
         message: message,
@@ -30,7 +34,25 @@ const savePostcard = () => {
         })
         .then((data) => {
             console.log("Postcard saved successfully:", data);
-        })
+        }).then((data) => {
+        console.log("Postcard saved successfully:", data);
+        const postcardElement = document.createElement("div");
+        postcardElement.classList.add("postcard", "saved");
+        console.log("Received data from server:", data);
+        postcardElement.innerHTML = `
+             <div class="postcard-image" style="position: relative;">
+                    <img src="${image}" alt="Postcard Image">
+                    <h2 class="postcard-title saved-title" style="color: ${titleColor};">${title}</h2>
+                    <p style=" color: ${titleColor};">${data.fromText}</p>
+             </div>
+                <div class="postcard-text" style="background-color: ${textBoxColor}; color: ${textColor}; margin-top: -13px;">
+                    <p style=" color: ${textColor}; background-color: ${textBoxColor};">${message}</p>
+                </div>
+            `;
+        const postcardGallery = document.getElementById("created-postcards");
+        postcardGallery.appendChild(postcardElement);
+    })
+
         .catch((error) => {
             console.error("Error saving postcard:", error);
         });
