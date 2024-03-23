@@ -15,6 +15,7 @@ body {
 #string{
   min-width: 20vw;
   min-height: 5vh;
+  font-family: "Courier Prime", monospace;
 }
 
 #submit{
