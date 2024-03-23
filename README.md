@@ -11,7 +11,7 @@ I was able to come up with a workout calorie calculator application that gives u
 
 ### Design/Evaluation Achievements
 - **Tested UI with Other Students**:
- 1. Shiu, Sunku
+ 1. Shiu
  2. What problems did the user have with your design?
  3. What comments did they make that surprised you?
  4. What would you change about the interface based on their feedback?
