@@ -1,4 +1,4 @@
-Seth Frank: 
+Seth Frank: http://a2-sethfrank.glitch.me
 
 ## Task List
 This program is an implementation of a basic task list application. The application makes use of CSS flexbox so that it is visible on many different screen sizes. For this application, you can input a task, specify which class it is for, the due date, and whether it is important or not. Once added, the server will give it a priority rating from 1-4 based on the due date and importance (1 being higher priority, 4 being lower priority). From there, you can edit and delete tasks in the table by clicking the respective buttons. To edit a task, it will fill the fields with the data where you can then edit t and resubmit. To delete a task, click the delete button and it will automatically delete it.
