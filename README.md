@@ -17,7 +17,7 @@ To update a student, you input a name already shown in the table and input the c
 To delete a student, you simply click the delete button next to the corresponding one.
 
 ## Technical Achievements
-- **Tech Achievement 1**: I created a single-page app the provides both a form for users to submit, update, or delete data and also always shows the current state of the server-side data. 
+- I created a single-page app the provides both a form for users to submit, update, or delete data and also always shows the current state of the server-side data. 
 This is done by always calling a function fetchStudentData() at the end of each function for a button press, creating/updating, or deleting, so that the information shown is always the up to date.
 I also added the fetchStudentData() in the window.onload() because I realized that if I refreshed all the data disappeared, until a submission was done, in which time all of the data saved would appear
 - I added the server creating derived fields and storing them
@@ -32,7 +32,7 @@ then the server only updates the credits and then updates the derived fields as 
 the corresponding name with which the delete button was attached to and then deletes the student from the list and sends back the data
 
 ### Design/Evaluation Achievements
-- **Design Achievement 1**: I didn't end up having the time to do the peer test
 - I did use element, id, and class selectors in formatting the page so that every thing is spaced correctly apart and the table had borders and headers a background
 - I also changed the style of the default buttons
 - Also added a hover feature where the buttons change colors if you hover over them
+- I didn't end up having the time to do the peer test
