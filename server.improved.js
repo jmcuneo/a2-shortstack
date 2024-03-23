@@ -6,13 +6,8 @@ const http = require( "http" ),
       // file.
       mime = require( "mime" ),
       dir  = "public/",
-      port = 3000
-
-const appdata = [
-  { "model": "toyota", "year": 1999, "mpg": 23 },
-  { "model": "honda", "year": 2004, "mpg": 30 },
-  { "model": "ford", "year": 1987, "mpg": 14} 
-]
+      port = 3000,
+      appdata = [];
 
 const server = http.createServer( function( request,response ) {
   if( request.method === "GET" ) {
@@ -27,7 +22,12 @@ const handleGet = function( request, response ) {
 
   if( request.url === "/" ) {
     sendFile( response, "public/index.html" )
-  }else{
+  }
+    else if (request.url === '/getPreviousAnswers'){
+      response.writeHead(200, {'Content-Type': "application/json"})
+      response.end(JSON.stringify(appdata))
+    }
+    else {
     sendFile( response, filename )
   }
 }
@@ -40,12 +40,37 @@ const handlePost = function( request, response ) {
   })
 
   request.on( "end", function() {
-    console.log( JSON.parse( dataString ) )
+    //console.log( JSON.parse( dataString ) )
+    const clientData = JSON.parse(dataString)
 
-    // ... do something with the data here!!!
-
-    response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
-    response.end("test")
+    if(clientData.operation === 'addition'){   //add functionality
+      const result = parseFloat(clientData.num1) + parseFloat(clientData.num2)    //add the two imputted numbers together
+      saveResult(result)    //record the reult to display to the user on the front end
+      response.writeHead(200, { 'Content-Type': 'application/json' })
+      response.end(JSON.stringify({ result: result}))
+    }
+      else if(clientData.operation === 'subtract'){   //subtraction functionality
+        const result = parseFloat(clientData.num1) - parseFloat(clientData.num2)    //add the two imputted numbers together
+        saveResult(result)    //record the reult to display to the user on the front end
+        response.writeHead(200, { 'Content-Type': 'application/json' })
+        response.end(JSON.stringify({ result: result}))
+      }
+      else if(clientData.operation === 'multiply'){   //multiplication functionality
+        const result = parseFloat(clientData.num1) * parseFloat(clientData.num2)    //add the two imputted numbers together
+        saveResult(result)    //record the reult to display to the user on the front end
+        response.writeHead(200, { 'Content-Type': 'application/json' })
+        response.end(JSON.stringify({ result: result}))
+      }
+      else if(clientData.operation === 'divide'){   //division functionality
+        const result = parseFloat(clientData.num1) / parseFloat(clientData.num2)    //add the two imputted numbers together
+        saveResult(result)    //record the reult to display to the user on the front end
+        response.writeHead(200, { 'Content-Type': 'application/json' })
+        response.end(JSON.stringify({ result: result}))
+      }
+      else{
+        response.writeHead(200, { 'Content-Type': 'text/plain' })
+        response.end('Error: Operation could not be completed')
+    }
   })
 }
 
@@ -72,3 +97,9 @@ const sendFile = function( response, filename ) {
 }
 
 server.listen( process.env.PORT || port )
+
+const saveResult = function(result){
+
+  appdata.push({operation: operation, result: result})
+
+}
