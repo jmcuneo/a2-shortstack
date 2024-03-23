@@ -3,31 +3,42 @@
   <head>
     <title>CS4241 Assignment 2</title>
     <meta charset="utf-8">
-    <script src="js/main.js"></script>
-    <link rel="stylesheet" href="css/main.css">
-    
-    <!-- get rid of favicon error -->
-    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <!-- These links have been incoporated for the usage of google fonts, symbols, and icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,100..900;1,100..900&family=Outfit:wght@600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="./css/main.css/" />
+
   </head>
-  <body>
+  <body class="libre-franklin-body-text">
+  <h1 class="outfit-header-font">Ticket Reservation System</h1>
     <form>
-      <input type="text" id="yourName" value="your name here">
-      <input type="text" id="startLocation" value="Enter your USA start location">
-      <input type="text" id="destination" value="Enter your USA destination">
+      <label for="FirstName">First Name: </label>
+      <input type="text" id="FirstName" placeholder="First Name" required="required">
+      <label for="MiddleName">Middle Name: </label>
+      <input type="text" id="MiddleName" placeholder="Middle Name">
+      <label for="LastName">Last Name: </label>
+      <input type="text" id="LastName" placeholder="Last Name"> </br>
+      <label for="Email">Email: </label>
+      <input type="text" id="Email" placeholder="Email" required="required">
+      <label for="StartLocation">Start Location: </label>
+      <input type="text" id="StartLocation" placeholder="USA Start Location" required="required">
+      <label for="Destination">Destination: </label>
+      <input type="text" id="Destination" placeholder="USA destination" required="required">
     </form>
-    <div class="transport-mode">
-      <button class="transport-mode-btn">Transportation</button>
-      <div class="dropdown-content">
-        <p>Lyft</p>
-        <p>Uber</p>
-        <p>PeterPan Bus</p>
-        <p>Greyhound Bus</p>
-        <p>Our Bus</p>
-        <p>Amtrak</p>
-        <p>Subway</p>
-        <p>Commuter Rail</p>
-      </div>
-    </div>
+    <label for="transport-mode" >Choose your transportation mode:</label>
+    <select name="Transportation mode" id="transport-mode">
+      <option value="Choose">Choose</option>
+      <option value="Lyft">Lyft</option>
+      <option value="Uber">Uber</option>
+      <option value="PeterPan Bus">PeterPan Bus</option>
+      <option value="Greyhound Bus">Greyhound Bus</option>
+      <option value="Our Bus">Our Bus</option>
+      <option value="Subway">Subway</option>
+      <option value="Commuter Rail">Commuter Rail</option>
+    </select>
     <button class="outfit-inside-buttons-font">SUBMIT</button>
+  <table id="Table"></table>
+  <script src="js/main.js"></script>
   </body>
 </html>

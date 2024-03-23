@@ -7,8 +7,20 @@ const submit = async function( event ) {
   // remains to this day
   event.preventDefault()
   
-  const input = document.querySelector( "#yourname" ),
-        json = { yourname: input.value },
+  const FirstName = document.querySelector( "#FirstName" ),
+      MiddleName = document.querySelector( "#MiddleName" ),
+      LastName = document.querySelector( "#LastName" ),
+      Email = document.querySelector( "#Email" ),
+      StartLocation = document.querySelector( "#StartLocation" ),
+      Destination = document.querySelector( "#Destination" ),
+      json = {
+        FirstName: FirstName.value,
+        MiddleName: MiddleName.value,
+        LastName: LastName.value,
+        Email: Email.value,
+        StartLocation: StartLocation.value,
+        Destination: Destination.value,
+      },
         body = JSON.stringify( json )
 
   const response = await fetch( "/submit", {
