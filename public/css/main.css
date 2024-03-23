@@ -1,0 +1,57 @@
+/*fonts*/
+.noto-sans soyombo-regular {
+    font-family: "Noto Sans Soyombo", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+.mandali-regular {
+    font-family: "Mandali", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+header {
+    font-family: "Mandali", sans-serif;
+}
+
+body {
+    font-family: "Noto Sans Soyombo", sans-serif;
+    background:ghostwhite;
+    color:darkblue;
+}
+
+div {
+    padding-top: 0px;
+    padding-bottom: 10px;
+}
+
+label {
+    font-size: 18px
+}
+
+.longInput{
+    height: 20px;
+    width: 150px;
+}
+
+.shortInput{
+    width: 50px;
+}
+
+.btn {
+    height: 30px;
+    width: 100px;
+    color: ghostwhite;
+    background-color: darkblue;
+    font-size: 16px;
+    padding: 5px;
+}
+
+table, th, td {
+    background: white;
+    border-color:black;
+    border: 1px solid;
+    border-collapse: collapse;
+    color: black;
+    width: 800px;
+}

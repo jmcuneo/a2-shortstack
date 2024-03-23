@@ -38,7 +38,7 @@ const handlePost = function( request, response ) {
 
     let data = JSON.parse( dataString );
 
-    //calculate derived variables
+    //calculate derived fields
     let dob = new Date(data.dob);
     data.age = Math.abs(new Date(Date.now() - dob.getTime()).getUTCFullYear() - 1970); //javapoint
     data.fullName = data.firstName + " " + data.lastName;

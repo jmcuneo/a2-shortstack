@@ -40,14 +40,19 @@ async function getData() {
 }
 
 async function addData(text) {
-    var table = document.querySelector(" #datatable ");
-    table.innerHTML = "";
-    const data = JSON.parse(text);
+    var table = document.querySelector(" #applicationTable ");
+    table.innerHTML = ""; //clear table
 
-    // stackoverflow
-    for (const elt of data) {
+    //add th cells
+    addTableHeaders(table);
+
+    const appdata = JSON.parse(text);
+
+    // from stack overflow
+    for (const item of appdata) {
         var row = table.insertRow();
 
+        //add cells
         var fullNameCell = row.insertCell();
         fullNameCell.id = "fullNameCell";
 
@@ -66,16 +71,38 @@ async function addData(text) {
         var phoneCell = row.insertCell();
         phoneCell.id = "phoneCell";
 
-        fullNameCell.innerHTML = elt.fullName;
-        dobCell.innerHTML = elt.dob;
-        ageCell.innerHTML = elt.age;
-        sexCell.innerHTML = elt.sex;
-        emailCell.innerHTML = elt.email;
-        phoneCell.innerHTML = elt.phone;
+        //put data in cells
+        fullNameCell.innerHTML = item.fullName.toUpperCase();
+        dobCell.innerHTML = item.dob;
+        ageCell.innerHTML = item.age;
+        sexCell.innerHTML = item.sex;
+        emailCell.innerHTML = item.email;
+        phoneCell.innerHTML = item.phone;
     }
 }
 
-window.onload = function () {
-    const submitBtn = document.querySelector("#submit");
-    submitBtn.onclick = submit;
+async function addTableHeaders(table) {
+    var headRow = table.insertRow();
+
+    var fullNameHead = headRow.insertCell();
+    fullNameHead.outerHTML = "<th>Patient Name</th>";
+
+    var dobHead = headRow.insertCell();
+    dobHead.outerHTML = "<th>DoB</th>";
+
+    var ageHead = headRow.insertCell();
+    ageHead.outerHTML = "<th>Age</th>";
+
+    var sexHead = headRow.insertCell();
+    sexHead.outerHTML = "<th>Sex</th>";
+
+    var emailHead = headRow.insertCell();
+    emailHead.outerHTML = "<th>Email</th>";
+
+    var phoneHead = headRow.insertCell();
+    phoneHead.outerHTML = "<th>Phone #</th>";
 }
+
+window.onload = function () {
+    document.querySelector("#applicationForm").onsubmit = submit;
+};
