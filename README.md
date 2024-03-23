@@ -1,6 +1,6 @@
 Klaudio Fusha
 
-(Insert Glitch link here)
+https://a2-klaudiofusha.glitch.me/
 
 ## Workout Calorie Calculator
 I was able to come up with a workout calorie calculator application that gives users the ability to input a workout starting and ending time, type, intensity to get an estimate of how many calories they burned. Once the form is submitted, data will be dynamically displayed in a results table at the bottom of the page. In that table, users have the ability to view, edit, and delete workout data. Regarding the CSS position technique, I used flexbox and changed the default direction from row to column. I also used gaps, a Google font (Madimi One), padding, margins, changed the background colors, and defined a max width.
