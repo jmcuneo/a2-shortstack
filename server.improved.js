@@ -15,7 +15,6 @@ const appdata = [
 ];
 
 const server = http.createServer(function (request, response) {
-  console.log("RECEIVING");
   if (request.method === "GET") {
     handleGet(request, response);
   } else if (request.method === "POST") {
@@ -46,12 +45,11 @@ const handlePost = function (request, response) {
   request.on("end", function () {
 
     const newEntry = JSON.parse(dataString);
-    console.log("Server receiving: " + newEntry);
 
     appdata.push(newEntry);
 
     response.writeHead(200, "OK", { "Content-Type": "text/plain" });
-    response.end("Data added successfully\n");
+    response.end(JSON.stringify(appdata));
   });
 };
 

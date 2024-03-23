@@ -1,16 +1,13 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 
 const submit = async function( event ) {
-  // stop form submission from trying to load
-  // a new .html page for displaying results...
-  // this was the original browser behavior and still
-  // remains to this day
+
   event.preventDefault();
 
-  var reqInputs = document.querySelectorAll("input[required]");
-  var numInputs = document.querySelectorAll("input[min]");
-  var isValid = true;
-  var allPositive = true;
+  const reqInputs = document.querySelectorAll("input[required]");
+  const numInputs = document.querySelectorAll("input[min]");
+  let isValid = true;
+  let allPositive = true;
 
   numInputs.forEach(function(input) {
     if (!(input.value >= 0)){
@@ -34,16 +31,16 @@ const submit = async function( event ) {
 
   const anEntry = {name: reqInputs[0].value, bodyWeight: reqInputs[1].value, squat: reqInputs[2].value, benchPress: reqInputs[3].value, deadLift: reqInputs[4].value};
   const body = JSON.stringify(anEntry);
-  console.log("Sending: " + body);
 
-  const response = await fetch( "/entries", {
+  fetch( "/submit", {
     method:"POST",
     body
-  })
+  }).then((response)=>{
+    return true;
+    //return response.json();
+  });
 
-  const text = await response.text()
-
-  console.log( "text:", text )
+  return false;
 }
 
 const get = async function(){
@@ -58,7 +55,5 @@ const get = async function(){
 
 window.onload = function() {
   const button = document.querySelector("button");
-  const entries = get();
-  console.log(entries);
   button.onclick = submit;
 }
