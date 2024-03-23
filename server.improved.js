@@ -23,6 +23,9 @@ const server = http.createServer( function( request,response ) {
   else if( request.method === "DELETE" ){
     handleDelete( request, response )
   }
+  else if(request.method === "PUT"){
+    handlePut(request, response);
+  }
 })
 
 const handleGet = function( request, response ) {
@@ -103,7 +106,7 @@ const handleDelete = function(request, response){
 
     console.log("made it here to delete")
 
-    //console.log(typeof Object.values(JSON.parse( dataString ))[0] === 'string')
+    console.log(typeof Object.values(JSON.parse( dataString ))[0] === 'string')
     if(isNaN(parseInt(Object.values(JSON.parse( dataString ))[0])) ||
         parseInt(Object.values(JSON.parse( dataString ))[0]) <= 0 ||
         parseInt(Object.values(JSON.parse( dataString ))[0]) > appdata.length+1) {
@@ -126,8 +129,6 @@ const handleDelete = function(request, response){
     response.end(jsonArray)
   })
 }
-
-
 /*
 const handleDelete = function(request, response){
   let dataString = ""
@@ -168,6 +169,57 @@ const handleDelete = function(request, response){
 }
 
  */
+const handlePut = function(request, response) {
+  let dataString = ""
+
+  request.on("data", function (data) {
+    dataString += data
+  })
+
+  let indexToChange = 0;
+  let indexFound = false;
+
+  request.on("end", function () {
+  if(isNaN(parseInt(Object.values(JSON.parse( dataString ))[0])) ||
+      parseInt(Object.values(JSON.parse( dataString ))[0]) <= 0 ||
+      parseInt(Object.values(JSON.parse( dataString ))[0]) > appdata.length
+  ){
+
+  } else{
+      for(let i = 0; i <appdata.length; i++){
+        if(parseInt(Object.values(JSON.parse( dataString ))[0]) === appdata[i].Id){
+          indexFound = true;
+          indexToChange = i;
+        }
+
+        if(indexFound && Object.values(JSON.parse( dataString ))[1] !== ""){
+          appdata[indexToChange].model = Object.values(JSON.parse( dataString ))[1];
+        }
+
+        if(indexFound && parseInt(Object.values(JSON.parse( dataString ))[2]) > 0){
+          appdata[indexToChange].year = parseInt(Object.values(JSON.parse( dataString ))[2]);
+        }
+
+        if(indexFound && parseInt(Object.values(JSON.parse( dataString ))[3]) > 0){
+          appdata[indexToChange].mpg = parseInt(Object.values(JSON.parse( dataString ))[3]);
+          appdata[indexToChange].tillEmpty = appdata[indexToChange].mpg * appdata[indexToChange].fuelLoad;
+        }
+
+        if(indexFound && parseInt(Object.values(JSON.parse( dataString ))[4]) > 0){
+          appdata[indexToChange].fuelLoad = parseInt(Object.values(JSON.parse( dataString ))[4]);
+          appdata[indexToChange].tillEmpty = appdata[indexToChange].mpg * appdata[indexToChange].fuelLoad;
+        }
+
+    }
+  }
+
+    var jsonArray = JSON.stringify(appdata)
+    response.writeHead(200, "OK", {"Content-Type": "text/plain"})
+    response.end(jsonArray)
+  })
+}
+
+
 const sendFile = function( response, filename ) {
    const type = mime.getType( filename ) 
 

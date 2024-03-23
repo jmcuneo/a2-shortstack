@@ -1,6 +1,7 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 let rowNumber = 1;
 let data;
+let isModified = false; //bool for getData and modify to fix table
 
 function addRow(id, model, year, mpg, fuelTank){ //adds row to table
   let table = document.getElementById("table");
@@ -64,7 +65,7 @@ const submit = async function( event ) {
       isNaN(parseInt(json.mpg)) ||
     isNaN(parseInt(json.fuelLoad))
   ) {
-    //TODO Error Message
+
   } else{
     addRow(json.Id, json.model, json.year, json.mpg, json.fuelLoad );
     data.push(json);
@@ -76,6 +77,7 @@ console.log(rowNumber)
   console.log( "text:", text )
 }
 
+//Helper for capitalizing car name
 function capitalFirstLetter(str){
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
@@ -127,7 +129,7 @@ const remove = async function (event) {
   console.log( "text:", text )
 
   if(isNaN(inputID.value)|| inputID.value === "" || parseInt(inputID.value) <= 0 || parseInt(inputID.value) > rowNumber){
-    //TODO Error Message
+
   } else{
 
     rowDelete(inputID.value)
@@ -135,20 +137,72 @@ const remove = async function (event) {
   }
 }
 
+const setModify = async function(){ //helper for modify
+  isModified = true;
+}
+const modify = async function(event){
+  event.preventDefault()
+
+  isModified = true;
+
+  const input0 = document.querySelector("#id2"),
+      input1 = document.querySelector( "#model2" ),
+      input2 = document.querySelector("#year2"),
+      input3 = document.querySelector("#mpg2"),
+      input4 = document.querySelector("#fuelLoad2"),
+      json = {Id: input0.value, model: capitalFirstLetter(input1.value), year: input2.value, mpg: input3.value, fuelLoad: input4.value, tillEmpty: input3.value * input4.value},
+      body = JSON.stringify(json)
+
+  const response = await fetch( "/submit", {
+    method:"PUT",
+    body
+  })
+
+  const text = await response.text()
+
+  console.log( "text:", text )
+
+  if( isNaN(parseInt(json.Id)) ||
+      parseInt(json.Id) <= 0 ||
+      parseInt(json.Id) > rowNumber
+
+  ) {
+  } else{
+    //await setModify.then(r=> console.log("done")).then(r=> getData)
+    await getData().then(r => console.log("done"));
+  }
+
+
+
+}
+
 const getData = async function() {
   rowNumber = 1;
+  let table = document.getElementById("table");
   const response = await fetch( "/data", {
     method:"GET"
   }).then((response) => response.json()
   ).then((json) =>data =json)
 
+  if(isModified){
 
+    for(let i = data.length; i > 0; i--){
+      table.deleteRow(i)
+    }
+    isModified = false;
+  }
+
+  console.log("len: " + data.length)
   for(let i = 0; i < data.length; i++){
     console.log(data[i].model)
+
     addRow(data[i].Id ,data[i].model, data[i].year, data[i].mpg, data[i].fuelLoad);
     rowNumber++
   }
   console.log(rowNumber)
+
+  console.log(data[data.length-1].Id)
+
   //const text = await response.text()
 
   //console.log( "text:", text )
@@ -156,10 +210,11 @@ const getData = async function() {
 }
 
 window.onload = function() {
-
 getData().then(r => console.log("stuff"));
   const submitButton = document.getElementById("submit");
   submitButton.onclick = submit;
   const deleteButton = document.getElementById("delete");
   deleteButton.onclick = remove;
+  const modifyButton = document.getElementById("modify");
+  modifyButton.onclick = modify;
 }
