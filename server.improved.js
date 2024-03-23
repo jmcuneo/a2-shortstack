@@ -48,6 +48,38 @@ const handleGet = function( request, response ) {
   }
 }
 
+function calculatePrice(bilingObj){
+  let totalPrice = 0
+  let discount = 0
+  let afterDiscount = 0
+  let finalPrice = 0
+  totalPrice = bilingObj.cost*bilingObj.quantity
+
+  //calculating discount
+  if(totalPrice < 50){
+    discount = 0.10 //10%
+  }
+  else if(totalPrice <= 50 && totalPrice > 100){
+    discount = 0.20 //20%
+  }
+  else if(totalPrice <= 100 && totalPrice > 500){
+    discount = 0.30 //30%
+  }
+  else if(totalPrice >= 500){
+    discount = 0.40 //40%
+  }
+
+  afterDiscount = discount*totalPrice
+  finalPrice = totalPrice - afterDiscount //final price including quantity
+
+  bilingObj.totalprice = totalPrice
+  bilingObj.discount = discount*100
+  bilingObj.afterdiscount = finalPrice
+
+  return bilingObj
+
+}
+
 const handlePost = function( request, response ) {
   let dataString = ""
   let totalPrice = 0
@@ -59,61 +91,52 @@ const handlePost = function( request, response ) {
   })
 
   request.on( "end", function() {
-    //console.log( JSON.parse( dataString ) )
-    let bilingObj = JSON.parse(dataString)
-    totalPrice = bilingObj.cost*bilingObj.quantity
-
-    //calculating discount
-    if(totalPrice > 50){
-      discount = 0.10 //10%
-    }
-    else if(totalPrice <= 50 && totalPrice > 100){
-      discount = 0.20 //20%
-    }
-    else if(totalPrice <= 100 && totalPrice > 500){
-      discount = 0.30 //30%
-    }
-    else if(totalPrice >= 500){
-      discount = 0.40 //40%
-    }
-
-    afterDiscount = discount*totalPrice
-    finalPrice = totalPrice - afterDiscount //final price including quantity
-
-    bilingObj.totalprice = totalPrice
-    bilingObj.discount = discount
-    bilingObj.afterdiscount = finalPrice
+    bilingObj = calculatePrice(JSON.parse(dataString))
+    // let bilingObj = JSON.parse(dataString)
+    // totalPrice = bilingObj.cost*bilingObj.quantity
+    //
+    // //calculating discount
+    // if(totalPrice > 50){
+    //   discount = 0.10 //10%
+    // }
+    // else if(totalPrice <= 50 && totalPrice > 100){
+    //   discount = 0.20 //20%
+    // }
+    // else if(totalPrice <= 100 && totalPrice > 500){
+    //   discount = 0.30 //30%
+    // }
+    // else if(totalPrice >= 500){
+    //   discount = 0.40 //40%
+    // }
+    //
+    // afterDiscount = discount*totalPrice
+    // finalPrice = totalPrice - afterDiscount //final price including quantity
+    //
+    // bilingObj.totalprice = totalPrice
+    // bilingObj.discount = discount
+    // bilingObj.afterdiscount = finalPrice
 
     billingData.push(bilingObj)
 
-    // ... do something with the data here!!!
-
-    console.log(billingData)
 
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
-    // if(billingData.length > 1){
-    //   console.log(billingData[billingData.length-1])
-    //   response.end(JSON.stringify(billingData[billingData.length-1]))
-    // }
-    // else{
-      response.end(JSON.stringify(billingData))
-    //}
+
+    response.end(JSON.stringify(billingData))
+
 
   })
 }
 
 const handleDelete = function( request, response ) {
   let dataString = ""
-  console.log(request.url.split('/')[1])
-  //let index = request.url.split('/')[1]
+
   request.on( "data", function( data ) {
     dataString += data
   })
 
   request.on( "end", function() {
-    //console.log("hi")
+
     let payload =  JSON.parse( dataString )
-    //console.log("payload = "+dataString)
 
     billingData.splice(payload.index, 1)
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
@@ -122,54 +145,18 @@ const handleDelete = function( request, response ) {
   })
 }
 
+
+
 const handlePut = function( request, response ) {
   let dataString = ""
-  let totalPrice = 0
-  let discount = 0
-  let afterDiscount = 0
-  let finalPrice = 0
   request.on( "data", function( data ) {
     dataString += data
   })
 
   request.on( "end", function() {
-    //console.log( JSON.parse( dataString ) )
-    let bilingObj = JSON.parse(dataString)
-    totalPrice = bilingObj.cost*bilingObj.quantity
+    bilingObj = calculatePrice(JSON.parse(dataString))
 
-    //calculating discount
-    if(totalPrice > 50){
-      discount = 0.10 //10%
-    }
-    else if(totalPrice <= 50 && totalPrice > 100){
-      discount = 0.20 //20%
-    }
-    else if(totalPrice <= 100 && totalPrice > 500){
-      discount = 0.30 //30%
-    }
-    else if(totalPrice >= 500){
-      discount = 0.40 //40%
-    }
-
-    afterDiscount = discount*totalPrice
-    finalPrice = totalPrice - afterDiscount //final price including quantity
-
-    bilingObj.totalprice = totalPrice
-    bilingObj.discount = discount
-    bilingObj.afterdiscount = finalPrice
-
-    //billingData.splice(bilingObj.updindex, 0, bilingObj)
     billingData[bilingObj.updindex] = bilingObj
-    //billingData.push(bilingObj)
-
-    // ... do something with the data here!!!
-
-    console.log(billingData)
-
-    //let updload =  JSON.parse( dataString )
-    //console.log("payload = "+dataString)
-
-
 
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
     response.end(JSON.stringify(billingData))

@@ -11,8 +11,7 @@ async function deleteRow(r) {
     const text = await response.text()
     let displayText = JSON.parse(text)
     addItem(displayText)
-    //var i = r.parentNode.parentNode.rowIndex;
-    //document.getElementById("my-table").deleteRow(i);
+
 }
 
 async function updateRow() {
@@ -76,22 +75,14 @@ const submit = async function( event ) {
   const text = await response.text()
     let displayText = JSON.parse(text)
     addItem(displayText)
-    let index = 0
-    //table.empty();
 
-
-
-    console.log(typeof(displayText)+displayText.length)
-  console.log( "text:", displayText )
 }
 
 function addItem(displayText){
     let table = document.getElementById('table-body')
     let total = 0
     table.innerHTML = ""
-    //if(displayText.length > 1){
-        //index = displayText.length-1
-        for(let index = 0; index<displayText.length; index++){
+    for(let index = 0; index<displayText.length; index++){
         let tds = ''
         tds = `<td>
                 <ul>
@@ -106,7 +97,7 @@ function addItem(displayText){
                 <td>
                 <ul>
                     <li>Price: ${displayText[index].totalprice}</li>
-                    <li>Discount: ${displayText[index].discount}</li>
+                    <li>Discount: ${displayText[index].discount}%</li>
                     <li>After Discount: ${displayText[index].afterdiscount}</li>
                 </ul>
                 </td>
@@ -117,63 +108,25 @@ function addItem(displayText){
                     data-category = ${displayText[index].category} data-desc = ${displayText[index].description}>UPDATE</button>
                 </td>
             `
-            total = total + displayText[index].afterdiscount
+        total = total + displayText[index].afterdiscount
         // <tr> Complete! Append to table!
         let objTr = `<tr id="delRow">${tds}</tr>`
         table.innerHTML += objTr
 
-        }
+    }
 
     tds = `<td>
-                
+            Total Price        
                 </td>
                 <td>
-                Total Price: ${total}
+                ${total}
                 </td>
-                <td>
-                    
+                <td>   
                 </td>
             `
-        let objTr = `<tr id="delRow">${tds}</tr>`
-        table.innerHTML += objTr
+    let objTr = `<tr id="delRow">${tds}</tr>`
+    table.innerHTML += objTr
 
-    //}
-    // else{
-    //     //for(let i = 0; i<displayText.length; i++){
-    //     let tds = ''
-    //     tds = `<td>
-    //             <ul>
-    //                 <li id="data-name">Name: ${displayText[index].productname}</li>
-    //                 <li>DOP: ${displayText[index].purchasedate}</li>
-    //                 <li id="data-cost">Cost: ${displayText[index].cost}</li>
-    //                 <li>Quantity: ${displayText[index].quantity}</li>
-    //                 <li>Category: ${displayText[index].category}</li>
-    //                 <li>Description: ${displayText[index].description}</li>
-    //             </ul>
-    //             </td>
-    //             <td>
-    //             <ul>
-    //                 <li>Price: ${displayText[index].totalprice}</li>
-    //                 <li>Discount: ${displayText[index].discount}</li>
-    //                 <li>After Discount: ${displayText[index].afterdiscount}</li>
-    //             </ul>
-    //             </td>
-    //             <td>
-    //                 <button onClick="deleteRow(this)" data-name = {displayText[index].productname} data-cost = {displayText[index].cost} id="deleteData" class="submit-btn">DELETE</button>
-    //                 <a class="submit-btn" href="#popup-box">UPDATE</a>
-    //             </td>
-    //         `
-    //     // <tr> Complete! Append to table!
-    //     let objTr = `<tr id="delRow">${tds}</tr>`
-    //     table.innerHTML += objTr
-    //     const test =`<div id="popup-box" class="modal">
-    //     <div class="content">
-    //         <h1 class="subtitle">My Work</h1>
-    //
-    //         <a href="#" class="box-close"><span class="material-symbols-outlined">close</span></a>
-    //     </div>
-    // </div>`
-        //}
 }
 
 window.onload = async function() {
@@ -187,50 +140,6 @@ window.onload = async function() {
     addItem(JSON.parse(text))
     console.log(JSON.parse(text))
 }
-
-
-
-//delete functionality
-// const deleteSubmit = async function( event ) {
-//     // stop form submission from trying to load
-//     // a new .html page for displaying results...
-//     // this was the original browser behavior and still
-//     // remains to this day
-//     event.preventDefault()
-//
-//     const input = document.querySelector( "#productname" ),
-//         json = {productname: input.value,},
-//         body = JSON.stringify( json )
-//
-//     let name = document.getElementById("data-name").value
-//     let cost = document.getElementById("data-cost").value
-//     console.log(name+cost)
-//
-//     const response = await fetch( "/submit", {
-//         method:"DELETE",
-//         body,
-//     })
-//
-//     const text = await response.text()
-//
-// }
-
-// window.addEventListener('click', function() {
-//     const delButton = document.querySelector("#deleteData");
-//     console.log(delButton)
-//     //delButton.onclick = deleteSubmit
-// })
-
-// const showPopup = document.querySelector("show-popup")
-// const popupContainer = document.querySelector("popup-container")
-// const closebtn = document.querySelector("close-btn")
-//
-// showPopup.onclick = () => {
-//     popupContainer.classList.add('active')
-// }
-// closebtn.onclick = () => {
-//     popupContainer.classList.remove('active')
-// }
 
 
 function openPopup(){
