@@ -9,8 +9,8 @@ const submit = async function( event ) {
   // remains to this day
   event.preventDefault()
   
-  const input = document.querySelector( "#yourname" ),
-        json = { yourname: input.value },
+  const input = document.querySelector( "#userinput"),
+        json = { username: input[0].value, score: input[1].value, time: input[2].value },
         body = JSON.stringify( json )
 
 
@@ -24,17 +24,9 @@ const submit = async function( event ) {
 
   console.log( "text:", text )
 
-  let newData = { "model": input.value, "year": 0, "mpg": 100 }
+  let newData = { "username": input[0].value, "score": input[1].value, "time": input[2].value }
 
-  const postData = await  fetch("data", {
-    method:"POST",
-    body
-  })
-
-  postData.
-
-
-  insetElementToTable(newData)
+  location.reload()
 
 }
 
@@ -51,45 +43,58 @@ window.onload = async function() {
 
   let data = await populateTable.json();
 
-  console.log(data)
+ // console.log(data)
 
   for(let i = 0; i < data.length; i++)
   {
-    insetElementToTable(data[i])
-  }
+    if(data[i] !== undefined)
+    {
+      insetElementToTable(data[i])
+    }
 
+  }
 
 }
 
 
-
 //CUSTOM CODE: Add this to the table
-function insetElementToTable(element)
+async function insetElementToTable(element)
 {
   tableIndex++;
   const table = document.getElementById("InformationTable")
   let row = table.insertRow(tableIndex)
 
-  for(let i = 0; i <= 3; i++)
+  for(let i = 0; i <= 5; i++)
   {
     let cell = row.insertCell(i)
 
     if(i == 0)
     {
-      cell.innerHTML = element.model;
+      cell.innerHTML = element.username;
     }
     else if(i == 1)
     {
-      cell.innerHTML = element.year;
+      cell.innerHTML = element.score;
     }
     else if(i == 2)
     {
-      cell.innerHTML = element.mpg;
+      cell.innerHTML = element.time;
     }
     else if(i == 3)
     {
-      let curDate = new Date()
-      cell.innerHTML = (curDate.getMonth() + 1) + "/" + curDate.getDate() + "/" + curDate.getFullYear()
+      cell.innerHTML = element.scoreOverTime;
+      //cell.innerHTML =  Math.round((element.score / element.time) * 10) / 10;
+    }
+    else if(i == 4)
+    {
+      cell.innerHTML = element.date;
+      //let curDate = new Date()
+      //cell.innerHTML = (curDate.getMonth() + 1) + "/" + curDate.getDate() + "/" + curDate.getFullYear()
+    }
+    else if(i == 5)
+    {
+      //cell.innerHTML = tableIndex;
+      cell.innerHTML = element.ID;
     }
 
   }

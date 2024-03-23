@@ -9,9 +9,9 @@ const http = require( "http" ),
       port = 3000
 
 const appdata = [
-  { "model": "toyota", "year": 1999, "mpg": 23 },
-  { "model": "honda", "year": 2004, "mpg": 30 },
-  { "model": "ford", "year": 1987, "mpg": 14} 
+  { "username": "Bashar", "score": 2000, "time": 100, "scoreOverTime": 20, "date": "1/10/2024", "ID": 1},
+  { "username": "Tim", "score": 4000, "time": 90, "scoreOverTime": 44.4, "date": "9/8/2023", "ID": 2 },
+  { "username": "Emma", "score": 3000, "time": 70, "scoreOverTime": 42.9, "date": "10/2/2022", "ID": 3}
 ]
 
 const server = http.createServer( function( request,response ) {
@@ -44,14 +44,24 @@ const handlePost = function( request, response ) {
   let dataString = ""
 
   request.on( "data", function( data ) {
-      dataString += data 
+      dataString += data
   })
 
   request.on( "end", function() {
     console.log( JSON.parse( dataString ) )
 
     // ... do something with the data here!!!
-    
+
+    let newData = JSON.parse((dataString))
+    console.log(newData)
+    let curDate = new Date()
+    newData.scoreOverTime = Math.round((newData.score / newData.time) * 10) / 10;
+    newData.date = (curDate.getMonth() + 1) + "/" + curDate.getDate() + "/" + curDate.getFullYear()
+    newData.ID = appdata.length + 1;
+
+    appdata.push(newData)
+    console.log(newData)
+
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
     response.end("test")
   })
