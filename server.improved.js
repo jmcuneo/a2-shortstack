@@ -8,11 +8,20 @@ const http = require( "http" ),
       dir  = "public/",
       port = 3000
 
-let appdata = [
-  { "make": "toyota", "model": "corolla", "year": 1999, "mpg": 23, "lateralGs": .7, "accel": 12.0 },
-  { "make": "honda", "model": "civic", "year": 2004, "mpg": 30, "lateralGs": .7, "accel": 12.0},
-  { "make": "ford", "model": "taurus", "year": 1987, "mpg": 14, "lateralGs": .7, "accel": 12.0}
-]
+
+
+let data ={
+  mainData: [
+    { "make": "toyota", "model": "corolla", "year": 1999, "mpg": 23, "lateralGs": .7, "accel": 12.0 },
+    { "make": "honda", "model": "civic", "year": 2004, "mpg": 30, "lateralGs": .7, "accel": 12.0},
+    { "make": "ford", "model": "taurus", "year": 1987, "mpg": 14, "lateralGs": .7, "accel": 12.0}
+  ],
+  averageData: {
+    "avgMakeLen": 0, "avgModelLen": 0, "avgYear": 0, "avgMpg": 0, "agvGs": 0, "avgAccel": 0 
+  },
+  exists: (arr, update) => arr.find(({make, model, year}) => make === update.make.toLowerCase() && model === update.model.toLowerCase() && year == update.year)
+}
+
 /* const parseFloats = {
   convertToNum: function(val){
     if(typeof val === 'string' && /^\d+(\.\d+)?$/.test(val)){
@@ -47,7 +56,7 @@ const handleGet = function( request, response ) {
       sendFile( response, "public/index.html" );
       break;
     case "/get-app-data":
-      fs.writeFile('public/app-data.json', JSON.stringify(appdata), (error) => {
+      fs.writeFile('public/app-data.json', JSON.stringify(data.mainData), (error) => {
         if (error) throw error;
       });
       sendFile(response, "public/app-data.json");
@@ -75,8 +84,16 @@ const handlePost = function( request, response ) {
     //console.log(parseFloats.convertData([JSON.parse( dataString )]));
     //appdata.concat(parseFloats.convertData([JSON.parse( dataString )]));
     dataString = JSON.parse(dataString);
-    appdata = appdata.concat(dataString);
-    console.log(JSON.stringify(appdata))
+    update = data.exists(data.mainData, dataString);
+    if(update){
+      update.mpg = dataString.mpg;
+      update.lateralGs = dataString.lateralGs;
+      update.accel = dataString.accel;
+      console.log("hey it exists \n",update);
+    }else {
+      data.mainData =  data.mainData.concat(dataString);
+    }
+    console.log(JSON.stringify(data.mainData))
     // ... do something with the data here!!!
 
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" })

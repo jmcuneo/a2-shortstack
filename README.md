@@ -15,6 +15,7 @@ Try to make your application do something useful! A todo list, storing / retriev
 Your application is required to implement the following functionalities(4 pts each, total 20 pts):
 
 - a `Server` which not only serves files, but also maintains a tabular dataset with 3 or more fields related to your application
+  - yes
 - a `Results` functionality which shows the entire dataset residing in the server's memory
 - a `Form/Entry` functionality which allows a user to add or delete data items residing in the server's memory
 - a `Server Logic` which, upon receiving new or modified "incoming" data, includes and uses a function that adds at least one additional derived field to this incoming data before integrating it with the existing dataset

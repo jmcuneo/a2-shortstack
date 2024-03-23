@@ -2,7 +2,8 @@
 let appdata = []
 function generateTable(data){
   console.log(data[0].make);
-  let table = '<table>';
+  let table = "";
+  table = '<table>';
   table += '<tr><th>Make</th><th>Model</th><th>Year</th><th>MPG</th><th>Gs</th><th>accel</th></tr>';
   data.forEach(item => {
     table += `<tr><td>${item.make}</td><td>${item.model}</td><td>${item.year}</td><td>${item.mpg}</td><td>${item.lateralGs}</td><td>${item.accel}</td></tr>`
@@ -38,6 +39,9 @@ const submit = async function( event ) {
   let values = Object.fromEntries(input.entries());
   values = parseData.toFloat(values);
   console.log(values);
+  if(!isNaN(values.make)){
+    return;
+  }
   body = JSON.stringify(values);
   const response = await fetch( "/submit", {
     method:"POST",
@@ -59,8 +63,9 @@ const getData = async function(event){
       return response.json();
     })
     .then(data => {
-      appdata = appdata.concat(data);
+      appdata =data;
       const tableContainer = document.getElementById('data');
+      tableContainer.innerHTML = "";
       tableContainer.innerHTML = generateTable(appdata);  
       console.log('data', data);
     })
