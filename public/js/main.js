@@ -85,7 +85,8 @@ function addRow(anagrams, index){
   }
   let lastColumn = document.createElement('th');
   let deleteButton = document.createElement('button');
-  deleteButton.innerHTML = "Remove";
+  // deleteButton.innerHTML = "Remove";
+  deleteButton.setAttribute('class','delete');
   deleteButton.onclick = (event)=>{remove(event,index)};
   lastColumn.appendChild(deleteButton);
   row.appendChild(lastColumn);

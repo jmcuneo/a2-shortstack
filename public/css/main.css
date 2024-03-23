@@ -1,4 +1,43 @@
 body {
-  background:black;
+  background:rgb(19, 0, 46);
   color:white;
+}
+
+#mainform{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top:25px;
+  margin-bottom: 25px;
+}
+
+#string{
+  min-width: 20vw;
+  min-height: 5vh;
+}
+
+#submit{
+  margin-left:25px;
+  margin-right: 25px;
+}
+
+h1{
+  text-align: center;
+}
+
+a{
+  color:brown;
+}
+
+footer{
+  position: fixed;
+  bottom:0%;
+}
+
+.delete{
+  background:url('../img/bin.png') no-repeat 0 0;
+  width: 40px;
+  height: 40px;
+  background-size:34px;
+  border:0;
 }
