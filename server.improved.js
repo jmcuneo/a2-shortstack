@@ -34,6 +34,7 @@ const handleGet = function( request, response ) {
 }
 
 const handlePost = function( request, response ) {
+    if(request.url === "/submit"){
     let dataString = ""
 
     request.on("data", function (data) {
@@ -41,21 +42,30 @@ const handlePost = function( request, response ) {
     })
 
     request.on("end", function () {
-      console.log(JSON.parse(dataString))
+        console.log(JSON.parse(dataString))
+        response.writeHead(200, "OK", {"Content-Type": "text/plain"})
+        response.end("Succeed")
+    })
+    }else if(request.url == "/results"){
 
-      // ... do something with the data here!!!
         const html = `
-        <html>
-        <div id="container">
+      <html lang="en">
+        <head>
+        <meta charset="UTF-8">
+        </head>
         <body>
-        ${appdata.map( item =>JSON.stringify(item))}
-        </body></div></html>
-        `
-
-
+        <head>
+        <tr>AppData:<br> </tr>
+        </head>
+        <tbody>
+        ${appdata.map(item => JSON.stringify(item))}
+        </tbody>
+        </body>
+        </html>
+      `
       response.writeHead(200, "OK", {"Content-Type": "text/plain"})
       response.end(html)
-    })
+    }
 }
 
 const sendFile = function( response, filename ) {
