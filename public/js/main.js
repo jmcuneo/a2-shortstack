@@ -10,9 +10,12 @@ const submit = async function( event ) {
   const charname = document.querySelector( "#charname" ),
         charrace = document.querySelector( "#charrace" ),
         charclass = document.querySelector( "#charclass" ),
-        json = { "charname": charname.value,
+        action = document.querySelector('input[name="action"]:checked').value;
+
+    json = { "charname": charname.value,
         "charrace": charrace.value,
-        "charclass": charclass.value},
+        "charclass": charclass.value,
+        "action": action},
         body = JSON.stringify( json )
 
   const response = await fetch( "/submit", {
@@ -31,6 +34,8 @@ const submit = async function( event ) {
 
 const deleteEntry = async function (deleteName, deleteClass){
 
+    console.log("delete entry: ", deleteName, deleteClass)
+
     const json = {
         "deleteName": deleteName,
         "deleteClass": deleteClass
@@ -38,10 +43,13 @@ const deleteEntry = async function (deleteName, deleteClass){
 
     const body = JSON.stringify(json)
 
-    const response = await fetch( "/deleteEntry", {
+    const response = await fetch( "/delete", {
         method:"POST",
         body
     })
+
+    // const text = await response.text()
+    await loadTable()
 }
 
 const loadTable = async function (){
@@ -61,7 +69,7 @@ const loadTable = async function (){
             for (let i = 0; i < data.length; i++) {
                 // creates a table row
                 const row = document.createElement("tr");
-                for (let j = 0; j < 5; j++) {
+                for (let j = 0; j < 6; j++) {
                     // Create a <td> element and a text node, make the text
                     // node the contents of the <td>, and put the <td> at
                     // the end of the table row
@@ -81,15 +89,18 @@ const loadTable = async function (){
                             content = data[i].modifier
                             break;
                         case 4:
+                            content = data[i].action
+                            break;
+                        case 5:
                             const button = document.createElement("button")
-                            button.onclick = () => console.log("button pressed!");
+                            button.onclick = () => deleteEntry(data[i].name, data[i].race);
                             button.id = "deleteButton"
                             button.textContent = "Delete"
                             cell.appendChild(button);
                             row.appendChild(cell);
                             break;
                     }
-                    if(j !== 4) {
+                    if(j !== 5) {
                         const cellText = document.createTextNode(content);
                         cell.appendChild(cellText);
                         row.appendChild(cell);

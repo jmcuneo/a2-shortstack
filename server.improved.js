@@ -9,9 +9,9 @@ const http = require( "http" ),
       port = 3000
 
 const appdata = [
-  { "name": "Duolian", "race": "Earth Genasi", "class": "Paladin", "modifier": "Charisma"},
-  { "name": "Kaede", "race": "Wood Elf", "class": "Monk", "modifier": "Dexterity" },
-  { "name": "Thaddeus Thunderclap", "race": "Gnome", "class": "Wizard", "modifier": "Intelligence"}
+  { "name": "Duolian", "race": "Earth Genasi", "class": "Paladin", "modifier": "Charisma", "action": "Greatsword"},
+  { "name": "Kaede", "race": "Wood Elf", "class": "Monk", "modifier": "Dexterity", "action": "Unarmed Strikes" },
+  { "name": "Thaddeus Thunderclap", "race": "Gnome", "class": "Wizard", "modifier": "Intelligence", "action": "Thunderclap"}
 ]
 
 const server = http.createServer( function( request,response ) {
@@ -49,8 +49,10 @@ const handlePost = function( request, response ) {
     if (request.url === "/submit") {
       //handle submit code
       saveData(dataString);
-    } else if(request.url === "/deleteEntry"){
+    } else if(request.url === "/delete"){
+      console.log("received request")
       //handle delete code
+      deleteData(dataString)
     }
 
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
@@ -62,10 +64,15 @@ const saveData = function( jsonData ){
   let myDataJSON = JSON.parse( jsonData )
 
   let charModifier = "unknown"
+  let randAction = "Unarmed Strikes"
 
   console.log("class :", myDataJSON.charclass)
 
   const charClass = myDataJSON.charclass.toString().toLowerCase();
+
+  //Either weapon or spell
+  const actionType = myDataJSON.action;
+
 
   if (charClass === "artificer" || charClass === "wizard") {
     charModifier = "Intelligence";
@@ -81,10 +88,119 @@ const saveData = function( jsonData ){
     charModifier = "unknown";
   }
 
+  if (actionType === "weapon") {
+    switch (charClass) {
+      case "artificer":
+        randAction = "gun";
+        break;
+      case "wizard":
+        randAction = "Quarterstaff";
+        break;
+      case "druid":
+        randAction = "Quarterstaff";
+        break;
+      case "ranger":
+        randAction = "Longbow";
+        break;
+      case "cleric":
+        randAction = "Mace";
+        break;
+      case "paladin":
+        randAction = "Warhammer";
+        break;
+      case "bard":
+        randAction = "Lute";
+        break;
+      case "sorcerer":
+        randAction = "Quarterstaff";
+        break;
+      case "warlock":
+        randAction = "Hexblade";
+        break;
+      case "monk":
+        randAction = "Unarmed Strikes";
+        break;
+      case "rogue":
+        randAction = "Dagger";
+        break;
+      case "barbarian":
+        randAction = "Greataxe";
+        break;
+      case "fighter":
+        randAction = "Longsword";
+        break;
+      default:
+        // Default case
+        break;
+    }
+  } else { // actionType === "magic"
+    switch (charClass) {
+      case "artificer":
+        randAction = "Arcane Weapon";
+        break;
+      case "wizard":
+        randAction = "Fireball";
+        break;
+      case "druid":
+        randAction = "Entangle";
+        break;
+      case "ranger":
+        randAction = "Hunter's Mark";
+        break;
+      case "cleric":
+        randAction = "Cure Wounds";
+        break;
+      case "paladin":
+        randAction = "Divine Smite";
+        break;
+      case "bard":
+        randAction = "Vicious Mockery";
+        break;
+      case "sorcerer":
+        randAction = "Magic Missile";
+        break;
+      case "warlock":
+        randAction = "Eldritch Blast";
+        break;
+      case "monk":
+        randAction = "Slow Fall";
+        break;
+      case "rogue":
+        randAction = "Invisibility";
+        break;
+      case "barbarian":
+        randAction = "RAGE!!";
+        break;
+      case "fighter":
+        randAction = "Action Surge";
+        break;
+      default:
+        // Default case
+        randAction = "Firebolt";
+        break;
+    }
+  }
 
-  appdata.push({"name": myDataJSON.charname, "race": myDataJSON.charrace, "class": myDataJSON.charclass, "modifier": charModifier})
+  appdata.push({"name": myDataJSON.charname, "race": myDataJSON.charrace, "class": myDataJSON.charclass, "modifier": charModifier, "action": randAction})
 
   console.log(appdata)
+}
+
+const deleteData = function( jsonData ){
+  let myDataJSON = JSON.parse( jsonData )
+  const deleteName = myDataJSON.deleteName;
+  const deleteClass = myDataJSON.deleteClass;
+
+  for (let i = 0; i < appdata.length; i++) {
+    // Check if the current object's name and race match the provided values
+    if (appdata[i].name === deleteName && appdata[i].race === deleteClass) {
+      // Remove the object from the array
+      appdata.splice(i, 1);
+      // Break out of the loop since we've found and removed the entry
+      break;
+    }
+  }
+
 }
 
 const sendFile = function( response, filename ) {
