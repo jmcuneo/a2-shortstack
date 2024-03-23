@@ -8,17 +8,7 @@ const http = require( "http" ),
       dir  = "public/",
       port = 3000
 
-const taskData = [
-  { "id": 1, "task": "A1 HW", "class": "CS4241", "duedate": "03/20/2024", "importance": "Yes", "priority": 0},
-  { "id": 2, "task": "HW 1", "class": "CS4342", "duedate": "03/22/2024", "importance": "No", "priority": 0},
-  { "id": 3, "task": "Lecture notes", "class": "ECE3849", "duedate": "03/24/2024", "importance": "Yes", "priority": 0},
-  { "id": 4, "task": "Lab 1", "class": "ECE3849", "duedate": "04/03/2024", "importance": "Yes", "priority": 0}
-]
-
-taskData.forEach(element => {
-  determinePriority(element);
-});
-
+const taskData = []
 
 const server = http.createServer( function( request,response ) {
   if( request.method === "GET" ) {
@@ -61,8 +51,6 @@ const handlePost = function( request, response ) {
       taskObject.id = taskData[taskData.length-1].id + 1;
     }
     
-
-    // Update priority
     determinePriority(taskObject);
 
     // Push new object to taskData array
@@ -71,7 +59,6 @@ const handlePost = function( request, response ) {
     response.end(JSON.stringify(taskData));
   })
 }
-
 
 // Delete mode
 const handleDelete = function( request, response ) {
@@ -88,7 +75,6 @@ const handleDelete = function( request, response ) {
   })
 }
 
-
 // Edit mode
 const handlePatch = function( request, response ) {
   let dataString = ""
@@ -97,7 +83,6 @@ const handlePatch = function( request, response ) {
   })
   request.on( "end", function() {
     let taskObject = JSON.parse( dataString );
-    // Update priority
     determinePriority(taskObject);
     // Update object
     taskData[determineTaskIndex(taskObject)] = taskObject;
@@ -105,9 +90,6 @@ const handlePatch = function( request, response ) {
     response.end(JSON.stringify(taskData));
   })
 }
-
-
-
 
 const sendFile = function( response, filename ) {
    const type = mime.getType( filename ) 
@@ -131,7 +113,7 @@ const sendFile = function( response, filename ) {
    })
 }
 
-
+// Determine the index of the task in the array
 function determineTaskIndex(taskObject) {
   let foundTask = false;
   let i = 0;
@@ -144,10 +126,6 @@ function determineTaskIndex(taskObject) {
   }
   return i;
 }
-
-
-
-
 
 // Determines the priority based on duedate, importance, and the current date
 function determinePriority(data) {

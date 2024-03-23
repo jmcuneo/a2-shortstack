@@ -3,6 +3,7 @@
 var taskData = [];
 editMode = -1;
 
+// Getting data from the server
 const loadData = async function() {
   const response = await fetch( "/taskData/", {
     method:"GET"
@@ -15,6 +16,7 @@ const loadData = async function() {
 
 loadData();
 
+// When submit button is hit to add or edit data
 const submit = async function( event ) {
   // stop form submission from trying to load
   // a new .html page for displaying results...
@@ -28,6 +30,7 @@ const submit = async function( event ) {
     let importance = document.querySelector( "#importance" );
 
     let json = {};
+    // Determine if this is an edit or an add
     if(editMode > 0) {
       json = {id: editMode, task: task.value, class: classi.value, duedate: duedate.value, importance: importance.value, priority: 0};
       const body = JSON.stringify( json );
