@@ -1,8 +1,8 @@
 const fs   = require( "fs" );
 
 //Read the scrabble dictionary txt file, split it by newlines to make a list of all words.
-const dictionary = fs.readFileSync("dictionary.txt", { encoding: 'utf8', flag: 'r' }).split("\r\n");
-  
+const dictionary = fs.readFileSync("dictionary.txt", { encoding: 'utf8', flag: 'r' }).split(/\r?\n/);
+
 //Creates a set of all allowed letters.
 const lettersString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const lettersSet = new Set(lettersString.split(""));
