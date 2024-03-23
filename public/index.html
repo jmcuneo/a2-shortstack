@@ -15,39 +15,35 @@
     <div class="header">What To Bring</div>
     <div class="text-grid">
       <form>
-        <input type="text" id="yourname" value="" placeholder="Enter Name"> <!--placeholder allows user to type directly without deleting valuetag first-->
-        <input type="text" id="youritem" value="" placeholder="Enter Item">
-        <input type="number" min= "0" step="1" oninput="validity.valid||(value='');" id="numItems" value="" placeholder="Enter Quanitity"> <!--only allow whole, positive numbers-->
-        <input type="number" min="0" id="itemPrice" value="" placeholder="Enter Item Price">
+        <input type="text" id="yourname" maxlength="10" value="" placeholder="Enter Name"> <!--placeholder allows user to type directly without deleting valuetag first-->
+        <input type="text" id="youritem" maxlength="10" value="" placeholder="Enter Item">
+        <input type="number" min= "0" step="1" maxlength="10" oninput="validity.valid||(value='');" id="numItems" value="" placeholder="Enter Quanitity"> <!--only allow whole, positive numbers-->
+        <input type="number" min="0" maxlength="10" id="itemPrice" value="" placeholder="Enter Item Price">
         <button id="submit">submit</button>
       </form>
-      <!--
-      <form>
-        <input type="text" id="suggestItem" value="" placeholder="Enter Item">
-        <input type="text" id="segguesQty" value="" placeholder="Enter Quanitity">
-        <button id="suggest">Suggest</button>
-      </form>
-    -->
     </div>
 
     <!--CSS GRID-->
-    <div class="header-grid">
-      <h2>Who's Bringing What:</h2>
-      <h2>Who's Coming:</h2>
     </div>
-    <div class="grid-container">
+    <div class="flex-container">
       <!-- Table to display fetched user data -->
-      <table id="table">
-        <tr>
-          <th>Name</th>
-          <th>Item</th>
-          <th>Quanitity</th>
-          <th>Total Cost</th>
-          <th>Delete an Item</th>
-        </tr>
-      </table>
-      
-      <p></p>
+      <div class="column">
+        <h2>Who's Bringing What:</h2>
+
+        <table id="table">
+          <tr>
+            <th>Name</th>
+            <th>Item</th>
+            <th>Quanitity</th>
+            <th>Total Cost</th>
+            <th>Delete an Item</th>
+          </tr>
+        </table>
+      </div>
+      <div class="column">
+        <h2>Who's Coming:</h2>
+        <ul id="guestList"></ul>
+      </div>
     </div>
   </body>
 </html>
