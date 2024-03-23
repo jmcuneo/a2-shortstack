@@ -1,5 +1,5 @@
 {
-  "name": "",
+  "name": "coderunner",
   "version": "",
   "description": "",
   "author": "",
@@ -7,6 +7,8 @@
     "start": "node server.improved.js"
   },
   "dependencies": {
-    "mime": "^2.4.4"
+    "is-var-name": "^2.0.0",
+    "isolated-vm": "^4.7.2",
+    "mime": "^2.6.0"
   }
 }
