@@ -1,116 +1,12 @@
-Assignment 2 - Short Stack: Basic Two-tier Web Application using HTML/CSS/JS and Node.js  
-===
+Seth Frank: 
 
-Due: March 24th, by 11:59 PM.
-
-This assignment aims to introduce you to creating a prototype two-tiered web application. 
-Your application will include the use of HTML, CSS, JavaScript, and Node.js functionality, with active communication between the client and the server over the life of a user session.
-
-Baseline Requirements
----
-
-There is a large range of application areas and possibilities that meet these baseline requirements. 
-Try to make your application do something useful! A todo list, storing / retrieving high scores for a very simple game... have a little fun with it.
-
-Your application is required to implement the following functionalities (4 pts each, total 20 pts):
-
-- DONE a `Server` which not only serves files, but also maintains a tabular dataset with 3 or more fields related to your application
-- DONE a `Results` functionality which shows the entire dataset residing in the server's memory
-- DONE a `Form/Entry` functionality which allows a user to add or delete data items residing in the server's memory
-- DONE a `Server Logic` which, upon receiving new or modified "incoming" data, includes and uses a function that adds at least one additional derived field to this incoming data before integrating it with the existing dataset
-- DONE the `Derived field` for a new row of data must be computed based on fields already existing in the row. 
-For example, a `todo` dataset with `task`, `priority`, and `creation_date` may generate a new field `deadline` by looking at `creation_date` and `priority`
-
-Your application is required to demonstrate the use of the following concepts:
-
-HTML (4 pts each, total 16 pts):
-- DONE One or more [HTML Forms](https://developer.mozilla.org/en-US/docs/Learn/HTML/Forms), with any combination of form tags appropriate for the user input portion of the application
-- DONE A results page displaying all data currently available on the server. You will most likely use a `<table>` tag for this, but `<ul>` or `<ol>` could also work and might be simpler to work with. Alternatively, you can create a single-page app (see Technical Acheivements) but this is not a requirement.
-- All pages should [validate](https://validator.w3.org)
-- DONE If your app contains multple pages, they should all be accessible from the homepage (index.html)
-
-CSS (4 pts each, total 16 pts):
-- DONE CSS styling of the primary visual elements in the application
-- DONE Various CSS Selector functionality must be demonstrated:
-    - Element selectors
-    - ID selectors
-    - Class selectors
-- DONE CSS positioning and styling of the primary visual elements in the application:
-    - DONE Use of either a CSS grid or flexbox for layout
-    - DONE Rules defining fonts for all text used; no default fonts! Be sure to use a web safe font or a font from a web service like [Google Fonts](http://fonts.google.com/)
-- DONE CSS defined in a maintainable, readable form, in external stylesheets 
-
-JavaScript (4 pts):
-- DONE At minimum, a small amount of front-end JavaScript to get / fetch data from the server; a sample is provided in this repository.
-
-Node.js (4 pts):
-- DONE An HTTP Server that delivers all necessary files and data for the application, and also creates the required `Derived Fields` in your data. 
-A starting point is provided in this repository.
-
-Deliverables
----
-
-1. (5 pts) Fork the starting project code repo. The starter code in the repo may be used or discarded as needed.
-2. (60 pts, detailed above) Implement your project with the above requirements.
-3. Test your project to make sure that when someone goes to your main page, it displays correctly.
-4. (5 pts) Deploy your project to Glitch, and fill in the appropriate fields in your package.json file.
-5. (5 pts) Ensure that your project has the proper naming scheme `a2-FirstnameLastname` so we can find it.
-6. (5 pts) Modify the README to the specifications below, and delete all of the instructions originally found in this README.
-7. (5 pts) Create and submit a Pull Request to the original repo. Be sure to include your name in the pull request.
-
-Acheivements
----
-
-Below are suggested technical and design achievements. You can use these to help customize the assignment to your personal interests. These are recommended acheivements, but feel free to create/implement your own... just make sure you thoroughly describe what you did in your README and why it was challenging. ALL ACHIEVEMENTS MUST BE DESCRIBED IN YOUR README IN ORDER TO GET CREDIT FOR THEM. Remember, the highest grade you can get on any individual assignment is a 100%.
-
-*Technical*
-- DONE (5 points) Create a single-page app that both provides a form for users to submit data and always shows the current state of the server-side data. To put it another way, when the user submits data, the server should respond sending back the updated data (including the derived field calculated on the server) and the client should then update its data display.
-
-- DONE (5 points) In addition to a form enabling adding and deleting data on the server, also add the ability to modify existing data.
-
-*Design/UX*
-- (5 points per person, with a max of 10 points) Test your user interface with other students in the class. Define a specific task for them to complete (ideally something short that takes <10 minutes), and then use the [think-aloud protocol](https://en.wikipedia.org/wiki/Think_aloud_protocol) to obtain feedback on your design (talk-aloud is also fine). Important considerations when designing your study:
-
-1. Make sure you start the study by clearly stating the task that you expect your user to accomplish.
-2. You shouldn't provide any verbal instructions on how to use your interface / accomplish the task you give them. Make sure that your interface is clear enough that users can figure it out without any instruction, or provide text instructions from within the interface itself. 
-3. If users get stuck to the point where they give up, you can then provde instruction so that the study can continue, but make sure to discuss this in your README. You won't lose any points for this... all feedback is good feedback!
-
-You'll need to use sometype of collaborative software that will enable you both to see the test subject's screen and listen to their voice as they describe their thoughts, or conduct the studies in person. After completing each study, briefly (one to two sentences for each question) address the following in your README:
-
-1. Provide the last name of each student you conduct the evaluation with.
-2. What problems did the user have with your design?
-3. What comments did they make that surprised you?
-4. What would you change about the interface based on their feedback?
-
-*You do not need to actually make changes based on their feedback*. This acheivement is designed to help gain experience testing user interfaces. If you run two user studies, you should answer two sets of questions. 
-
-FAQ
----
-**Q: Can I use frameworks for this assignment?**
-
-A: No. We'll discuss them later this term, but for right now, we want to see that you can implement these features yourself instead of outsourcing them to an existing framework or library.
-
-**Q: After I delete some data server-side, the data persists on the client side until I refresh the page.**
-
-A: Make sure the client-side copy of the data also reflects the deletion. The server-side and client-side copies of the data should remain in sync at all times.
-
-**Q: Do I have to implement the specific achievements above?**
-
-A: No. As discussed in the instructions, you are free to implement your own. If you're not sure if they'll qualify, check with the instructor.
-
-**Q: If I do a single page for the technical achievement, will I still get credit for the last two criteria in the base requirements?**
-
-Yes.
-
-
-Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
----
-
-## Your Web Application Title
-Include a very brief summary of your project here. Be sure to include the CSS positioning technique you used, and any required instructions to use your application.
+## Task List
+This program is an implementation of a basic task list application. The application makes use of CSS flexbox so that it is visible on many different screen sizes. For this application, you can input a task, specify which class it is for, the due date, and whether it is important or not. Once added, the server will give it a priority rating from 1-4 based on the due date and importance (1 being higher priority, 4 being lower priority). From there, you can edit and delete tasks in the table by clicking the respective buttons. To edit a task, it will fill the fields with the data where you can then edit t and resubmit. To delete a task, click the delete button and it will automatically delete it.
 
 ## Technical Achievements
-- **Tech Achievement 1**: Using a combination of...
+- **Tech Achievement 1**: Created a single-page program that allows the user to submit data and always see the up to date state of server-side data. Any time data is added, edited, or deleted, it will send that request to the server and then update the data on the server and send a response immediately back to the client so they can see it updated in the table.
+- **Tech Achievement 2**: Have the ability to add, edit, and delete data from the server. For adding data, I used the POST command to signal to the server to add the specified data that was passed in. For editing data, I used the PATCH command which sends the new updated object to the server which then will update the object based upon the ID associated with it. For deleting data, I used the DELETE command which will delete the specified object based upon the ID associated with it.
 
 ### Design/Evaluation Achievements
-- **Design Achievement 1**: 
+- **Design Achievement 1**: Made use of a table with buttons incorporated into it for ease of access for the user. The table made use of multiple colors to enable the user to more easily read and understand what is in the table. I also added buttons for each task for editing and deleting so that it is easier for the user to complete these tasks instead of having to scroll through ID number or something similar to delete or edit a task.
+- **Design Achievement 2**: Utilized a wrapper with a flexbox to enable the elements to change layout dependent on the screen width. For the section that allows the user to submit tasks, it will display the fields in a 2x2 layout for any screen widths greater than 800px. For ones that are less, it will then change the layout to 1X4 so the user doesn't have to scroll left. I did this by utilizing @media screen that enables when the screen width is greater than 800px. For the table, I have this set to width: 100% so that it automatically stretches to whatever the size of the screen width is so that it make the best use of space.
