@@ -26,55 +26,37 @@ const savePostcard = () => {
         },
         body: JSON.stringify(postcardData),
     })
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error("Network response was not ok");
-            }
-            return response.json();
-        })
-        .then((data) => {
-            console.log("Postcard saved successfully:", data);
-        }).then((data) => {
+    .then((response) => {
+        if (!response.ok) {
+            throw new Error("Network response was not ok");
+        }
+        return response.json();
+    })
+    .then((data) => {
         console.log("Postcard saved successfully:", data);
         const postcardElement = document.createElement("div");
         postcardElement.classList.add("postcard", "saved");
         console.log("Received data from server:", data);
         postcardElement.innerHTML = `
-             <div class="postcard-image" style="position: relative;">
-                    <img src="${image}" alt="Postcard Image">
-                    <h2 class="postcard-title saved-title" style="color: ${titleColor};">${title}</h2>
-                    <p style=" color: ${titleColor};">${data.fromText}</p>
-             </div>
-                <div class="postcard-text" style="background-color: ${textBoxColor}; color: ${textColor}; margin-top: -13px;">
-                    <p style=" color: ${textColor}; background-color: ${textBoxColor};">${message}</p>
-                </div>
-            `;
+           <div class="postcard-image" style="position: relative;">
+                <h2 class="postcard-title saved-title" style="color: ${titleColor};">${title}</h2>
+                <img src="${image}" alt="Postcard Image">
+            </div>
+            <div class="postcard-text" style="background-color: ${textBoxColor}; color: ${textColor}; margin-top: -13px;">
+                <p style="color: ${textColor}; background-color: ${textBoxColor};">${message}, ${data.fromText}</p>
+            </div>
+        `;
         const postcardGallery = document.getElementById("created-postcards");
         postcardGallery.appendChild(postcardElement);
+
+        const deleteButton = createDeleteButton(postcardData.id);
+        postcardElement.appendChild(deleteButton);
     })
-
-        .catch((error) => {
-            console.error("Error saving postcard:", error);
-        });
-
-    // making the postcard appear physically on site once saved
-    const postcardElement = document.createElement("div");
-    postcardElement.classList.add("postcard", "saved");
-    postcardElement.innerHTML = `
-        <div class="postcard-image" style="position: relative;">
-            <img src="${image}" alt="Postcard Image">
-            <h2 class="postcard-title saved-title" style="color: ${titleColor};">${title}</h2>
-        </div>
-        <div class="postcard-text" style="background-color: ${textBoxColor}; color: ${textColor}; margin-top: -13px;">
-            <p style=" color: ${textColor}; background-color: ${textBoxColor};">${message}</p>
-        </div>
-    `;
-    const postcardGallery = document.getElementById("created-postcards");
-    postcardGallery.appendChild(postcardElement);
-
-    const deleteButton = createDeleteButton(postcardData.id);
-    postcardElement.appendChild(deleteButton);
+    .catch((error) => {
+        console.error("Error saving postcard:", error);
+    });
 };
+
 
 
 document.getElementById("save-postcard").addEventListener("click", savePostcard);
