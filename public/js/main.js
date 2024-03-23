@@ -136,10 +136,6 @@ const remove = async function (event) {
     rowNumber--;
   }
 }
-
-const setModify = async function(){ //helper for modify
-  isModified = true;
-}
 const modify = async function(event){
   event.preventDefault()
 
@@ -168,7 +164,6 @@ const modify = async function(event){
 
   ) {
   } else{
-    //await setModify.then(r=> console.log("done")).then(r=> getData)
     await getData().then(r => console.log("done"));
   }
 
