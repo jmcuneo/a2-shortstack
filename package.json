@@ -1,8 +1,7 @@
 {
-  "name": "",
-  "version": "",
-  "description": "",
-  "author": "",
+  "name": "a2-zeshengchen",
+  "description": "an arcade game scores tracking application",
+  "author": "Zesheng Chen",
   "scripts": {
     "start": "node server.improved.js"
   },
