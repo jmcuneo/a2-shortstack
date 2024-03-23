@@ -101,27 +101,16 @@ const handleRemove = function (request, response) {
       appdata.splice(dataString, 1); // Remove the entry from the array
       console.log("Removed item at index: ", dataString);
       console.log("Updated appdata: ", appdata);
-      //generateList(appdata);
       response.writeHead(200, "OK", { "Content-Type": "text/plain" });
       response.end(JSON.stringify(appdata));
     } else {
       // Invalid index, send an error response
-      response.writeHead(204, "Bad Request", { "Content-Type": "text/plain" });
-      response.end(JSON.stringify("Invalid index"));
+      //response.writeHead(204, "Bad Request", { "Content-Type": "text/plain" });
+      //response.end(JSON.stringify("Invalid index"));
     }
   });
 };
 
-/**
- * update guest list
- */
-const generateList = function(array, object){
-  for(let i = 0; i < array.length; i++){
-    if(array[i].name === object.name){
-
-    }
-  }
-}
 
 const sendFile = function (response, filename) {
   const type = mime.getType(filename);
