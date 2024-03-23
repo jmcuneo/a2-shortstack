@@ -15,7 +15,6 @@ const server = http.createServer(function(request, response) {
 });
 
 const handleGet = function(request, response) {
-    //console.log(request);
     const filename = dir + request.url.slice(1);
     if (request.url === "/") {
         sendFile(response, "public/index.html");
@@ -33,8 +32,6 @@ const handlePost = function(request, response) {
     });
     request.on("end", function() {
         const data = JSON.parse(dataString);
-        console.log(data);
-        console.log(request.url);
 
         // ... do something with the data here!!!
         if (request.url === "/add") {
@@ -67,9 +64,9 @@ const createTable = function(response) {
     let table = "<tr><th>Recipe Name</th><th>Prep Time</th><th>Cook Time</th><th>Total Time</th></tr>";
     for (let data of appdata)
         table += `<tr><td>${data.name}</td>
-                  <td>${data.prep} min${data.prep == 1 ? "" : "s"}</td>
-                  <td>${data.cook} min${data.cook == 1 ? "" : "s"}</td>
-                  <td>${data.total} min${data.total == 1 ? "" : "s"}</td></tr>`;
+                      <td>${data.prep} min${data.prep == 1 ? "" : "s"}</td>
+                      <td>${data.cook} min${data.cook == 1 ? "" : "s"}</td>
+                      <td>${data.total} min${data.total == 1 ? "" : "s"}</td></tr>`;
     response.writeHeader(200, {"Content-Type": "string"});
     response.end(table);
 }

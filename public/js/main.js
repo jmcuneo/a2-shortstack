@@ -1,3 +1,7 @@
+const isNumeric = function(str) {
+    return !isNaN(str) && !isNaN(parseFloat(str));
+}
+
 const add = async function(event) {
     event.preventDefault();
 
@@ -8,10 +12,6 @@ const add = async function(event) {
                   prep: prepInput.value,
                   cook: cookInput.value},
           body = JSON.stringify(json);
-    
-    const isNumeric = function(str) {
-        return !isNaN(str) && !isNaN(parseFloat(str));
-    }
 
     if (json.name === "" || !isNumeric(json.prep) || !isNumeric(json.cook))
         return;
@@ -55,10 +55,6 @@ const modify = async function(event) {
                   prep: prepInput.value,
                   cook: cookInput.value},
           body = JSON.stringify(json);
-    
-    const isNumeric = function(str) {
-        return !isNaN(str) && !isNaN(parseFloat(str));
-    }
 
     if (json.name === "" || !isNumeric(json.prep) || !isNumeric(json.cook))
         return;
