@@ -44,10 +44,17 @@ const handlePost = function( request, response ) {
       console.log(JSON.parse(dataString))
 
       // ... do something with the data here!!!
+        const html = `
+        <html>
+        <div id="container">
+        <body>
+        ${appdata.map( item =>JSON.stringify(item))}
+        </body></div></html>
+        `
 
 
       response.writeHead(200, "OK", {"Content-Type": "text/plain"})
-      response.end("test")
+      response.end(html)
     })
 }
 
