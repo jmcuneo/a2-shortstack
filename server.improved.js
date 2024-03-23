@@ -51,13 +51,6 @@ const handlePost = function( request, response ) {
     console.log( JSON.parse( dataString ) )
 
     // ... do something with the data here!!!
-    //appdata[appdata.length] = { "model": dataString, "year": 1999, "mpg": 23 }
-
-
-    //for (i = 0; i < appdata.length; i++)
-   // {
-    //  insetElementToTable(appdata[i])
-   // }
     
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
     response.end("test")

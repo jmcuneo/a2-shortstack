@@ -1,6 +1,6 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 
-let tableIndex = 1;
+let tableIndex = 0;
 
 const submit = async function( event ) {
   // stop form submission from trying to load
@@ -14,20 +14,25 @@ const submit = async function( event ) {
         body = JSON.stringify( json )
 
 
-
   const response = await fetch( "/submit", {
     method:"POST",
     body 
   })
 
-
-
-
   const text = await response.text()
+
 
   console.log( "text:", text )
 
   let newData = { "model": input.value, "year": 0, "mpg": 100 }
+
+  const postData = await  fetch("data", {
+    method:"POST",
+    body
+  })
+
+  postData.
+
 
   insetElementToTable(newData)
 
