@@ -8,12 +8,30 @@ const http = require( "http" ),
       dir  = "public/",
       port = 3000
 
-const appdata = [
-  { "model": "toyota", "year": 1999, "mpg": 23 },
-  { "model": "honda", "year": 2004, "mpg": 30 },
-  { "model": "ford", "year": 1987, "mpg": 14} 
+let appdata = [
+  { "make": "toyota", "model": "corolla", "year": 1999, "mpg": 23, "lateralGs": .7, "accel": 12.0 },
+  { "make": "honda", "model": "civic", "year": 2004, "mpg": 30, "lateralGs": .7, "accel": 12.0},
+  { "make": "ford", "model": "taurus", "year": 1987, "mpg": 14, "lateralGs": .7, "accel": 12.0}
 ]
-
+/* const parseFloats = {
+  convertToNum: function(val){
+    if(typeof val === 'string' && /^\d+(\.\d+)?$/.test(val)){
+      return parseFloat(val);
+    } else {
+      return val;
+    }
+  },
+  convertData: function(data){
+    return data.map(item => {
+      const convertedItem = {};
+      for(const key in item){
+        convertedItem[key] = this.convertToNum(item);
+        
+      }
+      return convertedItem;
+    });
+  }
+}; */
 const server = http.createServer( function( request,response ) {
   if( request.method === "GET" ) {
     handleGet( request, response )    
@@ -24,12 +42,25 @@ const server = http.createServer( function( request,response ) {
 
 const handleGet = function( request, response ) {
   const filename = dir + request.url.slice( 1 ) 
+  switch(request.url){
+    case "/":
+      sendFile( response, "public/index.html" );
+      break;
+    case "/get-app-data":
+      fs.writeFile('public/app-data.json', JSON.stringify(appdata), (error) => {
+        if (error) throw error;
+      });
+      sendFile(response, "public/app-data.json");
+      break;
+    default:
+      sendFile(response,filename);
 
-  if( request.url === "/" ) {
+  }
+  /* if( request.url === "/" ) {
     sendFile( response, "public/index.html" )
   }else{
     sendFile( response, filename )
-  }
+  } */
 }
 
 const handlePost = function( request, response ) {
@@ -40,8 +71,12 @@ const handlePost = function( request, response ) {
   })
 
   request.on( "end", function() {
-    console.log( JSON.parse( dataString ) )
-
+    console.log( dataString  )
+    //console.log(parseFloats.convertData([JSON.parse( dataString )]));
+    //appdata.concat(parseFloats.convertData([JSON.parse( dataString )]));
+    dataString = JSON.parse(dataString);
+    appdata = appdata.concat(dataString);
+    console.log(JSON.stringify(appdata))
     // ... do something with the data here!!!
 
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" })

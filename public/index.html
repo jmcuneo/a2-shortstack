@@ -10,9 +10,17 @@
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
   <body>
-    <form>
-      <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
+    <form id="carFacts">
+      <input type="text" name="make" placeholder="car make"><br>
+      <input type="text" name="model" placeholder="model"><br>
+      <input type="number" name="year" placeholder="year"><br>
+      <input type="number" name="mpg" placeholder="mpg"><br>
+      <input type="number" name="lateralGs" placeholder="lateral g force"><br>
+      <input type="number" name="accel" placeholder="zero to sixty"><br>
+
+      <button id="submit">submit</button>
     </form>
+    <button id="fetch">fetch</button>
+    <div id="data"></div>
   </body>
 </html>
