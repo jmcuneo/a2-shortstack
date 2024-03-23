@@ -34,39 +34,47 @@ const handleGet = function( request, response ) {
 }
 
 const handlePost = function( request, response ) {
-    if(request.url === "/submit"){
-    let dataString = ""
+    if(request.url === '/submit'){
+        let dataString = ""
 
-    request.on("data", function (data) {
-      dataString += data
-    })
+        request.on("data", function (data) {
+            dataString += data
+        })
 
-    request.on("end", function () {
-        console.log(JSON.parse(dataString))
-        response.writeHead(200, "OK", {"Content-Type": "text/plain"})
-        response.end("Succeed")
-    })
-    }else if(request.url == "/results"){
-
-        const html = `
-      <html lang="en">
-        <head>
-        <meta charset="UTF-8">
-        </head>
-        <body>
-        <head>
-        <tr>AppData:<br> </tr>
-        </head>
-        <tbody>
-        ${appdata.map(item => JSON.stringify(item))}
-        </tbody>
-        </body>
-        </html>
-      `
-      response.writeHead(200, "OK", {"Content-Type": "text/plain"})
-      response.end(html)
+        request.on("end", function () {
+            console.log(JSON.parse(dataString))
+            response.writeHead(200, "OK", {"Content-Type": "text/plain"})
+            response.end("test")
+        })
     }
-}
+    if(request.url === '/public/index.html'){
+        let dataString = "";
+
+        request.on("data", function (data) {
+            dataString += data;
+        });
+        request.on("end", function () {
+           // console.log(appdata)
+            response.writeHead(200, "OK", {"Content-Type": "text/plain"})
+            response.end(JSON.stringify(appdata))})}}
+      //   const html = `
+      // <html lang="en">
+      //   <head>
+      //   <meta charset="UTF-8">
+      //   </head>
+      //   <body>
+      //   <head>
+      //   <tr>AppData:<br> </tr>
+      //   </head>
+      //   <tbody>
+      //   ${appdata.map(item => JSON.stringify(item))}
+      //   </tbody>
+      //   </body>
+      //   </html>
+      // `
+      // response.writeHead(200, "OK", {"Content-Type": "text/plain"})
+      // response.end(html)
+
 
 const sendFile = function( response, filename ) {
    const type = mime.getType( filename ) 
