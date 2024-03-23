@@ -71,6 +71,23 @@ async function addData(text) {
         var phoneCell = row.insertCell();
         phoneCell.id = "phoneCell";
 
+        /*var deleteCell = row.insertCell();
+        deleteCell.id = "deleteCell";*/
+
+
+        // for each entry add a delete button for that entry
+        var del = document.createElement('button');
+        del.type = "button";
+        del.innerHTML = "delete";
+
+        // set onclick event to call delete function
+        del.onclick = (function(item) {return function() {deleteItem(item);}})(item);
+
+        // add new elements and set their values
+        row.appendChild(del);
+
+
+
         //put data in cells
         fullNameCell.innerHTML = item.fullName.toUpperCase();
         dobCell.innerHTML = item.dob;
@@ -78,6 +95,7 @@ async function addData(text) {
         sexCell.innerHTML = item.sex;
         emailCell.innerHTML = item.email;
         phoneCell.innerHTML = item.phone;
+
     }
 }
 
@@ -101,6 +119,24 @@ async function addTableHeaders(table) {
 
     var phoneHead = headRow.insertCell();
     phoneHead.outerHTML = "<th>Phone #</th>";
+}
+
+const deleteItem = async function(item) {
+    // get the id to delete, add it to request, and make delete request to server
+    const index = item.id,
+        json = { "id": index },
+        body = JSON.stringify( json )
+
+    const response = await fetch( "\delete", {
+        method:"DELETE",
+        body
+    })
+
+    // get server response and reload updated data
+    const text = await response.text()
+    console.log(text)
+    //emptyForms()
+    addData()
 }
 
 window.onload = function () {
