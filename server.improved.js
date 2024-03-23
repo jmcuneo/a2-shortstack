@@ -8,10 +8,12 @@ const http = require( "http" ),
       dir  = "public/",
       port = 3000
 
-const appdata = [
-  { "model": "toyota", "year": 1999, "mpg": 23 },
-  { "model": "honda", "year": 2004, "mpg": 30 },
-  { "model": "ford", "year": 1987, "mpg": 14} 
+var currentID = 4
+
+var people = [
+  { "id": 1, "firstName": "Mark", "lastName": "Stevenson", "age": 23, "fullName": "Mark Stevenson" },
+  { "id": 2, "firstName": "Tom", "lastName": "Sanford", "age": 30, "fullName": "Tom Sanford" },
+  { "id": 3, "firstName": "Steve", "lastName": "Smith", "age": 14, "fullName": "Steve Smith" } 
 ]
 
 const server = http.createServer( function( request,response ) {
@@ -27,6 +29,8 @@ const handleGet = function( request, response ) {
 
   if( request.url === "/" ) {
     sendFile( response, "public/index.html" )
+  } else if (request.url === "/getPeople") {
+    response.end(JSON.stringify(people));
   }else{
     sendFile( response, filename )
   }
@@ -40,12 +44,29 @@ const handlePost = function( request, response ) {
   })
 
   request.on( "end", function() {
-    console.log( JSON.parse( dataString ) )
-
     // ... do something with the data here!!!
+    let url = request.url;
+    let data = JSON.parse( dataString )
+
+    if(url == "/submitAdd"){
+      let fullName = data.firstName+" "+data.lastName
+      people.push({id: currentID, firstName: data.firstName, lastName: data.lastName, age: data.age, fullName: fullName})
+      currentID = currentID + 1
+    } else if (url == "/submitRemove") {
+      for (let index = 0; index < people.length; index++){
+        if (people[index].id == data.id){
+          people.splice(index,1)
+          break
+        }
+      }
+    }
+    
+    console.log(people);
+    console.log(url);
+
 
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
-    response.end("test")
+    response.end(data.firstName)
   })
 }
 
