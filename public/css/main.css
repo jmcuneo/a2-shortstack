@@ -1,11 +1,12 @@
 body {
-  background: lightblue;
+  background: indianred;
   color: black;
   font-family: 'Roboto', sans-serif;
   margin: 3%;
 }
 
-#yourname {
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Helvetica', sans-serif;
 }
 
 #postcard-design {
@@ -19,7 +20,7 @@ body {
 .postcard {
   border: 1px solid;
   border-radius: 5px;
-  margin-bottom: 20px;
+  margin: 0px;
   padding: 10px;
   border: none;
 }
@@ -46,7 +47,7 @@ body {
   color: #fff;
   border: none;
   border-radius: 5px;
-  padding: 8px 16px;
+  padding: 8px 8px;
   cursor: pointer;
 }
 
@@ -54,24 +55,66 @@ body {
   background-color: #0056b3;
 }
 
-#postcard-gallery {
-  margin-top: 40px;
+#created-postcards-container {
+  margin-top: 20px;
+}
+
+#created-postcards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+  grid-gap: 5px;
+}
+
+.postcard {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow: hidden;
+  padding: 20px;
+  min-width: 300px;
+  width: 100%;
+}
+
+@media screen and (min-width: 1200px) {
+  #created-postcards {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 .postcard-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+}
+
+.background-image-select {
+  padding-bottom: 10px;
+}
+
+#save-postcard {
+  background: gray;
+  color: white;
+  border-style: solid;
+  border-color: black;
+}
+
+#save-postcard:hover {
+  background: indianred;
 }
 
 .postcard {
   flex-basis: calc(33.33% - 20px);
-  border: 1px solid #ccc;
+  border: none;
   border-radius: 5px;
   overflow: hidden;
+  width: fit-content;
+  min-width: 80%;
 }
 
 .postcard-image img {
+  width: 100%;
+  padding-bottom: 10px;
+}
+
+.postcard-text {
   width: 100%;
 }
 
@@ -106,18 +149,8 @@ body {
   object-fit: cover;
 }
 
-.postcard.saved .postcard-text {
-  width: 100%;
-  padding: 0;
-  background-color: inherit;
-  margin-top: -4px;
-}
-
-.postcard-image {
-  position: relative; /* Ensure the container is positioned relatively */
-}
-
-.postcard-title.saved-title {
+.postcard.saved .postcard-title {
+  font-family: Arial, sans-serif;
   position: absolute;
   top: 50%;
   left: 50%;

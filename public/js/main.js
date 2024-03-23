@@ -43,7 +43,7 @@ const savePostcard = () => {
             <img src="${image}" alt="Postcard Image">
             <h2 class="postcard-title saved-title" style="color: ${titleColor};">${title}</h2>
         </div>
-        <div class="postcard-text" style="background-color: ${textBoxColor}; color: ${textColor};">
+        <div class="postcard-text" style="background-color: ${textBoxColor}; color: ${textColor}; margin-top: -13px;">
             <p style=" color: ${textColor}; background-color: ${textBoxColor};">${message}</p>
         </div>
     `;
@@ -91,7 +91,7 @@ const deletePostcard = async (postId) => {
         if (response.ok) {
             const data = await response.json();
             console.log("Postcard deleted successfully:", data);
-            // Remove the postcard element from the DOM
+            // to remove the postcard element from the DOM
             const postcardElement = document.querySelector(`.postcard[data-postcard-id="${postId}"]`);
             if (postcardElement) {
                 postcardElement.remove();
@@ -109,7 +109,7 @@ document.addEventListener("click", async (event) => {
         const postId = event.target.dataset.postId;
         await deletePostcard(postId);
 
-        // Remove the postcard element from the DOM
+        // To remove the postcard element from the DOM
         const postcardElement = event.target.closest('.postcard');
         if (postcardElement) {
             postcardElement.remove();

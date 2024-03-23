@@ -7,26 +7,27 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
 </head>
 <body>
-<h1>Virtual Postcard Designer</h1>
+<h1>WPI Virtual Postcard Designer</h1>
 
 <div id="postcard-design">
   <h2>Design Your Postcard</h2>
 
-  <!-- Image Selection  -->
-  <select id="background-image-select">
-    <option value="empty">Select a background</option>
-    <option value="backgrounds/img.png">Background 1</option>
-    <option value="backgrounds/img_1.png">Background 2</option>
-    <option value="backgrounds/img_2.png">Background 3</option>
-    <option value="backgrounds/img_3.png">Background 4</option>
-    <option value="backgrounds/img_4.png">Background 5</option>
-    <option value="backgrounds/img_5.png">Background 6</option>
-    <option value="backgrounds/img_6.png">Background 7</option>
-    <option value="backgrounds/img_7.png">Background 8</option>
-  </select>
-
   <!-- Postcard creation -->
   <div class="postcard">
+    <!-- Image Selection  -->
+    <div class="background-image-select">
+    <select id="background-image-select">
+      <option value="empty">Select a background</option>
+      <option value="backgrounds/img.png">Background 1</option>
+      <option value="backgrounds/img_1.png">Background 2</option>
+      <option value="backgrounds/img_2.png">Background 3</option>
+      <option value="backgrounds/img_3.png">Background 4</option>
+      <option value="backgrounds/img_4.png">Background 5</option>
+      <option value="backgrounds/img_5.png">Background 6</option>
+      <option value="backgrounds/img_6.png">Background 7</option>
+      <option value="backgrounds/img_7.png">Background 8</option>
+    </select>
+    </div>
     <div class="postcard-image">
       <img id="postcard-preview" src="" alt="Postcard Preview">
     </div>
@@ -77,10 +78,13 @@
   </div>
 </div>
 
-<div id="created-postcards">
+<div id="created-postcards-container">
   <h2>Your Created Postcards</h2>
-  <!-- This is handled on main.js -->
 </div>
+<div id="created-postcards">
+  <!-- Postcards will be placed here in a grid -->
+</div>
+
 
 <script src="js/main.js"></script>
 </body>
