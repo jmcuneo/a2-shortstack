@@ -10,14 +10,15 @@
     font-style: normal;
 }
 
-header, h3 {
+header,
+h3 {
     font-family: "Mandali", sans-serif;
 }
 
 body {
     font-family: "Noto Sans Soyombo", sans-serif;
-    background:ghostwhite;
-    color:darkblue;
+    background: ghostwhite;
+    color: darkblue;
     display: grid;
 }
 
@@ -26,15 +27,15 @@ div {
 }
 
 label {
-    font-size: 18px
+    font-size: 18px;
 }
 
-.longInput{
+.longInput {
     height: 20px;
     width: 150px;
 }
 
-#sex{
+#sex {
     width: 40px;
     text-align: center;
 }
@@ -45,20 +46,32 @@ label {
     font-size: 16px;
     padding: 5px;
 }
+
+.delBtn {
+    font-family: "Noto Sans Soyombo", sans-serif;
+    font-size: 16px;
+    height: 50px;
+    background-color: red;
+    color: white;
+}
+
 #submit {
     height: 30px;
     width: 100px;
 }
 
-table{
-    text-align: left;
+table {
+    font-family: "Noto Sans Soyombo", sans-serif;
+    text-align: center;
     background: white;
     border: 1px solid black;
     border-collapse: collapse;
     color: black;
 }
-th, td {
-    text-align: left;
+th,
+td {
+    font-family: "Noto Sans Soyombo", sans-serif;
+    text-align: center;
     border: 1px solid black;
     border-collapse: collapse;
     height: 50px;

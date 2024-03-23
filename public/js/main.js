@@ -47,59 +47,38 @@ async function addData(text) {
     addTableHeaders(table);
 
     const appdata = JSON.parse(text);
-
     // from stack overflow
     for (const item of appdata) {
         var row = table.insertRow();
 
         //add cells
         var fullNameCell = row.insertCell();
-        fullNameCell.id = "fullNameCell";
-
         var dobCell = row.insertCell();
-        dobCell.id = "dobCell";
-
         var ageCell = row.insertCell();
-        ageCell.id = "ageCell";
-
         var sexCell = row.insertCell();
-        sexCell.id = "sexCell";
-
         var emailCell = row.insertCell();
-        emailCell.id = "emailCell";
-
         var phoneCell = row.insertCell();
-        phoneCell.id = "phoneCell";
+        var deleteCell = document.createElement('button');
 
-        /*var deleteCell = row.insertCell();
-        deleteCell.id = "deleteCell";*/
+        //manage delete button
+        deleteCell.className = "delBtn";
+        deleteCell.innerHTML = "Delete";
+        // iife- researched and modified code from udacity
+        deleteCell.onclick = (function(item) {return function() {deleteItem(item);}})(item);
 
-
-        // for each entry add a delete button for that entry
-        var del = document.createElement('button');
-        del.type = "button";
-        del.innerHTML = "delete";
-
-        // set onclick event to call delete function
-        del.onclick = (function(item) {return function() {deleteItem(item);}})(item);
-
-        // add new elements and set their values
-        row.appendChild(del);
-
-
-
-        //put data in cells
+        //add data
         fullNameCell.innerHTML = item.fullName.toUpperCase();
         dobCell.innerHTML = item.dob;
         ageCell.innerHTML = item.age;
         sexCell.innerHTML = item.sex;
         emailCell.innerHTML = item.email;
         phoneCell.innerHTML = item.phone;
-
+        row.appendChild(deleteCell);
     }
 }
 
 async function addTableHeaders(table) {
+    //modified from stack overflow
     var headRow = table.insertRow();
 
     var fullNameHead = headRow.insertCell();
@@ -122,8 +101,7 @@ async function addTableHeaders(table) {
 }
 
 const deleteItem = async function(item) {
-    // get the id to delete, add it to request, and make delete request to server
-    const index = item.id,
+    const index = item.id, //id = app data index to delete
         json = { "id": index },
         body = JSON.stringify( json )
 
@@ -132,11 +110,9 @@ const deleteItem = async function(item) {
         body
     })
 
-    // get server response and reload updated data
     const text = await response.text()
     console.log(text)
-    //emptyForms()
-    addData()
+    getData()
 }
 
 window.onload = function () {

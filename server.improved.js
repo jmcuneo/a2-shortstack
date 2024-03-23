@@ -67,6 +67,11 @@ const handleDelete = function( request, response ) {
     if(!(id===null)) {
       appdata.splice(id, 1);
 
+      //reassign data ids
+      for(let i = 0; i< appdata.length; i++){
+        appdata[i].id = i;
+      }
+
       response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
       response.end("application deleted")
     }
