@@ -30,6 +30,7 @@ const submitAdd = async function( event ) {
   })
 
   const text = await response.text();
+  document.getElementById("formOne").reset();
   addDataToTable(peopleTable);
 
 };
@@ -52,8 +53,31 @@ const submitRemove = async function( event ) {
   });
 
   const text = await response.text();
-
+  document.getElementById("formTwo").reset();
   addDataToTable(peopleTable);
+};
+
+const submitEdit = async function( event ) {
+  // stop form submission from trying to load
+  // a new .html page for displaying results...
+  // this was the original browser behavior and still
+  // remains to this day
+  event.preventDefault();
+
+  //Takes the first and last name of the person as well as their age
+  const input = document.querySelectorAll( "#idEdit, #firstNameEdit, #lastNameEdit, #ageEdit" ),
+        json = { id: input[0].value, firstName: input[1].value, lastName: input[2].value, age: input[3].value},
+        body = JSON.stringify( json );
+
+  const response = await fetch( "/submitEdit", {
+    method:"POST",
+    body 
+  })
+
+  const text = await response.text();
+  document.getElementById("formThree").reset();
+  addDataToTable(peopleTable);
+
 };
 
 window.onload = function() {
@@ -62,6 +86,9 @@ window.onload = function() {
 
     const buttonRemove = document.querySelector("#buttonRemove");
     buttonRemove.onclick = submitRemove;
+
+    const buttonEdit = document.querySelector("#buttonEdit");
+    buttonEdit.onclick = submitEdit;
 
     var peopleTable = document.querySelector("#peopleTable");
     addDataToTable(peopleTable);

@@ -59,14 +59,20 @@ const handlePost = function( request, response ) {
           break
         }
       }
+    } else if (url == "/submitEdit"){
+      for (let index = 0; index < people.length; index++){
+        if (people[index].id == data.id){
+          people[index].firstName = data.firstName;
+          people[index].lastName = data.lastName;
+          people[index].age = data.age;
+          people[index].fullName = data.firstName + " " + data.lastName;
+          break
+        }
+      }
     }
-    
-    console.log(people);
-    console.log(url);
-
 
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
-    response.end(data.firstName)
+    response.end()
   })
 }
 

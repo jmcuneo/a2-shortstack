@@ -1,8 +1,8 @@
 {
-  "name": "",
-  "version": "",
-  "description": "",
-  "author": "",
+  "name": "assignmenta2forwebware",
+  "version": "1.0",
+  "description": "This is Austin Rebello's submission website for the A2 assignment in the WPI course Webware.",
+  "author": "Austin Rebello",
   "scripts": {
     "start": "node server.improved.js"
   },
