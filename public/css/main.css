@@ -12,6 +12,26 @@ body {
     font-size: 30px;
     font-weight: bold;
 }
+.grid-container {
+  display: grid;
+  grid-column-gap: 10px;
+  grid-template-columns: 1000px auto 50px;
+  padding: 10px;
+}
+/*
+.text-grid{
+  display: grid;
+  grid-column-gap: 10px;
+  grid-template-columns: auto auto;
+  padding: 10px;
+}*/
+
+.header-grid {
+  display: grid;
+  grid-column-gap: 0px;
+  grid-template-columns: 750px auto;
+  padding: 10px;
+}
 
 table {
     font-family: arial, sans-serif;
@@ -57,6 +77,6 @@ button:active {
  form{
     padding-top: 5px;
     display: block;
-    width: 590px;
+    width: 900px;
     margin: auto;
  }
