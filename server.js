@@ -1,7 +1,7 @@
 const http = require( "http" ),
       fs   = require( "fs" ),
       // IMPORTANT: you must run `npm install` in the directory for this assignment
-      // to install the mime library if you"re testing this on your local machine.
+      // to install the mime library if you're testing this on your local machine.
       // However, Glitch will install it automatically by looking in your package.json
       // file.
       mime = require( "mime" ),
@@ -40,14 +40,16 @@ const handlePost = function( request, response ) {
   request.on( "end", function() {
     let data = JSON.parse(dataString);
     var type = data.type;
-    //TODO: Make this handle different url's rather than the type data
     switch(type){
+      //Entry is a new anagram request
       case "anagram":
         handleNewEntry(response,data);
         break;
+      //Entry is a request to remove a specific anagram.
       case "remove":
         handleRemove(response,data);
         break;
+      //Entry is a request to get all current appdata.
       case "getAll":
         handleGetAll(response,data);
         break;
@@ -77,6 +79,7 @@ const sendFile = function( response, filename ) {
    })
 }
 
+//When a new anagram request comes, sends back the new appdata entry.
 const handleNewEntry = function(response,data){
   var string = data.string;
   var anagrams = anagram.getAnagrams(string,4);
@@ -97,10 +100,11 @@ const handleNewEntry = function(response,data){
   response.end(JSON.stringify(nextData));
 }
 
+//When a request comes in to remove, remove it from appdata and send back the ID the server removed.
 const handleRemove = function(response, data){
   var removeVal = data.index;
   for(let i = 0; i < appdata.length; i++){
-    //TODO: Check that this handles data that's already been removed. It should, but check.
+    //If the ID isn't found, that's fine. It just won't remove anything.
     if(appdata[i].id === removeVal){
       appdata.splice(i,1);
       break;
@@ -110,6 +114,7 @@ const handleRemove = function(response, data){
   response.end(JSON.stringify({index:data.index}));
 }
 
+//Give the client all appdata
 const handleGetAll = function(response,data){
   response.writeHead( 200, "OK", {"Content-Type": "text/plain" });
   response.end(JSON.stringify(appdata));
