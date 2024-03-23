@@ -20,13 +20,32 @@ const submit = async function( event ) {
   console.log( "text:", text)
 }
 
+const add = async function( event ){
+  if(confirm("Do you want to add the data?")){
+    event.preventDefault()
+    const model = document.getElementById("model").value;
+    const year = document.getElementById("year").value;
+    const mpg = document.getElementById("mpg").value;
+    const newData = {model: model, year: year, mpg: mpg};
+    fetch("/add",{
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newData)
+    })
+    location.reload();
+  }
+
+}
 
 
 
-  window.onload = function () {
+  window.onload = async function () {
+    await result();
     const button1 = document.getElementById("submitBtn");
     button1.onclick = submit;
-    const button2 = document.getElementById("resultBtn");
-    button2.onclick = result;
+    const btnAdd = document.getElementById("addCar");
+    btnAdd.onclick = add;
   }
 

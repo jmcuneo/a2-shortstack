@@ -21,11 +21,43 @@ const server = http.createServer( function( request,response ) {
         handlePost( request, response )
     }else if (request.method === "DELETE"){
         handleDelete( request, response)
+    }else if (request.method === "PUT"){
+        handlePut (request, response)
     }
 })
 
+const handlePut = function(request, response){
+    let dataString = "";
+
+    request.on("data", function (data) {
+        dataString += data;
+    });
+    request.on('end', () => {
+        const inputData = JSON.parse(dataString);
+        const indexToUPdata= inputData.index;
+
+        if (indexToUPdata>= 0 && indexToUPdata < appdata.length) {
+            appdata[indexToUPdata] = inputData.data;
+        }
+        })
+}
+
 const handleDelete = function( request, response ) {
-    //write your code here
+    let dataString = "";
+
+    request.on("data", function (data) {
+        dataString += data;
+    });
+    request.on('end', () => {
+        const deleteData = JSON.parse(dataString);
+        const indexToDelete = deleteData.index;
+
+        if (indexToDelete >= 0 && indexToDelete < appdata.length) {
+            appdata.splice(indexToDelete, 1);
+            response.writeHead(200, {'Content-Type': 'application/json'});
+            response.end(JSON.stringify({message: 'Data deleted successfully'}));
+        }
+    })
 }
 
 const handleGet = function( request, response ) {
@@ -62,6 +94,18 @@ const handlePost = function( request, response ) {
             response.writeHead(200, "OK", {"Content-Type": "text/plain"})
             response.end("test")
         })
+    }else if(request.url === '/add'){
+        let dataString = "";
+
+        request.on("data", function (data) {
+            dataString += data;
+        });
+        request.on('end', () => {
+            const newData = JSON.parse(dataString);
+            appdata.push(newData);
+            response.writeHead(200, { 'Content-Type': 'application/json' });
+            response.end(JSON.stringify({ message: 'Data added successfully', data: newData }));
+        });
     }
 }
 const sendFile = function( response, filename ) {

@@ -2,3 +2,20 @@ body {
   background:black;
   color:white;
 }
+table{
+
+  border-color: white;
+  border-collapse: collapse;
+}
+th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+/* 表格内容样式 */
+td {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
