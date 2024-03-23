@@ -49,10 +49,12 @@ const handlePost = function( request, response ) {
     let data = JSON.parse( dataString )
 
     if(url == "/submitAdd"){
+      // Pushes a new person to the people array using the parsed data
       let fullName = data.firstName+" "+data.lastName
       people.push({id: currentID, firstName: data.firstName, lastName: data.lastName, age: data.age, fullName: fullName})
       currentID = currentID + 1
     } else if (url == "/submitRemove") {
+      // Searches through the people list until it finds the matching ID
       for (let index = 0; index < people.length; index++){
         if (people[index].id == data.id){
           people.splice(index,1)
@@ -60,6 +62,7 @@ const handlePost = function( request, response ) {
         }
       }
     } else if (url == "/submitEdit"){
+      // Searches through the people list until it finds the matching ID
       for (let index = 0; index < people.length; index++){
         if (people[index].id == data.id){
           people[index].firstName = data.firstName;
