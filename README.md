@@ -47,8 +47,5 @@ Acheivements
 s designed to help gain experience testing user interfaces. If you run two user studies, you should answer two sets of questions. 
 
 
-Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
----
-
 
 
