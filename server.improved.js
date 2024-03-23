@@ -14,6 +14,7 @@ const appdata = [
     { "model": "ford", "year": 1987, "mpg": 14}
 ]
 
+
 const server = http.createServer( function( request,response ) {
     if( request.method === "GET" ) {
         handleGet( request, response )
@@ -38,6 +39,8 @@ const handlePut = function(request, response){
 
         if (indexToUPdata>= 0 && indexToUPdata < appdata.length) {
             appdata[indexToUPdata] = inputData.data;
+            const currentYear = new Date().getFullYear();
+            appdata[indexToUPdata].age = currentYear - appdata[indexToUPdata].year;
         }
         })
 }
@@ -71,7 +74,10 @@ const handleGet = function( request, response ) {
             dataString += data;
         });
         request.on("end", function () {
-            // console.log(appdata)
+            const currentYear = new Date().getFullYear();
+            appdata.forEach(item => {
+                item.age = currentYear - item.year;
+            });
             response.writeHead(200, "OK", {"Content-Type": "text/plain"})
             response.end(JSON.stringify(appdata))})}
     else if( request.url === "/" ) {

@@ -8,9 +8,11 @@
 
   <!-- get rid of favicon error -->
   <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+
 </head>
 <body>
-
+<div class = "grid-container">
+  <div class = "right-content">
 <form id = "myForm">
   <input type="text" id="yourname" value="your name here">
   <button id="submitBtn">submit</button><br>
@@ -22,18 +24,21 @@
     <button id="addCar">Add New Car</button><br>
   </div1>
 </form>
-
+  </div>
+  <div class = "left-content">
 <table width = "600">
   <thead></thead>
   <tr>
     <th>Model</th>
     <th>Year</th>
-    <th>mpg</th>
+    <th>MPG</th>
+    <th>Age</th>
     <th>Delete</th>
     <th>Update</th>
   </tr>
   <tbody id = "tbMain"></tbody>
 </table>
+  </div>
 <script>
 
 
@@ -46,6 +51,7 @@
               return response.text()
             }) .then(function (data){
       dataArray = (JSON.parse(data))
+      console.log(dataArray)
     })
 
     const tbody = document.getElementById('tbMain');
@@ -68,6 +74,10 @@
       const mpgCell = document.createElement('td');
       mpgCell.innerHTML = h.mpg;
       row.appendChild(mpgCell);
+
+      const ageCell = document.createElement('td');
+      ageCell.innerHTML = h.age;
+      row.appendChild(ageCell);
 
       const delCell = document.createElement('td');
       row.appendChild(delCell);
@@ -138,6 +148,6 @@
     await new Promise(resolve => setTimeout(resolve,1000));
   }
 </script>
-
+</div>
 </body>
 </html>
