@@ -58,16 +58,16 @@ const handleDelete = function (request, response) {
   const postId = parseInt(urlParts[urlParts.length - 1]);
 
   const index = postcards.findIndex((postcard) => postcard.id === postId);
-
   if (index !== -1) {
     postcards.splice(index, 1);
-    response.writeHead(200, "OK", { "Content-Type": "application/json" });
-    response.end(JSON.stringify({ message: "Postcard deleted successfully!" }));
+    response.writeHead(200, { "Content-Type": "application/json" });
+    response.end(JSON.stringify({ message: "Postcard deleted successfully" }));
   } else {
     response.writeHead(404, { "Content-Type": "text/plain" });
     response.end("Error: Postcard not found");
   }
 };
+
 
 
 const sendFile = function (response, filename) {

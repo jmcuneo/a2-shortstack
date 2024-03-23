@@ -89,9 +89,13 @@ const deletePostcard = async (postId) => {
             method: "DELETE",
         });
         if (response.ok) {
-            const postcardElement = document.getElementById(`postcard-${postId}`);
-            postcardElement.remove();
-            console.log("Postcard deleted successfully");
+            const data = await response.json();
+            console.log("Postcard deleted successfully:", data);
+            // Remove the postcard element from the DOM
+            const postcardElement = document.querySelector(`.postcard[data-postcard-id="${postId}"]`);
+            if (postcardElement) {
+                postcardElement.remove();
+            }
         } else {
             console.error("Error deleting postcard:", response.statusText);
         }
@@ -99,6 +103,19 @@ const deletePostcard = async (postId) => {
         console.error("Error deleting postcard:", error);
     }
 };
+
+document.addEventListener("click", async (event) => {
+    if (event.target.classList.contains("delete-button")) {
+        const postId = event.target.dataset.postId;
+        await deletePostcard(postId);
+
+        // Remove the postcard element from the DOM
+        const postcardElement = event.target.closest('.postcard');
+        if (postcardElement) {
+            postcardElement.remove();
+        }
+    }
+});
 
 
 const createDeleteButton = (postId) => {
@@ -111,3 +128,4 @@ const createDeleteButton = (postId) => {
     });
     return deleteButton;
 };
+
