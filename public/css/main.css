@@ -15,6 +15,19 @@ body {
 .form-group {
   margin-bottom: 15px;
 }
+.centered-container {
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+.row{
+  padding: 20px;
+  margin: 0 auto;
+  text-align: center;
+}
 label {
   display: block;
   font-weight: bold;
@@ -40,13 +53,12 @@ button:hover {
 }
 table {
   border-collapse: collapse;
-  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  max-width: 200px;
 }
 th, td {
   border: 1px solid black;
   padding: 8px;
   text-align: center;
-}
-th {
-  background-color: #f2f2f2;
 }
