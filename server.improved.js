@@ -8,11 +8,6 @@ const http = require( "http" ),
       dir  = "public/",
       port = 3000
 
-const appdata = [
-  { "model": "toyota", "year": 1999, "mpg": 23 },
-  { "model": "honda", "year": 2004, "mpg": 30 },
-  { "model": "ford", "year": 1987, "mpg": 14} 
-]
 
 const server = http.createServer( function( request,response ) {
   if( request.method === "GET" ) {
@@ -35,19 +30,36 @@ const handleGet = function( request, response ) {
 const handlePost = function( request, response ) {
   let dataString = ""
 
+
   request.on( "data", function( data ) {
-      dataString += data 
+      dataString += data
+    console.log(dataString)
   })
+
 
   request.on( "end", function() {
     console.log( JSON.parse( dataString ) )
 
+    const data = JSON.parse(dataString);
+    const pointsPerTeammate = data.points/data.teammates;
+
+    data.pointsPerTeammate=pointsPerTeammate.toString();
+
+
+
+    console.log(data)
+
+
+
+
     // ... do something with the data here!!!
 
-    response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
-    response.end("test")
+    response.writeHead( 200, "OK", {"Content-Type": "application/json" })
+    response.end(JSON.stringify(data))
+    // response.end("Modified")
   })
 }
+
 
 const sendFile = function( response, filename ) {
    const type = mime.getType( filename ) 

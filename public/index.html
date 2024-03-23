@@ -10,9 +10,27 @@
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
   <body>
-    <form>
-      <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
-    </form>
+  <nav>
+    <a href="./index.html">Home</a>
+  </nav>
+  <form>
+    <label for="Name">Name of the Project: </label>
+    <input type="text" id="name" value="" required><br/>
+    <label for="teammates">Number of Teammates: </label>
+    <input type="text" id="teammates" value="Number of teammates" required><br/>
+    <label for="points">Total Points:</label>
+    <input type="text" id="points" value="Total points" required><br/>
+    <button>submit</button>
+  </form>
+  <!-- <div id="result"></div> --> <!-- This is where the result will be displayed -->
+  <ul id="dataList"></ul>
+  <form id="removeProject" method="POST">
+    <label for="removeProject">Remove a project:</label>
+    <input type="text" id="removeName" name="removeName">
+    <button type="submit">Remove</button>
+  </form>
+  <script src="js/main.js"></script>
+
+
   </body>
 </html>
