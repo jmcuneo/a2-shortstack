@@ -11,26 +11,43 @@
   </head>
 
   <body>
-    <p></p>
+    <!--CSS Grid-->
     <div class="header">What To Bring</div>
-    <form>
-      <input type="text" id="yourname" value="" placeholder="Enter Name">
-      <input type="text" id="youritem" value="" placeholder="Enter Item">
-      <input type="text" id="numItems" value="" placeholder="Enter Quanitity"> <!--placeholder allows user to type directly without deleting valuetag first-->
-      <button id="submit">submit</button>
-    </form>
-    <div>
-      <h2>Who's Bringing What:</h2>
+    <div class="text-grid">
+      <form>
+        <input type="text" id="yourname" value="" placeholder="Enter Name"> <!--placeholder allows user to type directly without deleting valuetag first-->
+        <input type="text" id="youritem" value="" placeholder="Enter Item">
+        <input type="number" min= "0" step="1" oninput="validity.valid||(value='');" id="numItems" value="" placeholder="Enter Quanitity"> <!--only allow whole, positive numbers-->
+        <input type="number" min="0" id="itemPrice" value="" placeholder="Enter Item Price">
+        <button id="submit">submit</button>
+      </form>
+      <!--
+      <form>
+        <input type="text" id="suggestItem" value="" placeholder="Enter Item">
+        <input type="text" id="segguesQty" value="" placeholder="Enter Quanitity">
+        <button id="suggest">Suggest</button>
+      </form>
+    -->
+    </div>
 
+    <!--CSS GRID-->
+    <div class="header-grid">
+      <h2>Who's Bringing What:</h2>
+      <h2>Who's Coming:</h2>
+    </div>
+    <div class="grid-container">
       <!-- Table to display fetched user data -->
       <table id="table">
         <tr>
           <th>Name</th>
           <th>Item</th>
           <th>Quanitity</th>
+          <th>Total Cost</th>
           <th>Delete an Item</th>
         </tr>
       </table>
+      
+      <p></p>
     </div>
   </body>
 </html>
