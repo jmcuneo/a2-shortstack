@@ -2,7 +2,7 @@
 
 const result = async function( event ) {
   event.preventDefault()
-  const response = await fetch( "/results", {
+  await fetch( "/results", {
     method:"POST",
   }).then(
   function(response){
@@ -15,6 +15,7 @@ const result = async function( event ) {
       console.log(data);
     }
   })
+
 }
 const submit = async function( event ) {
   // stop form submission from trying to load
@@ -40,5 +41,5 @@ const submit = async function( event ) {
   const button1 = document.getElementById("submitBtn");
   button1.onclick = submit;
   const button2 = document.getElementById("resultBtn");
-  button2.onclick = result();
+  button2.onclick = result;
   }
