@@ -15,3 +15,10 @@ I was able to come up with a workout calorie calculator application that gives u
  2. What problems did the user have with your design?
  3. What comments did they make that surprised you?
  4. What would you change about the interface based on their feedback?
+
+--
+
+ 1. Sunku
+ 2. What problems did the user have with your design?
+ 3. What comments did they make that surprised you?
+ 4. What would you change about the interface based on their feedback?
