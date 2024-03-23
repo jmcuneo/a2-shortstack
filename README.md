@@ -24,11 +24,19 @@ In this application, users can add scores with a player's name, score, and date,
 
 ## Design/Evaluation Achievements
 - **Test User Interface With Another Student**:
+
+
   1. Last name: 
      1. De
+     
+
   2. What problems did the user have with your design: 
-     1. 
+     1. The user noted that he sometimes mistook the "delete" function for the "modify" function. This caused him to accidentally delete data he didn't want to do so because the two buttons were more alike.
+
+
   3. What comments did they make that surprised you: 
-     1. 
+     1. He suggests to make a 'confirm' pop up window for 'cancel', and also he discovered that while using 'edit' when the edit form is displayed, if he delete this data while the form is displayed, the data is deleted but the edit form still exists.
+
+
   4. What would you change about the interface based on their feedback: 
-     1. 
+     1. I think his suggestions are really helpful for improving my UX design. I would make both changes on a 'confirm' pop up window for "cancel" functionality, and also fix the issue for 'edit' form should not display when deleted.
