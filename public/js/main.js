@@ -35,23 +35,31 @@ const submit = async function (event) {
   //PROMISE
   const text = await response.json();
   const justAdded = text[text.length - 1];
-  //checkDuplicate(text, justAdded);
+  makeGuestList(text, justAdded);
   addToTable(justAdded);
   console.log("text:", text);
 };
 
-/*
-const checkDuplicate = function(array, item){
+
+const makeGuestList = function(array, item){
+  let nameCount = 0;
   for(let i = 0; i < array.length; i++){
-    if(array.length > 0 && item.item === array[i].item){
-      alert(array[i].name + " is already bringing " + item.item);
-      return;
-    } else{
-      return;
+    if(item.name == array[i].name){
+      nameCount++;
     }
   }
+  if(nameCount <= 1){
+    const list = document.getElementById("guestList");
+    const li = document.createElement("li");
+    li.setAttribute("id", "guestName");
+    li.innerHTML = item.name;
+    console.log(typeof(item.name), item.name);
+    list.appendChild(li);
+  }else{
+    console.log("cannot add");
+    console.log(nameCount);
+  }
 }
-*/
 
 //entry object
 const createEntry = function (name, item, price, qty) {
@@ -110,6 +118,7 @@ const refreshPage = async function () {
   const text = await response.json();
   for (let i = 0; i < text.length; i++) {
     addToTable(text[i]);
+    makeGuestList(text, text[i]);
   }
   console.log("done");
 };
@@ -125,21 +134,22 @@ const remove = async function (entryIndex) {
     body: JSON.stringify(entryIndex),
   });
   const text = await response.json();
-  //make index a string
   const entry = text[entryIndex];
-
-  if (text.status === 204) {
-    clearTable();
-    return;
-  } else {
-    clearTable();
-  }
-  console.log("Removed Entry: ", entry);
-};
+  //console.log("updated array", text);
+  clearTable(text);
+}
 
 //remove row
-const clearTable = function () {
-  document.getElementById("entryRow").remove();
+const clearTable = function (text) {
+  for(let i = 0; i <= text.length; i++){
+    document.getElementById("entryRow").remove();
+    console.log("clear table called");
+    if(document.getElementById("guestName") != undefined){
+      document.getElementById("guestName").remove();
+    }
+  }
+  refreshPage();
+
 };
 
 window.onload = function () {
