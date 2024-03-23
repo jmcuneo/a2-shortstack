@@ -54,7 +54,7 @@ const remove = async function(event,index){
 const submitButton = document.querySelector("#submit");
 submitButton.onclick = submit;
 const table = document.querySelector("#table");
-const localAppData = [];
+var localAppData = [];
 
 const updateAllData = async function(){
   const response = await fetch("/submit",{
@@ -64,7 +64,10 @@ const updateAllData = async function(){
     })
   });
   const res = await response.json();
-  table.innerHTML = "";
+  for(let i = 0; i < localAppData.length; i++){
+    table.removeChild(localAppData[i].element);
+  }
+  localAppData = [];
   for(let i = 0; i < res.length; i++){
     let item = res[i];
     let element = addRow([item.string,item.gram0,item.gram1,item.gram2,item.gram3],item.id);
