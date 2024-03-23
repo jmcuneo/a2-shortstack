@@ -30,6 +30,7 @@ before sending the list back to the front end to create the table
 then the server only updates the credits and then updates the derived fields as well before sending the student data back
 - I created a delete button in main.js as well so that a new delete button is created for every single row in the table there is. The delete button calls a separate function, which goes through the list until it finds
 the corresponding name with which the delete button was attached to and then deletes the student from the list and sends back the data
+- The inputs also auto clear after submitting
 
 ### Design/Evaluation Achievements
 - I did use element, id, and class selectors in formatting the page so that every thing is spaced correctly apart and the table had borders and headers a background
