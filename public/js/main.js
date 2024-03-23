@@ -2,17 +2,11 @@
 let tasks = []
 let editIndex = -1
 
-const getTasks = async function() {
-  const response = await fetch("/tasks")
-  tasks = await response.json()
-  renderTasks()
-}
-
 const renderTasks = function() {
   const table = document.querySelector("#tasks")
   table.innerHTML = ""
   const headerRow = document.createElement("tr")
-  headerRow.innerHTML = `<th>Task Name</th><th>Priority</th><th>Creation Date</th><th>Days Not Done</th>`
+  headerRow.innerHTML = `<th>Done</th><th>Task Name</th><th>Priority</th><th>Creation Date</th><th>Days Not Done</th>`
   table.appendChild(headerRow)
 
   for (let i = 0; i < tasks.length; i++) {
@@ -31,7 +25,6 @@ const renderTasks = function() {
         })
         json["index"] = i
         const body = JSON.stringify( json )
-        console.log(body)
 
         const response = await fetch( "/tasks", {
           method:"PUT",
@@ -43,7 +36,7 @@ const renderTasks = function() {
         renderTasks()
       }
       // table.appendChild(editForm)
-      row.innerHTML = `<td><input name="taskName" type="text" form="editForm" value="${task.taskName}" required></td><td><input name="priority" type="number" form="editForm" value="${task.priority}" required></td><td><input name="creation_date" type="date" form="editForm" value="${task.creation_date}" required></td><td></td><input id="edit" type="submit" form="editForm" value="Submit"/>`
+      row.innerHTML = `<input type="checkbox" class="trollCheckbox"/><td><input name="taskName" type="text" form="editForm" value="${task.taskName}" required></td><td><input name="priority" type="number" form="editForm" value="${task.priority}" required></td><td><input name="creation_date" type="date" form="editForm" value="${task.creation_date}" required></td><td></td><input id="edit" type="submit" form="editForm" value="Submit"/>`
       row.appendChild(editForm)
 
       const cancelButton = document.createElement("button")
@@ -55,7 +48,7 @@ const renderTasks = function() {
       row.appendChild(cancelButton)
     }
     else {
-      row.innerHTML = `<td>${task.taskName}</td><td>${task.priority}</td><td>${task.creation_date}</td><td>${task.days_not_done}</td>`
+      row.innerHTML = `<input type="checkbox" class="trollCheckbox"/><td>${task.taskName}</td><td>${task.priority}</td><td>${task.creation_date}</td><td>${task.days_not_done}</td>`
 
       const editButton = document.createElement("button")
       editButton.innerHTML = "Edit"
@@ -84,8 +77,18 @@ const renderTasks = function() {
 
   const row = document.createElement("tr")
   const today = (new Date()).toISOString().split('T')[0]
-  row.innerHTML = `<td><input name="taskName" type="text" form="addForm" placeholder="Task Name" required></td><td><input name="priority" type="number" form="addForm" placeholder="Priority" value="1" required></td><td><input name="creation_date" type="date" form="addForm" value="${today}" required></td><td></td><td><input id="add" type="submit" form="addForm" value="Add Task"/></td>`
+  // make a checkbox for done
+
+  row.innerHTML = `<td><input type="checkbox" class="trollCheckbox"/></td><td><input name="taskName" type="text" form="addForm" placeholder="Task Name" required></td><td><input name="priority" type="number" form="addForm" placeholder="Priority" value="1" required></td><td><input name="creation_date" type="date" form="addForm" value="${today}" required></td><td></td><td><input id="add" type="submit" form="addForm" value="Add Task"/></td>`
   table.appendChild(row)
+
+  const checkboxes = document.querySelectorAll('.trollCheckbox');
+  checkboxes.forEach(function(checkbox) {
+    checkbox.addEventListener('click', function(event) {
+      event.preventDefault();
+      alert("YOU MAY NOT COMPLETE THE TASK! This is a To Not-Do List, remember?");
+    });
+  });
 }
 
 const submit = async function (event) {
@@ -112,8 +115,11 @@ const submit = async function (event) {
   renderTasks()
 }
 
-window.onload = function() {
-  getTasks()
+window.onload = async function() {
   const form = document.querySelector( "#addForm" )
   form.onsubmit = submit
+
+  const response = await fetch("/tasks")
+  tasks = await response.json()
+  renderTasks()
 }

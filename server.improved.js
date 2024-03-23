@@ -10,18 +10,26 @@ const http = require( "http" ),
 
 const appdata = [
   {
-    taskName: "Review Code Changes",
-    priority: 3,
-    creation_date: "2024-03-18",
-    days_not_done: 0,
+    taskName: "Find my lost goldfish",
+    priority: 100,
+    creation_date: "2014-09-15",
   },
   {
-    taskName: "Schedule Team Meeting",
-    priority: 2,
+    taskName: "Finish Assignment 2",
+    priority: 5,
+    creation_date: "2024-03-18",
+  },
+  {
+    taskName: "Make WPI schedule",
+    priority: -100,
     creation_date: "2024-03-10",
-    days_not_done: 8,
-  }
+  },
 ]
+
+// Calculate derived field, days_not_done, for default tasks
+appdata.forEach( task => {
+  task.days_not_done = Math.floor((new Date() - new Date(task.creation_date)) / (1000 * 60 * 60 * 24))
+})
 
 const server = http.createServer( function( request,response ) {
   if( request.method === "GET" ) {
@@ -64,9 +72,15 @@ const handlePost = function( request, response ) {
 
     // ... do something with the data here!!!
     const task = JSON.parse( dataString )
+    task.priority = Number(task.priority)
     task.days_not_done = Math.floor((new Date() - new Date(task.creation_date)) / (1000 * 60 * 60 * 24))
 
-    appdata.push( task )
+    let i = 0;
+    while (i < appdata.length && appdata[i].priority > task.priority) {
+      i++;
+    }
+    appdata.splice(i, 0, task);
+
     console.log( appdata )
 
     response.writeHead( 200, "OK", {"Content-Type": "application/json"})
@@ -92,13 +106,23 @@ const handlePut = function( request, response ) {
     const json = JSON.parse( dataString )
     const task = {
       taskName: json.taskName,
-      priority: json.priority,
+      // turn priority into a number
+      priority: Number(json.priority),
       creation_date: json.creation_date,
       days_not_done: Math.floor((new Date() - new Date(json.creation_date)) / (1000 * 60 * 60 * 24)),
     }
 
-    appdata[json.index] = task
-    // console.log( appdata )
+    appdata.splice(json.index, 1)
+    console.log( appdata )
+
+    let i = 0;
+    while (i < appdata.length && appdata[i].priority > task.priority) {
+      i++;
+    }
+    appdata.splice(i, 0, task);
+
+    console.log( "APSLICE" )
+    console.log( appdata )
 
     response.writeHead( 200, "OK", {"Content-Type": "application/json"})
     response.end( JSON.stringify( appdata ) )
