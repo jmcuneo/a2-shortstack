@@ -30,7 +30,7 @@ function getLocalAppDataEntry(id){
       return {index:i,entry:localAppData[i]};
     }
   }
-  return null;
+  return undefined;
 }
 
 const remove = async function(event,index){
@@ -46,8 +46,12 @@ const remove = async function(event,index){
   var rIndex = parseInt(res.index);
   console.log(res);
   let searchResult = getLocalAppDataEntry(rIndex);
-  table.removeChild(searchResult.entry.element);
-  localAppData.splice(searchResult.index,1);
+  if(searchResult !== undefined){
+    for(let i = 0; i < 6; i++){
+      table.children[searchResult.entry.element].remove();
+    }
+    localAppData.splice(searchResult.index,1);
+  }
 }
 
 
@@ -64,8 +68,8 @@ const updateAllData = async function(){
     })
   });
   const res = await response.json();
-  for(let i = 0; i < localAppData.length; i++){
-    table.removeChild(localAppData[i].element);
+  for(let i = table.children.length-1; i >= 6; i--){
+    table.children[i].remove();
   }
   localAppData = [];
   for(let i = 0; i < res.length; i++){
@@ -77,23 +81,23 @@ const updateAllData = async function(){
 }
 
 function addRow(anagrams, index){
-  let row = document.createElement('tr');
+  // For accessing element to delete by index
+  var startChildCount = table.children.length;
   for(let i = 0; i < anagrams.length; i++){
-    let anagramEntry = document.createElement('th');
+    let anagramEntry = document.createElement('span');
     anagramEntry.innerHTML=anagrams[i];
-    row.appendChild(anagramEntry);
+    table.appendChild(anagramEntry);
   }
-  let lastColumn = document.createElement('th');
+  let lastColumn = document.createElement('span');
   let deleteButton = document.createElement('button');
   // deleteButton.innerHTML = "Remove";
   deleteButton.setAttribute('class','delete');
   deleteButton.onclick = (event)=>{remove(event,index)};
   lastColumn.appendChild(deleteButton);
-  row.appendChild(lastColumn);
-  table.appendChild(row);
-  return row;
+  table.appendChild(lastColumn);
+  return startChildCount;
 }
 
 updateAllData();
-//Refresh the data every 20 seconds.
-setInterval(updateAllData,20000);
+//Refresh the data every 10 seconds.
+setInterval(updateAllData,10000);
