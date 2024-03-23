@@ -1,73 +1,74 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <title>CS4241 Assignment 2</title>
-    <meta charset="utf-8">
-    <script src="js/main.js"></script>
-    <link rel="stylesheet" href="css/main.css">
-    
-    <!-- get rid of favicon error -->
-    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
-  </head>
-  <body>
+<head>
+  <title>CS4241 Assignment 2</title>
+  <meta charset="utf-8">
+  <script src="js/main.js"></script>
+  <link rel="stylesheet" href="css/main.css">
 
-    <table width = "600">
-      <thead></thead>
-      <tr>
-        <th>Model</th>
-        <th>Year</th>
-        <th>mpg</th>
-      </tr>
-      <tbody id = "tbMain"></tbody>
-    </table>
-    <script>
-      const result = async function( ) {
-        event.preventDefault()
-      await fetch( '/public/index.html', {
-        method:"POST",
-      }).then(
-              function(response){
-                return response.text()
-              }) .then(function (data){
-        dataArray = (JSON.parse(data))
+  <!-- get rid of favicon error -->
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+</head>
+<body>
+
+<form id = "myForm">
+  <input type="text" id="yourname" value="your name here">
+  <button id="submitBtn">submit</button><br>
+  <div1>
+    <thead>Add your car data</thead><br>
+    <input type="text" id="model" value="your car's model"><br>
+    <input type="text" id="year" value="your car's year"><br>
+    <input type="text" id="mpg" value="your car's mpg">
+    <button id="updateCar">Update Your Car</button><br>
+  </div1>
+  <button id="resultBtn">Result</button>
+</form>
+
+<table width = "600">
+  <thead></thead>
+  <tr>
+    <th>Model</th>
+    <th>Year</th>
+    <th>mpg</th>
+  </tr>
+  <tbody id = "tbMain"></tbody>
+</table>
+<script>
+  const result = async function( ) {
+    event.preventDefault()
+    await fetch( '/public/index.html', {
+      method:"GET",
+    }).then(
+            function(response){
+              return response.text()
+            }) .then(function (data){
+      dataArray = (JSON.parse(data))
     })
 
-      const tbody = document.getElementById('tbMain');
+    const tbody = document.getElementById('tbMain');
 
-      for(let i = 0; i < dataArray.length; i++){
-        const trow = getDataRow(dataArray[i]);
-        tbody.appendChild(trow);
-}
-function getDataRow(h) {
-  const row = document.createElement('tr');
+    for(let i = 0; i < dataArray.length; i++){
+      const trow = getDataRow(dataArray[i]);
+      tbody.appendChild(trow);
+    }
+    function getDataRow(h) {
+      const row = document.createElement('tr');
 
-  const modelCell = document.createElement('td');
-  modelCell.innerHTML = h.model;
-  row.appendChild(modelCell);
+      const modelCell = document.createElement('td');
+      modelCell.innerHTML = h.model;
+      row.appendChild(modelCell);
 
-  const yearCell = document.createElement('td');
-  yearCell.innerHTML = h.year;
-  row.appendChild(yearCell);
+      const yearCell = document.createElement('td');
+      yearCell.innerHTML = h.year;
+      row.appendChild(yearCell);
 
-  const mpgCell = document.createElement('td');
-  mpgCell.innerHTML = h.mpg;
-  row.appendChild(mpgCell);
-  return row;
-}
-}
-    </script>
+      const mpgCell = document.createElement('td');
+      mpgCell.innerHTML = h.mpg;
+      row.appendChild(mpgCell);
+      return row;
+    }
+  }
+</script>
 
-    <form id = "myForm">
-      <input type="text" id="yourname" value="your name here">
-      <button id="submitBtn">submit</button><br>
-      <div1>
-        <thead>Add your car data</thead><br>
-        <input type="text" id="model" value="your car's model"><br>
-        <input type="text" id="year" value="your car's year"><br>
-        <input type="text" id="mpg" value="your car's mpg">
-        <button id="updateCar">Update Your Car</button><br>
-      </div1>
-      <button id="resultBtn">Result</button>
-    </form>
-  </body>
+</body>
 </html>
