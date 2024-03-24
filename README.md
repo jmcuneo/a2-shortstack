@@ -87,8 +87,10 @@ You'll need to use sometype of collaborative software that will enable you both 
 Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
 ---
 
-## Your Web Application Title
-Include a very brief summary of your project here. Be sure to include the CSS positioning technique you used, and any required instructions to use your application.
+## Recipe Cookbook
+Has it been your lifelong goal to find a website to store simple information about recipes you like? Well look no further, your greatest dreams are right in front of you.
+Users can enter the name of recipe, along with its prep and cook times, and the application will automatically calculate the total time needed and add it to the table. To remove a recipe from the table, enter the name of the recipe and click 'Remove'. To modify a recipe in the table, enter the name of the recipe as well as the new prep and cook times for it, then click 'Modify'.
+(FlexBox CSS Positioning Used)
 
 ## Technical Achievements
 - **Single-Page App**: When the client sends a request to the server to add, remove, or modify data, the server updates the stored appdata accordingly and sends a new table in the response. The client then updates its page with the new table.
