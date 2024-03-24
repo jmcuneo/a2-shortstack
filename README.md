@@ -22,4 +22,4 @@ I was able to come up with a workout calorie calculator application that gives u
  1. Sunku
  2. Problems: The edit and delete button could be included inside the table, like create a column for them as well. Can expand the table, like make it a little bigger.
  3. Surprising: They thought that I had an interesting idea and calculation of calories burnt.
- 4. What to Change: You can try adding more fields to the form
+ 4. What to Change: Adding more fields to the form or making the table bigger
