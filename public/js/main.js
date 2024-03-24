@@ -16,7 +16,7 @@ const submit = async function (event) {
 
     const input = document.getElementById("task-input").value
     const dueDate = document.getElementById("calendar").value
-    const json = { "task": input, "creationDate": new Date(), "dueDate": dueDate }
+    const json = { "task": input, "creationDate": new Date().toISOString().split("T")[0], "dueDate": dueDate }
     const body = JSON.stringify(json)
 
     const response = await fetch("/submit", {
@@ -42,15 +42,22 @@ function populateTaskTable(tasks) {
   if (tableHeaderRow.innerHTML.trim() === "") {
     tableHeaders.forEach(header => {
       let th = document.createElement("th");
+      th.setAttribute("scope", "col")
       th.textContent = header;
       tableHeaderRow.appendChild(th);
     });
   }
+
   tableBody.innerHTML = ""
 
   tasks.forEach(obj => {
     let tr = document.createElement("tr");
-    
+    Object.values(obj).forEach(val => {
+      let td = document.createElement("td");
+      td.textContent = val
+      tr.appendChild(td)
+    })
+    tableBody.appendChild(tr)
   })
 }
 

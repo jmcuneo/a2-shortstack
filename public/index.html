@@ -24,16 +24,19 @@
 </head>
 
 <body>
-  <div id="input-wrapper">
+
+  <div id="input-form-wrapper">
     <form id="input-form">
       <input type="text" id="task-input" placeholder="Add a task" required>
-
-      <label for="due-date">Due date:</label>
-      <input type="date" id="calendar" name="due-date" />
-
+    
+      <div id="due-date-wrapper">
+        <label for="due-date">Due date:</label>
+        <input type="date" id="calendar" name="due-date" />
+      </div>
       <button>Submit</button>
     </form>
   </div>
+
   <div id="data-display-wrapper">
     <table id="task-table">
       <thead>
