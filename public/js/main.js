@@ -6,7 +6,7 @@ const submit = async function( event ) {
   // this was the original browser behavior and still
   // remains to this day
   event.preventDefault()
-  // Get form input values
+
 
   const input_name = document.querySelector("#name"),
       input_teammates = document.querySelector("#teammates"),
@@ -26,7 +26,6 @@ const submit = async function( event ) {
   const recievedData = JSON.parse(text);
 
   addToList(recievedData);
-  //document.getElementById("result").innerText =text;
   console.log("text:", text);
 
   function addToList(data) {
@@ -42,20 +41,27 @@ const submit = async function( event ) {
 const removeProject = async function(event) {
   event.preventDefault();
 
-  // Get input value (name of object to delete) from the form
   const removeName = document.querySelector("#removeName").value;
 
-
-    // Make a POST request to the server to delete the corresponding object
     await fetch("/delete", {
       method: "POST",
-      body: JSON.stringify({ name: removeName }),
-      headers: {
-        "Content-Type": "application/json" // Specify JSON content type
-      }
+      body: JSON.stringify({ name: removeName })
     });
+  //Empty string removes all
+  if (removeName === "") return;
     console.log("Project removed:", removeName);
+    removeFromList(removeName);
 };
+const removeFromList = function(name) {
+
+  const listItems = document.querySelectorAll("#dataList li");
+  listItems.forEach(function(item) {
+    if (item.textContent.includes(name)) {
+      item.remove();
+    }
+  });
+};
+
 
 
 

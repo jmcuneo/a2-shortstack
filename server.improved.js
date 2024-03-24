@@ -45,14 +45,7 @@ const handlePost = function( request, response ) {
 
     data.pointsPerTeammate=pointsPerTeammate.toString();
 
-
-
     console.log(data)
-
-
-
-
-    // ... do something with the data here!!!
 
     response.writeHead( 200, "OK", {"Content-Type": "application/json" })
     response.end(JSON.stringify(data))
