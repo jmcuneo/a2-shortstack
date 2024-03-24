@@ -1,6 +1,0 @@
-add "firstname", "lastname", "middlename"
-add "name" where they are concatenated
-change middlename
-fix name
-delete lastname
-make me a self referential object

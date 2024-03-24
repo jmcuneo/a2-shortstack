@@ -9,13 +9,35 @@ This project runs user sumbited code in a isolated javascript instance and then 
 - **Delete Button**: made a button to delele a varible
 - **Isolation**: made the user submitted code run in an isolated javascript instance as to protect the server. this uses the isolated-vm npm package. I tried the sandcastle package before that but it didn't work as it kept timing the code out. 
 - **Names**: the server code checks the validity of varible names. Bad names are replaced with noname# where # starts at 1 and increases.
+- **Hosting**: Glitch did not like the isolated-vm package and failed to install it. I then tried to install it on my raspberry pi running my webserver. The isolated-vm package tried to install infinitely, and crashed the device. I am now running the server 
+- **Glitch**: The glitch project now redirects to my new hosting
 
 ## Design/Evaluation Achievements
 - **Gradient**: used same gradient from last project and my website
 - **Used Roboto**: used roboto from google fonts like last project
 - **TextArea**: made the code input a \<textarea> so the user could expand the input box
 - **Colors**: made the buttons different colors. the buttons flip colors on hover
+- **Readme Page**: made a page to host the project description and instructions
+- **Feedback**: V down below V
 
+
+## Feedback
+1. Provide the last name of each student you conduct the evaluation with.
+    Milo Jacobs
+2. What problems did the user have with your design?
+    They did not understand that the name field was for varible names. My script was a little confusing in that aspect as I put varible names in quotes and also had the him enter a human name. They did not see the readme button either until I told them about it. After they read the readme page, they understood how to use it better.
+3. What comments did they make that surprised you?
+    I was kinda suprised about his iterpretation of the form labels, but looking back I agree it was confusing.
+4. What would you change about the interface based on their feedback?
+    I would make the readme button bigger and change it's location. I would chnge the labels to more descripitve names.
+
+## Feedback Script
+1. add varibles *firstName*, *lastName*, *middleName* with values
+2. add varible *Name* where they are concatenated
+3. change *middleName*
+4. fix varible name
+5. delete lastname
+6. Challenge: make me a self referential object
 
 ## Check List
 
