@@ -34,12 +34,16 @@ const addition = async function( event ) {
     body: body 
   })
 
-  const data = await response.json()
+  console.log(response)
 
-  const result = document.querySelector('#result')
-  result.textContent = "Result: " + data.result
+  parsedData = JSON.parse(response.body)
+  const name = parsedData
+  //const result = document.querySelector('#result')
+  result.textContent = "Result: " + name
+  
+  console.log(name)
 
-  getSavedResults()
+  //getSavedResults()
 
 }
 
@@ -126,15 +130,15 @@ window.onload = function() {
 }
 
 const getSavedResults = async function() {
-  const response = await fetch('getSavedResults'),
-  answers = await response.json();
+  const response = await fetch('/getPreviousResults'),
+  results = await response.json();
 
   const previousResults = document.querySelector('#previousResults')
   previousResults.innerHTML = ""  //add space
 
-  answers.forEach(function(answer){
+  results.forEach(function(item){
     const li = document.createElement('li')
-    li.textContent = answer
+    li.textContent = `Operation: ${item.operation}, Result: ${item.result}`;
     previousResults.appendChild(li)
   })
 }

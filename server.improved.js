@@ -23,7 +23,7 @@ const handleGet = function( request, response ) {
   if( request.url === "/" ) {
     sendFile( response, "public/index.html" )
   }
-    else if (request.url === '/getPreviousAnswers'){
+    else if (request.url === '/getPreviousResults'){
       response.writeHead(200, {'Content-Type': "application/json"})
       response.end(JSON.stringify(appdata))
     }
@@ -98,7 +98,7 @@ const sendFile = function( response, filename ) {
 
 server.listen( process.env.PORT || port )
 
-const saveResult = function(result){
+const saveResult = function(operation, result){
 
   appdata.push({operation: operation, result: result})
 
