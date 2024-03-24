@@ -9,7 +9,7 @@
         <!-- get rid of favicon error -->
         <link rel="icon" href="data:;base64,iVBORw0KGgo=">
         <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+
     </head>
     <body>
         <div class="top-nav">
@@ -21,7 +21,7 @@
 
         <div class="flex-container">
             <div class="flex-item inside-form">
-                <form>
+                <form> <!-- form for user to enter purchase data -->
                     <label>Product Name</label>
                     <br>
                     <input autofocus autocomplete="off" type="text" id="productname" placeholder="Enter product name">
@@ -52,13 +52,13 @@
                     <br>
                     <input autocomplete="off" type="text" id="description" placeholder="Enter any product description">
                     <br>
-                    <button id="submit" class="submit-btn">submit</button>
+                    <button id="submit" class="submit-btn">SUBMIT</button>
                     <button type="reset" class="submit-btn">RESET</button>
                 </form>
             </div>
             <div class="flex-item display-results">
                 <h1>Purchase Data</h1>
-                <table id="my-table" class="table-info"> <!-- creating a table for different categories of experiences like school, projects, clubs -->
+                <table id="my-table" class="table-info"> <!-- creating a table for purchase data-->
                     <thead> <!-- for table heading columns, 1st row -->
                     <tr>
                         <th>Product Details</th>
@@ -76,7 +76,7 @@
 
         <div class="popup" id="popup">
             <h2>Form Update</h2>
-            <form>
+            <form> <!-- form for user to update purchase data -->
                 <label>Product Name</label>
                 <br>
                 <input autocomplete="off" type="text" id="updproductname" placeholder="Enter product name">

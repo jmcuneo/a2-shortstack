@@ -1,21 +1,25 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
-async function deleteRow(r) {
-    console.log(r)
 
+//function to delete row
+//Called when delete button in the respective row clicked
+async function deleteRow(r) {
+    //saving the object containing the index to remove
     let payload = JSON.stringify({index:r.getAttribute('data-index')})
     const response = await fetch( "/submit", {
         method:"DELETE",
-        body: payload,
+        body: payload, //sending the object to server with delete request
     })
 
     const text = await response.text()
     let displayText = JSON.parse(text)
-    addItem(displayText)
+    addItem(displayText) //displaying the updated data received from server
 
 }
 
+//function to update row
+//called when update button in the respective row clicked
 async function updateRow() {
-    console.log(document.getElementById("updproductname").value)
+    //fetching the updated values from the form
     let updateLoad = JSON.stringify({
         updindex: document.getElementById("updindex").value,
         productname: document.getElementById("updproductname").value,
@@ -28,15 +32,17 @@ async function updateRow() {
 
     const response = await fetch("/submit", {
         method: "PUT",
-        body: updateLoad,
+        body: updateLoad, //sending the values to server using PUT request
     })
 
     const text = await response.text()
     let displayText = JSON.parse(text)
-    addItem(displayText)
+    addItem(displayText) //displaying updated data received from server
 }
 
+//function to populate popup form for updating
 async function displayRow(row) {
+    //setting the value for input html tag
     document.getElementById("updindex").setAttribute('value', row.getAttribute('data-updindex'))
     document.getElementById("updproductname").setAttribute('value', row.getAttribute('data-updname'))
     document.getElementById("updpurchasedate").setAttribute('value', row.getAttribute('data-dop'))
@@ -46,13 +52,14 @@ async function displayRow(row) {
     document.getElementById("upddescription").setAttribute('value', row.getAttribute('data-desc'))
 }
 
+//function to add data when form submitted
 const submit = async function( event ) {
   // stop form submission from trying to load
   // a new .html page for displaying results...
   // this was the original browser behavior and still
   // remains to this day
   event.preventDefault()
-  
+    //fetching values from the form
     const input = document.querySelector( "#productname" ),
         purchasedate = document.getElementById("purchasedate"),
         cost = document.getElementById("cost"),
@@ -65,24 +72,25 @@ const submit = async function( event ) {
             quantity: quantity.value,
             category: category.value,
             description: description.value},
-        body = JSON.stringify( json )
+        body = JSON.stringify( json ) //created json object
 
   const response = await fetch( "/submit", {
       method:"POST",
-      body,
+      body, //sending json object to server by POST request
   })
 
   const text = await response.text()
     let displayText = JSON.parse(text)
-    addItem(displayText)
+    addItem(displayText) //displaying data received from server
 
 }
 
+//function to fill the table with data
 function addItem(displayText){
     let table = document.getElementById('table-body')
     let total = 0
     table.innerHTML = ""
-    for(let index = 0; index<displayText.length; index++){
+    for(let index = 0; index<displayText.length; index++){ //looping over the array of objects received from server
         let tds = ''
         tds = `<td>
                 <ul>
@@ -109,9 +117,9 @@ function addItem(displayText){
                 </td>
             `
         total = total + displayText[index].afterdiscount
-        // <tr> Complete! Append to table!
+        // Append to table
         let objTr = `<tr id="delRow">${tds}</tr>`
-        table.innerHTML += objTr
+        table.innerHTML += objTr //adds row to table html
 
     }
 
@@ -131,24 +139,26 @@ function addItem(displayText){
 
 window.onload = async function() {
     const button = document.querySelector("#submit");
-    button.onclick = submit;
+    button.onclick = submit; //calling submit function when submit button hit
 
+    //onload displaying the data, so data displayed on client after refreshing as well
     const response = await fetch( "/send_again", {
         method:"GET",
     })
     const text = await response.text()
     addItem(JSON.parse(text))
-    console.log(JSON.parse(text))
+
 }
 
-
+//function to show the popup
 function openPopup(){
     let popup = document.getElementById('popup')
     popup.classList.add('open-popup')
 }
 
+//function to close the popup
 function closePopup(){
-    document.getElementById("reset").click()
+    document.getElementById("reset").click() //reset form
     let popup = document.getElementById('popup')
     popup.classList.remove('open-popup')
 

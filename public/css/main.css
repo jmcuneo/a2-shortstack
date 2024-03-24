@@ -38,6 +38,7 @@ label{
     font-weight: bold;
 }
 
+/* for the form elements */
 input[type=text], input[type=number], input[type=date], select{
     width: 50%;
     padding: 15px;
@@ -46,17 +47,12 @@ input[type=text], input[type=number], input[type=date], select{
     background: #f1f1f1;
 }
 
-input[type=date], input[type=number]{
-
-}
-
+/* for positioning the form and table properly */
 .flex-container{
     display: flex;
     justify-content: space-around;
     align-items: center;
     flex-direction: row;
-    /*flex-wrap: wrap;*/
-    /*align-content: space-between;   */
 }
 
 .flex-item{

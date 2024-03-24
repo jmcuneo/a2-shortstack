@@ -1,7 +1,7 @@
 {
   "name": "Billing System",
-  "version": "",
-  "description": "Simple web application for billing system",
+  "version": "1.0",
+  "description": "Simple web application for billing system. Can add, view, delete, and update purchase data.",
   "author": "Sai Teja Sunku",
   "scripts": {
     "start": "node server.improved.js"
