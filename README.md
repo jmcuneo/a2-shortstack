@@ -89,7 +89,13 @@ Sample Readme (delete the above when you're ready to submit, and modify the belo
 
 ## Recipe Cookbook
 Has it been your lifelong goal to find a website to store simple information about recipes you like? Well look no further, your greatest dreams are right in front of you.
-Users can enter the name of recipe, along with its prep and cook times, and the application will automatically calculate the total time needed and add it to the table. To remove a recipe from the table, enter the name of the recipe and click 'Remove'. To modify a recipe in the table, enter the name of the recipe as well as the new prep and cook times for it, then click 'Modify'.
+
+Users can enter the name of recipe, along with its prep and cook times, and the application will automatically calculate the total time needed and add it to the table.
+
+To remove a recipe from the table, enter the name of the recipe and click 'Remove'.
+
+To modify a recipe in the table, enter the name of the recipe as well as the new prep and cook times for it, then click 'Modify'.
+
 (FlexBox CSS Positioning Used)
 
 ## Technical Achievements
