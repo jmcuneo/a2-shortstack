@@ -27,7 +27,7 @@ const submit = async function( event ) {
     console.log("Data submitted successfully");
   } else {
     console.log("Error: ", response.status, response.statusText);
-    alert("Error: " + response.status + " " + response.statusText);
+    alert("Error: Name already exists");
   }
 
 
@@ -52,7 +52,7 @@ async function deleteData(event) {
     console.log("Data deleted successfully");
   } else {
     console.log("Error: ", response.status, response.statusText);
-    alert("Error: " + response.status + " " + response.statusText);
+    alert("Error: Name not found");
   }
   getResults(event);
 }
@@ -76,7 +76,7 @@ async function editData(event) {
     console.log("Data edited successfully");
   } else {
     console.log("Error: ", response.status, response.statusText);
-    alert("Error: " + response.status + " " + response.statusText);
+    alert("Error: Name not found");
   }
   getResults(event);
 }
