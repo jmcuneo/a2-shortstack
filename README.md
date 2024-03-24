@@ -110,3 +110,9 @@ To modify a recipe in the table, enter the name of the recipe as well as the new
     2. Problems: They noticed that the Remove and Modify forms were case-sensitive for the recipe names. They also requested that the font size for the entire website be larger.
     3. Surprising Comments: They did not make any comments that suprised me.
     4. Changes: Based on their feedback, I made everything on the site larger for visibility and changed the recipe name inputs for the Remove and Modify forms to be case-insensitive.
+
+- **Peer Testing 2**:
+    1. Last Name: Chartier
+    2. Problems: They said to make the headers bigger to take up more of the screen.
+    3. Surprising Comments: They did not make any comments that surprised me.
+    4. Changes: Based on their feedback, I made the headers larger.

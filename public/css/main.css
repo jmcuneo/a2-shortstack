@@ -12,6 +12,14 @@ body {
     color: rgb(32, 32, 32);
 }
 
+h1 {
+    font-size: 4em;
+}
+
+h2 {
+    font-size: 2em;
+}
+
 .container {
     display: flex;
     align-items: center;
