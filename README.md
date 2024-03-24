@@ -1,6 +1,6 @@
 ## Basic To-Do Application
 
-This is a simple to-do application that allows users to add, edit, and delete tasks. Users can add new tasks, mark tasks as completed, and delete tasks.
+This is a simple to-do application that allows users to add, edit, and delete tasks. Users can add new tasks, mark tasks as completed, and delete tasks. You can view via [this](https://a2-williamhuang.glitch.me) link.
 
 The front-end utilizes HTML, CSS, and JavaScript, with a focus on Flexbox for CSS positioning to create a responsive layout. The back-end is built with Node.js and Express, offering RESTful APIs to interact with the to-do list.
 
