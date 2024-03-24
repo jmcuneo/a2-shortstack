@@ -11,7 +11,8 @@ const appdata = [
     squat: 297,
     benchPress: 171,
     deadLift: 357,
-  },
+    total: 825
+  }
 ];
 
 const server = http.createServer(function (request, response) {
@@ -45,6 +46,7 @@ const handlePost = function (request, response) {
   request.on("end", function () {
 
     const newEntry = JSON.parse(dataString);
+    newEntry.total = Number(newEntry.squat) + Number(newEntry.benchPress) + Number(newEntry.deadLift);
 
     appdata.push(newEntry);
 
