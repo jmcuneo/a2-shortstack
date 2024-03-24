@@ -12,4 +12,19 @@ Positionaly styled using the CSS-Grid layout.
 
 ### Design/Evaluation Achievements
 
-- **Design Achievement 1**:
+- **Design Achievement:**
+
+  - From Beck
+
+    - The message you left made me laugh. Feedback wise, I think having the form in a row would make it easier to type in, however you made it very intuitive nonetheless. I like how the “remove course” portion is separate from the other portion. For some reason, I can type e into course id, but that’s the only letter. It makes the Course ID null, and the CRN “Term-“. It also makes removing the course impossible.
+    - You make Course ID strictly a number, however I think it would be better to make it a string and validate it manually. If you make it a large number, it automatically turns into scientific notation (2.33e+65)
+    - Not really in the scope of my responsibilities (I don’t think), but I went ahead and looked at inspect element (I was curious). For the form, you included a bunch of br’s, but from my experience it’s better to not include them. Including them makes it look really bad on mobile (which, for the purposes of this small assignment doesn’t matter). It’s something to consider
+
+    * Still not in my scope of responsibilities, in the main.js, you use cTerm.value.concat(“-“, cID.value), when you could have simply done cTerm.value + “-“ + cID.value
+
+  * From Perez
+    * Problems: Cant remove course if there's only one left in results, sometimes would update the first result's courseid instead of creating a new course
+      * **Fixed this problem - courses can now be removed if only one is there!**
+    * Comments: How to update data was a bit unclear, but I like how you just need to match the courseid to update the rest of the information
+      * **Added instructions on the site to be more explicit!**
+    * What could change: instead of manually typing in the courseid to delete a course, pressing a delete button at the end of a row could make it quicker for the user

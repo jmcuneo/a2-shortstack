@@ -78,6 +78,11 @@ const renderCourses = function (json) {
 
 		courses.replaceChild(tbody, oldTbody);
 	}
+	else {
+		const courses = document.getElementById("courses");
+		const tbody = courses.querySelector("tbody");
+		tbody.innerHTML = "";
+	}
 }
 
 // bind buttons to respective functions
