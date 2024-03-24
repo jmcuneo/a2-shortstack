@@ -21,43 +21,6 @@ body {
   display: flex;
 }
 
-/* navigation section */
-#navbar {
-  height: 40px;
-  background-color: #FAD762;
-  width: 100%;
-}
-
-#navbar ul {
-  display: flex;
-  padding: 0;
-  margin: 0;
-  list-style-type: none;
-  justify-content: space-evenly;
-}
-
-#navbar li {
-  padding-top: 10px;
-}
-
-/* navigation links*/
-#navbar li a {
-  color: #7e61fa;
-  /* navbar text color */
-  font-weight: 800;
-  text-decoration: none;
-}
-
-/* navigation link when a link is hovered over */
-#navbar li a:hover {
-  color: #7a776d;
-  text-decoration: underline;
-}
-
-#animation {
-  position: absolute;
-}
-
 p {
   font-size: 18px;
   line-height: 1.6;
@@ -73,10 +36,6 @@ main {
   background-color: #61A6FA;
   flex: 1;
   padding: 20px;
-}
-
-ul, li {
-  color: #6d737a;
 }
 
 /* New stuff */
