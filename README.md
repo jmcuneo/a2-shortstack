@@ -10,18 +10,24 @@ This project implemented the functionality of get and post requests to a node.js
 
 ### Design/Evaluation Achievements
 - **User Think Aloud Study**: 
-Last Name One:
+Last Name: Sahagian
+
 What problems did the user have with your design?
+There's no data validation on the site, I shouldn't be able to enter negative ages. 
 
 What comments did they make that surprised you?
+N/A
 
 What would you change about the interface based on their feedback?
+Add data input/edit validation to the website.
 
+Last Name: Ni
 
-Last Name Two:
 What problems did the user have with your design?
+No problems.
 
 What comments did they make that surprised you?
+"Its very intuitive, theres nothing wrong with it."
 
 What would you change about the interface based on their feedback?
-
+N/A
