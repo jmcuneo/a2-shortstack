@@ -9,7 +9,7 @@ const submit = async function( event, x, y ) {
     y: y
   };
 
-  if(submission.name === "" || submission.name.match("\\s+")) {
+  if(submission.name === "" || submission.name.match("^\\s+$")) {
     logStatus("Please enter a display name.", "#FFFF33");
     return;
   }

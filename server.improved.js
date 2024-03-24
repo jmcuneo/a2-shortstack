@@ -48,7 +48,7 @@ const handlePost = function( request, response ) {
   request.on( "end", function() {
     const userData = JSON.parse(dataString);
 
-    if(!userData.color.match("^#[0-9a-f]{6}$") || userData.name === "" || userData.name.match("\\s+") || userData.x < 0 || userData.x >= 10 || userData.y < 0 || userData.y >= 10) {
+    if(!userData.color.match("^#[0-9a-f]{6}$") || userData.name === "" || userData.name.match("^\\s+$") || userData.x < 0 || userData.x >= 10 || userData.y < 0 || userData.y >= 10) {
       response.writeHead( 200, "OK", { "Content-Type": "text/plain" });
       response.end(JSON.stringify({ result: "invalid"}));
       return;
