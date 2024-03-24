@@ -2,16 +2,15 @@
 Adobe Color Swatches in Hex (Also can be found in the adobe_colors.png image in repo):
 Color 1: #348888
 Color 2: #22BABB
-Color 3: #9EF8EE
-Color 4: #FA7F08
-Color 5: #F24405
+Color 3: #FA7F08
+Color 4: #F24405
 */
 
 body {
   background-color: #348888;      /*the background color of the website*/
 }
 
-h1 {
+h1 {      /*element selector*/
   text-align: center;
   color: #F24405;     /*default color of the header 1s*/
 }
@@ -22,7 +21,7 @@ h2 {
 }
 
 
-t {
+#t {             /*ID delector*/
   text-align: center;
   color: #FA7F08;         /*default color of the header p sections*/
 }
@@ -35,7 +34,7 @@ b {
   font-weight: bold;
 }
 
-.center {        /*type for the "wpi.png" image to ensure that it is only 50% of the width and auto set to the middle of the webpage*/
+.center {        /*class selector*/
   display: block;
   margin-left: auto;
   margin-right: auto;
