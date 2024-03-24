@@ -1,27 +1,36 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 
-const submit = async function( event ) {
-  // stop form submission from trying to load
-  // a new .html page for displaying results...
-  // this was the original browser behavior and still
-  // remains to this day
+const submit = async function (event) {
   event.preventDefault()
-  
-  const input = document.querySelector( "#yourname" ),
-        json = { yourname: input.value },
-        body = JSON.stringify( json )
+  const form = document.getElementById("input-form")
+  if (form.checkValidity()) {
 
-  const response = await fetch( "/submit", {
-    method:"POST",
-    body 
-  })
+    const input = document.getElementById("task-input").value
+    const dueDate = document.getElementById("calendar").value
+    const json = { "task": input, "creationDate": new Date().toISOString().split('T')[0], "dueDate": dueDate }
+    const body = JSON.stringify(json)
 
-  const text = await response.text()
+    const response = await fetch("/submit", {
+      method: "POST",
+      body
+    })
 
-  console.log( "text:", text )
+    const text = await response.text()
+
+    console.log("clientSends:", json)
+    console.log("clientReceives:", text)
+  } else {
+    console.log("bad")
+  }
 }
 
-window.onload = function() {
-   const button = document.querySelector("button");
-  button.onclick = submit;
+window.onload = function () {
+  const form = document.getElementById("input-form");
+  form.onsubmit = submit;
+  const [today] = new Date().toISOString().split('T')
+
+  const dateInput = document.getElementById('calendar');
+  dateInput.setAttribute('min', today);
+  dateInput.setAttribute('value', today);
 }
+
