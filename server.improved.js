@@ -53,6 +53,7 @@ const handleGet = function( request, response ) {
 
 //SERVER LOGIC
 function calculatePrice(bilingObj){
+  //DERIVED FIELDS
   let totalPrice = 0
   let discount = 0
   let afterDiscount = 0

@@ -24,14 +24,14 @@ The table also has buttons to delete any purchase data asynchronously and update
 - *Update Data*:
 1. Click on the update button in the corresponding row and a popup form opens with the existing row data populated
 2. Make the required changes
-3. Click update for popup form to close and modify the data
+3. Click update on the popup form to close and modify the data
 4. The changes are made in the server and immediately displayed in the table
 
 **Server (node.js)**:
 - The server handles GET, POST, DELETE, and PUT by checking the request made.
-- Server uses GET request to redirect uses to the index page and instructions page when clicked on the button.
+- Server uses GET request to redirect users to the index page and instructions page when clicked on the button.
 - Server uses POST request to add data into the array of objects stored in the server 
-  - Every time a purchase data added creates an object with the form elements as properties and values, which is added to the array
+  - Every time a purchase data added, creates an object with the form elements as properties and values, which is added to the array
   - The array is returned back to frontend to display data
   - handlePost() method has server logic and derived fields. Based on the user inputted data, the server calculates total price, discount, and price after discount. 
     - The server accesses the information using object properties
@@ -46,7 +46,7 @@ The table also has buttons to delete any purchase data asynchronously and update
 - I have created a separate CSS file called main.css to add all the stylings and linked with html using the link tag
 - The CSS properties are applied to the html elements either using classes/IDs or direct tag names
 - The web page uses flexbox positioning technique
-  - Using the styling rules like display, justify-content, align items, and flex-direction the flexbox technique was used to position abd align the form and table in a proper manner that's convenient for the user to use.
+  - Using the styling rules like display, justify-content, align items, and flex-direction the flexbox technique was used to position and align the form and table in a proper manner that's convenient for the user to use.
 - Used margin and padding to space the form and table elements evenly and other html elements
 - Used width, height, top, left, z-index to set top-navigation bar and footer to maximum scale and make them visible appropriately
 - Used border and border-collapse to style the table and borders around table and the form
@@ -78,7 +78,7 @@ The table also has buttons to delete any purchase data asynchronously and update
   - The second column shows price values
   - The third column for buttons to update/delete
   - Each row is a purchase record, so bullet points are used to display specific product information
-- The page also sues div tags to organize the html elements and apply CSS appropriately
+- The page also uses div tags to organize the html elements and apply CSS appropriately
 - Uses footer and h tags for headings and footer at bottom of the page
 - Uses link and script tags to connect CSS and JS
 - Used different attributes for the form like 
@@ -96,14 +96,15 @@ The server performs logical calculations and sends back the array of objects, wh
 - The update function has multiple helper functions. 
   - When update button clicked the opening of popup form is handled
   - The corresponding data is populated automatically using the table index to identify which row of data to use. Using DOM functions, setAttribute, getAttribute the populating happens
-  - When update button of the form clicked, the form closing is handled by JS and using DOM functions the updated data is fetched as sent back to server. The server replaced the updated information and sends back the array which is displayed by JS again.
+  - When update button of the form clicked, the form closing is handled by JS and using DOM functions the updated data is fetched and sent back to server. The server replaces the updated information and sends back the array which is displayed by JS again.
 - await, fetch are used to send GET, POST, PUT, DELETE requests and also receive data from the server
 - JS also calculates the total price of all merchandise but NOT the total price for each and after discount value 
 
 ## Technical Achievements
 - **Tech Achievement 1**: This app is a single-page app because the users can see the form to add data and also view data on the same page.
-  - The user can fill the form displayed on the left and clicking on submit will display the entered purchased data in the table on right immediately and asynchronously. 
+  - The user can fill the form displayed on the left and clicking on submit will display the entered purchased data in the table on right immediately and asynchronously.
 The data displayed has been processed by adding discount and total price calculations done by the server. 
+  - The data on client is always visible until the server is restarted and dynamically the updated data can be seen when deleted/updated
 - **Tech Achievement 2**: This app also allows to delete and update purchase data. 
   - Clicking on the delete button in the corresponding row will immediately and asynchronously delete data by sending request to the server and it sends back the updated data, which the user can see.
   - Clicking on the update button in the corresponding row will immediately and asynchronously update data by sending request to server and it updates the data with re-performing the calculations/logic and sends back updated data, which can be seen by the user.
@@ -112,23 +113,23 @@ The data displayed has been processed by adding discount and total price calcula
 - **Design Achievement 1**:
 - Task - Add a purchase record by filling the form, update the record added, see the total price, and delete the record.
 - *USER 1*:
-1. Provide the last name of each student you conduct the evaluation with.
+1. Provide the last name of each student you conduct the evaluation with.  
 Fusha
-2. What problems did the user have with your design?
+2. What problems did the user have with your design?  
 The footer displaying on top of the update form, which blocks the buttons for the update form. Upon clicking the instructions page, the user needs to use the browser arrow to go back, which is inconvenient. 
 The discount field seems redundant. 
-3. What comments did they make that surprised you?
+3. What comments did they make that surprised you?  
 The user really liked the gradient used for top-navigation bar and the footer. The instructions page was impressive and pretty detailed to guide the user.
-4. What would you change about the interface based on their feedback?
+4. What would you change about the interface based on their feedback?  
 I would add a home button on the instructions page for the user to return back to index page. I would add units for the price to make it clear. Also, fix the footer by positioning it correctly.
 
 - *USER 2*:
-1. Provide the last name of each student you conduct the evaluation with.
+1. Provide the last name of each student you conduct the evaluation with.  
 Shiu
-2. What problems did the user have with your design?
+2. What problems did the user have with your design?  
 The footer was not sticking to the bottom, which leads to blocking of buttons. The user can't navigate back home from instructions page, which was only possible through the browser back button. 
-3. What comments did they make that surprised you?
+3. What comments did they make that surprised you?  
 The user liked the idea of having instructions page that can be visited from the index page.
-4. What would you change about the interface based on their feedback?
+4. What would you change about the interface based on their feedback?  
 I would add a button to go to home page from the instructions page. Also, add units for the cost like dollars or any other.
    
