@@ -158,17 +158,19 @@ const loadTable = async function (){
                             content = data[i].action
                             break;
                         case 5:
+                            const button2 = document.createElement("button")
+                            button2.onclick = () => editEntry(data[i].name, data[i].race, data[i].class, data[i].modifier, data[i].action);
+                            button2.id = "editButton"
+                            button2.textContent = "Edit"
+                            cell.appendChild(button2);
+
                             const button = document.createElement("button")
                             button.onclick = () => deleteEntry(data[i].name, data[i].race);
                             button.id = "deleteButton"
                             button.textContent = "Delete"
                             cell.appendChild(button);
 
-                            const button2 = document.createElement("button")
-                            button2.onclick = () => editEntry(data[i].name, data[i].race, data[i].class, data[i].modifier, data[i].action);
-                            button2.id = "editButton"
-                            button2.textContent = "Edit"
-                            cell.appendChild(button2);
+
                             row.appendChild(cell);
                             break;
 
