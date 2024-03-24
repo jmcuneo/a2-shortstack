@@ -87,11 +87,15 @@ You'll need to use sometype of collaborative software that will enable you both 
 Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
 ---
 
-## Your Web Application Title
-Include a very brief summary of your project here. Be sure to include the CSS positioning technique you used, and any required instructions to use your application.
+## Dungeons and Dragons Character Storage/Generator
+This web application serves as a storage point for Dungeons and Dragons Characters, as well as a starting point for newer players. Users are able to submit a character name, race, class, and select a primary type of action. On submission, the character will be added to the table, the primary modifier of the class will be displayed, and a random action will be assigned. 
+You can delete entries or modify them with the buttons on the right of the table. With the edit button, you can adjust the modifier or action if the derived value is not as expected. 
+
+For this site, I used CSS flexboxes to position my elements. Additionally, to style my web app I used a variety of different tags, ids, and classes.
 
 ## Technical Achievements
-- **Tech Achievement 1**: Using a combination of...
+- **Single Page App**: My web application is a single page that contains a form for users to submit data, as well as a table to display the data. This was somewhat challenging, as I had to find ways to pass the data between the client and the server. Additionally, I wanted to ensure that the user is consistently seeing updated data, so I made the table update every time any data would be changed. 
+- **Modify Data**: In addition to being a single page, I added an edit functionality. Users are able to click the edit button next to a table entry. An edit form will appear, and they can adjust the information accordingly. This was difficult because not only did I have to have a way to load the existing data, but I needed a way to properly update it so we do not have multiple entries. Throughout this process I ran into a plethora of bugs but I was able to get the edit form working and the table updating properly.  
 
 ### Design/Evaluation Achievements
 - **Design Achievement 1**: 
