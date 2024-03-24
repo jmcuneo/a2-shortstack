@@ -6,21 +6,29 @@
  * uses array from server to create HTML table
  */
 const submit = async function (event) {
-  // stop form submission from trying to load
-  // a new .html page for displaying results...
-  // this was the original browser behavior and still
-  // remains to this day
+  // stop form submission from trying to load a new .html page for displaying results...
+  // this was the original browser behavior and still remains to this day
   event.preventDefault();
 
   const nameInput = document.querySelector("#yourname");
   const itemInput = document.querySelector("#youritem");
-  const priceInput = document.querySelector("#itemPrice"); //new
+  const priceInput = document.querySelector("#itemPrice");
   const qtyInput = document.querySelector("#numItems");
-/*
-  if(isEmpty(nameInput.value) || isEmpty(itemInput.value) || isEmpty(qtyInput.value)){
-    alert("Please fill out all fields.");
+
+  document.getElementById("yourname").focus(); //put cursor in first box
+
+  //make sure all fields complete
+  if (
+    isEmpty(nameInput.value) ||
+    isEmpty(itemInput.value) ||
+    isEmpty(qtyInput.value)
+  ) {
+    alert(
+      "Please fill out all fields. If the price is unknown, you may leave it blank."
+    );
     return;
-  }*/
+  }
+
   const newEntry = createEntry(
     nameInput.value,
     itemInput.value,
@@ -32,7 +40,6 @@ const submit = async function (event) {
     method: "POST",
     body: JSON.stringify(newEntry),
   });
-  //PROMISE
   const text = await response.json();
   const justAdded = text[text.length - 1];
   makeGuestList(text, justAdded);
@@ -40,26 +47,27 @@ const submit = async function (event) {
   console.log("text:", text);
 };
 
-
-const makeGuestList = function(array, item){
+/**
+ * Check the array and compare to the name just entered - if name already in the array, do not add to list
+ * If the name is not in the array, add to list
+ */
+const makeGuestList = function (array, item) {
   let nameCount = 0;
-  for(let i = 0; i < array.length; i++){
-    if(item.name == array[i].name){
+  for (let i = 0; i < array.length; i++) {
+    if (item.name == array[i].name) {
       nameCount++;
     }
   }
-  if(nameCount <= 1){
+  if (nameCount <= 1) {
     const list = document.getElementById("guestList");
     const li = document.createElement("li");
     li.setAttribute("id", "guestName");
     li.innerHTML = item.name;
-    console.log(typeof(item.name), item.name);
     list.appendChild(li);
-  }else{
-    console.log("cannot add");
-    console.log(nameCount);
+  } else {
+    console.log("Cannot Add to List");
   }
-}
+};
 
 //entry object
 const createEntry = function (name, item, price, qty) {
@@ -101,6 +109,7 @@ const resetTextBoxes = function () {
   document.querySelector("#numItems").value = "";
 };
 
+//check if input box is empty
 function isEmpty(str) {
   return !str || str.length === 0;
 }
@@ -120,6 +129,7 @@ const refreshPage = async function () {
     addToTable(text[i]);
     makeGuestList(text, text[i]);
   }
+  document.getElementById("yourname").focus(); //put cursor in first input box
   console.log("done");
 };
 
@@ -134,22 +144,18 @@ const remove = async function (entryIndex) {
     body: JSON.stringify(entryIndex),
   });
   const text = await response.json();
-  const entry = text[entryIndex];
-  //console.log("updated array", text);
   clearTable(text);
-}
+};
 
-//remove row
+//clear the table and guest list and rebuild from new array
 const clearTable = function (text) {
-  for(let i = 0; i <= text.length; i++){
+  for (let i = 0; i <= text.length; i++) {
     document.getElementById("entryRow").remove();
-    console.log("clear table called");
-    if(document.getElementById("guestName") != undefined){
+    if (document.getElementById("guestName") != undefined) {
       document.getElementById("guestName").remove();
     }
   }
   refreshPage();
-
 };
 
 window.onload = function () {
@@ -159,7 +165,7 @@ window.onload = function () {
   //event listener
   document.addEventListener("click", function (event) {
     event.preventDefault();
-    //check if there are any elements to remove 
+    //check if there are any elements to remove
     if (event.target && event.target.classList.contains("remove")) {
       //use event listener to get the index and use to call remove
       const entryIndex = event.target.closest("tr").rowIndex - 1; // Subtract 1 because of table header

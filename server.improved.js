@@ -1,9 +1,5 @@
 const http = require("http"),
   fs = require("fs"),
-  // IMPORTANT: you must run `npm install` in the directory for this assignment
-  // to install the mime library if you"re testing this on your local machine.
-  // However, Glitch will install it automatically by looking in your package.json
-  // file.
   mime = require("mime"),
   dir = "public/",
   port = 3000;
@@ -57,28 +53,23 @@ const handleSubmit = function (request, response) {
     const updatedObject = calculateDerived(dataObject);
     appdata.push(updatedObject);
     //calculate derived
-    
+
     response.writeHead(200, "OK", { "Content-Type": "text/plain" });
     response.end(JSON.stringify(appdata)); //send array back to client
   });
 };
 
-//always going to else -> === or null?
-const calculateDerived = function(object){
-  if(object.price === "" || object.qty === ""){
+const calculateDerived = function (object) {
+  if (object.price === "" || object.qty === "") {
     object.cost = "Cannot calculate total cost";
-  }
-  else{
-    //let totalCost = parseFloat(object.price) * parseFloat(object.qty);
+  } else {
     let totalCost = object.price * object.qty;
     object.cost = totalCost;
   }
   return object;
-}
+};
 
-/**
- * sends the client the current data in the appdata array
- */
+// sends the client the current data in the appdata array
 const handleRefresh = function (response) {
   response.writeHead(200, "OK", { "Content-Type": "text/plain" });
   response.end(JSON.stringify(appdata));
@@ -97,20 +88,13 @@ const handleRemove = function (request, response) {
   });
 
   request.on("end", function () {
-    if (dataString !== 1) {
-      appdata.splice(dataString, 1); // Remove the entry from the array
-      console.log("Removed item at index: ", dataString);
-      console.log("Updated appdata: ", appdata);
-      response.writeHead(200, "OK", { "Content-Type": "text/plain" });
-      response.end(JSON.stringify(appdata));
-    } else {
-      // Invalid index, send an error response
-      //response.writeHead(204, "Bad Request", { "Content-Type": "text/plain" });
-      //response.end(JSON.stringify("Invalid index"));
-    }
+    appdata.splice(dataString, 1); // Remove the entry from the array
+    console.log("Removed item at index: ", dataString);
+    console.log("Updated appdata: ", appdata);
+    response.writeHead(200, "OK", { "Content-Type": "text/plain" });
+    response.end(JSON.stringify(appdata));
   });
 };
-
 
 const sendFile = function (response, filename) {
   const type = mime.getType(filename);

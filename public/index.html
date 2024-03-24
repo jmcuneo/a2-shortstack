@@ -11,7 +11,6 @@
   </head>
 
   <body>
-    <!--CSS Grid-->
     <div class="header">What To Bring</div>
     <div class="text-grid">
       <form>
@@ -23,13 +22,12 @@
       </form>
     </div>
 
-    <!--CSS GRID-->
+    <!--Start of Flex-->
     </div>
     <div class="flex-container">
       <!-- Table to display fetched user data -->
       <div class="column">
         <h2>Who's Bringing What:</h2>
-
         <table id="table">
           <tr>
             <th>Name</th>
@@ -40,8 +38,9 @@
           </tr>
         </table>
       </div>
+      <!--Guest List-->
       <div class="column">
-        <h2>Who's Coming:</h2>
+        <h2 id="number">Who's Coming:</h2>
         <ul id="guestList"></ul>
       </div>
     </div>
