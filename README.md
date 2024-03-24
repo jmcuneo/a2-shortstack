@@ -1,6 +1,8 @@
 Assignment 2 - Short Stack: Basic Two-tier Web Application using HTML/CSS/JS and Node.js  
 Era Kalaja
 
+a2-EraKalaja.glitch.mw
+
 ## Assignment 2 - Short Stack: Two Tier Web Application for GPA calculation 
 This project is a short stack: two tier web application for GPA calculations. Given classes, grades, and credits by a user, the web application is able to calculate the GPA and produce a table of each entry provided. The user may choose to either add to the table via the calculate button (they must enter all fields in that row- everything above the first dashed line), delete from the table using the delete button (the table gives each entry an ID, the user should identify the ID from the table that they'd like to delete and enter it in before clicking the button), or modify an entry from the table using the modify class button (all fields must be filled out regardless of whether its changing or not). The table generates a derived field in the table as well which indicates the change in gpa with the addition of any classes, as well as a final cumulative gpa. 
 To style this web page I used CSS flexbox to ensure positioning. 
