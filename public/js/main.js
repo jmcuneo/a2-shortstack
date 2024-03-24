@@ -1,26 +1,42 @@
-let previousResults =[]
+let previousResults =[]     //empty array for user data
+
+const deleteResult = function(index) {
+  previousResults.splice(index, 1)     //remove element from the array
+  updatePrevious()         //update the table
+};
+
 
 const updatePrevious = function() {
-  const previousResultsTable = document.getElementById('previousResults')
-  const tbody = previousResultsTable.querySelector('tbody')
+  const previousResultsTable = document.getElementById('previousResults')     //identify table
+  const tbody = previousResultsTable.querySelector('tbody')         //identify body
 
   tbody.innerHTML = '';
   
   previousResults.forEach((result, index) => {
     const row = document.createElement('tr')          //create row
     const cellIndex = document.createElement('td')    //create index column
-    cellIndex.textContent = (index + 1)             //increment
+    cellIndex.textContent = (index + 1)               //increment
     const cellResult = document.createElement('td')   //create result column
     cellResult.textContent = result      //append the result to the html element
+
+    const cellDelete = document.createElement('td')    //add delete element to row
+    const deleteButton = document.createElement('button')      //create button
+    deleteButton.textContent = 'Delete'                        //text for button
+    deleteButton.addEventListener('click', function() {         //event handler for button click
+      deleteResult(index);        //delete the entry at the given index in the array
+    });
+    cellDelete.appendChild(deleteButton)           //delete the cell
+
     row.appendChild(cellIndex)                        //add the index to the current row
     row.appendChild(cellResult)                       //add the result to the current column
+    row.appendChild(cellDelete)                       //include the button to the row
     tbody.appendChild(row)                            //add row to the table
   })
 }
 
 // Function to add result to the previous results table
 const addResultToPrevious = function(result) {
-  previousResults.push(result.toFixed(2));    // Add the result to the beginning of the array
+  previousResults.push(result.toFixed(2))    // Add the result to the beginning of the array
   if (previousResults.length > 50) {      //limit array length to 50 prevoius entries
     previousResults.pop();      //Remove the oldest result if 50 is reached
   }
@@ -41,7 +57,7 @@ const addition = async function( event ) {
     body: body
   })
 
-  const responseData = await response.json(); // Get the response
+  const responseData = await response.json()  // Get the response
   const resultElement = document.querySelector('#result');        //define the result element on the screen
   resultElement.textContent = "Result: " + JSON.stringify(responseData.result);     //assign the client side element to the result from the response
 
@@ -62,11 +78,11 @@ const subtract = async function( event ) {
     body: body 
   })
 
-  const responseData = await response.json();
-  const resultElement = document.querySelector('#result');
-  resultElement.textContent = "Result: " + JSON.stringify(responseData.result); 
+  const responseData = await response.json()
+  const resultElement = document.querySelector('#result')
+  resultElement.textContent = "Result: " + JSON.stringify(responseData.result) 
 
-  addResultToPrevious(responseData.result);
+  addResultToPrevious(responseData.result)
 }
 
 //multiplication function
@@ -83,11 +99,11 @@ const multiply = async function( event ) {
     body: body 
   })
 
-  const responseData = await response.json(); // Get the response
-  const resultElement = document.querySelector('#result');
-  resultElement.textContent = "Result: " + JSON.stringify(responseData.result); // Use the plain text response
+  const responseData = await response.json() // Get the response
+  const resultElement = document.querySelector('#result')
+  resultElement.textContent = "Result: " + JSON.stringify(responseData.result) // Use the plain text response
 
-  addResultToPrevious(responseData.result);
+  addResultToPrevious(responseData.result)
 }
 
 //division function
@@ -104,9 +120,9 @@ const divide = async function( event ) {
     body: body 
   })
 
-  const responseData = await response.json(); // Get the response
-  const resultElement = document.querySelector('#result');
-  resultElement.textContent = "Result: " + JSON.stringify(responseData.result); // Use the plain text response
+  const responseData = await response.json() // Get the response
+  const resultElement = document.querySelector('#result')
+  resultElement.textContent = "Result: " + JSON.stringify(responseData.result) // Use the plain text response
 
   addResultToPrevious(responseData.result);
 }
