@@ -10,40 +10,46 @@
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
   <body>
+  <div class="container">
     <header> Dungeons and Dragons Character Storage </header>
 
-    <form id="characterForm">
-      <input type="text" id="charname" placeholder="character name here" >
-      <input type="text" id="charrace" placeholder="character race here" value="">
-      <input type="select" list="classes" id="charclass" placeholder="select a class">
-      <datalist id="classes">
-        <option value="Artificer">
-        <option value="Barbarian">
-        <option value="Bard">
-        <option value="Cleric">
-        <option value="Druid">
-        <option value="Fighter">
-        <option value="Monk">
-        <option value="Paladin">
-        <option value="Ranger">
-        <option value="Rogue">
-        <option value="Sorcerer">
-        <option value="Warlock">
-        <option value="Wizard">
-      </datalist>
+    <div class="formContainer">
+      <form id="characterForm">
+        <input type="text" id="charname" placeholder="character name" >
+        <input type="text" id="charrace" placeholder="character race" value="">
+        <input type="text" list="classes" id="charclass" placeholder="select a class">
+        <datalist id="classes">
+          <option value="Artificer">
+          <option value="Barbarian">
+          <option value="Bard">
+          <option value="Cleric">
+          <option value="Druid">
+          <option value="Fighter">
+          <option value="Monk">
+          <option value="Paladin">
+          <option value="Ranger">
+          <option value="Rogue">
+          <option value="Sorcerer">
+          <option value="Warlock">
+          <option value="Wizard">
+        </datalist>
 
-      <button id="submitbutton">submit</button>
-      <br>
+        <button id="submitbutton">submit</button>
+        <br>
 
-      <label>
-        <input type="radio" name="action" value="weapon"> Weapon
-        <input type="radio" name="action" value="spell"> Spell
-      </label>
+        <div id="radio-select">
+          <label>
+            <input type="radio" name="action" value="weapon"> Weapon
+          </label>
+          <label>
+            <input type="radio" name="action" value="spell"> Spell
+          </label>
+        </div>
 
+      </form>
+    </div>
 
-    </form>
-
-    <table id="characterTable" border="2px">
+    <table id="characterTable">
       <tbody id="charTableBody">
         <tr>
           <td>Character Name</td>
@@ -57,13 +63,18 @@
     </table>
 
 
-    <form id="editForm">
+    <div class="formContainer" >
+      <form id="editForm" style="display: none;">
+        <input type="text" id="editname">
+        <input type="text" id="editrace">
+        <input type="text" id="editclass">
+        <input type="text" id="editmodifier" >
+        <input type="text" id="editaction" >
+        <button id="savebutton">save</button>
+        <button id="cancelbutton">cancel</button>
+      </form>
+    </div>
 
-
-    </form>
-
-
-
-
+  </div>
   </body>
 </html>

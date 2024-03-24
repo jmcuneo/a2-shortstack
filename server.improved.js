@@ -49,8 +49,11 @@ const handlePost = function( request, response ) {
     if (request.url === "/submit") {
       //handle submit code
       saveData(dataString);
-    } else if(request.url === "/delete"){
-      console.log("received request")
+    } else if(request.url === "/edit") {
+      saveEdit(dataString);
+    }
+    else if(request.url === "/delete"){
+      console.log("received delete request")
       //handle delete code
       deleteData(dataString)
     }
@@ -186,7 +189,12 @@ const saveData = function( jsonData ){
   console.log(appdata)
 }
 
+const saveEdit = function( jsonData ){
+  let myDataJSON = JSON.parse( jsonData )
+  appdata.push({"name": myDataJSON.name, "race": myDataJSON.race, "class": myDataJSON.class, "modifier": myDataJSON.modifier, "action": myDataJSON.action})
+}
 const deleteData = function( jsonData ){
+  console.log("deleting based on jsondata ", jsonData )
   let myDataJSON = JSON.parse( jsonData )
   const deleteName = myDataJSON.deleteName;
   const deleteClass = myDataJSON.deleteClass;

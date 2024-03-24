@@ -1,5 +1,6 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
-
+let editOriginalName
+let editOriginalClass
 const submit = async function( event ) {
   // stop form submission from trying to load
   // a new .html page for displaying results...
@@ -52,6 +53,61 @@ const deleteEntry = async function (deleteName, deleteClass){
     await loadTable()
 }
 
+const editEntry = function (editName, editRace, editClass, editMod, editAction){
+    console.log("edit data for ", editName)
+    document.getElementById("editForm").style.display = 'block';
+    document.getElementById("editname").value = editName;
+    document.getElementById("editrace").value = editRace;
+    document.getElementById("editclass").value = editClass;
+    document.getElementById("editmodifier").value = editMod;
+    document.getElementById("editaction").value = editAction;
+    editOriginalName = editName;
+    editOriginalClass = editClass;
+}
+
+const saveEdit = async function ( event ){
+    event.preventDefault()
+    console.log("saving edit, deleting ", editOriginalName, editOriginalClass)
+
+    await deleteEntry(editOriginalName, editOriginalClass);
+
+    const charname = document.querySelector( "#editname" ),
+        charrace = document.querySelector( "#editrace" ),
+        charclass = document.querySelector( "#editclass" ),
+        charmod = document.querySelector( "#editmodifier" ),
+        action = document.querySelector('#editaction');
+
+    json = { "name": charname.value,
+        "race": charrace.value,
+        "class": charclass.value,
+        "modifier": charmod.value,
+        "action": action.value},
+        body = JSON.stringify( json )
+
+    const response = await fetch( "/edit", {
+        method:"POST",
+        body
+    })
+
+    cancel(event);
+    await loadTable();
+}
+const cancel = function ( event ){
+    event.preventDefault()
+
+    document.getElementById("editForm").style.display = 'none';
+    document.getElementById("editname").value = "";
+    document.getElementById("editrace").value = "";
+    document.getElementById("editclass").value = "";
+    document.getElementById("editmodifier").value = "";
+    document.getElementById("editaction").value = "";
+
+    editOriginalClass = ""
+    editOriginalName = ""
+
+}
+
+
 const loadTable = async function (){
     console.log("loading table")
 
@@ -97,8 +153,15 @@ const loadTable = async function (){
                             button.id = "deleteButton"
                             button.textContent = "Delete"
                             cell.appendChild(button);
+
+                            const button2 = document.createElement("button")
+                            button2.onclick = () => editEntry(data[i].name, data[i].race, data[i].class, data[i].modifier, data[i].action);
+                            button2.id = "editButton"
+                            button2.textContent = "Edit"
+                            cell.appendChild(button2);
                             row.appendChild(cell);
                             break;
+
                     }
                     if(j !== 5) {
                         const cellText = document.createTextNode(content);
@@ -119,5 +182,7 @@ const loadTable = async function (){
 window.onload = function() {
    const submitbutton = document.querySelector("#submitbutton");
     submitbutton.onclick = submit;
+    document.querySelector("#cancelbutton").onclick = cancel;
+    document.querySelector("#savebutton").onclick = saveEdit;
     loadTable();
 }
