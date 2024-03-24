@@ -1,35 +1,34 @@
 let previousResults =[]
-let index = 0;
 
 const updatePrevious = function() {
   const previousResultsTable = document.getElementById('previousResults')
   const tbody = previousResultsTable.querySelector('tbody')
 
-  tbody.innerHTML = ''
-
+  tbody.innerHTML = '';
+  
   previousResults.forEach((result, index) => {
-    const row = document.createElement('tr')      //create row
+    const row = document.createElement('tr')          //create row
     const cellIndex = document.createElement('td')    //create index column
-    cellIndex.textContent = "Index: " + (index + 1)   //increment
+    cellIndex.textContent = (index + 1)             //increment
     const cellResult = document.createElement('td')   //create result column
-    cellResult.textContent = "Result: " + result    //append the result to the html element
-    row.appendChild(cellIndex)                      //add the index to the current row
-    row.appendChild(cellResult)                     //add the result to the current column
-    tbody.appendChild(row)                          //add row to the table
+    cellResult.textContent = "Result: " + result      //append the result to the html element
+    row.appendChild(cellIndex)                        //add the index to the current row
+    row.appendChild(cellResult)                       //add the result to the current column
+    tbody.appendChild(row)                            //add row to the table
   })
 }
 
 // Function to add result to the previous results table
-const addResultToPrevious = function(result, index) {
-  previousResults.push(result, index);    // Add the result to the beginning of the array
-  if (previousResults.length > 50) {    //limit array length to 50 prevoius entries
-    previousResults.pop(); // Remove the oldest result if 50 is reached
+const addResultToPrevious = function(result) {
+  previousResults.push(result);    // Add the result to the beginning of the array
+  if (previousResults.length > 50) {      //limit array length to 50 prevoius entries
+    previousResults.pop();      //Remove the oldest result if 50 is reached
   }
   updatePrevious();     //update table
 };
 
 //addition function
-const addition = async function( event ) {    //addition function 
+const addition = async function( event ) { 
   event.preventDefault()
 
   const num1 = document.querySelector('#num1').value,     //get num1 from the first input box

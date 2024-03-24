@@ -4,10 +4,18 @@
     <title>CS4241 A2 Calculator</title>
     <meta charset="utf-8">
     <script src="js/main.js"></script>
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/main.css"><!--reference to the .css file that houses styling information-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Madimi+One&display=swap"> <!--references the font for the entire webpage-->
     
     <!-- get rid of favicon error -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <style>
+      body{     
+        font-family: "Madimi One", sans-serif;      
+        font-weight: 400;
+        font-style: normal;
+      }
+    </style> <!--references the font styling for the webpage.-->
   </head>
   <body>
     <form>
@@ -26,12 +34,13 @@
       <br>
     </form>
     <br>
-    <table id="result"></table>
+    <t>
+    <table id="result" class= "center"></table>
     <h2>Previous Results:</h2>
     <table id="previousResults">
       <thead>
         <tr>
-          <th>#:</th>
+          <th>Operation #:</th>
           <th>Result:</th>
         </tr>
       </thead>
@@ -39,5 +48,6 @@
         <!-- Dynamic rows here -->
       </tbody>
     </table>
+  </t>
   </body>
 </html>
