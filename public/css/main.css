@@ -17,6 +17,10 @@ input {
   font-style: normal;
   font-size: 16pt;
 }
+input[type="submit"] {
+  border-color: #000000;
+  border-style: solid;
+}
 
 h1, h2, h3, h4, h5, h6 {
   font-family: "Roboto", sans-serif;
@@ -128,3 +132,4 @@ hr {
 .change p {
   margin-bottom: 5px;
 }
+

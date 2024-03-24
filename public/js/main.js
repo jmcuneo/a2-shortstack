@@ -84,7 +84,7 @@ async function updateGrid() {
     recentChildren.push(wrapper);
   }
 
-  recentList.replaceChildren(...recentChildren);
+  recentList.replaceChildren(...recentChildren.reverse());
   //refreshLoopId = setTimeout(updateGrid, 10000);
 }
 
