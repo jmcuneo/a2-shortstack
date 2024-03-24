@@ -1,18 +1,105 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <title>CS4241 Assignment 2</title>
-    <meta charset="utf-8">
-    <script src="js/main.js"></script>
-    <link rel="stylesheet" href="css/main.css">
-    
-    <!-- get rid of favicon error -->
-    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
-  </head>
-  <body>
-    <form>
-      <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
-    </form>
-  </body>
+
+<head>
+  <title>CS4241 Assignment 2</title>
+  <meta charset="utf-8">
+  <script src="js/main.js"></script>
+  <link rel="stylesheet" href="css/main.css">
+
+  <!-- get rid of favicon error -->
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+</head>
+
+<div class="headContainer">
+  <header>
+    <h1>GPA Calculator</h1>
+  </header>
+</div>
+<br>
+
+<body>
+  <form>
+
+    <p>To add classes to the table and calculate your GPA fill in the following information:</p>
+
+    <div class="addContainer">
+      <label for="class">Class Name*:</label>
+      <input type="text" id="class" name="class">
+      <label for="grade">Grade*:</label>
+      <select name="grade" id="grade">
+        <option value="">--Choose an option--</option>
+        <option value="A">A</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+        <option value="D">D</option>
+        <option value="F">F</option>
+      </select>
+      <label for="credits">Credits*:</label>
+      <input type="number" id="credits" name="credits">
+      <button id="calculate_button">Calculate</button>
+    </div>
+
+    <br><br>
+    <hr class="dashed-line">
+
+    <div class="explainTable">
+      <p>See below for GPA calculations</p>
+    </div>
+    <div class="table-container">
+      <table id="dataTable">
+        <tr>
+          <th id="idNum">ID</th>
+          <th>Class</th>
+          <th>Grade</th>
+          <th>Credits</th>
+          <th>GPA Change</th>
+        </tr>
+      </table>
+    </div>
+
+    <div class="gpaContainer">
+      <h2>Your cumulative GPA is: </h2>
+      <h3 id="gpa"></h3>
+      <br>
+      <hr class="dashed-line">
+      <p>To delete an entry enter the corresponding ID from the table:</p>
+      <div class="deleteContainer">
+        <label for="delete">ID #*:</label>
+        <input type="number" id="delete" name="delete">
+        <button id="delete_button">Delete</button>
+      </div>
+
+      <br><br>
+      <hr class="dashed-line">
+      <br>
+
+      <p>To modify an entry enter the following criteria:</p>
+
+      <div class="modifyContainer">
+        <label for="id">ID*:</label>
+        <input type="number" id="idModify" name="id">
+        <label for="class">Class Name*:</label>
+        <input type="text" id="classModify" name="class">
+        <label for="grade">Grade*:</label>
+        <select name="gradeModify" id="gradeModify">
+          <option value="">--Choose an option--</option>
+          <option value="A">A</option>
+          <option value="B">B</option>
+          <option value="C">C</option>
+          <option value="D">D</option>
+          <option value="F">F</option>
+        </select>
+        <label for="credits">Credits*:</label>
+        <input type="number" id="creditsModify" name="credits">
+        <button id="modify_button">Modify Class</button>
+      </div>
+
+      <br><br>
+      <hr class="dashed-line">
+      
+  </form>
+  </div>
+</body>
+
 </html>

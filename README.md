@@ -1,97 +1,36 @@
 Assignment 2 - Short Stack: Basic Two-tier Web Application using HTML/CSS/JS and Node.js  
-===
+Era Kalaja
 
-Due: March 24th, by 11:59 PM.
+## Assignment 2 - Short Stack: Two Tier Web Application for GPA calculation 
+This project is a short stack: two tier web application for GPA calculations. Given classes, grades, and credits by a user, the web application is able to calculate the GPA and produce a table of each entry provided. The user may choose to either add to the table via the calculate button (they must enter all fields in that row- everything above the first dashed line), delete from the table using the delete button (the table gives each entry an ID, the user should identify the ID from the table that they'd like to delete and enter it in before clicking the button), or modify an entry from the table using the modify class button (all fields must be filled out regardless of whether its changing or not). The table generates a derived field in the table as well which indicates the change in gpa with the addition of any classes, as well as a final cumulative gpa. 
+To style this web page I used CSS flexbox to ensure positioning. 
+Ensure that when performing an actions, that all (and only) the fields that are in the same row as the button are filled out. 
 
-This assignment aims to introduce you to creating a prototype two-tiered web application. 
-Your application will include the use of HTML, CSS, JavaScript, and Node.js functionality, with active communication between the client and the server over the life of a user session.
-
-Baseline Requirements
----
-
-There is a large range of application areas and possibilities that meet these baseline requirements. 
-Try to make your application do something useful! A todo list, storing / retrieving high scores for a very simple game... have a little fun with it.
-
-Your application is required to implement the following functionalities (4 pts each, total 20 pts):
-
-- a `Server` which not only serves files, but also maintains a tabular dataset with 3 or more fields related to your application
-- a `Results` functionality which shows the entire dataset residing in the server's memory
-- a `Form/Entry` functionality which allows a user to add or delete data items residing in the server's memory
-- a `Server Logic` which, upon receiving new or modified "incoming" data, includes and uses a function that adds at least one additional derived field to this incoming data before integrating it with the existing dataset
-- the `Derived field` for a new row of data must be computed based on fields already existing in the row. 
-For example, a `todo` dataset with `task`, `priority`, and `creation_date` may generate a new field `deadline` by looking at `creation_date` and `priority`
-
-Your application is required to demonstrate the use of the following concepts:
-
-HTML (4 pts each, total 16 pts):
-- One or more [HTML Forms](https://developer.mozilla.org/en-US/docs/Learn/HTML/Forms), with any combination of form tags appropriate for the user input portion of the application
-- A results page displaying all data currently available on the server. You will most likely use a `<table>` tag for this, but `<ul>` or `<ol>` could also work and might be simpler to work with. Alternatively, you can create a single-page app (see Technical Acheivements) but this is not a requirement.
-- All pages should [validate](https://validator.w3.org)
-- If your app contains multple pages, they should all be accessible from the homepage (index.html)
-
-CSS (4 pts each, total 16 pts):
-- CSS styling of the primary visual elements in the application
-- Various CSS Selector functionality must be demonstrated:
-    - Element selectors
-    - ID selectors
-    - Class selectors
-- CSS positioning and styling of the primary visual elements in the application:
-    - Use of either a CSS grid or flexbox for layout
-    - Rules defining fonts for all text used; no default fonts! Be sure to use a web safe font or a font from a web service like [Google Fonts](http://fonts.google.com/)
-- CSS defined in a maintainable, readable form, in external stylesheets 
-
-JavaScript (4 pts):
-- At minimum, a small amount of front-end JavaScript to get / fetch data from the server; a sample is provided in this repository.
-
-Node.js (4 pts):
-- An HTTP Server that delivers all necessary files and data for the application, and also creates the required `Derived Fields` in your data. 
-A starting point is provided in this repository.
-
-Deliverables
----
-
-1. (5 pts) Fork the starting project code repo. The starter code in the repo may be used or discarded as needed.
-2. (60 pts, detailed above) Implement your project with the above requirements.
-3. Test your project to make sure that when someone goes to your main page, it displays correctly.
-4. (5 pts) Deploy your project to Glitch, and fill in the appropriate fields in your package.json file.
-5. (5 pts) Ensure that your project has the proper naming scheme `a2-FirstnameLastname` so we can find it.
-6. (5 pts) Modify the README to the specifications below, and delete all of the instructions originally found in this README.
-7. (5 pts) Create and submit a Pull Request to the original repo. Be sure to include your name in the pull request.
-
-Acheivements
----
-
-Below are suggested technical and design achievements. You can use these to help customize the assignment to your personal interests. These are recommended acheivements, but feel free to create/implement your own... just make sure you thoroughly describe what you did in your README and why it was challenging. ALL ACHIEVEMENTS MUST BE DESCRIBED IN YOUR README IN ORDER TO GET CREDIT FOR THEM. Remember, the highest grade you can get on any individual assignment is a 100%.
-
-*Technical*
-- (5 points) Create a single-page app that both provides a form for users to submit data and always shows the current state of the server-side data. To put it another way, when the user submits data, the server should respond sending back the updated data (including the derived field calculated on the server) and the client should then update its data display.
-
-- (5 points) In addition to a form enabling adding and deleting data on the server, also add the ability to modify existing data.
-
-*Design/UX*
-- (5 points per person, with a max of 10 points) Test your user interface with other students in the class. Define a specific task for them to complete (ideally something short that takes <10 minutes), and then use the [think-aloud protocol](https://en.wikipedia.org/wiki/Think_aloud_protocol) to obtain feedback on your design (talk-aloud is also fine). Important considerations when designing your study:
-
-1. Make sure you start the study by clearly stating the task that you expect your user to accomplish.
-2. You shouldn't provide any verbal instructions on how to use your interface / accomplish the task you give them. Make sure that your interface is clear enough that users can figure it out without any instruction, or provide text instructions from within the interface itself. 
-3. If users get stuck to the point where they give up, you can then provde instruction so that the study can continue, but make sure to discuss this in your README. You won't lose any points for this... all feedback is good feedback!
-
-You'll need to use sometype of collaborative software that will enable you both to see the test subject's screen and listen to their voice as they describe their thoughts, or conduct the studies in person. After completing each study, briefly (one to two sentences for each question) address the following in your README:
-
-1. Provide the last name of each student you conduct the evaluation with.
-2. What problems did the user have with your design?
-3. What comments did they make that surprised you?
-4. What would you change about the interface based on their feedback?
-
-*You do not need to actually make changes based on their feedback*. This acheivement is designed to help gain experience testing user interfaces. If you run two user studies, you should answer two sets of questions. 
-
-Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
----
-
-## Your Web Application Title
-Include a very brief summary of your project here. Be sure to include the CSS positioning technique you used, and any required instructions to use your application.
 
 ## Technical Achievements
-- **Tech Achievement 1**: Using a combination of...
+- **Tech Achievement 1**: Created a single-page app that both provides a form for users to submit data and always shows the current state of the server-side data. To do this I created some fields and buttons in which users can submit their desired data through, then that data is taken and stored within a table displayed back to the user. The table returns both the users entry and 2 derived fields along with a cumulative GPA displayed underneath the table.  When the user submits its class/grade data, the server responds sending back the updated data (including the 2 derived fields calculated on the server) and the client then updates its data display. It was challenging to create a table on the fly since it involved very little HTML and a lot more JavaScript than I expected. I had never worked with dynamic tables before and it was a challenge to do so successfully, it took me many tries to be satisfied with the end product. Furthermore, it was challenging to keep the table always updated with the server side array state even upon refreshing. 
+- **Tech Achievement 2**: Created a form that enables adding and deleting class/grade data on the server, and also added the ability to modify existing data through the modify class button. To modify a class the user must fill out all the fields that are in the same row as the modify class button, keeping only the ID consistent (all other information can be modified or unmodified so long the ID is the same as the one in the table). The server will search for the ID in its array and change all fields according to the users input along with recalculations, then send it back to the client for the client to display it. This was challenging at first while I figured out how to search the array properly for the id and edit all data in the row according to the users input. 
 
 ### Design/Evaluation Achievements
-- **Design Achievement 1**: 
+- **Design Achievement 1**: Tested my user interface with 2 other students by telling them to calculate their GPA and to make use of all functionalities on the page. The following questions/answers resulted from my study: 
+
+Student 1:
+1. Provide the last name of each student you conduct the evaluation with.
+Fede
+2. What problems did the user have with your design?
+At first the user didn't know which fields needed to be filled in and which didn't to add to the table. They didn't seem to read the instructions right away (didn't stand out enough).
+3. What comments did they make that surprised you?
+I was surprised to hear that they had a harder time adding to the table rather than deleting or modifying. I was also surprised that they didnt fully understnd the vocabulary of modifying rather than editing. 
+4. What would you change about the interface based on their feedback?
+I think I'd make it more obvious to use, perhaps giving more obvious instructions. I think I get a little too compfortable with my wording on these assignments because I know that the graders understand the scope of the project and the common phrases used like modify and ID. 
+
+Student 2:
+1. Provide the last name of each student you conduct the evaluation with.
+Gilman
+2. What problems did the user have with your design?
+They did not understand which fields they had to fill out and the relevance of some the fields. They also seemed to be confused by the order and ID# correspondance. They also had a hard time with the instructions. 
+instructions could be more attention grabbing
+3. What comments did they make that surprised you?
+I was surprised that they didn't find the order of tasks on the page accomodating, they would've preferred to see modify before delete with the ID# somehow made more obvious. I was also surprised by their interpretation of the instructions. 
+4. What would you change about the interface based on their feedback?
+I would instead make the interface more clear on the order in which things should be filled out, with more of a separation between which fields should be filled out for the task at hand. I'd also add an alert that informed the user that they still have field to fill in. 
