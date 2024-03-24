@@ -9,16 +9,25 @@ const http = require( "http" ),
       port = 3000
 
 const appdata = [
-  { "model": "toyota", "year": 1999, "mpg": 23 },
-  { "model": "honda", "year": 2004, "mpg": 30 },
-  { "model": "ford", "year": 1987, "mpg": 14} 
+  { "model": "toyota", "year": 1999, "mpg": 23, "EOL": 2077},
+  { "model": "honda", "year": 2004, "mpg": 30, "EOL": 2060},
+  { "model": "ford", "year": 1987, "mpg": 14, "EOL": 2049} 
 ]
+
+const calculateEOL = (year, mpg) => {
+  let new_val = year + mpg;
+  new_val = new_val - (year % mpg);
+
+  return new_val;
+}
 
 const server = http.createServer( function( request,response ) {
   if( request.method === "GET" ) {
     handleGet( request, response )    
   }else if( request.method === "POST" ){
     handlePost( request, response ) 
+  }else if( request.method === "DELETE"){
+    handleDelete( request, response)
   }
 })
 
@@ -40,13 +49,32 @@ const handlePost = function( request, response ) {
   })
 
   request.on( "end", function() {
-    console.log( JSON.parse( dataString ) )
+    //console.log( JSON.parse( dataString ) )
+    let json_data = JSON.parse(dataString);
+    
+    json_data.EOL = calculateEOL(json_data.year, json_data.mpg);
 
-    // ... do something with the data here!!!
+    appdata.push(json_data);
+    appdata.forEach( (value) => console.log(value));
 
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
-    response.end("test")
+    response.end(JSON.stringify(appdata))
   })
+}
+
+const handleDelete = function (request, response) {
+ let del = "";
+
+  request.on( "data", function( data ) {
+      del += data 
+  })
+ 
+
+  console.log(del);
+  let type = mime.getType(del)
+  response.writeHead( 200, "OK", {"Content-Type": type })
+  response.end("done")
+
 }
 
 const sendFile = function( response, filename ) {
@@ -70,5 +98,7 @@ const sendFile = function( response, filename ) {
      }
    })
 }
+
+
 
 server.listen( process.env.PORT || port )

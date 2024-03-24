@@ -8,11 +8,26 @@
     
     <!-- get rid of favicon error -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <!-- credit to: https://www.valentinog.com/blog/html-table/-->
   </head>
   <body>
     <form>
-      <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
+      <input type="text" id="model" value="Insert Model Name">
     </form>
+    <form>
+      <input type="number" id="year" value="Insert Model Year">
+    </form>
+    <form>
+      <input type="number" id="mpg" value="Insert Average MPG">
+      <button id="submit">submit</button>
+      
+    </form>
+    <form>
+      <input type="number" id="row">
+      <button id="erase">delete</button>
+    </form>
+    <table>
+      <!-- here goes our data! -->
+    </table>
   </body>
 </html>

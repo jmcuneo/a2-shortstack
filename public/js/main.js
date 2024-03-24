@@ -1,14 +1,41 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 
+let returnedArray;
+
+function generateTableHead(table, data) {
+  let thead = table.createTHead();
+  let row = thead.insertRow();
+  for (let key of data) {
+    let th = document.createElement("th");
+    let text = document.createTextNode(key);
+    th.appendChild(text);
+    row.appendChild(th);
+  }
+}
+
+function generateTable(table, data) {
+  for (let element of data) {
+    let row = table.insertRow();
+    for (key in element) {
+      let cell = row.insertCell();
+      let text = document.createTextNode(element[key]);
+      cell.appendChild(text);
+    }
+  }
+}
+
 const submit = async function( event ) {
   // stop form submission from trying to load
   // a new .html page for displaying results...
   // this was the original browser behavior and still
   // remains to this day
   event.preventDefault()
-  
-  const input = document.querySelector( "#yourname" ),
-        json = { yourname: input.value },
+  const input_model = document.querySelector( "#model" ),
+        input_year = document.querySelector( "#year" ),
+        input_mpg = document.querySelector( "#mpg" ),
+        json = { model: input_model.value,
+                year: Number(input_year.value),
+                mpg: Number(input_mpg.value) },
         body = JSON.stringify( json )
 
   const response = await fetch( "/submit", {
@@ -17,11 +44,31 @@ const submit = async function( event ) {
   })
 
   const text = await response.text()
+  
+  let returnedArray = JSON.parse(text);
+  console.log( "text:", returnedArray );
+  let table = document.querySelector("table");
+  let data = Object.keys(returnedArray [0]);
+  generateTable(table, returnedArray);
+  generateTableHead(table, data);
+  
+}
 
-  console.log( "text:", text )
+const erase = async function( event ) {
+  event.preventDefault()
+
+  let valueToDel = { "number" : document.getElementById("row").value };
+
+  const response = await fetch( "/submit", {
+    method:"DELETE",
+    body: JSON.stringify(valueToDel) 
+  })
 }
 
 window.onload = function() {
-   const button = document.querySelector("button");
-  button.onclick = submit;
+   const button_submit = document.getElementById("submit");
+   const button_delete = document.getElementById("erase");
+  button_submit.onclick = submit;
+  button_delete.onclick = erase;
+  
 }
