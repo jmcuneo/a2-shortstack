@@ -1,6 +1,8 @@
 # Code Runner
 This project runs user sumbited code in a isolated javascript instance and then shows that result to the user. Simply put your varible name and code in the form and press add. If the varible already exists, the button will change to modify. You can also hit the buttons to recalculate, modify, or delete varibles. You can also refreh the data with the refresh button. When a varible name is not allowed, it is replaced with noname# where # starts at 1 and increases as to not override other nonames. Varibles are cloned when passed to other calculations so varibles can't be modified, though their clones can be returned. The code entered is run in eval, so code can be interpreted weirdly. Most notably objects are interpreted as a block with labels inside, so: {name:value} => {*name:* return value;} This can be fixed by putting the object in parentheses: ({name:value})
 
+The glitch site https://a2-nate-westfall.glitch.me/ redirects to http://game.gamestream.stream:3000/
+
 ## Technical Achievements
 - **Single-Page App**: made the project as single page application where anytime the data is changed on the client, new data is sent
 - **Refresh Button**: made a refresh button so sthat new data can be fetched without adding or changing data 
