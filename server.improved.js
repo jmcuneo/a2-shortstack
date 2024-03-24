@@ -6,8 +6,7 @@ const http = require( "http" ),
       // file.
       mime = require( "mime" ),
       dir  = "public/",
-      port = 3000,
-      appdata = [];
+      port = 3000
 
 const server = http.createServer( function( request,response ) {
   if( request.method === "GET" ) {
