@@ -1,12 +1,12 @@
 {
-  "name": "",
-  "version": "",
+  "name": "a2-carlosmedina",
+  "version": "0.0.1",
   "description": "",
-  "author": "",
+  "author": "Carlos Medina",
   "scripts": {
     "start": "node server.improved.js"
   },
   "dependencies": {
-    "mime": "^2.4.4"
+    "mime": "^2.6.0"
   }
 }
