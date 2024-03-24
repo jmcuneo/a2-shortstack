@@ -20,7 +20,8 @@ function removeNameFromEquations(name) {
 // make sure avrible name is good
 // returns noname# if not
 function ensureVarName(name) {
-  if (VarName(name)) {
+  const bad = Array.from("=; \n\r");
+  if (!bad.some(c=>name.includes(c))&&VarName(name)) {
     removeNameFromEquations(name)
     return name
   }
