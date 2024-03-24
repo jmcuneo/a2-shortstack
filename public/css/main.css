@@ -1,4 +1,115 @@
 body {
-  background:black;
-  color:white;
+  font-family: "Madimi One", sans-serif;
+  margin: 0;
+  background-color: #61A6FA   ;
+  background-size: 65px;
+  color: #6a77a2;
+  background-image: url(water2.webp);
+}
+
+/* Border box includes padding and border in the element's total width and height. */
+* {
+  box-sizing: border-box;
+}
+
+#container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+#flex {
+  display: flex;
+}
+
+/* navigation section */
+#navbar {
+  height: 40px;
+  background-color: #FAD762;
+  width: 100%;
+}
+
+#navbar ul {
+  display: flex;
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  justify-content: space-evenly;
+}
+
+#navbar li {
+  padding-top: 10px;
+}
+
+/* navigation links*/
+#navbar li a {
+  color: #7e61fa;
+  /* navbar text color */
+  font-weight: 800;
+  text-decoration: none;
+}
+
+/* navigation link when a link is hovered over */
+#navbar li a:hover {
+  color: #7a776d;
+  text-decoration: underline;
+}
+
+#animation {
+  position: absolute;
+}
+
+p {
+  font-size: 18px;
+  line-height: 1.6;
+  color: #6d737a;
+}
+
+h1, h2{
+  color: #6f6d7a;
+  font-weight: bold;
+}
+
+main {
+  background-color: #61A6FA;
+  flex: 1;
+  padding: 20px;
+}
+
+ul, li {
+  color: #6d737a;
+}
+
+/* New stuff */
+
+input {
+  width: 100%;
+  padding: 5px;
+  margin: 5px 0;
+  border-radius: 5px;
+}
+
+table, th, td {
+  border: 1px solid black;
+}
+
+table {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  max-width: 100%;
+}
+
+button {
+  background-color: #FAD762;
+  color: #7e61fa;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  padding: 10px 20px;
+  margin: 5px;
+}
+
+.centered {
+  text-align: center;
 }
