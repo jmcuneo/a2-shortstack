@@ -1,11 +1,13 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 
-function radioValue () {
-  var elem = document.getElementsByName("operator");
+function radioValue (name) {
+  var elem = document.getElementsByName(name);
  
   for (let i = 0; i < elem.length; i++) {
       if (elem[i].checked){ return elem[i].value }
   }
+
+  return null
 }
 
 const submit = async function( event ) {
@@ -17,7 +19,7 @@ const submit = async function( event ) {
   
   const val1 = document.querySelector( "#firstVal" ),
         val2 = document.querySelector( "#secVal" ),
-        op = radioValue(),
+        op = radioValue("operator"),
         guess = document.querySelector( "#guess" ),
         json = { val1: val1.value, val2: val2.value, op: op, guess: guess.value},
         body = JSON.stringify( json )
@@ -51,27 +53,43 @@ function deleteItem( event ) {
 }
 
 function modItem ( event ) {
+  event.preventDefault() 
+
   let form = document.getElementsByClassName("forms")[0]
   form.style.display = "none"
 
   let modform = document.getElementById("modForm")
   modform.style.display = "block"
 
+  let saveButton = document.getElementsByClassName("saveButton")[0]
+  saveButton.id = event.srcElement.id
+  saveButton.onclick = modSave
+}
+
+async function modSave ( event ) {
   const val1 = document.querySelector( "#newFirst" ),
         val2 = document.querySelector( "#newSec" ),
-        op = radioValue(),
+        op = radioValue("newOP"),
         answer = document.querySelector( "#forceAnswer" ),
         json = {index: event.srcElement.id, val1: val1.value, val2: val2.value, op: op, output: answer.value},
         body = JSON.stringify( json )
 
-  fetch( "/modify", {
+  const response = await fetch( "/modify", {
     method:"POST",
     body 
-  }).then( (response) => {
-      response.json().then((resp) => {
-        displayData(resp)
-      })
-    })
+  })
+
+  const resp = await response.json()
+  displayData(resp)
+  console.log( "text:", resp)
+  // fetch( "/modify", {
+  //   method:"POST",
+  //   body 
+  // }).then( (response) => {
+  //   response.json().then((resp) => {
+  //     displayData(resp)
+  //   })
+  // })
 }
 
 function initialLoad(){
@@ -104,7 +122,7 @@ function displayData(data) {
 
   let table = document.getElementById("serverTable")
   for(let i = 0; i < data.length; i++){
-    if(document.getElementById("data" + i) == null) { //Modify this later to make sure the data is the same
+    if(document.getElementById("data" + i) == null) {
       let tr = document.createElement("tr")
       tr.id = "data" + i;
       tr.className = "dataTR"

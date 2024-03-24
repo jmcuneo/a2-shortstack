@@ -28,16 +28,20 @@ const server = http.createServer( function( request,response ) {
     } else if (request.url === "/delete") {
       deleteData(request, response)
     } else if (request.url === "/modify") {
-     
+      modData(request, response)
     }
-    
   }
 })
 
 const handleGet = function( request, response ) {
   const filename = dir + request.url.slice( 1 ) 
+  //console.log("GET url: " + request.url)
 
-  if( request.url === "/" ) {
+  if( request.url === "/" || request.url.includes("?")) {
+    //Weird bug was popping up here with extra GET requests being sent after data was modified
+    //No idea where the requests were coming from or why (I tried a lot of debugging on both client and server sides)
+    //To get any modification to work I had to hardcode in the "?" check
+    //Found this sunday night so I couldn't ask professor or TAs about it
     sendFile( response, "public/index.html" )
   }else{
     sendFile( response, filename )
@@ -124,34 +128,38 @@ function modData (request, response) {
 
   request.on( "end", function() {
     let data = JSON.parse(dataString)
-    console.log(data)
+    //console.log(data)
 
     let oldData = appdata[data.index]
+    let comboData = combineData(data, oldData)
 
-    if (data.answer != null) {
-      oldData.output = data.answer
-    } else if (data.val1 && data.val2 && data.op) {
-      oldData.output = eval(data.val1 + data.op + data.val2) //Switch out of eval to switch case or something
-      oldData.val1 = parseInt(data.val1)
-      oldData.val2 = parseInt(data.val2)
-      oldData.op = data.op
+    if (comboData.output == null || comboData.output == '') {
+      //Switch out of eval to switch case or something
+      comboData.output = eval(comboData.val1 + comboData.op + comboData.val2) 
     }
     
-    
+    appdata[data.index] = comboData
     sendData(response)
   })
 }
 
 
-function combineData(mod, old) {
+function combineData (mod, old) {
   let newData = {val1: null, val2: null, op: null, output: null, guess: null}
-  if (mod.answer != null) {
-    newData.output = mod.answer
+  if (mod.output != null) {
+    newData.output = mod.output
   }
+  newData.val1 = pickData(mod, old, "val1")
+  newData.val2 = pickData(mod, old, "val2")
+  newData.op = pickData(mod, old, "op")
+  console.log("New operator is " + newData.op)
+  return newData
+}
 
-  if (mod.val1) {
-    newData.val1 = mod.val1
+function pickData (mod, old, valType) {
+  if (mod[valType] != null && mod[valType] != '') {
+    return mod[valType]
   } else {
-    newData.val1 = old.val1
+    return old[valType]
   }
 }
