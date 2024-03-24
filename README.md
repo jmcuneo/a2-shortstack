@@ -91,7 +91,8 @@ Sample Readme (delete the above when you're ready to submit, and modify the belo
 Include a very brief summary of your project here. Be sure to include the CSS positioning technique you used, and any required instructions to use your application.
 
 ## Technical Achievements
-- **Tech Achievement 1**: Using a combination of...
+- **Single-Page App**: When the client sends a request to the server to add, remove, or modify data, the server updates the stored appdata accordingly and sends a new table in the response. The client then updates its page with the new table.
+- **Modification Functionality**: Along with adding or removing data, the client can send a request to the server to modify a piece of data. This is done by sending the recipe name along with the updated prep time and cook time. The server automatically recalculates the total time.
 
 ### Design/Evaluation Achievements
 - **Design Achievement 1**: 
