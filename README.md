@@ -16,7 +16,9 @@ Basic functionalities
 HTML
 - HTML form with inputs and datalists
 - Results page: Table on the main page (single page app)
-- index.html validated ![img.png](img.png)
+- index.html validated
+
+![img.png](img.png)
 - All pages available from homepage (single page app)
 
 CSS
