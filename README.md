@@ -14,12 +14,12 @@ For CSS, used \[data-send] (within the JS, but inside a querySelector so it stil
 
 ### Design/Evaluation Achievements
 - **Design Achievement 1**: 
-1. Provide the last name of each student you conduct the evaluation with.
-2. What problems did the user have with your design?
-3. What comments did they make that surprised you?
-4. What would you change about the interface based on their feedback?
+1. Ni
+2. Only the task name changes when clicking around
+3. I forgot to check for empty dates (I do check for empty names)
+4. Make the tablename section uneditable after clicking on an item, and changing "submit" to "edit"
 
-1. Provide the last name of each student you conduct the evaluation with.
-2. What problems did the user have with your design?
-3. What comments did they make that surprised you?
-4. What would you change about the interface based on their feedback?
+1. Greene
+2. The table headers jump around when adding items to the list 
+3. They aren't a huge fan of the simplistic black and white colorscheme
+4. I could fix the table headers problem by adding a dummy row (only when the table is empty) and make it not clickable, but have a bunch of spaces so the table doesn't jump around when adding the first new row (since there already is one)
