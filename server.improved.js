@@ -1,12 +1,12 @@
-const http = require( "http" ),
-      fs   = require( "fs" ),
+const http = require("http"),
+      fs   = require("fs"),
       // IMPORTANT: you must run `npm install` in the directory for this assignment
       // to install the mime library if you"re testing this on your local machine.
       // However, Glitch will install it automatically by looking in your package.json
       // file.
-      mime = require( "mime" ),
+      mime = require("mime"),
       dir  = "public/",
-      port = 3000
+      port = 3000;
 
 const appdata = [
   { "model": "toyota", "year": 1999, "mpg": 23 },
@@ -18,62 +18,89 @@ const gpaData = [
   
 ]
 
-const server = http.createServer( function( request,response ) {
-  if( request.method === "GET" ) {
-    handleGet( request, response )    
-  }else if( request.method === "POST" ){
-    handlePost( request, response ) 
+const server = http.createServer(function(request,response)
+{
+  if (request.method === "GET") {
+    handleGet(request, response); 
+  } else if (request.method === "POST") {
+    console.log("POSTING");
+    handlePost(request, response); 
   }
 })
 
-const handleGet = function( request, response ) {
-  const filename = dir + request.url.slice( 1 ) 
-
-  if( request.url === "/" ) {
-    sendFile( response, "public/index.html" )
-  }else{
-    sendFile( response, filename )
+const handleGet = function(request, response)
+{
+  const filename = dir + request.url.slice(1);
+  if (request.url === "/") {
+    sendFile(response, "public/index.html");
+  } else {
+    sendFile(response, filename);
   }
 }
 
-const handlePost = function( request, response ) {
-  let dataString = ""
+const handlePost = function(request, response)
+{
+  let dataString = "";
 
-  request.on( "data", function( data ) {
-      dataString += data 
+  request.on("data", function(data) {
+      dataString += data;
   })
 
-  request.on( "end", function() {
-    console.log("Data: ", JSON.parse( dataString ) )
+  request.on("end", function() {
+    console.log("Data: ", JSON.parse(dataString));
 
     // ... do something with the data here!!!
     gpaData[gpaData.length] = JSON.parse(dataString);
 
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
     response.end(JSON.stringify(gpaData[gpaData.length - 1]));
+    let gpa = calculateGpa(gpaData);
+    console.log("GPA: ", gpa);
   })
 }
 
-const sendFile = function( response, filename ) {
-   const type = mime.getType( filename ) 
+const sendFile = function(response, filename)
+{
+   const type = mime.getType(filename);
 
-   fs.readFile( filename, function( err, content ) {
-
+   fs.readFile(filename, function(err, content) {
      // if the error = null, then we"ve loaded the file successfully
-     if( err === null ) {
-
+     if (err === null) {
        // status code: https://httpstatuses.com
-       response.writeHeader( 200, { "Content-Type": type })
-       response.end( content )
-
-     }else{
-
+       response.writeHeader(200, { "Content-Type": type});
+       response.end(content);
+     } else {
        // file not found, error code 404
-       response.writeHeader( 404 )
-       response.end( "404 Error: File Not Found" )
-
+       response.writeHeader(404);
+       response.end("404 Error: File Not Found");
      }
    })
 }
 
-server.listen( process.env.PORT || port )
+const calculateGpa = function(jsonData)
+{
+  let totalPoints = 0;
+  let totalCredits = 0;
+  jsonData.forEach(entry => {
+    let currentPoints = 0;
+    let grade = entry.grade.toLowerCase();
+
+    if (grade === "a") {
+      currentPoints = 4;
+    } else if (grade === "b") {
+      currentPoints = 3;
+    } else if (grade === "c") {
+      currentPoints = 2;
+    } else if (grade === "d") {
+      currentPoints = 1;
+    }
+
+    let amountCredits = Number(entry.credits);
+    currentPoints *= amountCredits;
+    totalPoints += currentPoints;
+    totalCredits += amountCredits;
+  });
+  return totalPoints / totalCredits;
+}
+
+server.listen(process.env.PORT || port);

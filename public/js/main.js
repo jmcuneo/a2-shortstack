@@ -15,23 +15,34 @@ const submit = async function(event)
   const json = {class: classInput.value, grade: gradeInput.value, credits: creditsInput.value};
   const body = JSON.stringify(json);
 
-  const response = await fetch( "/submit", {
+  const response = await fetch("/submit",
+  {
     method:"POST",
     body
   });
 
   const text = await response.text();
   console.log("text:", text);
-
-  let table = document.getElementById("table");
-  let numRows = table.rows.length;
-  let row = table.insertRow(numRows);
-  let cell1 = row.insertCell(0);
-  cell1.innerHTML = "NEW";
+  const newData = JSON.parse(text);
+  addToTable(newData);
 }
 
 window.onload = function()
 {
-  const button = document.querySelector("button");
-  button.onclick = submit;
+  const submitButton = document.getElementById("submit");
+  submitButton.onclick = submit;
+}
+
+const addToTable = function(newData)
+{
+  let table = document.getElementById("table");
+  let numRows = table.rows.length;
+  let row = table.insertRow(numRows);
+
+  let classCell = row.insertCell(0);
+  classCell.innerHTML = newData.class;
+  let gradeCell = row.insertCell(1);
+  gradeCell.innerHTML = newData.grade;
+  let creditsCell = row.insertCell(2);
+  creditsCell.innerHTML = newData.credits;
 }
