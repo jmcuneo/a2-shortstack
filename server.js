@@ -10,7 +10,7 @@ const server = http.createServer(function (request, response) {
 
 const handleGet = function (request, response) {
   response.writeHead(302, {
-    'Location': 'http://gamestream.stream:3000'
+    'Location': 'http://game.gamestream.stream:3000'
   });
   response.end();
 }
