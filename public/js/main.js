@@ -5,7 +5,7 @@ const submit = async function( event ) {
   // a new .html page for displaying results...
   // this was the original browser behavior and still
   // remains to this day
-  event.preventDefault()
+  event.preventDefault();
   
   const FirstName = document.querySelector( "#FirstName" ),
       MiddleName = document.querySelector( "#MiddleName" ),
@@ -25,15 +25,9 @@ const submit = async function( event ) {
 
   const response = await fetch( "/submit", {
     method:"POST",
-    body 
-  })
+    body: JSON.stringify(json)
+  });
 
-  const text = await response.text()
-
-  console.log( "text:", text )
-}
-
-window.onload = function() {
-   const button = document.querySelector("button");
-  button.onclick = submit;
+  const text = await response.text();
+  console.log( "text:", text );
 }

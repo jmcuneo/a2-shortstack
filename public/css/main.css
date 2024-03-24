@@ -16,18 +16,22 @@ input{
   text-align: left;
 }
 
-button{
-  display: block;
+.submit{
+  left:45%;
+  -ms-transform: translate(50%, 50%);
+  transform: translate(50%, 50%);
+  position: absolute;
   background: rgba(255, 0, 0, 0.89);
   color: white;
   margin-top: 25px;
-  margin-left: 50px;
+  align-self: center;
   padding-top: 5px;
   padding-bottom: 5px;
   padding-left: 20px;
   padding-right: 20px;
   border-radius: 10px;
-  font-family: Outfit
+  font-family: "Outfit", sans-serif;
+  font-size: 20px;
 }
 .libre-franklin-body-text{
   font-family: "Libre Franklin", sans-serif;
@@ -38,7 +42,7 @@ button{
 .outfit-header-font{
   font-family: "Outfit", sans-serif;
   font-optical-sizing: auto;
-  font-size: 20px;
+  font-size: 40px;
   font-weight: bold;
   text-decoration: black;
   font-style: normal;
