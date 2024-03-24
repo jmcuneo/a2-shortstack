@@ -4,15 +4,41 @@
     <title>CS4241 Assignment 2</title>
     <meta charset="utf-8">
     <script src="js/main.js"></script>
+    <link rel = "stylesheet" href = "https://fonts.googleapis.com/css?family=BioRhyme">
     <link rel="stylesheet" href="css/main.css">
     
     <!-- get rid of favicon error -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
-  <body>
+  <body><br />
+    <div class = "background">
+    <div class = "text_background">
     <form>
-      <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
+      <input type="text" id="add_part" value="Name of Part">
+      <input type="text" id="add_material" value="Material">
+      <input type="text" id="add_quantity" value = "Quantity">
+      <input type="text" id="add_weight" value="Weight per Unit">
+      <button id = "add_button">Add/Modify Part</button>
+    </form><br />
+    <table id = "part_table">
+      <tr>
+       <th>Part Name</th>
+       <th>Material</th>
+       <th>Quantity</th>
+       <th>Weight</th>
+      <tbody id = "table_body"></tbody>
+      </tr>
+    </table><br />
+    <form>
+      <input type="text" id="remove_part" value="Part name to remove">
+      <button id = "remove_button">Remove Part</button>
     </form>
+    
+  </div>
+  <div class = "image_background">
+    <img id = "trex_img" src =  "trex.png">
+    <img id = "trex_img" src =  "trex_built.png">
+  </div>
+</div>
   </body>
 </html>
