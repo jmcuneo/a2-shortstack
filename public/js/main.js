@@ -13,6 +13,7 @@ const submit = async function( event ) {
       Email = document.querySelector( "#Email" ),
       StartLocation = document.querySelector( "#StartLocation" ),
       Destination = document.querySelector( "#Destination" ),
+      Transport =document.querySelector("#transport-mode")
       json = {
         FirstName: FirstName.value,
         MiddleName: MiddleName.value,
@@ -20,14 +21,20 @@ const submit = async function( event ) {
         Email: Email.value,
         StartLocation: StartLocation.value,
         Destination: Destination.value,
+        Transport: Transport.value,
       },
         body = JSON.stringify( json )
+    console.log(body);
 
   const response = await fetch( "/submit", {
     method:"POST",
-    body: JSON.stringify(json)
+    body
   });
 
   const text = await response.text();
-  console.log( "text:", text );
+  console.log( "text:" + JSON.parse(text) );
+}
+window.onload = function() {
+    const button = document.querySelector("#Submit");
+    button.onclick = submit;
 }
