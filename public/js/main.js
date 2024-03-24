@@ -11,7 +11,7 @@ const updatePrevious = function() {
     const cellIndex = document.createElement('td')    //create index column
     cellIndex.textContent = (index + 1)             //increment
     const cellResult = document.createElement('td')   //create result column
-    cellResult.textContent = "Result: " + result      //append the result to the html element
+    cellResult.textContent = result      //append the result to the html element
     row.appendChild(cellIndex)                        //add the index to the current row
     row.appendChild(cellResult)                       //add the result to the current column
     tbody.appendChild(row)                            //add row to the table
@@ -20,7 +20,7 @@ const updatePrevious = function() {
 
 // Function to add result to the previous results table
 const addResultToPrevious = function(result) {
-  previousResults.push(result);    // Add the result to the beginning of the array
+  previousResults.push(result.toFixed(2));    // Add the result to the beginning of the array
   if (previousResults.length > 50) {      //limit array length to 50 prevoius entries
     previousResults.pop();      //Remove the oldest result if 50 is reached
   }

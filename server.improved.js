@@ -43,7 +43,7 @@ const handlePost = function( request, response ) {
     num2 = parseFloat(clientData.num2)        //extracting the second number from clientData
 
     if(operation === "addition"){   //add functionality
-      const result = num1 + num2    //add the two imputted numbers together
+      const result = (num1 + num2).toFixed(2)    //add the two imputted numbers together
 
       const responseData = { result: result }
       response.writeHead(200, { 'Content-Type': 'application/json' })
@@ -51,21 +51,21 @@ const handlePost = function( request, response ) {
     }
     
       else if(operation === "subtract"){   //subtraction functionality
-      const result = num1 - num2    //subtract the two imputted numbers together
+      const result = (num1 - num2).toFixed(2)    //subtract the two imputted numbers together
 
       const responseData = { result: result }
       response.writeHead(200, { 'Content-Type': 'application/json' })
       response.end(JSON.stringify(responseData))
     }
       else if(operation === "multiply"){   //multiplication functionality
-      const result = num1 * num2    //multiply the two imputted numbers together
+      const result = (num1 * num2).toFixed(2)    //multiply the two imputted numbers together
 
       const responseData = { result: result }
       response.writeHead(200, { 'Content-Type': 'application/json' })
       response.end(JSON.stringify(responseData))
     }
       else  if(operation === "divide"){   //division functionality
-      const result = num1 / num2    //divide the two imputted numbers together
+      const result = (num1 / num2).toFixed(2)    //divide the two imputted numbers together
 
       const responseData = { result: result }
       response.writeHead(200, { 'Content-Type': 'application/json' })
