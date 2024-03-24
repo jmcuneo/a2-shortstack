@@ -6,13 +6,16 @@ const http = require( "http" ),
       // file.
       mime = require( "mime" ),
       dir  = "public/",
-      port = 3000
+      port = 3000;
+const EDIT_DELAY = 1000 * 60; // 60 second delay before editing again
 
-const appdata = [
-  { "model": "toyota", "year": 1999, "mpg": 23 },
-  { "model": "honda", "year": 2004, "mpg": 30 },
-  { "model": "ford", "year": 1987, "mpg": 14} 
-]
+let colors = [];
+for(let k = 0; k < 100; k++) {
+  colors.push("#FFFFFF");
+}
+
+let recentList = [];
+let countdown = [];
 
 const server = http.createServer( function( request,response ) {
   if( request.method === "GET" ) {
@@ -27,7 +30,10 @@ const handleGet = function( request, response ) {
 
   if( request.url === "/" ) {
     sendFile( response, "public/index.html" )
-  }else{
+  } else if (request.url === "/readGrid") {
+    response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
+    response.end(JSON.stringify({colors: colors, recent: recentList }));
+  } else {
     sendFile( response, filename )
   }
 }
@@ -40,13 +46,45 @@ const handlePost = function( request, response ) {
   })
 
   request.on( "end", function() {
-    console.log( JSON.parse( dataString ) )
+    const userData = JSON.parse(dataString);
 
-    // ... do something with the data here!!!
+    if(!userData.color.match("^#[0-9a-f]{6}$") || userData.name === "" || userData.name.match("\\s+") || userData.x < 0 || userData.x >= 10 || userData.y < 0 || userData.y >= 10) {
+      response.writeHead( 200, "OK", { "Content-Type": "text/plain" });
+      response.end(JSON.stringify({ result: "invalid"}));
+      return;
+    }
 
-    response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
-    response.end("test")
+    cleanCountdown(); // Ensures that only values are ones that cannot edit
+    const search = countdown.find(u => u.name === userData.name);
+    const readTime = new Date();
+    if(search) {
+      response.writeHead( 200, "OK", { "Content-Type": "text/plain" });
+      response.end(JSON.stringify({ result: "deny", extra: EDIT_DELAY - (readTime.getTime() - search.lastSubmitted.getTime()) }));
+      return;
+    }
+
+    const coord = { x: userData.x, y: userData.y };
+
+    countdown.push({ name: userData.name, lastSubmitted: readTime });
+    recentList.push({ name: userData.name, lastSubmitted: readTime, color: userData.color, coord: coord });
+    while(recentList.length > 20) {
+      recentList.shift();
+    }
+
+    colors[coord.x * 10 + coord.y] = userData.color;
+
+    response.writeHead( 200, "OK", { "Content-Type": "text/plain" });
+    response.end(JSON.stringify({ result: "accept"}));
   })
+}
+
+function cleanCountdown() {
+  const readTime = new Date();
+  for(let i = countdown.length - 1; i >= 0; i--) {
+    if(readTime.getTime() - countdown[i].lastSubmitted.getTime() >= EDIT_DELAY) {
+      countdown.splice(i);
+    }
+  }
 }
 
 const sendFile = function( response, filename ) {
@@ -56,12 +94,10 @@ const sendFile = function( response, filename ) {
 
      // if the error = null, then we"ve loaded the file successfully
      if( err === null ) {
-
        // status code: https://httpstatuses.com
        response.writeHeader( 200, { "Content-Type": type })
        response.end( content )
-
-     }else{
+     } else {
 
        // file not found, error code 404
        response.writeHeader( 404 )
@@ -71,4 +107,4 @@ const sendFile = function( response, filename ) {
    })
 }
 
-server.listen( process.env.PORT || port )
+server.listen( process.env.PORT || port );
