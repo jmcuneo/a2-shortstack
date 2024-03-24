@@ -8,11 +8,7 @@ const http = require( "http" ),
       dir  = "public/",
       port = 3000
 
-const appdata = [
-  { "model": "toyota", "year": 1999, "mpg": 23 },
-  { "model": "honda", "year": 2004, "mpg": 30 },
-  { "model": "ford", "year": 1987, "mpg": 14} 
-]
+const appdata = []
 
 const server = http.createServer( function( request,response ) {
   if( request.method === "GET" ) {
@@ -33,19 +29,22 @@ const handleGet = function( request, response ) {
 }
 
 const handlePost = function( request, response ) {
+  console.log("POSTING");
   let dataString = ""
 
   request.on( "data", function( data ) {
       dataString += data 
   })
 
-  request.on( "end", function() {
-    console.log( JSON.parse( dataString ) )
-
-    // ... do something with the data here!!!
-
+  request.on( "end", function( ) {
+    console.log( JSON.parse( dataString ) );
+    const finalData = JSON.parse( dataString ); 
+    //console.log("Length of appdata: ", appdata);
+    appdata.push(finalData);
+    
+    
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
-    response.end("test")
+    response.end(JSON.stringify(finalData))
   })
 }
 
