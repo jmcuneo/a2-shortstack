@@ -7,7 +7,8 @@ const http = require( "http" ),
       mime = require( "mime" ),
       dir  = "public/",
       port = 3000
-
+let details=[];
+let inputCost={};
 const server = http.createServer( function( request,response ) {
   if( request.method === "GET" ) {
     handleGet( request, response )
@@ -33,21 +34,44 @@ const handleGet = function( request, response ) {
 
 const handlePost = function( request, response ) {
   let dataString = ""
-  let countID=0
   request.on( "data", function( data ) {
       dataString += data
   })
 
   request.on( "end", function() {
     console.log( JSON.parse( dataString ) )
-
-    // ... do something with the data here!!!
-
+    inputCost=JSON.parse(dataString)
+    inputCost.cost=cost(inputCost.Transport);
+    details.push(inputCost)
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
-    response.end(JSON.stringify("test"))
+    response.end(JSON.stringify(details))
   })
 }
+const handlePut = function( request, response ) {
+    let dataString = ""
+    let countID=0
+    request.on( "data", function( data ) {
+        dataString += data
+    })
 
+    request.on( "end", function() {
+        console.log( JSON.parse( dataString ) )
+        let inputCost=JSON.parse(dataString)
+        inputCost.cost=cost(inputCost.Transport);
+        details.push(inputCost)
+        response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
+        response.end(JSON.stringify(details))
+    })
+}
+const handleDelete = function(request, response){
+    let position =
+    details.splice()
+    inputCost.
+}
+function cost(Transport){
+
+    return 10;
+}
 const sendFile = function( response, filename ) {
    const type = mime.getType( filename )
 

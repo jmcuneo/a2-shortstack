@@ -32,8 +32,26 @@ const submit = async function( event ) {
   });
 
   const text = await response.text();
+  display(JSON.parse(text));
   console.log( "text:" + JSON.parse(text) );
 }
+function toDelete(){
+
+}
+function display(object){
+    let table = document.querySelector("#data_body");
+    let elements=""
+    table.innerHTML=""
+    for(let i=0; i<object.length;i++){
+        elements=`<td> ${i}</td><td> ${object[i].FirstName}</td> <td> ${object[i].MiddleName}</td>
+        <td> ${object[i].LastName}</td><td><td> ${object[i].Email}</td>
+         ${object[i].StartLocation}</td> <td> ${object[i].Destination}</td>
+         <td> ${object[i].Transport}</td><td> ${object[i].cost}</td>`
+        let entries = `<tr>${elements}</tr>`
+        table.innerHTML += entries;
+    }
+}
+
 window.onload = function() {
     const button = document.querySelector("#Submit");
     button.onclick = submit;
