@@ -23,11 +23,7 @@ const handleGet = function( request, response ) {
   if( request.url === "/" ) {
     sendFile( response, "public/index.html" )
   }
-    else if (request.url === '/getPreviousResults'){
-      response.writeHead(200, {'Content-Type': "application/json"})
-      response.end(JSON.stringify(appdata))
-    }
-    else {
+  else {
     sendFile( response, filename )
   }
 }
@@ -40,35 +36,45 @@ const handlePost = function( request, response ) {
   })
 
   request.on( "end", function() {
-    //console.log( JSON.parse( dataString ) )
     const clientData = JSON.parse(dataString)
+    console.log(clientData)
 
-    if(clientData.operation === 'addition'){   //add functionality
-      const result = parseFloat(clientData.num1) + parseFloat(clientData.num2)    //add the two imputted numbers together
-      saveResult(result)    //record the reult to display to the user on the front end
+    const operation = clientData.operation,   //extracting the operation from clientData
+    num1 = parseFloat(clientData.num1),       //extracting the first number from clientData
+    num2 = parseFloat(clientData.num2)        //extracting the second number from clientData
+
+    if(operation === "addition"){   //add functionality
+      const result = num1 + num2    //add the two imputted numbers together
+
+      const responseData = { result: result }
       response.writeHead(200, { 'Content-Type': 'application/json' })
-      response.end(JSON.stringify({ result: result}))
+      response.end(JSON.stringify(responseData))
     }
-      else if(clientData.operation === 'subtract'){   //subtraction functionality
-        const result = parseFloat(clientData.num1) - parseFloat(clientData.num2)    //add the two imputted numbers together
-        saveResult(result)    //record the reult to display to the user on the front end
-        response.writeHead(200, { 'Content-Type': 'application/json' })
-        response.end(JSON.stringify({ result: result}))
-      }
-      else if(clientData.operation === 'multiply'){   //multiplication functionality
-        const result = parseFloat(clientData.num1) * parseFloat(clientData.num2)    //add the two imputted numbers together
-        saveResult(result)    //record the reult to display to the user on the front end
-        response.writeHead(200, { 'Content-Type': 'application/json' })
-        response.end(JSON.stringify({ result: result}))
-      }
-      else if(clientData.operation === 'divide'){   //division functionality
-        const result = parseFloat(clientData.num1) / parseFloat(clientData.num2)    //add the two imputted numbers together
-        saveResult(result)    //record the reult to display to the user on the front end
-        response.writeHead(200, { 'Content-Type': 'application/json' })
-        response.end(JSON.stringify({ result: result}))
-      }
+    
+      else if(operation === "subtract"){   //subtraction functionality
+      const result = num1 - num2    //subtract the two imputted numbers together
+
+      const responseData = { result: result }
+      response.writeHead(200, { 'Content-Type': 'application/json' })
+      response.end(JSON.stringify(responseData))
+    }
+      else if(operation === "multiply"){   //multiplication functionality
+      const result = num1 * num2    //multiply the two imputted numbers together
+
+      const responseData = { result: result }
+      response.writeHead(200, { 'Content-Type': 'application/json' })
+      response.end(JSON.stringify(responseData))
+    }
+      else  if(operation === "divide"){   //division functionality
+      const result = num1 / num2    //divide the two imputted numbers together
+
+      const responseData = { result: result }
+      response.writeHead(200, { 'Content-Type': 'application/json' })
+      response.end(JSON.stringify(responseData))
+    }
+      
       else{
-        response.writeHead(200, { 'Content-Type': 'text/plain' })
+        response.writeHead(400, { 'Content-Type': 'text/plain' })
         response.end('Error: Operation could not be completed')
     }
   })
@@ -97,9 +103,3 @@ const sendFile = function( response, filename ) {
 }
 
 server.listen( process.env.PORT || port )
-
-const saveResult = function(operation, result){
-
-  appdata.push({operation: operation, result: result})
-
-}

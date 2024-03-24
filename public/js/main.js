@@ -1,53 +1,24 @@
-// FRONT-END (CLIENT) JAVASCRIPT HERE.
-
-const submit = async function( event ) {
-  // stop form submission from trying to load
-  // a new .html page for displaying results...
-  // this was the original browser behavior and still
-  // remains to this day
-  event.preventDefault()
-  
-  const input = document.querySelector( "#yourname" ),
-        json = { yourname: input.value },
-        body = JSON.stringify( json )
-
-  const response = await fetch( "/submit", {
-    method: "POST",
-    body: body 
-  })
-
-  const text = await response.text()
-
-  console.log( "text: ", text )
-}
-
-const addition = async function( event ) {
+//addition function
+const addition = async function( event ) {    //addition function 
   event.preventDefault()
 
-  const num1 = document.querySelector('#num1').value,
-  num2 = document.querySelector('#num2').value,
-  json = { operation: 'addition', num1: num1, num2: num2},
-  body = JSON.stringify( json )
+  const num1 = document.querySelector('#num1').value,     //get num1 from the first input box
+  num2 = document.querySelector('#num2').value,           //get num2 from the second input box
+  json = { operation: 'addition', num1: num1, num2: num2},      //define the payload
+  body = JSON.stringify( json )                                 //stringify payload
 
   const response = await fetch( "/addition", {
-    method: "POST",
-    body: body 
+    method: "POST",       //post method
+    body: body
   })
 
-  console.log(response)
-
-  parsedData = JSON.parse(response.body)
-  const name = parsedData
-  //const result = document.querySelector('#result')
-  result.textContent = "Result: " + name
-  
-  console.log(name)
-
-  //getSavedResults()
-
+  const responseData = await response.json(); // Get the response
+  const resultElement = document.querySelector('#result');        //define the result element on the screen
+  resultElement.textContent = "Result: " + JSON.stringify(responseData.result);     //assign the client side element to the result from the response
 }
 
-const subtract = async function( event ) {
+//subtraction function
+const subtract = async function( event ) {        
   event.preventDefault()
 
   const num1 = document.querySelector('#num1').value,
@@ -60,15 +31,13 @@ const subtract = async function( event ) {
     body: body 
   })
 
-  const data = await response.json()
-
-  const result = document.querySelector('#result')
-  result.textContent = "Result: " + data.result
-
-  getSavedResults()
+  const responseData = await response.json();
+  const resultElement = document.querySelector('#result');
+  resultElement.textContent = "Result: " + JSON.stringify(responseData.result); 
 
 }
 
+//multiplication function
 const multiply = async function( event ) {
   event.preventDefault()
 
@@ -82,15 +51,13 @@ const multiply = async function( event ) {
     body: body 
   })
 
-  const data = await response.json()
-
-  const result = document.querySelector('#result')
-  result.textContent = "Result: " + data.result
-
-  getSavedResults()
+  const responseData = await response.json(); // Get the response
+  const resultElement = document.querySelector('#result');
+  resultElement.textContent = "Result: " + JSON.stringify(responseData.result); // Use the plain text response
 
 }
 
+//division function
 const divide = async function( event ) {
   event.preventDefault()
 
@@ -104,41 +71,23 @@ const divide = async function( event ) {
     body: body 
   })
 
-  const data = await response.json()
-
-  const result = document.querySelector('#result')
-  result.textContent = "Result: " + data.result
-
-  getSavedResults()
+  const responseData = await response.json(); // Get the response
+  const resultElement = document.querySelector('#result');
+  resultElement.textContent = "Result: " + JSON.stringify(responseData.result); // Use the plain text response
 
 }
 
 window.onload = function() {
-  const addButton = document.querySelector("#addButton")
-  addButton.onclick = addition
+  const addButton = document.querySelector("#addButton")    //create an add button on the screen
+  addButton.onclick = addition                              //map the button to the addition function
 
-  const subtractButton = document.querySelector("#subtractButton")
-  subtractButton.onclick = subtract
+  const subtractButton = document.querySelector("#subtractButton")  //create an subtract button on the screen
+  subtractButton.onclick = subtract                                 //map the button to the subtraction function
 
-  const multiplyButton = document.querySelector("#multiplyButton")
-  multiplyButton.onclick = multiply
+  const multiplyButton = document.querySelector("#multiplyButton")    //create an multiply button on the screen
+  multiplyButton.onclick = multiply                                   //map the button to the multiplication function
 
-  const divideButton = document.querySelector("#divideButton")
-  divideButton.onclick = divide
+  const divideButton = document.querySelector("#divideButton")        //create an divide button on the screen
+  divideButton.onclick = divide                                       //map the button to the division function
 
-  getSavedResults()
-}
-
-const getSavedResults = async function() {
-  const response = await fetch('/getPreviousResults'),
-  results = await response.json();
-
-  const previousResults = document.querySelector('#previousResults')
-  previousResults.innerHTML = ""  //add space
-
-  results.forEach(function(item){
-    const li = document.createElement('li')
-    li.textContent = `Operation: ${item.operation}, Result: ${item.result}`;
-    previousResults.appendChild(li)
-  })
 }
