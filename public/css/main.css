@@ -1,6 +1,6 @@
 body {
   font-family: "Roboto", Arial, sans-serif;
-  background: #0288D1;
+  background: #0288d1;
   color: white;
   box-sizing: border-box;
 }
@@ -20,4 +20,20 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: center;
+}
+
+table {
+  border-collapse: collapse;
+  border: 2px solid black;
+  letter-spacing: 1px;
+}
+
+thead {
+  background-color: var(--main-color);
+}
+
+th,
+td {
+  border: 1px solid black;
+  padding: 8px 10px;
 }

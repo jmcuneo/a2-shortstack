@@ -11,7 +11,7 @@ const http = require("http"),
 // going to store data like this:
 // {task: <string>; created-on: <date>; due-by: <date>, is-most-urgent: <bool>}
 //is most urgent will be a derived field, and will signal to the client to highlight this one red. this will the the task with the closest due date to the current time
-const appdata = [{ "task": "hi" }, { "task": "i" }
+const appData = [
 ]
 
 const server = http.createServer(function (request, response) {
@@ -40,13 +40,32 @@ const handlePost = function (request, response) {
   })
 
   request.on("end", function () {
-    let taskName = JSON.parse(dataString)
-    
+    let taskObj = JSON.parse(dataString)
 
-    
+    const index = appData.findIndex(obj => obj.task === taskObj.task)
+
+    const newTaskObject = {
+      task: taskObj.task, creationDate: taskObj.creationDate, dueDate: taskObj.dueDate
+    }
+    if (index !== -1) {
+      appData[index] = newTaskObject
+    } else {
+      appData.push(newTaskObject)
+    }
+
+    //you can have a day change between computations and sends, so just computing directly before sending out
+    let appDataToSend = appData
+    appDataToSend.forEach(obj => {
+      const timeDiff = new Date(obj.dueDate) - new Date()
+      const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24))
+      // -0
+      obj.daysUntilDue = daysDiff + 0
+    })
+
+    console.log(appDataToSend)
 
     response.writeHead(200, "OK", { "Content-Type": "text/plain" })
-    response.end(JSON.stringify(appdata))
+    response.end(JSON.stringify(appDataToSend))
   })
 }
 
