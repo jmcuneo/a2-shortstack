@@ -16,6 +16,21 @@ form {
   max-width: 550px;
 }
 
+/*An element selector that allows me to use a websafe font for the input fields*/
+input {
+  font-family: "Madimi One", sans-serif;
+}
+
+/*An element selector that allows me to use a websafe font for the select fields*/
+select {
+  font-family: "Madimi One", sans-serif;
+}
+
+/*An element selector that allows me to use a websafe font for the button fields*/
+button {
+  font-family: "Madimi One", sans-serif;
+}
+
 /*A class selector that allows me to style (font size) the workout form label on the webpage*/
 .workout_form_label {
   font-size: 45px;
