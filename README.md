@@ -32,9 +32,9 @@ Task for them to complete: Input a weight that you can bench for x reps at y rpe
 
 #### User 1: Tom
 Problems: They are not sure which rep is currently selected. They assumed it is defaulted to 1.
-Comment: They like the basic color. They like how values are temporary and do not have to clear it before entering anything.
+Comment: They like the basic color. They like how values are temporary and do not have to clear it before entering anything.They like how the input is grouped into one container and the table in another. 
 Changes: I would make the selected button change color.
 #### User 2: MacNevin
-Problems: They are not sure which rep is currently selected. They assumed it is defaulted to 1.
-Comment: They like how the input is grouped into one container and the table in another.
-Changes: I would make the selected button change color.
+Problems: Should have a text to explain what RPE is and what the calculator might be used for.
+Comment: The UI is easy to understand and navigate and easy on the eyes.
+Changes: I would add a button to bring the user to an about page that explains what an RPE is and the purpose of an RPE calculator.
