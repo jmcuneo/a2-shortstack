@@ -5,6 +5,15 @@ body {
 h1{
   color: black;
 }
+button{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 10px;
+    font-family: "Outfit", sans-serif;
+    font-size: 20px;
+}
 input{
   display: inline-block;
   margin-top: 20px;
@@ -15,7 +24,30 @@ input{
   padding-right: 20px;
   text-align: left;
 }
+/** For table styling**/
+table{
+    margin-top: 100px;
+    margin-bottom: 50px;
+    width: 400px;
+}
+/** For table header styling**/
+th{
+    text-align: left;
+}
+/** For styling that should apply to table, table header, and table data cell**/
+table, th, td{
+    border: 3px solid black;
+    padding: 20px;
 
+}
+/** To apply styling to even table rows**/
+tr:nth-child(even){
+    background: greenyellow;
+}
+/** To apply styling to odd table rows**/
+tr:nth-child(odd){
+    background: burlywood;
+}
 .submit{
   left:45%;
   -ms-transform: translate(50%, 50%);
@@ -25,13 +57,6 @@ input{
   color: white;
   margin-top: 25px;
   align-self: center;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  padding-left: 20px;
-  padding-right: 20px;
-  border-radius: 10px;
-  font-family: "Outfit", sans-serif;
-  font-size: 20px;
 }
 .libre-franklin-body-text{
   font-family: "Libre Franklin", sans-serif;
