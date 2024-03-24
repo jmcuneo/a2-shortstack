@@ -1,18 +1,38 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <title>CS4241 Assignment 2</title>
-    <meta charset="utf-8">
-    <script src="js/main.js"></script>
-    <link rel="stylesheet" href="css/main.css">
-    
-    <!-- get rid of favicon error -->
-    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
-  </head>
-  <body>
-    <form>
-      <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
-    </form>
+    <head>
+        <title>CS4241 Assignment 2</title>
+        <meta charset="utf-8">
+        <script src="js/main.js"></script>
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div class="sidebar">
+            <div class="sidebar-entry" style="display: flex" id="make-workout">
+                <img src="assets/write.svg" style="height: 24px; margin: 0px 10px 0px 5px"/>
+                New List
+            </div>
+            <div class="sidebar-entry" id="view-workout">View Workouts</div>
+            <div style="border-bottom: 1px solid white"></div>
+            <div id="workout-list" style="display: flex; flex-direction: column">
+                <div>a</div>
+                <div>b</div>
+            </div>
+        </div>
+        <div class="window" id="make-workout-window" style="display: flex">
+            <form style="user-select: none; display: flex; flex-direction: column; gap: 20px; padding: 20px">
+                Title
+                <input id="title" class="form-title-entry" placeholder="Workout Name"/>
+                Description
+                <textarea id="description" class="form-description-entry" placeholder="Workout Description"></textarea>
+                <button id="submit-button" class="add-button">Log Workout</button>
+            </form>
+        </div>
+        <div class="window" id="view-workout-window" style="display: none">
+            All Workouts
+        </div>
   </body>
 </html>

@@ -13,7 +13,7 @@ const appdata = [
   { "model": "honda", "year": 2004, "mpg": 30 },
   { "model": "ford", "year": 1987, "mpg": 14} 
 ]
-
+// Create a server
 const server = http.createServer( function( request,response ) {
   if( request.method === "GET" ) {
     handleGet( request, response )    
@@ -23,8 +23,7 @@ const server = http.createServer( function( request,response ) {
 })
 
 const handleGet = function( request, response ) {
-  const filename = dir + request.url.slice( 1 ) 
-
+  const filename = dir + request.url.slice( 1 )
   if( request.url === "/" ) {
     sendFile( response, "public/index.html" )
   }else{
@@ -34,16 +33,14 @@ const handleGet = function( request, response ) {
 
 const handlePost = function( request, response ) {
   let dataString = ""
-
+  // every time you get a new packet of data, appened data
   request.on( "data", function( data ) {
       dataString += data 
   })
-
+  // once you get an "end packet" or end of data stream, do something with it
   request.on( "end", function() {
     console.log( JSON.parse( dataString ) )
-
     // ... do something with the data here!!!
-
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
     response.end("test")
   })
