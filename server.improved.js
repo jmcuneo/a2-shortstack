@@ -197,11 +197,11 @@ const deleteData = function( jsonData ){
   console.log("deleting based on jsondata ", jsonData )
   let myDataJSON = JSON.parse( jsonData )
   const deleteName = myDataJSON.deleteName;
-  const deleteClass = myDataJSON.deleteClass;
+  const deleteRace = myDataJSON.deleteRace;
 
   for (let i = 0; i < appdata.length; i++) {
     // Check if the current object's name and race match the provided values
-    if (appdata[i].name === deleteName && appdata[i].race === deleteClass) {
+    if (appdata[i].name === deleteName && appdata[i].race === deleteRace) {
       // Remove the object from the array
       appdata.splice(i, 1);
       // Break out of the loop since we've found and removed the entry

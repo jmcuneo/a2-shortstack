@@ -1,6 +1,6 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 let editOriginalName
-let editOriginalClass
+let editOriginalRace
 const submit = async function( event ) {
   // stop form submission from trying to load
   // a new .html page for displaying results...
@@ -33,13 +33,13 @@ const submit = async function( event ) {
   await loadTable()
 }
 
-const deleteEntry = async function (deleteName, deleteClass){
+const deleteEntry = async function (deleteName, deleteRace){
 
-    console.log("delete entry: ", deleteName, deleteClass)
+    console.log("delete entry: ", deleteName, deleteRace)
 
     const json = {
         "deleteName": deleteName,
-        "deleteClass": deleteClass
+        "deleteRace": deleteRace
     }
 
     const body = JSON.stringify(json)
@@ -53,6 +53,17 @@ const deleteEntry = async function (deleteName, deleteClass){
     await loadTable()
 }
 
+const save = async function( event ){
+    event.preventDefault();
+
+    console.log("global var values: ", editOriginalName, editOriginalRace)
+
+    await deleteEntry(editOriginalName, editOriginalRace);
+
+    await saveEdit(event)
+}
+
+
 const editEntry = function (editName, editRace, editClass, editMod, editAction){
     console.log("edit data for ", editName)
     document.getElementById("editForm").style.display = 'block';
@@ -62,14 +73,13 @@ const editEntry = function (editName, editRace, editClass, editMod, editAction){
     document.getElementById("editmodifier").value = editMod;
     document.getElementById("editaction").value = editAction;
     editOriginalName = editName;
-    editOriginalClass = editClass;
+    editOriginalRace = editRace;
 }
 
 const saveEdit = async function ( event ){
     event.preventDefault()
-    console.log("saving edit, deleting ", editOriginalName, editOriginalClass)
+    console.log("saving edit, deleting ", editOriginalName, editOriginalRace)
 
-    await deleteEntry(editOriginalName, editOriginalClass);
 
     const charname = document.querySelector( "#editname" ),
         charrace = document.querySelector( "#editrace" ),
@@ -102,7 +112,7 @@ const cancel = function ( event ){
     document.getElementById("editmodifier").value = "";
     document.getElementById("editaction").value = "";
 
-    editOriginalClass = ""
+    editOriginalRace = ""
     editOriginalName = ""
 
 }
@@ -183,6 +193,6 @@ window.onload = function() {
    const submitbutton = document.querySelector("#submitbutton");
     submitbutton.onclick = submit;
     document.querySelector("#cancelbutton").onclick = cancel;
-    document.querySelector("#savebutton").onclick = saveEdit;
+    document.querySelector("#savebutton").onclick = save;
     loadTable();
 }
