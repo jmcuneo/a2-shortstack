@@ -2,6 +2,7 @@ Assignment 2 - Short Stack: Basic Two-tier Web Application using HTML/CSS/JS and
 ===
 ## What To Bring
 Nora Cleary http://a2-noracleary.glitch.me
+
 This application allows people to coordinate their contributions to an event. If I am hosting a dinner for my friends, I could send them this link and they would add what they plan to bring to dinner. Their name is added to the guest list, and if they bring more than one item, their name only appears on the guest list once (You must differentiate names if you share a name!)
 I used a CSS flexbox to style the page. 
 
