@@ -1,7 +1,7 @@
 ## To Not-Do List
 User manages a list of tasks they don't want to do. User can add/edit/delete tasks.
 
-https://to-not-do-list.glitch.me/
+https://a2-gabrielshiu.glitch.me/
 
 Used flexboxes to center and space elements.
 
