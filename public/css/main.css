@@ -20,6 +20,10 @@ input {
 input[type="submit"] {
   border-color: #000000;
   border-style: solid;
+  transition: 0.3s linear filter;
+}
+input[type="submit"]:hover {
+  filter: invert(20%);
 }
 
 h1, h2, h3, h4, h5, h6 {
