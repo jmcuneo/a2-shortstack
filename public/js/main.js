@@ -1,21 +1,28 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
-let appdata = []
-function generateTable(data){
-  console.log(data[0].make);
+
+
+let appdata = [
+
+]
+let averageData ={
+  
+}
+function generateTable(data, flag){
   let table = "";
   table = '<table>';
-  table += '<tr><th>Make</th><th>Model</th><th>Year</th><th>MPG</th><th>Gs</th><th>accel</th></tr>';
-  data.forEach(item => {
-    table += `<tr><td>${item.make}</td><td>${item.model}</td><td>${item.year}</td><td>${item.mpg}</td><td>${item.lateralGs}</td><td>${item.accel}</td></tr>`
-  })
+  if(!flag){
+    table += '<tr><th>Make</th><th>Model</th><th>Year</th><th>MPG</th><th>Gs</th><th>accel</th></tr>';
+    data.forEach(item => {
+        table += `<tr><td>${item.make}</td><td>${item.model}</td><td>${item.year}</td><td>${item.mpg}</td><td>${item.lateralGs}</td><td>${item.accel}</td></tr>`;
+    })
+  } else{
+    table += '<tr><th>Avg Make Len</th><th>Avg Model Len</th><th>Avg Year</th><th>Avg MPG</th><th>Avg Gs</th><th>Avg accel</th></tr>';
+    table += `<tr><td>${data.avgMake}</td><td>${data.avgMake}</td><td>${data.avgYear}</td><td>${data.avgMpg}</td><td>${data.avgLateralGs}</td><td>${data.avgAccel}</td></tr>`
+  }
+  
   table += '</table>';
   return table;
 }
-const destroyFast = container => {
-  const el = document.getElementById(container);
-  while (el.firstChild) el.removeChild(el.firstChild);
-};
-
 const parseData = {
   toFloat: function(data){
     let ret = {
@@ -28,7 +35,7 @@ const parseData = {
   }
 }
 
-const submit = async function( event ) {
+const submit = async function( event, endpoint) {
   // stop form submission from trying to load
   // a new .html page for displaying results...
   // this was the original browser behavior and still
@@ -39,11 +46,11 @@ const submit = async function( event ) {
   let values = Object.fromEntries(input.entries());
   values = parseData.toFloat(values);
   console.log(values);
-  if(!isNaN(values.make)){
+  if(!isNaN(values.make)||typeof values.make !== "string" || typeof values.model !== "string" ){
     return;
   }
   body = JSON.stringify(values);
-  const response = await fetch( "/submit", {
+  const response = await fetch( endpoint, {
     method:"POST",
     body 
   })
@@ -54,7 +61,7 @@ const submit = async function( event ) {
 }
 
 const getData = async function(event){
-  event.preventDefault();
+  
   let response = await fetch("/get-app-data")
     .then(response => {
       if(!response.ok){
@@ -63,10 +70,14 @@ const getData = async function(event){
       return response.json();
     })
     .then(data => {
-      appdata =data;
+      appdata =data[0];
+      averageData = data[1];
       const tableContainer = document.getElementById('data');
       tableContainer.innerHTML = "";
-      tableContainer.innerHTML = generateTable(appdata);  
+      tableContainer.innerHTML = generateTable(appdata);
+      const avgTableContainer = document.getElementById('avgData');
+      avgTableContainer.innerHTML = "";
+      avgTableContainer.innerHTML = generateTable(averageData, 1);
       console.log('data', data);
     })
     .catch(error => {
@@ -77,9 +88,9 @@ const getData = async function(event){
 
 
 window.onload = function() {
+  getData(null)
   const submitButton = document.querySelector("#submit");
-  submitButton.onclick = submit;
-  const fetchButton = document.querySelector("#fetch");
-  fetchButton.onclick = getData;
-
+  submitButton.onclick = () => submit(event, "/submit").finally(getData);
+  const deleteButton = document.querySelector("#delete");
+  deleteButton.onclick = () => submit(event, "/delete").finally(getData);
 }

@@ -1,8 +1,8 @@
 {
-  "name": "",
-  "version": "",
-  "description": "",
-  "author": "",
+  "name": "CAR INFORMATION WEBSITE.NET.COM.ORG",
+  "version": "1.0",
+  "description": "basic means of tracking a few metrics on cars",
+  "author": "Ivy Bixler",
   "scripts": {
     "start": "node server.improved.js"
   },

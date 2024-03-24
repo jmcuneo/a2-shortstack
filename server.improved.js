@@ -11,15 +11,38 @@ const http = require( "http" ),
 
 
 let data ={
+  keys: ["make", "model", "year", "mpg","lateralGs", "accel"],
   mainData: [
     { "make": "toyota", "model": "corolla", "year": 1999, "mpg": 23, "lateralGs": .7, "accel": 12.0 },
     { "make": "honda", "model": "civic", "year": 2004, "mpg": 30, "lateralGs": .7, "accel": 12.0},
     { "make": "ford", "model": "taurus", "year": 1987, "mpg": 14, "lateralGs": .7, "accel": 12.0}
   ],
   averageData: {
-    "avgMakeLen": 0, "avgModelLen": 0, "avgYear": 0, "avgMpg": 0, "agvGs": 0, "avgAccel": 0 
+    "avgMake": 0, "avgModel": 0, "avgYear": 0, "avgMpg": 0, "avgLateralGs": 0, "avgAccel": 0 
   },
-  exists: (arr, update) => arr.find(({make, model, year}) => make === update.make.toLowerCase() && model === update.model.toLowerCase() && year == update.year)
+  exists: (arr, update) => arr.find(({make, model, year}) => make === update.make.toLowerCase() && model === update.model.toLowerCase() && year == update.year),
+  delete: (arr, update) => {
+    const index = arr.findIndex(({make, model, year}) =>  make === update.make.toLowerCase() && model === update.model.toLowerCase() && year == update.year)
+    index > -1 ? arr.splice(index, 1) : console.log("nope");
+  },
+  //average: (arr, obj) => arr.reduce((sum, currentVal) => sum + currentVal[obj], 0)/ arr.length,
+  average: (arr, obj) => arr.reduce((sum, currentVal) => sum + (typeof currentVal[obj] === "string" ? currentVal[obj].length : currentVal[obj]), 0)/ arr.length,
+  helper: (str) =>  "avg" + str.substring(0,1).toUpperCase() + str.slice(1),
+  mainAvg: (self) => {
+    console.log(self.keys)
+    if(self.keys){
+      self.keys.forEach(index => {
+        console.log(index)
+        self.averageData[self.helper(index)] = self.average(self.mainData, index);
+      });
+      
+    } else {
+      Object.keys(self.averageData).forEach((index)=>index=0)
+      console.log("hi");
+    }
+  },
+
+
 }
 
 /* const parseFloats = {
@@ -56,7 +79,8 @@ const handleGet = function( request, response ) {
       sendFile( response, "public/index.html" );
       break;
     case "/get-app-data":
-      fs.writeFile('public/app-data.json', JSON.stringify(data.mainData), (error) => {
+      data.mainAvg(data);
+      fs.writeFile('public/app-data.json', JSON.stringify([data.mainData, data.averageData]), (error) => {
         if (error) throw error;
       });
       sendFile(response, "public/app-data.json");
@@ -84,18 +108,34 @@ const handlePost = function( request, response ) {
     //console.log(parseFloats.convertData([JSON.parse( dataString )]));
     //appdata.concat(parseFloats.convertData([JSON.parse( dataString )]));
     dataString = JSON.parse(dataString);
-    update = data.exists(data.mainData, dataString);
-    if(update){
-      update.mpg = dataString.mpg;
-      update.lateralGs = dataString.lateralGs;
-      update.accel = dataString.accel;
-      console.log("hey it exists \n",update);
-    }else {
-      data.mainData =  data.mainData.concat(dataString);
+    let update;
+    switch(request.url){
+      case "/submit":
+        update = data.exists(data.mainData, dataString);
+        if(update){
+          update.mpg = dataString.mpg;
+          update.lateralGs = dataString.lateralGs;
+          update.accel = dataString.accel;
+          console.log("hey it exists \n",update);
+        }else {
+          data.mainData =  data.mainData.concat(dataString);
+        }
+        console.log(JSON.stringify(data.mainData))
+        break;
+      case "/delete":
+        const test = (update) => data.mainData.findIndex(({make, model, year}) =>  make === update.make.toLowerCase() && model === update.model.toLowerCase() && year == update.year)
+        console.log(test(dataString))
+        update = data.delete(data.mainData, dataString);
+        break;
+      default:
+        console.log("damn!");
+        break;
+        
     }
-    console.log(JSON.stringify(data.mainData))
-    // ... do something with the data here!!!
-
+      
+      // ... do something with the data here!!!
+    data.mainAvg(data);
+    console.log(data.averageData);
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
     response.end("test")
   })
