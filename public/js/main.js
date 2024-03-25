@@ -83,7 +83,12 @@ async function editData(event) {
 
 // Get the results of stored data from the server
 async function getResults(event) {
-  event.preventDefault();
+  try {
+    event.preventDefault();
+  }
+  catch (error) {
+    //console.log("No event");
+  }
   const response = await fetch("/data.json", {
     method: "GET"
   });
@@ -153,4 +158,5 @@ window.onload = function() {
       editData(event);
     }
   });
+  getResults();
 }
