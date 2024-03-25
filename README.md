@@ -8,9 +8,10 @@ For styling I used CSS flexboxes and a variety of selectors as outlined in the a
 
 ## Technical Achievements
 - **Single-Page App**: Both the form for adding new tasks and the to-do list (the "results" of the form) are displayed side-by-side using CSS flexboxes. The to-do list automatically updates after a submission to the form is made (the user doesn't have to refresh the page).
+- **Error Checking**: The user is alerted if they try to create a task without the name or full due date filled out, and the task is not sent to the server. This was a little tricky since I had to figure out how to determine if all the fields had been left blank in the form. I originally spent some time trying to use "required" tags along with an input with type="submit" to achieve this, but I was having trouble getting that to work so I ended up doing basically the same thing manually using JavaScript.
 
-### Design/Evaluation Achievements
-- **Customizable Task Coloring**: The color a user selects for a task is reflected in the styling of it's row, which was a little tricky to get properly working.
+### Design Achievements
+- **Customizable Task Coloring**: The color a user selects for a task is reflected in the styling of it's row, which was a little difficult to get properly working.
 - **Sound Effects!**: Little sound effects play when you add or remove a task. Isn't that neat! I'd never used audio in JavaScript before so I had to learn a little bit about that to get this working.
     - Attributions: 
         - click by 1bob -- https://freesound.org/s/717365/ -- License: Creative Commons 0

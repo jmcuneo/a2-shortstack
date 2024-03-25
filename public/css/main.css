@@ -5,7 +5,7 @@
 
 body {
   font-family: Nunito, Arial, Helvetica, sans-serif;
-  background:#52473f;
+  background:#2b2b2b;
   color:white;
   display: flex;
   align-items: center;
@@ -41,12 +41,47 @@ form {
   flex-direction: column;
 }
 
-button {
-  margin: 10px;
+#form-input-container {
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 label {
-  margin-left: 5px;
+  margin-left: 10px;
+}
+
+input  {
+  border-style: none;
+  background-color: transparent;
+  font-family: Nunito, Arial, Helvetica, sans-serif;
+  color: white;
+  font-size: 1rem;
+}
+
+#task-name:hover, #task-date:hover, #task-name:focus, #task-date:focus {
+  border-bottom: 1px solid white;
+}
+
+#task-color:hover {
+  border: 1px solid white;
+  background-color: dimgray;
+}
+
+button {
+  margin: 10px;
+  border: none;
+  background-color: black;
+  font-family: Nunito, Arial, Helvetica, sans-serif;
+  color: white;
+  font-size: 1rem;
+  border-radius: 4px;
+}
+
+button:hover {
+  cursor: pointer;
+  background-color: dimgray;
 }
 
 

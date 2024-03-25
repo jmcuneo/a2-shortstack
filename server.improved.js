@@ -56,7 +56,6 @@ const handlePost = function( request, response ) {
   })
 
   request.on( "end", function() {
-    // console.log( "received: ", JSON.parse( dataString ) )
     let dataReceived = JSON.parse(dataString); // convert string received to JSON object
 
     let data = {
@@ -68,8 +67,6 @@ const handlePost = function( request, response ) {
     appdata.push(data); // store data received in the server
 
     assignItemPriorities(); // server-side calculation performed here
-
-    // console.log("storage", appdata)
 
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
     response.end("test")
@@ -84,7 +81,6 @@ const handleDelete = function( request, response ) {
   })
 
   request.on( "end", function() {
-    // console.log( "received: ", dataString)
     data = parseInt(dataString); // convert string received to JSON object
     appdata.splice(data, 1); // remove 1 item at the index specified in the response body
     assignItemPriorities();

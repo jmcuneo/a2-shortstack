@@ -9,25 +9,39 @@ const submit = async function (event) {
   // remains to this day
   event.preventDefault()
 
-  let click = new Audio("add.mp3");
-  click.play();
+  // making sure no inputs were left blank
+  let inputs = document.querySelectorAll("input");
+  let foundEmpty = false;
+  for(let i = 0; i < inputs.length; i++) {
+    if(inputs[i].value.length < 1) {
+      foundEmpty = true;
+    }
+  }
 
-  const nameInput = document.querySelector("#task-name"),
-    dateInput = document.querySelector("#task-date"),
-    colorInput = document.querySelector("#task-color"),
-    json = {
-      name: nameInput.value,
-      date: dateInput.value,
-      color: colorInput.value
-    },
-    body = JSON.stringify(json)
+  if(foundEmpty) {
+      alert("You must give the task a name and complete due date");
+  }
+  else{
+      let click = new Audio("add.mp3");
+      click.play();
 
-  const response = await fetch("/submit", {
-    method: "POST",
-    body
-  })
-
-  syncClientData();
+      const nameInput = document.querySelector("#task-name"),
+      dateInput = document.querySelector("#task-date"),
+      colorInput = document.querySelector("#task-color"),
+      json = {
+        name: nameInput.value,
+        date: dateInput.value,
+        color: colorInput.value
+      },
+      body = JSON.stringify(json)
+  
+    const response = await fetch("/submit", {
+      method: "POST",
+      body
+    })
+  
+    syncClientData();
+  }
 }
 
 // syncs client data with the JSON data from the server
@@ -98,7 +112,7 @@ const constructTable = function () {
 
 window.onload = function () {
   // set up submit button functionality
-  const button = document.querySelector("button");
+  const button = document.querySelector("#submit-button");
   button.onclick = submit;
 
   // get data from server and populate table
