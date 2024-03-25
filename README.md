@@ -1,7 +1,7 @@
 
 ---
 
-## Your Web Application Title
+## Text Combiner Application
 My website is very simple. I simply have two input boxes which take in any string. Upon clicking the "Combine!" button, the two strings are concatenated together with an added ' ' between them. The number of combined characters are then counted and logged as well. These two things, as well as the entry number, are then reported out in a table format.
 
 ## Technical Achievements
