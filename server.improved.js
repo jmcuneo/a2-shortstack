@@ -49,27 +49,60 @@ const handlePost = function( request, response ) {
 }
 const handlePut = function( request, response ) {
     let dataString = ""
-    let countID=0
     request.on( "data", function( data ) {
         dataString += data
     })
 
     request.on( "end", function() {
         console.log( JSON.parse( dataString ) )
-        let inputCost=JSON.parse(dataString)
-        inputCost.cost=cost(inputCost.Transport);
-        details.push(inputCost)
+        let save = JSON.parse(dataString)
+        details[save] =
         response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
         response.end(JSON.stringify(details))
     })
 }
 const handleDelete = function(request, response){
-    let position =
-    details.splice()
-    inputCost.
+    let dataString = ""
+    request.on( "data", function( data ) {
+        dataString += data
+    })
+
+    request.on( "end", function() {
+        console.log( JSON.parse( dataString ) )
+        let index=JSON.parse(dataString)
+        details.splice(index, 1)
+        console.log(details)
+        response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
+        response.end(JSON.stringify(details))
+    })
+
 }
 function cost(Transport){
-
+    switch (Transport){
+        case 'Lyft':
+            return 50;
+            break;
+        case 'Uber':
+            return 45;
+            break;
+        case 'PeterPan Bus':
+            return 35;
+            break;
+        case 'Greyhound Bus':
+            return 35;
+            break;
+        case 'Our Bus':
+            return 30;
+            break;
+        case 'Subway':
+            return 5;
+            break;
+        case 'Commuter Rail':
+            return 12;
+            break;
+        default:
+            return 0;
+    }
     return 10;
 }
 const sendFile = function( response, filename ) {

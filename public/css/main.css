@@ -13,6 +13,7 @@ button{
     border-radius: 10px;
     font-family: "Outfit", sans-serif;
     font-size: 20px;
+    display: inline-block;
 }
 input{
   display: inline-block;
@@ -24,11 +25,17 @@ input{
   padding-right: 20px;
   text-align: left;
 }
+#booking_details{
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+    overflow: hidden;
+}
 /** For table styling**/
 table{
     margin-top: 100px;
     margin-bottom: 50px;
-    width: 400px;
+    border-collapse: collapse;
 }
 /** For table header styling**/
 th{
@@ -40,12 +47,9 @@ table, th, td{
     padding: 20px;
 
 }
-/** To apply styling to even table rows**/
-tr:nth-child(even){
-    background: greenyellow;
-}
+
 /** To apply styling to odd table rows**/
-tr:nth-child(odd){
+tr{
     background: burlywood;
 }
 .submit{
