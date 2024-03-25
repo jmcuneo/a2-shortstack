@@ -1,5 +1,7 @@
 Assignment 2 - Read Me
 ===
+Link : https://a2-joselinbarbosa.glitch.me
+
 ## To Do List
 Manage what you tasks you have pending with my To Do List website. Add tasks and categorize them as low or high priority. Based on priority the program will either give you a 3 or 7 day deadline. Click the delete button to get rid of a task. I used a flex box to adjust my navigation bar. 
 
