@@ -75,7 +75,7 @@ const handleDelete = function( request, response ) {
     let delNumber = json_data.number;
     console.log(delNumber);
     const index = delNumber;
-  if (index > -1) { 
+  if (index > -1 ) { 
     appdata.splice(index, 1); 
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
     response.end(JSON.stringify(appdata))
