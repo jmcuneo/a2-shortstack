@@ -8,9 +8,7 @@ const submit = async function( event ) {
   event.preventDefault()
   if (validateForm()){
   const studentName = document.getElementById("student-name"),
-        //credits = credits earned
         credits = document.getElementById("credits"),
-        //grade = credits needed
         grade = document.getElementById("grade"),
         json = { studentName: studentName.value, credits: credits.value, grade: grade.value, },
         body = JSON.stringify( json );
@@ -25,16 +23,13 @@ const submit = async function( event ) {
 }
 }
 
-
-
 window.onload = function() {
   createTable();
   const button = document.querySelector("button");
   button.onclick = submit;
 }
 
-const histCtr = 0;
-
+//based table code off of https://www.w3schools.com/jsreF/met_table_insertrow.asp
 const createTable = function(){
   let table = document.getElementById("students");
   // Create table header row
@@ -60,6 +55,7 @@ const createTable = function(){
         row.insertCell(1).innerHTML = response.credits;
         row.insertCell(2).innerHTML = response.grade;
         row.insertCell(3).innerHTML = response.creditsLeft;
+        //implemented button using https://stackoverflow.com/questions/15315315/how-do-i-add-a-button-to-a-td-using-js
         row.insertCell(4).innerHTML =`<button class='deleteButton' onclick=deleteStudent(${index})>Delete</button>`;
         index++;
       }
@@ -67,14 +63,18 @@ const createTable = function(){
       let emptyRow = table.insertRow(-1);
       emptyRow.insertCell(0);
       emptyRow.insertCell(1);
-      emptyRow.insertCell(2).innerHTML = "History Counter: " + histCtr;
+      emptyRow.insertCell(2).innerHTML = "History";
       emptyRow.insertCell(3);
       emptyRow.insertCell(4);
     });
 
+
+
     
 }
 
+
+//uses the framwork from submit to delete items
 const deleteStudent = function(rowIndex) {
   let confirmDelete = confirm(
     "Are you sure you want to delete this student?"
@@ -94,7 +94,7 @@ const deleteStudent = function(rowIndex) {
   }
 
 }
-
+//this is a little reater i added 
 const validateForm = function() {
   const studentName = document.getElementById("student-name").value;
   const credits = document.getElementById("credits").value;
@@ -112,7 +112,7 @@ const validateForm = function() {
     return false;
   }else if (credits > grade){
     alert("Credits Earned has to be smaller than Credits Needed");
-    return false 
+    return false;
   }
 
   return true;

@@ -52,8 +52,10 @@ const handlePost = function( request, response ) {
   request.on( "end", function() {
     let newData = JSON.parse(dataString);
     if (request.url === "/submit") {
+      //server logic and derived field 
       newData.creditsLeft = newData.grade - newData.credits;
       appdata.push(newData);
+    //used the submit framework for the delete 
     } else if (request.url === "/delete") {
       appdata.splice(newData["deletingResponse"], 1);
     }
@@ -83,9 +85,7 @@ const sendFile = function( response, filename ) {
      }
    })
 }
-const deleteItem = function (jsonData) {
-  
-};
+
  
 
 
