@@ -39,13 +39,13 @@ h3 {
 }
 
 button {
+  font-family: "Inconsolata", monospace;
   color: white;
   border-radius: 4px;
   cursor: pointer;
 }
 
 .submitButton, .saveButton {
-  font-family: "Inconsolata", monospace;
   background-color: #014b11;
   padding: 7px 15px;
   margin: 8px 0;
@@ -57,7 +57,6 @@ button {
 }
 
 .deleteButton {
-  font-family: "Inconsolata", monospace;
   background-color: #6f0303;
   padding: 5px 10px;
   margin: 4px 0;
@@ -69,7 +68,6 @@ button {
 }
 
 .modButton {
-  font-family: "Inconsolata", monospace;
   background-color: #52023c;
   padding: 5px 10px;
   margin: 4px 0;
