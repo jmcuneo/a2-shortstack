@@ -1,15 +1,13 @@
 
-a2-eshabajwa1.glitch.me/
+a2-eshabajwa.glitch.me/
 
 ## How many more credits do your students need?
-This site takes in a students name, how many credits they have earned, and how many credits they need. Then it calculates how many
-credits they need.
+This site takes in a students name, how many credits they have earned, and how many credits they need. Then it calculates how many more credits they need to graduate.
 
 ## Technical Achievements
-I created single page app that provides a way to enter student data and displays server data (after hitting the submit buttion, didn't have time to fix that bug.)
-The drived field Credits Left 
+I created single page app that provides a way to enter student data and displays server's data and the history of the data. This can be used so teachers or professors can reference the information if they need to.
 
-I was able to impletent a way to delete any sudent in the list on the sever side. I added a comfermation alert to the user knows that they are deleting a student 
+I was able to impletent a way to delete any student in the list on the sever side. I added a comfermation alert to the user knows that they are deleting a student. Even if the student is deleted.
 
 ### Design/Evaluation Achievements
 Note: These think alouds happened before I styled the HTML

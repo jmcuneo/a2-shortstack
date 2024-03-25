@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>Home Page</title>
+    <title>CS4241 Assignment 2</title>
     <meta charset="utf-8">
     <script src="js/main.js"></script>
     <link rel="stylesheet" href="css/main.css">
@@ -15,33 +15,40 @@
   <body>
 
     <h1>How many more credits do your students need?</h1>
+    <p>This website will calculate how many credits your students need to graduate.</p>
+    <p>Please enter one student at a time.</p>
 
     <form>
       <p>
-      <label for="student-name">Student Name:</label>
-      <input type="text" id="student-name" name="student-name">
+        <label for="student-name">Student Name:</label>
+        <input type="text" id="student-name" name="student-name">
       </p>
-      
+      <!-- <p>
+        <label for="year">Class Year:</label>
+        <select id="year" name="year">
+          <option value="First-Year" selected="selected">First-Year</option>
+          <option value="Sophomore">Sophomore</option>
+          <option value="Junior">Junior</option>
+          <option value="Senior">Senior</option>
+        </select>
+      </p> -->
       <p>
-      <label for="credits">Credits Earned:</label>
-      <input type="text" id="credits" name="credits">
+        <label for="credits">Credits Earned:</label>
+        <input type="text" id="credits" name="credits">
       </p>
       <p>
-      <label for="grade">Credits Needed:</label>
-      <input type="text" id="grade" name="grade">
+        <label for="grade">Credits Needed:</label>
+        <input type="text" id="grade" name="grade">
       </p>
 
       
-      <button>submit</button>
+      <button>Submit</button>
   </form>
 
   <div id="resultTable">
-    <br />
     <h2 class="centerText">Your Students</h2>
-    <table id="responses" class="centerText autoMargin">
+    <table id="students" class="center">
     </table>
-    <br />
-    <br />
   </div>
 
   

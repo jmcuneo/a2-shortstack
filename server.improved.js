@@ -11,7 +11,9 @@ const http = require( "http" ),
 const appdata = [
   { 
     studentName: 'Esha Bajwa',
+    //credits = credits earned
     credits : 102,
+    //grade = credits required 
     grade: 180,
     creditsLeft: 78
   }
@@ -30,14 +32,14 @@ const handleGet = function( request, response ) {
 
   if( request.url === "/" ) {
     sendFile( response, "public/index.html" )
+  }else if (request.url === "/getAppdata"){
+    response.writeHeader(200, { "Content-Type": "text/plain" });
+    response.end(JSON.stringify(appdata));
   }else{
     sendFile( response, filename )
   }
 
-  if (request.url === "/getResponses"){
-    response.writeHeader(200, { "Content-Type": "text/plain" });
-    response.end(JSON.stringify(appdata));
-  }
+  
 }
 
 const handlePost = function( request, response ) {
@@ -48,22 +50,13 @@ const handlePost = function( request, response ) {
   })
 
   request.on( "end", function() {
-  
+    let newData = JSON.parse(dataString);
     if (request.url === "/submit") {
-      appdata.push(JSON.parse(dataString));
+      newData.creditsLeft = newData.grade - newData.credits;
+      appdata.push(newData);
     } else if (request.url === "/delete") {
-      deleteItem(JSON.parse(dataString));
+      appdata.splice(newData["deletingResponse"], 1);
     }
-    
-
-    for (let i = 0; i < appdata.length; i++) {
-      let response = appdata[i];
-      response.creditsLeft = response.grade-response.credits;
-      console.log(response);
-    }
-    console.log(appdata)
-  
-
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
     response.end("test")
   })
@@ -91,8 +84,10 @@ const sendFile = function( response, filename ) {
    })
 }
 const deleteItem = function (jsonData) {
-  appdata.splice(jsonData["deletingResponse"], 1);
+  
 };
+ 
+
 
 server.listen( process.env.PORT || port )
 
