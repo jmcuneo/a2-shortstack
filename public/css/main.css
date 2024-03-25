@@ -2,7 +2,7 @@
 body {
   background-color: black;
   color:white;
-  font-family: BioRhyme;
+  font-family: "Titillium Web";
   font-size: 18px;
   text-align: center;
 }
@@ -45,7 +45,7 @@ body {
 
 /* Rulesets for all buttons */
 button, input {
-  font-family: BioRhyme;
+  font-family: "Titillium Web";
   font-size: 17px;
 }
 
