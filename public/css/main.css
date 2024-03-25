@@ -23,6 +23,7 @@ body {
   background-color: #181818;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .sidebar-entry{
@@ -60,7 +61,6 @@ body {
   text-align: left;
   color: white;
   font-size: 32px;
-  overflow: none;
   resize: none;
 }
 
