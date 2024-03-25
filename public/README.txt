@@ -15,11 +15,10 @@ will update their existing information, except for the date (which was an intent
 
 Web Testing with other students:
 
-I was only able to get 1 other student to test my application, and I forgot their name (Very tight on time)
-(but apparently they are crediting me if that will matter)
-They tested my app in an extremely early stage that only had information submission working,
-They did comment however, on the fact it was intuitive in its simple nature, so I kept the app's design
-simple and understandable throughout.
+Brandon Lui: Commented on the fact that I had pre-entered values and could change them to be in the background of the text that way
+when you click on the input fields they are empty but still tell you what they are for
+
+Jayson Caissie: Found a bug that when editing information that the Score / Time filed did not round ot one decimal place (this has been fixed)
 
 
 

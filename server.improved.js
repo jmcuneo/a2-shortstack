@@ -72,7 +72,7 @@ const handlePost = function( request, response ) {
     {
       appdata[replaceIndex].score = newData.score;
       appdata[replaceIndex].time = newData.time;
-      appdata[replaceIndex].scoreOverTime = newData.score / newData.time;
+      appdata[replaceIndex].scoreOverTime = Math.round((newData.score / newData.time) * 10) / 10;
     }
     else
     {
