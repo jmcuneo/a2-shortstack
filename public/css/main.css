@@ -1,10 +1,13 @@
+/** Element Selector: **/
 body {
   background:lightcoral;
   color:black;
 }
+/** Element Selector: **/
 h1{
   color: black;
 }
+/** Element Selector: **/
 button{
     padding-top: 5px;
     padding-bottom: 5px;
@@ -15,6 +18,7 @@ button{
     font-size: 20px;
     display: inline-block;
 }
+/** Element Selector: **/
 input{
   display: inline-block;
   margin-top: 20px;
@@ -25,33 +29,41 @@ input{
   padding-right: 20px;
   text-align: left;
 }
+/** ID Selector: **/
 #booking_details{
     display: flex;
     justify-content: space-evenly;
     flex-direction: row;
     overflow: hidden;
 }
-/** For table styling**/
+/** Element Selector: To align the footer to center using CSS flexbox **/
+footer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+/** Element Selector: For table styling**/
 table{
     margin-top: 100px;
     margin-bottom: 50px;
     border-collapse: collapse;
 }
-/** For table header styling**/
+/** Element Selector: For table header styling**/
 th{
     text-align: left;
 }
-/** For styling that should apply to table, table header, and table data cell**/
+/** Element Selector: For styling that should apply to table, table header, and table data cell**/
 table, th, td{
     border: 3px solid black;
     padding: 20px;
 
 }
 
-/** To apply styling to odd table rows**/
+/** Element Selector: To apply styling to odd table rows**/
 tr{
     background: burlywood;
 }
+/** Class Selector: **/
 .submit{
   left:45%;
   -ms-transform: translate(50%, 50%);
@@ -62,12 +74,14 @@ tr{
   margin-top: 25px;
   align-self: center;
 }
+/** Class Selector: **/
 .libre-franklin-body-text{
   font-family: "Libre Franklin", sans-serif;
   font-optical-sizing: auto;
   font-weight: bold;
   font-style: normal;
 }
+/** Class Selector: **/
 .outfit-header-font{
   font-family: "Outfit", sans-serif;
   font-optical-sizing: auto;
