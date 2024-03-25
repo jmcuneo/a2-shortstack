@@ -108,6 +108,8 @@ const handlePost = function( request, response ) {
     //console.log(parseFloats.convertData([JSON.parse( dataString )]));
     //appdata.concat(parseFloats.convertData([JSON.parse( dataString )]));
     dataString = JSON.parse(dataString);
+    dataString.make = typeof dataString.make === "string" ? dataString.make.toLowerCase() : dataString.make;
+    dataString.model = typeof dataString.model === "string" ? dataString.model.toLowerCase() : dataString.model;
     let update;
     switch(request.url){
       case "/submit":
