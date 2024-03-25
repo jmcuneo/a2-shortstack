@@ -10,24 +10,42 @@ const updateTodos = async () => {
   clientTodos.forEach((todo) => {
     const todoItem = document.createElement("li");
 
-    // Add a checkbox
+    // Checkbox
     const checkBox = document.createElement("input");
     checkBox.type = "checkbox";
     checkBox.checked = todo.completed;
     checkBox.addEventListener("change", () => toggleTodo(todo.id));
 
-    // Add a delete button
+    // Delete button
     const deleteBtn = document.createElement("button");
     deleteBtn.textContent = "x";
     deleteBtn.classList.add("delete-btn");
     deleteBtn.onclick = () => deleteTodo(todo.id);
 
+    // Todo title
+    const titleSpan = document.createElement("span");
+    titleSpan.textContent = todo.title;
+    titleSpan.classList.add("todo-title");
+
+    // Creation date
+    const createdAtSpan = document.createElement("span");
+    createdAtSpan.textContent = `Created at: ${new Date(todo.createdAt).toLocaleString()}`;
+    createdAtSpan.classList.add("todo-created-at");
+
+    // Time since added
+    const timeSinceAddedSpan = document.createElement("span");
+    timeSinceAddedSpan.textContent = todo.timeSinceAdded;
+    timeSinceAddedSpan.classList.add("todo-time-since-added");
+
     todoItem.appendChild(checkBox);
-    todoItem.append(todo.title);
+    todoItem.appendChild(titleSpan);
     todoItem.appendChild(deleteBtn);
+    todoItem.appendChild(createdAtSpan);
+    todoItem.appendChild(timeSinceAddedSpan);
     todosList.appendChild(todoItem);
   });
 };
+
 
 // Toggle todo completion status
 const toggleTodo = async (id) => {

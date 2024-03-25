@@ -6,6 +6,12 @@ const { v4: uuidv4 } = require("uuid");
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 
+// logger for all requests
+app.use((req, res, next) => {
+  console.log(`${req.method} request for ${req.url}`);
+  next();
+});
+
 // dummy database
 let todos = [
   {
