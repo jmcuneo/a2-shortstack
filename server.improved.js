@@ -14,16 +14,18 @@ const appdata = [
   { "model": "ford", "year": 1987, "mpg": 14} 
 ]
 
+// Stores data for GPA values
 const gpaData = [
   
 ]
+
+var gpa = 0.0;
 
 const server = http.createServer(function(request,response)
 {
   if (request.method === "GET") {
     handleGet(request, response); 
   } else if (request.method === "POST") {
-    console.log("POSTING");
     handlePost(request, response); 
   }
 })
@@ -33,6 +35,12 @@ const handleGet = function(request, response)
   const filename = dir + request.url.slice(1);
   if (request.url === "/") {
     sendFile(response, "public/index.html");
+  } else if (request.url === "/display") {
+    response.writeHead( 200, "OK", {"Content-Type": "text/plain" });
+    response.end(JSON.stringify(gpaData));
+  } else if (request.url === "/gpa") {
+    response.writeHead( 200, "OK", {"Content-Type": "text/plain" });
+    response.end(gpa.toString());
   } else {
     sendFile(response, filename);
   }
@@ -45,18 +53,17 @@ const handlePost = function(request, response)
   request.on("data", function(data) {
       dataString += data;
   })
-
-  request.on("end", function() {
-    console.log("Data: ", JSON.parse(dataString));
-
-    // ... do something with the data here!!!
-    gpaData[gpaData.length] = JSON.parse(dataString);
-
-    response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
-    response.end(JSON.stringify(gpaData[gpaData.length - 1]));
-    let gpa = calculateGpa(gpaData);
-    console.log("GPA: ", gpa);
-  })
+  if (request.url === "/submit")
+  {
+    request.on("end", function() {  
+      // ... do something with the data here!!!
+      gpaData[gpaData.length] = JSON.parse(dataString);
+  
+      response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
+      response.end(JSON.stringify(gpaData[gpaData.length - 1]));
+      gpa = calculateGpa(gpaData);
+    })
+  }
 }
 
 const sendFile = function(response, filename)
@@ -77,6 +84,7 @@ const sendFile = function(response, filename)
    })
 }
 
+// Determine what the user's GPA is based on the provided info
 const calculateGpa = function(jsonData)
 {
   let totalPoints = 0;

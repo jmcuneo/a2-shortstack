@@ -1,5 +1,14 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 
+// Triggers upon site load
+window.onload = function()
+{
+  getData();
+  const submitButton = document.getElementById("submit");
+  submitButton.onclick = submit;
+}
+
+// Submit a new entry to the GPA data
 const submit = async function(event) 
 {
   // stop form submission from trying to load
@@ -22,27 +31,72 @@ const submit = async function(event)
   });
 
   const text = await response.text();
-  console.log("text:", text);
   const newData = JSON.parse(text);
   addToTable(newData);
 }
 
-window.onload = function()
+// Obtain the GPA table data from the server 
+const getData = async function()
 {
-  const submitButton = document.getElementById("submit");
-  submitButton.onclick = submit;
+  let response = await fetch("/display",
+  {
+    method:"GET",
+  });
+  const text = await response.text();
+  buildInitialTable(JSON.parse(text));
 }
 
+// Optain the final GPA value from the server
+const getGpa = async function()
+{
+  let response = await fetch("/gpa",
+  {
+    method:"GET",
+  });
+  const text = await response.text();
+  displayGpa(text);
+}
+
+// Create the initial GPA table with current data
+const buildInitialTable = function(initialData)
+{
+  for (let i = 0; i < initialData.length; i++)
+  {
+    addToTable(initialData[i]);
+  }
+}
+
+// Add a new entry to the GPA data table
 const addToTable = function(newData)
 {
+  // Initialize table info
   let table = document.getElementById("table");
   let numRows = table.rows.length;
   let row = table.insertRow(numRows);
 
+  // Create cels
   let classCell = row.insertCell(0);
   classCell.innerHTML = newData.class;
   let gradeCell = row.insertCell(1);
   gradeCell.innerHTML = newData.grade;
   let creditsCell = row.insertCell(2);
   creditsCell.innerHTML = newData.credits;
+  
+  // Add delete button to row
+  let deleteCell = row.insertCell(3);
+  let deleteButton = document.createElement("button");
+  deleteButton.textContent = "Delete Entry";
+  deleteButton.id = `delete${numRows}`;
+  console.log(deleteButton.id);
+  deleteCell.appendChild(deleteButton);
+
+  // Optain the new GPA
+  getGpa();
+}
+
+// Display the GPA value on screen
+const displayGpa = function(gpaValue)
+{
+  let gpaText = document.getElementById("gpa");
+  gpaText.innerHTML = `GPA: ${gpaValue}`;
 }
