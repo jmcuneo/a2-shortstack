@@ -113,4 +113,4 @@ const drawTargets = async function( event ) {
 }
 
 setInterval(drawTargets, 40);
-setInterval(fetchHighScores, 100);
+setInterval(fetchHighScores, 10000);
