@@ -19,6 +19,8 @@ const server = http.createServer(function (request, response) {
     handleGet(request, response)
   } else if (request.method === "POST") {
     handlePost(request, response)
+  } else if (request.method === "DELETE") {
+    handleDelete(request, response)
   }
 })
 
@@ -64,9 +66,35 @@ const handlePost = function (request, response) {
 
     console.log(appDataToSend)
 
-    response.writeHead(200, "OK", { "Content-Type": "text/plain" })
+    response.writeHead(200, "OK", { "Content-Type": "application/json" })
     response.end(JSON.stringify(appDataToSend))
   })
+}
+
+const handleDelete = function (request, response) {
+  let dataString = ""
+
+  request.on("data", function (data) {
+    dataString += data
+  })
+
+  request.on("end", () => {
+    let data = JSON.parse(dataString)
+
+
+    response.writeHead(200, "OK", { "Content-Type": "application/json" })
+    console.log(JSON.stringify(data))
+    response.end(JSON.stringify(data))
+    // console.log(` ${task}, ${task.task}`)
+    // const index = appData.findIndex(obj => obj.task === task.task)
+    // console.log("index" + index)
+    // if (index > -1) {
+    //   appData.splice(index, 1)
+    // }
+    // console.log(`Sending ${JSON.stringify(appData)}`)
+  })
+
+
 }
 
 const sendFile = function (response, filename) {
