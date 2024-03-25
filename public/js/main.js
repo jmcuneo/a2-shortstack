@@ -1,5 +1,5 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
-var count = 1;
+var count = 1; //variable for counting entries in data table
 
 const submit = async function( event ) {
   // stop form submission from trying to load
@@ -8,6 +8,11 @@ const submit = async function( event ) {
   // remains to this day
   event.preventDefault()
   
+  //getting input from user
+  //front string and backstring are from textbox 
+  //they get concatenated together
+  //calculate string length
+  //send string to json and then to body
   const frontString = document.querySelector( "#frontstring" ).value,
         backString = document.querySelector("#backstring").value,
         concatenatedString = frontString + ' ' + backString,
@@ -21,9 +26,10 @@ const submit = async function( event ) {
   })
   
   const text = await response.text();
+  //get table element to be modified
   const tableElement = document.getElementById('responseTable');
+  //create appropriate spots in table element
   const nextRow = document.createElement('tr');
-
   const cell1 = document.createElement('td');
   const cell2 = document.createElement('td');
   const cell3 = document.createElement('td');
@@ -34,19 +40,18 @@ const submit = async function( event ) {
   delButton.textContent = 'Delete Row';
   editButton.textContent = 'Edit Row';
   
+  //add count to left-most table cell and increment count
   cell1.textContent = count;
+  count++;
   
   //parsedData = JSON.parse(body);
   
+  //add user input to cells
   cell2.textContent = concatenatedString;
   cell3.textContent = stringLength;
 
+  //build edit and delete button functionality
   delButton.addEventListener('click',function() {
-    // find the index with the value you're tryna delete
-
-    //  remove the index or loop through app data (horrible solution lmfao) and copy all but that into a temp before restoring it
-
-    // remove from the table
     tableElement.removeChild(nextRow);
   });
   editButton.addEventListener('click', function() {
@@ -58,22 +63,20 @@ const submit = async function( event ) {
      this.cell3.textContent = stringLength;
   });
 
+  //append buttons to cells
   cell4.appendChild(delButton);
   cell5.appendChild(editButton);
 
+  //append cells to the new row
   nextRow.appendChild(cell1);
   nextRow.appendChild(cell2);
   nextRow.appendChild(cell3);
   nextRow.appendChild(cell4);
   nextRow.appendChild(cell5);
 
+  //append row to table
   tableElement.appendChild(nextRow);
-  // subarray for app data:
-    // [1: entry num
-    // 2: combined string
-    // 3: string length]
-  // appdata.push([count, concatenatedString, stringLength]);
-  count++;
+  
 }
 
 window.onload = function() {

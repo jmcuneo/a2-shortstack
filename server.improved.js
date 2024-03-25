@@ -29,7 +29,7 @@ const handleGet = function( request, response ) {
 }
 
 const handlePost = function( request, response ) {
-  console.log("POSTING");
+  //console.log("POSTING");
   let dataString = ""
 
   request.on( "data", function( data ) {
@@ -37,14 +37,14 @@ const handlePost = function( request, response ) {
   })
 
   request.on( "end", function( ) {
-    console.log( JSON.parse( dataString ) );
+    //console.log( JSON.parse( dataString ) );
     const finalData = JSON.parse( dataString ); 
 
     // Do something with the data here
 
     appdata.push(finalData);
-    console.log(appdata);
-    console.log(finalData);
+    //console.log(appdata);
+    //console.log(finalData);
     
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
     response.end(JSON.stringify(finalData))
