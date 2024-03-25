@@ -1,12 +1,12 @@
 {
-  "name": "",
-  "version": "",
-  "description": "",
-  "author": "",
+  "name": "a2-jolenepern",
+  "version": "1",
+  "description": "Website that tracks your books and reading progress",
+  "author": "Jolene Pern",
   "scripts": {
     "start": "node server.improved.js"
   },
   "dependencies": {
-    "mime": "^2.4.4"
+    "mime": "^2.6.0"
   }
 }

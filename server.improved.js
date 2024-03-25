@@ -4,14 +4,18 @@ const http = require( "http" ),
       // to install the mime library if you"re testing this on your local machine.
       // However, Glitch will install it automatically by looking in your package.json
       // file.
-      mime = require( "mime" ),
+      mime = require( "mime" ), //allows us to pass data back
       dir  = "public/",
       port = 3000
 
 const appdata = [
-  { "model": "toyota", "year": 1999, "mpg": 23 },
-  { "model": "honda", "year": 2004, "mpg": 30 },
-  { "model": "ford", "year": 1987, "mpg": 14} 
+  {
+    title: "The Seven Husbands of Evelyn Hugo",
+    author: "Taylor Jenkins",
+    totalPages: 400,
+    currentPage: 15,
+    pagesLeft: 385
+  }
 ]
 
 const server = http.createServer( function( request,response ) {
@@ -27,7 +31,10 @@ const handleGet = function( request, response ) {
 
   if( request.url === "/" ) {
     sendFile( response, "public/index.html" )
-  }else{
+  } else if (request.url === "/getResponses"){
+    response.writeHeader(200, { "Content-Type": "text/plain" });
+    response.end(JSON.stringify(appdata));
+  } else{
     sendFile( response, filename )
   }
 }
@@ -35,18 +42,31 @@ const handleGet = function( request, response ) {
 const handlePost = function( request, response ) {
   let dataString = ""
 
-  request.on( "data", function( data ) {
-      dataString += data 
+  request.on("data", function(data){
+    dataString += data
   })
 
   request.on( "end", function() {
     console.log( JSON.parse( dataString ) )
 
     // ... do something with the data here!!!
+    if(request.url === "/submit"){
+      appdata.push(JSON.parse(dataString))
+    } else if(request.url === "/delete"){
+      deleteItem(JSON.parse(dataString))
+    }
+    
+
+    for(let i=0; i<appdata.length; i++){
+      let response = appdata[i]
+      //derive pagesLeft from totalPages and currentPage
+      response.pagesLeft = response.totalPages - response.currentPage
+    }
 
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
-    response.end("test")
+    response.end()
   })
+
 }
 
 const sendFile = function( response, filename ) {
@@ -69,6 +89,10 @@ const sendFile = function( response, filename ) {
 
      }
    })
+}
+
+const deleteItem = function (json){
+  appdata.splice(json["deletingResponse"], 1)
 }
 
 server.listen( process.env.PORT || port )
