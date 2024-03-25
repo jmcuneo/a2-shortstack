@@ -81,20 +81,16 @@ const handleDelete = function (request, response) {
   request.on("end", () => {
     let data = JSON.parse(dataString)
 
+    const index = appData.findIndex(obj => obj.task === data.task)
 
+    if (index > -1) {
+      appData.splice(index, 1)
+    } else {
+      console.log("Could not delete")
+    }
     response.writeHead(200, "OK", { "Content-Type": "application/json" })
-    console.log(JSON.stringify(data))
-    response.end(JSON.stringify(data))
-    // console.log(` ${task}, ${task.task}`)
-    // const index = appData.findIndex(obj => obj.task === task.task)
-    // console.log("index" + index)
-    // if (index > -1) {
-    //   appData.splice(index, 1)
-    // }
-    // console.log(`Sending ${JSON.stringify(appData)}`)
+    response.end(JSON.stringify(appData))
   })
-
-
 }
 
 const sendFile = function (response, filename) {

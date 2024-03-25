@@ -76,7 +76,7 @@ const tableDeleteButton = async function (buttonTarget) {
   let taskText
   if (row) {
     taskText = row.cells[1].textContent;
-  } else{
+  } else {
     throw new Error("button without task")
   }
 
@@ -94,7 +94,7 @@ const tableDeleteButton = async function (buttonTarget) {
 
   if (response.ok) {
     const dataJson = await response.json()
-    console.log(`Data: ${JSON.stringify(dataJson)}`)
+    populateTaskTable(dataJson)
   }
 }
 
