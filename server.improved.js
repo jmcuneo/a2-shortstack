@@ -64,8 +64,6 @@ const handlePost = function (request, response) {
       obj.daysUntilDue = daysDiff + 0
     })
 
-    console.log(appDataToSend)
-
     response.writeHead(200, "OK", { "Content-Type": "application/json" })
     response.end(JSON.stringify(appDataToSend))
   })

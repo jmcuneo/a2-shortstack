@@ -26,12 +26,9 @@ const submit = async function (event) {
     })
 
     const allTasks = await response.json()
-
-    console.log("clientSends:", json)
-    console.log("clientReceives:", allTasks)
     populateTaskTable(allTasks)
   } else {
-    console.log("bad")
+    console.log("did not validate")
   }
 }
 
@@ -80,8 +77,6 @@ const tableDeleteButton = async function (buttonTarget) {
     throw new Error("button without task")
   }
 
-  console.log(`task: ${taskText}`)
-
   const options = {
     method: 'DELETE',
     headers: {
@@ -100,10 +95,11 @@ const tableDeleteButton = async function (buttonTarget) {
 
 function populateTaskTable(tasks) {
   const tableHeaders = ["", "Task", "Creation date", "Due date", "Days left"]
-  const tableHeaderRow = document.getElementById("task-table-header")
+  const tableHeader = document.getElementById("task-table-header")
   const tableBody = document.getElementById("task-table-body")
 
-  if (tableHeaderRow.innerHTML.trim() === "") {
+  if (tableHeader.innerHTML.trim() === "") {
+    let tr = document.createElement("tr")
     tableHeaders.forEach(header => {
       let th = document.createElement("th")
       th.setAttribute("scope", "col")
@@ -112,8 +108,9 @@ function populateTaskTable(tasks) {
       if (header === "Days left") {
         th.onclick = tableSort
       }
-      tableHeaderRow.appendChild(th)
+      tr.appendChild(th)
     });
+    tableHeader.appendChild(tr)
   }
 
   tableBody.innerHTML = ""
