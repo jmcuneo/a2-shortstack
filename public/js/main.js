@@ -42,17 +42,8 @@ async function yesNoPatternFunc(){
             pattern.push(37 + Math.floor(Math.random()*4));
         }
         for (let l=0;l<length;l++){
-            var i=r*length + l;
             var current=pattern[l];
-            if (i===indexToAlter){
-                var keyCodes=[37,38,39,40];
-                var index = keyCodes.indexOf(current);
-                keyCodes.splice(index,1);
-                keyList.push(keyCodes[Math.floor(Math.random()*3)])
-            }
-            else{
-                keyList.push(current);
-            }
+            keyList.push(current);
         }
         for (let r = 1; r<reps; r++) {
             for (let l=0;l<length;l++){
