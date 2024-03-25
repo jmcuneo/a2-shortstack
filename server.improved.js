@@ -6,6 +6,8 @@ const http = require("http"),
 
 const appdata = [];
 
+const suggestdata = [];
+
 const server = http.createServer(function (request, response) {
   if (request.method === "GET") {
     handleGet(request, response);
@@ -34,6 +36,10 @@ const handlePost = function (request, response) {
     handleRefresh(response);
   } else if (request.url === "/remove") {
     handleRemove(request, response);
+  } else if(request.url === "/suggest"){
+    handleSuggest(request, response);
+  } else if(request.url === "/bring"){
+    handleBring(request, response);
   }
 };
 /**
@@ -52,8 +58,6 @@ const handleSubmit = function (request, response) {
     const dataObject = JSON.parse(dataString);
     const updatedObject = calculateDerived(dataObject);
     appdata.push(updatedObject);
-    //calculate derived
-
     response.writeHead(200, "OK", { "Content-Type": "text/plain" });
     response.end(JSON.stringify(appdata)); //send array back to client
   });
@@ -71,8 +75,12 @@ const calculateDerived = function (object) {
 
 // sends the client the current data in the appdata array
 const handleRefresh = function (response) {
+  let bothArrays = {
+    appdata: appdata,
+    suggestdata: suggestdata
+  };
   response.writeHead(200, "OK", { "Content-Type": "text/plain" });
-  response.end(JSON.stringify(appdata));
+  response.end(JSON.stringify(bothArrays));
 };
 
 /**
@@ -95,6 +103,65 @@ const handleRemove = function (request, response) {
     response.end(JSON.stringify(appdata));
   });
 };
+
+const handleBring = function (request, response) {
+  let dataString = "";
+
+  request.on("data", function (data) {
+    dataString += data;
+  });
+
+  request.on("end", function () {
+    const newData = {name:"", item: suggestdata[dataString].Sitem, price: "",qty: suggestdata[dataString].Sqty};
+    suggestdata.splice(dataString, 1); // Remove the entry from the array
+    appdata.push(newData);
+    console.log("index: ", dataString);
+    console.log("Updated suggestdata: ", suggestdata);
+    console.log("after bring, updated appdata: ", appdata);
+
+    //send client both arrays -> make a new object, with both objects array inside (better way to do this??)
+    let bothArrays = {
+      appdata: appdata,
+      suggestdata: suggestdata
+    };
+    response.writeHead(200, "OK", { "Content-Type": "text/plain" });
+    response.end(JSON.stringify(bothArrays));
+  });
+};
+
+const handleSuggest = function(request, response){
+  let dataString = "";
+
+  request.on("data", function (data) {
+    dataString += data;
+  });
+
+  request.on("end", function () {
+    //check if suggestion is already in array
+    
+    //if not - add to suggest array
+    //send client suggestdata
+    
+    const suggestObject = JSON.parse(dataString);
+    let repeat = 0;
+    for(let i = 0; i < appdata.length; i++){
+      if(appdata[i].item == suggestObject.Sitem){
+        console.log("repeat", repeat);
+        repeat++;
+      }
+    }
+    if(repeat > 0){
+      console.log("cannot add suggestion");
+      return;
+    }else{
+      suggestdata.push(suggestObject);
+    }
+    //suggestdata.push(suggestObject);
+    console.log("suggestdata after suggest: ", suggestdata)
+    response.writeHead(200, "OK", { "Content-Type": "text/plain" });
+    response.end(JSON.stringify(suggestdata)); //send array back to client
+  });
+} 
 
 const sendFile = function (response, filename) {
   const type = mime.getType(filename);
