@@ -1,8 +1,8 @@
 {
-  "name": "",
-  "version": "",
-  "description": "",
-  "author": "",
+  "name": "Simple To-Do List",
+  "version": "1.0",
+  "description": "A simple to-do list app made for Assignment 2 for CS 4241",
+  "author": "Parker Frizzle",
   "scripts": {
     "start": "node server.improved.js"
   },
