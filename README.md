@@ -22,4 +22,6 @@ I made a simple TODO app with flex-box styling. To use, input your task name int
 
 I think the reasonable changes are all of the ones except SSR. I agree that these are useful and should be implemented.
 
-- **Design Achievement 2**: Caissie
+- **Design Achievement 2**: Caissie. He said that the modification of a task could be easier or more clear--modifying the table directly would be most intuitive, but perhaps a tooltip on submit or on the text entry would be easier.
+
+I think this would be a cool change, but might be rather involved creating a custom table element to facilitate this.
