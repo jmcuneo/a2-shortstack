@@ -35,9 +35,8 @@ const calculateValue = async function( event )
   }
 }
 
-const revealResults = async function( event )
+const revealResults = async function()
 {
-  event.preventDefault();
   try 
   {    
     const response = await fetch("/getResults",
@@ -49,7 +48,8 @@ const revealResults = async function( event )
     if (!response.ok) 
       throw new Error("Failed to fetch results");
     
-    event.target.textContent = "Re-fetch Results"
+    const revealResults = document.getElementById("reveal-results");
+    revealResults.textContent = "Re-fetch Results"
     
     const data = await response.json();
     const results = document.getElementById("results");
@@ -91,6 +91,7 @@ const addIcon = async function( event )
   {
     icon.remove();
     availableSlot.appendChild(icon);
+      revealResults();
   }
   else 
     console.error("Error:", response.statusText);
@@ -118,6 +119,7 @@ const delIcon = async function( event )
     icon.remove();
     let itemPool = document.getElementById("item-pool");
     itemPool.appendChild(icon);
+    revealResults();
   } else {
     console.error("Error:", response.statusText);
   }
@@ -200,6 +202,7 @@ const addOrModItem = async function( event )
     if(!itemInPool(iconName))
       createIcon(iconName)
     displayNewData(iconName)
+    revealResults();
   }
   else 
     console.error("Error:", response.statusText);
@@ -225,6 +228,7 @@ const delItem = async function( event )
   {
     const iconToRemove = document.getElementsByClassName(prefix + iconName)[0];
     iconToRemove.remove();
+    revealResults();
   }
   else 
     console.error("Error:", response.statusText);
@@ -251,7 +255,6 @@ window.onload = function()
   btnCalculateValue.onclick = calculateValue;
   
   const btnRevealResults = document.getElementById("reveal-results");
-  btnRevealResults.onclick = revealResults;
   
   //Add onclick handlers to icons
   const gridIconPool = document.getElementById('item-pool');
