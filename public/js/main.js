@@ -1,46 +1,57 @@
-let previousResults =[]     //empty array for user data
+//main.js
+//client-side code
 
-const deleteResult = function(index) {
-  previousResults.splice(index, 1)     //remove element from the array
-  updatePrevious()         //update the table
+//function to delete a given entry in the server array with the previous results
+const deleteResult = async function (index) {
+  const operation = 'deleteResult'              //define the operation that is referenced on the server side
+  const response = await fetch("/deleteResult", {           //fetch on the server side
+      method: "POST",
+      body: JSON.stringify({ operation: operation, index: index }),       //pass through, the defined operation and the index in the array that needs to be deleted
+      headers: { "Content-Type": "application/json" }
+  });
+  updateTable(); // update the table 
 };
 
+//function to update the table to reflect the fetch from the server side array
+const updateTable = async function() {          
+  const response = await fetch("/getPreviousResults");    //fetch the array
+    if (response.ok) {        //if array can be accessed
+      const previousResults = await response.json();      // array of previous results
+      const previousResultsTable = document.getElementById('previousResults');        //define table
+      const tbody = previousResultsTable.querySelector('tbody');                      //define table body
+      tbody.innerHTML = '';         //clear the content in the body              
+      previousResults.forEach((result, index) => {        //loop through the fetched array
+          const row = document.createElement('tr');       //define row
+          const cellIndex = document.createElement('td'); //define index
+          cellIndex.textContent = (index + 1);            //set index number to the element in the html
+          const cellResult = document.createElement('td');  //define result
+          cellResult.textContent = result.result;           //fetch the result from each array entry and set it to the element content
 
-const updatePrevious = function() {
-  const previousResultsTable = document.getElementById('previousResults')     //identify table
-  const tbody = previousResultsTable.querySelector('tbody')         //identify body
+          const cellDelete = document.createElement('td');            //define the cell for delete button
+          const deleteButton = document.createElement('button');      // create the delete button
+          deleteButton.textContent = 'Delete';                        //"delete" text inside of the button
+          deleteButton.addEventListener('click', function() {         //create an event handler for when the button is clicked that links to the deleteResult() function above
+              deleteResult(index);
+          });
+          cellDelete.appendChild(deleteButton);                       //add the delete button to the cell for delete button
 
-  tbody.innerHTML = '';
-  
-  previousResults.forEach((result, index) => {
-    const row = document.createElement('tr')          //create row
-    const cellIndex = document.createElement('td')    //create index column
-    cellIndex.textContent = (index + 1)               //increment
-    const cellResult = document.createElement('td')   //create result column
-    cellResult.textContent = result      //append the result to the html element
-
-    const cellDelete = document.createElement('td')    //add delete element to row
-    const deleteButton = document.createElement('button')      //create button
-    deleteButton.textContent = 'Delete'                        //text for button
-    deleteButton.addEventListener('click', function() {         //event handler for button click
-      deleteResult(index);        //delete the entry at the given index in the array
-    });
-    cellDelete.appendChild(deleteButton)           //delete the cell
-
-    row.appendChild(cellIndex)                        //add the index to the current row
-    row.appendChild(cellResult)                       //add the result to the current column
-    row.appendChild(cellDelete)                       //include the button to the row
-    tbody.appendChild(row)                            //add row to the table
-  })
+          row.appendChild(cellIndex);     //add the of the index cell to the row
+          row.appendChild(cellResult);    //add the of the result cell to the row
+          row.appendChild(cellDelete);    //add the of the delete cell to the row
+          tbody.appendChild(row);         //add the row to the defined table
+      });
+  }
 }
 
-// Function to add result to the previous results table
-const addResultToPrevious = function(result) {
-  previousResults.push(result)    // Add the result to the beginning of the array
-  if (previousResults.length > 50) {      //limit array length to 50 prevoius entries
-    previousResults.pop();      //Remove the oldest result if 50 is reached
-  }
-  updatePrevious();     //update table
+//function to add result to the previous results table
+const addResultToPrevious = async function(result) {    
+  const operation = 'addResult'     //define the operation
+  const response = await fetch("/addResult", {      //fetch to send the operation and the result to be added to the server-side array
+    method: "POST",
+    body: JSON.stringify({ operation: operation, result: result }),       //operation: defined above, result: passed to the function
+    headers: { "Content-Type": "application/json" }
+  });
+  updateTable(); //update the table 
 };
 
 //addition function
@@ -61,7 +72,7 @@ const addition = async function( event ) {
   const resultElement = document.querySelector('#result');        //define the result element on the screen
   resultElement.textContent = "Result: " + JSON.stringify(responseData.result);     //assign the client side element to the result from the response
 
-  addResultToPrevious(responseData.result);
+  updateTable();        //update the table
 }
 
 //subtraction function
@@ -82,7 +93,7 @@ const subtract = async function( event ) {
   const resultElement = document.querySelector('#result')
   resultElement.textContent = "Result: " + JSON.stringify(responseData.result) 
 
-  addResultToPrevious(responseData.result)
+  updateTable();          //update the table
 }
 
 //multiplication function
@@ -103,7 +114,7 @@ const multiply = async function( event ) {
   const resultElement = document.querySelector('#result')
   resultElement.textContent = "Result: " + JSON.stringify(responseData.result) // Use the plain text response
 
-  addResultToPrevious(responseData.result)
+  updateTable();          //update the table
 }
 
 //division function
@@ -124,10 +135,13 @@ const divide = async function( event ) {
   const resultElement = document.querySelector('#result')
   resultElement.textContent = "Result: " + JSON.stringify(responseData.result) // Use the plain text response
 
-  addResultToPrevious(responseData.result);
+  updateTable();          //update the table
 }
 
-window.onload = function() {
+window.onload = function() {      //on page load
+
+  updateTable();      //update table
+
   const addButton = document.querySelector("#addButton")    //create an add button on the screen
   addButton.onclick = addition                              //map the button to the addition function
 

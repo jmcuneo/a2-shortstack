@@ -3,14 +3,14 @@ ctchartier@wpi.edu
 Project Link: https://a2-connorchartier.glitch.me/
 
 ## Calculator: Addition, Subtraction, Mulitplication, Division
-    -My project allows the user to input two seperate numbers, one into each of the input boxes. Then the user is able to select a operation to perform on the two numbers with the reult showing up centered on the screen. There is also a seprate protion on the bottom of the screen the keeps track of the previous results for past operations. This array is then added onto each time the user performs an operation. I used CSS, classes, elements, and IDs to format different sections of my webpage.
+    - My project allows the user to input two seperate numbers, one into each of the input boxes. Then the user is able to select a operation to perform on the two numbers with the result showing up centered on the screen. There is also a seprate protion on the bottom of the screen the keeps track of the previous results for past operations. This array is then added onto each time the user performs an operation. The user can also delete a previous result. I used CSS classes, elements, and IDs to format different sections of my webpage.
 
 ## Technical Achievements
 - **Tech Achievement 1**: Single Page App
-    -I have created a single page app that allows the user to input two numbers and select a computation to complete. This then allows them to add, subract, multiply, and divide. The server side data is also displayed to the user at all times in the "Previous Results section".
+    - I have created a single page app that allows the user to input two numbers and select a computation to complete. This then allows them to add, subract, multiply, and divide. The server side data is also displayed to the user at all times in the "Previous Results section".
 
 - **Tech Achievement 2**: Modifing existing data
-    -I did not add the ability to modify the existing data.
+    - I did not add the ability to edit the existing data stored in the previous results section.
 
 ### Design/Evaluation Achievements
 - **Design Achievement 1**: Testing Participant #1
@@ -18,7 +18,7 @@ Project Link: https://a2-connorchartier.glitch.me/
     - Silvester
 2. What problems did the user have with your design?
     - They told me to truncate my decimals.
-    - They told me to consider removing the work result next to each of my results since there is a header there
+    - They told me to consider removing the word result next to each of my results since there is a header there
 3. What comments did they make that surprised you?
     - They said that my stylistic choice to not have a line in between the two "Previous Results" table headers looked strange.
 4. What would you change about the interface based on their feedback?
