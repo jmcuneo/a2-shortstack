@@ -24,7 +24,8 @@ const submit = async function( event ) {
 		body
   })
 
-  const text = await response.text()
+  const text = await response.text();
+	console.log(text);
 
 	getReports();
 }
@@ -200,7 +201,8 @@ const submitmod = async function(id) {
 		body
   })
 
-  const text = await response.text()
+  const text = await response.text();
+	console.log(text);
 	
 	endmod();
 	getReports();
@@ -212,7 +214,6 @@ const endmod = function() {
 	submitbutton.style.visibility = "visible";
 	const modbuttons = document.querySelectorAll(".delmodbutton");
 	modbuttons.forEach((button) => {
-		console.log("test");
 		button.disabled = false;
 	});
 	
