@@ -1,4 +1,37 @@
 body {
-  background:black;
+  background: #381515;
   color:white;
+  padding: 64px;
+  text-align: center;
+  align-content: center;
+}
+
+p {
+  margin: 0;
+}
+
+tr {
+  width: 500px;
+}
+
+td {
+  width: 100px;
+  text-align: center;
+}
+
+#tableDiv {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+.backButton {
+  width: 150px;
+  height: 50px;
+  margin: 16px;
+}
+
+button {
+  min-width: 75px;
+  height: 25px;
 }
