@@ -62,19 +62,30 @@ const handlePost = function( request, response ) {
   })
 }
 
-const handleDelete = function (request, response) {
- let del = "";
+const handleDelete = function( request, response ) {
+  let dataString = ""
 
   request.on( "data", function( data ) {
-      del += data 
+      dataString += data 
   })
- 
 
-  console.log(del);
-  let type = mime.getType(del)
-  response.writeHead( 200, "OK", {"Content-Type": type })
-  response.end("done")
+  request.on( "end", function() {
+    //console.log( JSON.parse( dataString ) )
+    let json_data = JSON.parse(dataString);
+    let delNumber = json_data.number;
+    console.log(delNumber);
+    const index = delNumber;
+  if (index > -1) { 
+    appdata.splice(index, 1); 
+    response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
+    response.end(JSON.stringify(appdata))
+  } else {
+    response.writeHead( 410, "Gone", {"Content-Type": "text/plain" })
+    response.end("There was nothing to delete!");
+  }
 
+    
+  })
 }
 
 const sendFile = function( response, filename ) {

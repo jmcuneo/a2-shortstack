@@ -1,5 +1,5 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
-
+// credit to: https://www.valentinog.com/blog/html-table/
 let returnedArray;
 
 function generateTableHead(table, data) {
@@ -47,22 +47,29 @@ const submit = async function( event ) {
   
   let returnedArray = JSON.parse(text);
   console.log( "text:", returnedArray );
-  let table = document.querySelector("table");
-  let data = Object.keys(returnedArray [0]);
-  generateTable(table, returnedArray);
-  generateTableHead(table, data);
-  
+  createTable(returnedArray);
 }
 
 const erase = async function( event ) {
   event.preventDefault()
 
-  let valueToDel = { "number" : document.getElementById("row").value };
+  const valueToDel = { "number" : document.getElementById("row").value };
 
   const response = await fetch( "/submit", {
     method:"DELETE",
     body: JSON.stringify(valueToDel) 
   })
+  const text = await response.text()
+  let returnedArray = JSON.parse(text);
+  console.log( "text:", returnedArray );
+  createTable(returnedArray);
+}
+
+const createTable = function(array) {
+  let table = document.querySelector("table");
+  let data = Object.keys(array [0]);
+  generateTable(table, array);
+  generateTableHead(table, data);
 }
 
 window.onload = function() {
