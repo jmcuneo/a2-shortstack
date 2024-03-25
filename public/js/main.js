@@ -37,9 +37,9 @@ const addRow = function(row) {
   td.textContent = row.name;
   tr.appendChild(td);
 
-  td = document.createElement('td');
-  td.textContent = row.count;
-  tr.appendChild(td);
+  let countTd = document.createElement('td');
+  countTd.textContent = row.count;
+  tr.appendChild(countTd);
 
   let date = document.createElement('td');
   date.textContent = new Date(row.addedDate).toLocaleString();
@@ -72,7 +72,7 @@ const addRow = function(row) {
   a2.textContent = 'edit';
   td3.appendChild(a2);
   td3.onclick = function() {
-    let newName = prompt('Enter a new name');
+    let newName = prompt('Enter a new name', row.name);
     if (!newName) {
       return;
     }
