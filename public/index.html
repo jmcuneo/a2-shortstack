@@ -22,6 +22,14 @@
       </form>
     </div>
 
+    <div>
+      <form>
+        <input type="text" id="suggestItem" value="" placeholder="Item">
+        <input type="text" id="suggestQty" value="" placeholder="Qty">
+        <button id="suggest">suggest</button>
+      </form>
+    </div>
+
     <!--Start of Flex-->
     </div>
     <div class="flex-container">
@@ -42,6 +50,16 @@
       <div class="column">
         <h2 id="number">Who's Coming:</h2>
         <ul id="guestList"></ul>
+      </div>
+      <div>
+        <h2>Suggestions:</h2>
+        <table id="tableSuggest">
+          <tr>
+            <th>Item</th>
+            <th>Quanitity</th>
+            <th>Bring This Item</th>
+          </tr>
+        </table>
       </div>
     </div>
   </body>
