@@ -5,14 +5,48 @@
     <meta charset="utf-8">
     <script src="js/main.js"></script>
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     
     <!-- get rid of favicon error -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
-  <body>
+  <body style="margin-left: 10px; margin-right: 10px">
+    <h1>Inventory Manager</h1>
     <form>
-      <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
+        <h2>Type an object below to add it to the item pool (FOR TESTING PURPOSE, USE "fish" AS INPUT)  </h2>
+        <label>Item Name:</label>
+        <input type="text" id="item-name" name="itemName">
+        <button type="submit" id="add-item">Add/Mod Item</button>
+        <button type="submit" id="del-item">Delete Item</button>
+        <label id = "lbl-result"></label>
     </form>
+        <p>Click an item to transfer to/from inventory</p>
+        <div class="icon-grid" id="item-pool">
+          <i class="fas fa-paperclip"></i>          
+          <i class="fas fa-bicycle"></i>
+          <i class="fas fa-car-side"></i>
+          <i class="fas fa-guitar"></i>
+        </div>
+        <div class="icon-grid" id="inventory" style="background-color: #121212">
+          <div class="empty-slot"></div>
+          <div class="empty-slot"></div>
+        </div>
+      <button id = "calculate-value">Calculate Value</button>
+      <button id = "reveal-results">Reveal Results</button>
+    <h3 id = "inventory-value"  style="display: none">Inventory Value: {{INVENTORY_VALUE}}</h3>
+    <h3 id = "inventory-weight" style="display: none">Inventory Weight: {{INVENTORY_WEIGHT}}</h3>
+    <div id = "results" style="display: none">
+      <h1>Results</h1>
+      <p id="results-text"></p>
+    </div>
+
+
   </body>
 </html>
+
+
+
+

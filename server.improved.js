@@ -1,17 +1,64 @@
+let inventoryValue = 0
+let inventoryWeight = 0
+const prefix = "fas fa-"
+
+function addInventory(item)
+{
+  inventoryValue += parseInt(item.value);
+  inventoryWeight += parseInt(item.weight);
+  item.inInventory = true;
+}
+
+function delInventory(item)
+{
+  inventoryValue -= parseInt(item.value);
+  inventoryWeight -= parseInt(item.weight);
+  item.inInventory = false;
+}
+
+const getInventory = function( request, response ) 
+{
+  
+  const data = { inventoryValue, inventoryWeight };
+
+  response.writeHeader( 200, { "Content-Type": "text/plain" })
+  response.end(JSON.stringify(data));
+}
+
+const getResults = function( request, response ) 
+{
+  response.writeHeader( 200, { "Content-Type": "text/plain" })
+  response.end(JSON.stringify(appdata));
+}
+
+const getResult = function(itemName, request, response ) 
+{
+  let result
+  
+  if(itemName.includes('='))
+    itemName = itemName.split('=')[1]
+  
+  const index = appdata.findIndex(item => item.item === itemName);
+  if (index!== -1) 
+    result = appdata[index];
+  else 
+    console.log("Item not found in appdata array: " + itemName);
+  
+  response.writeHeader( 200, { "Content-Type": "text/plain" })
+  response.end(JSON.stringify(result));
+}
+
 const http = require( "http" ),
       fs   = require( "fs" ),
-      // IMPORTANT: you must run `npm install` in the directory for this assignment
-      // to install the mime library if you"re testing this on your local machine.
-      // However, Glitch will install it automatically by looking in your package.json
-      // file.
       mime = require( "mime" ),
       dir  = "public/",
       port = 3000
 
 const appdata = [
-  { "model": "toyota", "year": 1999, "mpg": 23 },
-  { "model": "honda", "year": 2004, "mpg": 30 },
-  { "model": "ford", "year": 1987, "mpg": 14} 
+  { "item": "paperclip", "value": 1,     "weight": 1,        "inInventory": false},
+  { "item": "bicycle",   "value": 50,    "weight": 120000,   "inInventory": false},
+  { "item": "car-side",  "value": 20000, "weight": 1000000,  "inInventory": false},
+  { "item": "guitar",    "value": 200,   "weight": 1500,     "inInventory": false},
 ]
 
 const server = http.createServer( function( request,response ) {
@@ -22,30 +69,84 @@ const server = http.createServer( function( request,response ) {
   }
 })
 
-const handleGet = function( request, response ) {
+const handleGet = function( request, response ) 
+{
+  const itemName = request.url.split("/")[2];
   const filename = dir + request.url.slice( 1 ) 
-
-  if( request.url === "/" ) {
-    sendFile( response, "public/index.html" )
-  }else{
-    sendFile( response, filename )
+  const requestURL = request.url.split("?")[0]
+  
+  if( requestURL === "/" ) 
+    {sendFile( response, "public/index.html" )}
+  else if (requestURL === "/getInventory")
+    {getInventory( request, response )}
+  else if (requestURL === "/getResults")
+    {getResults( request, response )}
+  else if (requestURL === "/getResult")
+  {
+    const itemName = request.url.split("?")[1];
+    getResult(itemName, request, response )
   }
+  else
+  {sendFile( response, filename)}
+}
+
+function addOrModItem(dataObject)
+{
+  const newItem = 
+  {
+    item: dataObject.addOrModItem,
+    value: dataObject.value,
+    weight: dataObject.weight,
+    inInventory: false
+  }
+  const index = appdata.findIndex(item => item.item === dataObject.addOrModItem);
+  if (index!== -1) 
+    appdata[index] = newItem;
+  else 
+    appdata.push(newItem)
+}
+
+function delItemFromPool(dataObject)
+{
+  const itemToDelete = dataObject.delItem;
+  const index = appdata.findIndex(item => item.item === itemToDelete);
+  if (index!== -1) 
+    appdata.splice(index, 1);
+  else 
+    console.log("Item not found in appdata array: " + itemToDelete);
+}
+
+function moveIcon(dataObject, key)
+{
+  let object = dataObject[key];
+  object = object.substring(prefix.length);
+  const item = appdata.find(obj => obj.item === object); 
+  if (item)
+    if(key === "addIcon")
+      addInventory(item)
+    else if(key === "delIcon")
+      delInventory(item)
 }
 
 const handlePost = function( request, response ) {
   let dataString = ""
-
   request.on( "data", function( data ) {
       dataString += data 
   })
-
+  
   request.on( "end", function() {
-    console.log( JSON.parse( dataString ) )
+    const dataObject = JSON.parse(dataString);
+    const key = Object.keys(dataObject)[0];
+    
+    if(key === "addOrModItem")
+      addOrModItem(dataObject)
+    else if (key === "delItem")
+      delItemFromPool( dataObject)
+    else
+      moveIcon(dataObject, key)
 
-    // ... do something with the data here!!!
-
-    response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
-    response.end("test")
+    response.writeHeader( 200, { "Content-Type": "text/plain" })
+    response.end()
   })
 }
 
@@ -71,4 +172,4 @@ const sendFile = function( response, filename ) {
    })
 }
 
-server.listen( process.env.PORT || port )
+server.listen( process.env.PORT || port );
