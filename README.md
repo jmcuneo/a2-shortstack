@@ -7,8 +7,8 @@ This project is a very simple (silly) calculator. The user inputs 2 numbers, cho
 
 
 ## Technical Achievements
-- **Single-page App**: All forms and data are displayed on the same page. When an item is added, modified, or deleted, the table changes immediately to reflect it. Data is saved server-side, so any entries added, changed, or deleted by any user will stay that way until another change is made or until glitch makes the project go to sleep.
-- **User Can Modify Data**: By pressing the "modify" button, the user can change number values, operators, and even what the correct answer is displayed as.
+- **Single-page App**: All forms and data are displayed on the same page. When an item is added, modified, or deleted, the table changes immediately to reflect it. Data is saved server-side, so any entries added, changed, or deleted by any user will stay that way until another change is made or until glitch makes the project go to sleep. This was achieved by using a combination async and regular event functions for each button and then handling the returning promises. Each time the server sent the most recent data in a response, the data table was re-built to be up-to-date.
+- **User Can Modify Data**: By pressing the "modify" button, the user can choose to change number values, operators, and even what the correct answer is displayed as. To achieve this, I assigned an ID to each data entry that corresponded with their position in the server-side data array. I sent this ID and the newest field changes to the server, where they were parsed to take the most recent data from each source (new and old). The most challenging parts of this section were hiding the modification form while the add-item form was visible and vice-versa, parsing the data to combine new and old on the server side, and properly handling the HTML querying of the different table's radio buttons. 
 
 ## Design/Evaluation Achievements
 - **Tested with students**: I tasked 3 students with creating 2 data entries, deleting at least one data entry, and modifying at least one row.
