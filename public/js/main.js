@@ -79,6 +79,42 @@ const createEntry = function (name, item, price, qty) {
   return entry;
 };
 
+const createSuggest = function (item, qty) {
+  const suggest = {};
+  suggest.Sitem = item;
+  suggest.Sqty = qty;
+  return suggest;
+};
+
+const clearSuggest = function(array){
+  console.log(!!document.getElementById("suggestRow"));
+  if(!!document.getElementById("suggestRow")){
+    for (let i = 0; i < array.length - 1; i++) {
+      console.log("clearingtable. length: ", array.length)
+      document.getElementById("suggestRow").remove();
+    }
+  }else{
+    return;
+  }
+};
+const makeTable = function (array) {
+  //check if table is empty
+  for (let j = 0; j < array.length; j++) {
+    const entry = array[j];
+    const table = document.getElementById("tableSuggest");
+    const row = `<tr id="suggestRow">
+              <td>${entry.Sitem}</td>
+              <td>${entry.Sqty}</td>
+              <td><button class="bring">Bring</button></td>
+            </tr>`;
+    table.insertAdjacentHTML("beforeend", row);
+    //eventlistener
+    const bringButton = table.querySelector(".bring:last-child");
+    bringButton.addEventListener("click", function (event) {
+      event.preventDefault();
+    });
+  }
+};
 /**
  * Adds row to HTML table
  * creates an event listener for each button created - can get index from click
@@ -98,6 +134,7 @@ const addToTable = function (entry) {
   removeButton.addEventListener("click", function (event) {
     event.preventDefault();
   });
+
   resetTextBoxes();
 };
 
@@ -107,6 +144,8 @@ const resetTextBoxes = function () {
   document.querySelector("#youritem").value = "";
   document.querySelector("#itemPrice").value = ""; //new
   document.querySelector("#numItems").value = "";
+  document.querySelector("#suggestItem").value = "";
+  document.querySelector("#suggestQty").value = "";
 };
 
 //check if input box is empty
@@ -125,10 +164,14 @@ const refreshPage = async function () {
     body: "",
   });
   const text = await response.json();
-  for (let i = 0; i < text.length; i++) {
-    addToTable(text[i]);
-    makeGuestList(text, text[i]);
+  const appdata = text.appdata;
+  const suggestdata = text.suggestdata;
+  for (let i = 0; i < appdata.length; i++) {
+    addToTable(appdata[i]);
+    makeGuestList(appdata, appdata[i]);
   }
+  clearSuggest(suggestdata);
+  makeTable(suggestdata);
   document.getElementById("yourname").focus(); //put cursor in first input box
   console.log("done");
 };
@@ -158,10 +201,57 @@ const clearTable = function (text) {
   refreshPage();
 };
 
+const suggest = async function (event) {
+  // stop form submission from trying to load a new .html page for displaying results...
+  // this was the original browser behavior and still remains to this day
+  event.preventDefault();
+
+  const itemSuggest = document.querySelector("#suggestItem");
+  const qtySuggest = document.querySelector("#suggestQty");
+
+  //make sure all fields complete
+
+  const newSuggest = createSuggest(itemSuggest.value, qtySuggest.value);
+
+  const response = await fetch("/suggest", {
+    method: "POST",
+    body: JSON.stringify(newSuggest),
+  });
+  const text = await response.json();
+  const justAdded = text[text.length - 1];
+  clearSuggest(text);
+  makeTable(text); //implement second table
+  console.log("suggest:", text);
+};
+
+const bring = async function (entryIndex) {
+  const response = await fetch("/bring", {
+    method: "POST",
+    body: JSON.stringify(entryIndex),
+  });
+  const text = await response.json();
+  const appdata = text.appdata;
+  const suggestdata = text.suggestdata;
+  addToTable(appdata[appdata.length - 1]);
+  console.log(suggestdata);
+  
+  for (let i = 0; i <= suggestdata.length; i++) {
+    console.log("clearingtable")
+    document.getElementById("suggestRow").remove();
+  }
+  clearSuggest(suggestdata);
+  makeTable(suggestdata);
+  //const justAdded = text[text.length - 1];
+  console.log("Bring this item: ", text);
+};
+
 window.onload = function () {
   refreshPage();
   const button = document.getElementById("submit");
   button.onclick = submit;
+
+  const suggestButton = document.getElementById("suggest");
+  suggestButton.onclick = suggest;
   //event listener
   document.addEventListener("click", function (event) {
     event.preventDefault();
@@ -171,5 +261,14 @@ window.onload = function () {
       const entryIndex = event.target.closest("tr").rowIndex - 1; // Subtract 1 because of table header
       remove.onclick = remove(entryIndex);
     }
+
+    //check if there are any elements to remove
+    if (event.target && event.target.classList.contains("bring")) {
+      //use event listener to get the index and use to call remove
+      const suggestIndex = event.target.closest("tr").rowIndex - 1; // Subtract 1 because of table header
+      bring.onclick = bring(suggestIndex);
+    }
   });
 };
+
+//if someone adds something that is in suggestdat -> remove from suggest data??
