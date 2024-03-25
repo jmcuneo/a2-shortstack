@@ -2,7 +2,7 @@ Assignment 2 - Short Stack: Basic Two-tier Web Application using HTML/CSS/JS and
 ===
 
 ## Name list
-I made this website as a people list with function to add, remove, and edit people from the people list. This could be used as a party guest list, attendance list, and more. It also shows the time the person was added to the list as the generated field. There are 4 names in the test data. Just enter the person's name in the box and click submit to add someone to the list. Click delete to delete the person and finally click edit to edit the person's name. 
+I made this website as a people list with function to add, remove, and edit people from the people list. This could be used as a party guest list, attendance list, and more. It also shows the time the person was added to the list as the generated field. There are 4 names in the test data. Just enter the person's name in the box and click submit to add someone to the list. Click delete to delete the person and finally click edit to edit the person's name. The generated fields are the unique id per name which is hidden, the added date, and the count of how many times an individual person is on the list. 
 
 https://a2-brandonlui.glitch.me
 
@@ -11,7 +11,7 @@ https://a2-brandonlui.glitch.me
 
 I had the server respond back when editing, deleting, or adding data and the client added the data accordingly. When adding data, the server responds with the ID of the item and the generated data, the date. This is then implemented into the data table as shown. 
 
-- **Tech Achievement 1**: (5 points) In addition to a form enabling adding and deleting data on the server, also add the ability to modify existing data.
+- **Tech Achievement 2**: (5 points) In addition to a form enabling adding and deleting data on the server, also add the ability to modify existing data.
 
 I added a fucntion to modify existing data by clicking on the edit button on the table. 
 
@@ -29,5 +29,20 @@ Nothing really suprised me exept for the fact that the site was fast!
 
 What would you change about the interface based on their feedback?
 I would make it more user friendly by adding borders to the table and also prevent duplicate names or empty names from being added to the list. 
+
+
+
+
+Provide the last name of each student you conduct the evaluation with. 
+Will Huang
+
+What problems did the user have with your design?
+No, it could be better by adding more borders and making it look more sophisticated. 
+
+What comments did they make that surprised you?
+He liked taht it woked well and it was simple.
+
+What would you change about the interface based on their feedback?
+I would make it more clean and sophisticated. I would style the tables better. 
 
 

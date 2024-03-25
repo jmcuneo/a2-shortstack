@@ -36,8 +36,12 @@ const addRow = function(row) {
   let td = document.createElement('td');
   td.textContent = row.name;
   tr.appendChild(td);
-  let date = document.createElement('td');
 
+  td = document.createElement('td');
+  td.textContent = row.count;
+  tr.appendChild(td);
+
+  let date = document.createElement('td');
   date.textContent = new Date(row.addedDate).toLocaleString();
   tr.appendChild(date);
   let td2 = document.createElement('td');

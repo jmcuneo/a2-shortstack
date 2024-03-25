@@ -10,10 +10,10 @@ const http = require( "http" ),
 
 const appdata = [
 
-  { name: "John", id: "1", addedDate: new Date()},
-  { name: "Paul", id: "2", addedDate: new Date()},
-  { name: "George", id: "3", addedDate: new Date()},
-  { name: "Ringo", id: "4", addedDate: new Date()}
+  { name: "John", id: "1", addedDate: new Date(), count: 1},
+  { name: "Paul", id: "2", addedDate: new Date(), count: 1},
+  { name: "George", id: "3", addedDate: new Date(), count: 1},
+  { name: "Paul", id: "4", addedDate: new Date(), count: 2}
 ]
 
 const server = http.createServer( function( request,response ) {
@@ -90,6 +90,14 @@ const handlePost = function( request, response ) {
     dataString = JSON.parse( dataString )
     dataString.id = Math.random().toString(36).substr(2, 9)
     dataString.addedDate = new Date()
+    let count = 0;
+    for (let i = 0; i < appdata.length; i++) {
+      if (appdata[i].name.toLowerCase() === dataString.name.toLowerCase()) {
+        count++;
+      }
+    }
+    count++;
+    dataString.count = count;
 // add the data to our data array
     appdata.push( dataString )
     console.log( dataString )
@@ -116,7 +124,6 @@ const sendFile = function( response, filename ) {
        // file not found, error code 404
        response.writeHeader( 404 )
        response.end( "404 Error: File Not Found" )
-
      }
    })
 }
