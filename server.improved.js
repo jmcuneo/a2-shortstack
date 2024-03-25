@@ -9,9 +9,12 @@ const http = require( "http" ),
       port = 3000
 
 const appdata = [
-  { "model": "toyota", "year": 1999, "mpg": 23 },
-  { "model": "honda", "year": 2004, "mpg": 30 },
-  { "model": "ford", "year": 1987, "mpg": 14} 
+  { 
+    studentName: 'Esha Bajwa',
+    credits : 102,
+    grade: 180,
+    creditsLeft: 78
+  }
 ]
 
 const server = http.createServer( function( request,response ) {
@@ -30,6 +33,11 @@ const handleGet = function( request, response ) {
   }else{
     sendFile( response, filename )
   }
+
+  if (request.url === "/getResponses"){
+    response.writeHeader(200, { "Content-Type": "text/plain" });
+    response.end(JSON.stringify(appdata));
+  }
 }
 
 const handlePost = function( request, response ) {
@@ -40,9 +48,21 @@ const handlePost = function( request, response ) {
   })
 
   request.on( "end", function() {
-    console.log( JSON.parse( dataString ) )
+  
+    if (request.url === "/submit") {
+      appdata.push(JSON.parse(dataString));
+    } else if (request.url === "/delete") {
+      deleteItem(JSON.parse(dataString));
+    }
+    
 
-    // ... do something with the data here!!!
+    for (let i = 0; i < appdata.length; i++) {
+      let response = appdata[i];
+      response.creditsLeft = response.grade-response.credits;
+      console.log(response);
+    }
+    console.log(appdata)
+  
 
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
     response.end("test")
@@ -70,5 +90,10 @@ const sendFile = function( response, filename ) {
      }
    })
 }
+const deleteItem = function (jsonData) {
+  appdata.splice(jsonData["deletingResponse"], 1);
+};
 
 server.listen( process.env.PORT || port )
+
+
