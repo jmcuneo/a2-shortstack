@@ -1,4 +1,78 @@
 body {
-  background:black;
+  background:cadetblue;
   color:white;
+  overflow: clip;
+  text-align: center;
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.square {
+    border: 2px solid black;
+    border-radius: 5px;
+    height: 20em;
+    width: 20em;
+}
+
+.spacer {
+  height: 0.8em;
+}
+
+.cursor {
+  height: 1.1em;
+  width: 1.1em;
+  /* background: rgb(255, 248, 238); */
+  /* border-radius: 1em; */
+  position: absolute;
+}
+
+.target {
+  height: 1.1em;
+  width: 1.1em;
+  background: rgb(255, 248, 238);
+  border-radius: 1em;
+  position: relative;
+}
+
+.line {
+  height: 2.5em;
+  width: 1.8em;
+  background: black;
+  position: absolute;
+  border-radius: 0.3em;
+}
+
+#lines {
+  position: absolute;
+  background: transparent;
+}
+
+#score {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: rgb(255, 248, 238);
+}
+
+.hscore {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: black;
+}
+
+button {
+  background: transparent;
+  border: 2px solid black;
+  border-radius: 0.3em;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: black;
+}
+
+#targets {
+  border: none;
+}
+
+#hscores {
+  display: flex;
+  justify-content: center;
 }

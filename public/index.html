@@ -10,9 +10,22 @@
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
   <body>
-    <form>
-      <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
+    <div id="lines"></div>
+    <div id="hscores"></div>
+    <form class="box">
+      <div class="spacer"></div>
+      <div class="square" id="mouse" onmousemove="trackMouse(event)"></div>
+      <div class="spacer"></div>
+      <div class="square" id="area">
+        <div class="square" id="targets">
+
+        </div>
+        <img class="cursor" src="images/cursor.svg" id="cursor"></img>
+      </div>
+      <div class="spacer"></div>
+      <div class="score" id="score">Score: 0</div>
+      </div>
     </form>
+    <button onclick="submitScore()">Submit your score!</button>
   </body>
 </html>
