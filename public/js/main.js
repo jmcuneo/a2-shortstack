@@ -2,22 +2,25 @@
 
 
 const submit = async function( event ) {
-  // stop form submission from trying to load
-  // a new .html page for displaying results...
-  // this was the original browser behavior and still
-  // remains to this day
-  event.preventDefault()
+  if (confirm("Do you want to submit your name?")) {
+    // stop form submission from trying to load
+    // a new .html page for displaying results...
+    // this was the original browser behavior and still
+    // remains to this day
+    event.preventDefault()
 
-  const input = document.querySelector("#yourname"),
-      json = {"yourname": input.value},
-      body = JSON.stringify(json)
+    const input = document.querySelector("#yourname"),
+        json = {"yourname": input.value},
+        body = JSON.stringify(json)
 
-  const response = await fetch( "/submit", {
-    method:"POST",
-    body
-  })
-  const text = await response.text()
-  console.log( "text:", text)
+    const response = await fetch("/submit", {
+      method: "POST",
+      body
+    })
+    const text = await response.text()
+    console.log("text:", text)
+    confirm("Succeed! Thank you for joining us");
+  }
 }
 
 const add = async function( event ){

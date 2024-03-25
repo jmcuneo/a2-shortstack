@@ -98,7 +98,7 @@ const handlePost = function( request, response ) {
         request.on("end", function () {
             console.log(JSON.parse(dataString))
             response.writeHead(200, "OK", {"Content-Type": "text/plain"})
-            response.end("test")
+            response.end("Succeed")
         })
     }else if(request.url === '/add'){
         let dataString = "";
