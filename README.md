@@ -24,7 +24,7 @@ The front-end utilizes HTML, CSS, and JavaScript, with a focus on Flexbox for CS
 - **Constructive Feedback:** Suggesting increasing the size of the task input field and add button for adding tasks to make them more prominent.
 - **Changed Features:** Increased the size of the input field and the font size of the add button to improve visibility and usability.
 
-**Hu:**
+**Chantre:**
 
 - **Positive Feedback:** Liked the quick response time when adding, editing, and deleting tasks from the server.
 - **Constructive Feedback:** Suggested increasing the size of the container for tasks to make it easier to read and interact with the tasks.
