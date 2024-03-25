@@ -10,20 +10,13 @@
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
   <body>
-    <button>
-      Start order
+    <button onclick=startNewOrder()>
+      Start new order
     </button>
 
-    <form id="additem"> <p>
-      Add the item that you would like to order!
-    </p>
-
-    </form>
-    <form>
-      <button id="itemSelect">Add item to order</button>
-      <input type="text" id="yourname" placeholder="Name for order">
-      <input type="text" id="yourname" placeholder="Ingredients">
-      <button id="submit">submit</button>
-    </form>
+    <button id="orders" onclick=checkOrders()>
+      Check existing orders
+    </button>
+    
   </body>
 </html>

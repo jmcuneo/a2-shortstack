@@ -1,8 +1,5 @@
 body {
-  background:black;
+  background:brown;
   color:white;
 }
-form.additem {
-  background-color: antiquewhite;
-  visibility: hidden;
-}
+
