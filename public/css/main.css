@@ -14,6 +14,10 @@ body {
   margin-bottom: 5rem;
 }
 
+.label-text {
+  color: #040404;
+}
+
 #input-form {
   width: 50%;
   height: 20vh;
@@ -54,7 +58,6 @@ button {
   list-style: none;
   margin: 0;
   text-align: center;
-  transition: all 200ms;
   vertical-align: baseline;
   white-space: nowrap;
 }
@@ -75,10 +78,6 @@ button {
   border-collapse: collapse;
   border: 2px solid black;
   letter-spacing: 1px;
-}
-
-.days-left {
-  cursor: pointer;
 }
 
 th,
