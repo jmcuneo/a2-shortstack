@@ -1,6 +1,8 @@
 
 ---
 
+Jolene Pern http://a2-jolenepern.glitch.me
+
 ## Your Personal Library
 
 I developed a Personal Library website, where you can enter books you are currently reading and the track the progress of your books. I used CSS flex positioning for parts of my website. 
