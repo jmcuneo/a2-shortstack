@@ -1,6 +1,8 @@
 # Assignment 2 - Short Stack: Basic Two-tier Web Application using HTML/CSS/JS and Node.js
 Lucas Sicard
 
+https://a2-lucassicard.glitch.me/
+
 ### Summary:
 This application keeps track of all of your expenses for any given month! It separates the values into rent, utilities, 
 food, & other. Then it adds up all the values & displays everything in an easy-to-read table. You may add new data to 
