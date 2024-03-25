@@ -1,74 +1,93 @@
-const http = require( "http" ),
-      fs   = require( "fs" ),
-      // IMPORTANT: you must run `npm install` in the directory for this assignment
-      // to install the mime library if you"re testing this on your local machine.
-      // However, Glitch will install it automatically by looking in your package.json
-      // file.
-      mime = require( "mime" ),
-      dir  = "public/",
-      port = 3000
+const http = require("http");
+const fs = require("fs");
+const mime = require("mime");
 
-const appdata = [
-  { "model": "toyota", "year": 1999, "mpg": 23 },
-  { "model": "honda", "year": 2004, "mpg": 30 },
-  { "model": "ford", "year": 1987, "mpg": 14} 
-]
+const port = process.env.PORT || 3000;
 
-const server = http.createServer( function( request,response ) {
-  if( request.method === "GET" ) {
-    handleGet( request, response )    
-  }else if( request.method === "POST" ){
-    handlePost( request, response ) 
+let appdata = [
+  { "task": "groceries", "priority": "low", "creationdate": "3/18/2024, 11:13:00 AM" },
+  { "task": "sleep", "priority": "low", "creationdate": "3/18/2024, 11:14:00 AM" },
+  { "task": "homework", "priority": "high", "creationdate": "3/18/2024, 11:15:00 AM"} 
+];
+
+const server = http.createServer((request, response) => {
+  if (request.method === "GET") {
+    handleGet(request, response);
+  } else if (request.method === "POST") {
+    handlePost(request, response);
   }
-})
+});
 
-const handleGet = function( request, response ) {
-  const filename = dir + request.url.slice( 1 ) 
+const handleGet = (request, response) => {
+  const filename = "public" + request.url;
 
-  if( request.url === "/" ) {
-    sendFile( response, "public/index.html" )
-  }else{
-    sendFile( response, filename )
+  if (request.url === "/") {
+    sendFile(response, "public/index.html");
+  } else if (request.url === "/getdata") {
+    const dataWithDeadline = appdata.map(item => {
+      const deadline = calculateDeadline(item.creationdate, item.priority);
+      return { ...item, deadline }; 
+    });
+    response.writeHead(200, { "Content-Type": "application/json" });
+    response.end(JSON.stringify(dataWithDeadline)); 
+  } else {
+    sendFile(response, filename);
   }
-}
+};
 
-const handlePost = function( request, response ) {
-  let dataString = ""
+const handlePost = (request, response) => {
+  let dataString = "";
 
-  request.on( "data", function( data ) {
-      dataString += data 
-  })
+  request.on("data", (data) => {
+    dataString += data;
+  });
 
-  request.on( "end", function() {
-    console.log( JSON.parse( dataString ) )
+  request.on("end", () => {
+    const requestData = JSON.parse(dataString);
+    if (requestData.action === "delete") {
+      const { index } = requestData;
+      if (index >= 0 && index < appdata.length) {
+        appdata.splice(index, 1);
+        response.writeHead(200, { "Content-Type": "text/plain" });
+        response.end("Task deleted");
+      } else {
+        response.writeHead(400, { "Content-Type": "text/plain" });
+        response.end("Invalid task index");
+      }
+    } else {
+      const newData = requestData;
+      const deadline = calculateDeadline(newData.creationdate, newData.priority);
+      newData.deadline = deadline;
+      appdata.push(newData);
+      response.writeHead(200, { "Content-Type": "text/plain" });
+      response.end("Data received");
+    }
+  });
+};
 
-    // ... do something with the data here!!!
 
-    response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
-    response.end("test")
-  })
-}
+const sendFile = (response, filename) => {
+  const type = mime.getType(filename);
 
-const sendFile = function( response, filename ) {
-   const type = mime.getType( filename ) 
+  fs.readFile(filename, (err, content) => {
+    if (err === null) {
+      response.writeHeader(200, { "Content-Type": type });
+      response.end(content);
+    } else {
+      response.writeHeader(404);
+      response.end("404 Error: File Not Found");
+    }
+  });
+};
 
-   fs.readFile( filename, function( err, content ) {
+const calculateDeadline = (creationdate, priority) => {
+  const deadlineDate = new Date(creationdate);
+  if (priority === "high") {
+    deadlineDate.setDate(deadlineDate.getDate() + 3);
+  } else {
+    deadlineDate.setDate(deadlineDate.getDate() + 7);
+  }
+  return deadlineDate.toLocaleDateString(); 
+};
 
-     // if the error = null, then we"ve loaded the file successfully
-     if( err === null ) {
-
-       // status code: https://httpstatuses.com
-       response.writeHeader( 200, { "Content-Type": type })
-       response.end( content )
-
-     }else{
-
-       // file not found, error code 404
-       response.writeHeader( 404 )
-       response.end( "404 Error: File Not Found" )
-
-     }
-   })
-}
-
-server.listen( process.env.PORT || port )
+server.listen(port);

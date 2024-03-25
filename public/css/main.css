@@ -1,4 +1,96 @@
 body {
-  background:black;
-  color:white;
+  background: white;
+  color: black;
+  font-family: "NTR", sans-serif;
+}
+
+.ntr-regular {
+  font-family: "NTR", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+button {
+  font-family: "NTR", sans-serif;
+  font-size: 12px;
+  background-color: orange; 
+  color: white;
+  border: none;
+  border-radius: 2px;
+  padding: 1px 10px;
+}
+
+button:hover {
+  background-color: red;
+}
+
+
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  padding: 10px; 
+  text-align: left;
+}
+
+.table-container {
+  margin: 20px auto; 
+  width: 90%; 
+  max-width: 800px; 
+}
+
+p {
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 20px;
+}
+
+form {
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 10px;
+}
+
+
+:root {
+  --nav-color: orange;
+  --nav-text: #ffffff;
+}
+
+*,
+*::before,
+*::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  background-color: var(--nav-color);
+  font-size: 1.2rem;
+  font-family: "NTR", sans-serif;
+  height: 70px;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 80%;
+  margin: auto;
+  font-size: 30px;
+}
+
+.navbar ul {
+  display: flex; 
+  list-style-type: none;
+  padding: 0; 
+}
+
+.navbar ul li {
+  margin: 0 10px;
+}
+
+.container .navbar ul li {
+  padding: 10px;
 }

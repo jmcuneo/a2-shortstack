@@ -1,18 +1,50 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>CS4241 Assignment 2</title>
-    <meta charset="utf-8">
-    <script src="js/main.js"></script>
-    <link rel="stylesheet" href="css/main.css">
-    
-    <!-- get rid of favicon error -->
-    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
-  </head>
-  <body>
-    <form>
-      <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
-    </form>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CS4241 Assignment 2</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=NTR&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+</head>
+<body>
+  <div class="container">
+    <div class="navbar">
+      <nav class="nav-flex">
+        <ul>
+          <li>To Do List</li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+  <p>
+    Add a task to your to-do list:
+  </p>
+  <form>
+    <input type="text" id="task" placeholder="Task">
+    <input type="text" id="priority" placeholder="Priority - low/high">
+    <button type="submit">Submit</button>
+  </form>
+  <p>
+    Your current to-do list:
+  </p>
+  <table id="todo-table" class="table-container">
+    <thead>
+      <tr>
+        <th>Task</th>
+        <th>Priority</th> 
+        <th>Creation Date</th>
+        <th>Deadline</th>
+         <th>Delete Task</th> 
+      </tr>
+    </thead>
+    <tbody id="todo-table-body">
+    </tbody>
+  </table>
+
+  <script src="js/main.js"></script>
+</body>
 </html>
