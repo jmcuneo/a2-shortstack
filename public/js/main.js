@@ -49,8 +49,7 @@ function addStudent(){
       for (let response of json) {
         
         response.responseNum = index;
-        let row = table.insertRow(-1);
-        
+        let dummyRow = table.insertRow(-1);
         let name = row.insertCell(0);
         let credsEarned = row.insertCell(1);
         let credsNeeded = row.insertCell(2);
