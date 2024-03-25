@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>CS4241 Assignment 2</title>
+    <meta charset="utf-8">
+    <script src="js/main.js"></script>
+    <link rel="stylesheet" href="css/main.css">
+
+    <!-- get rid of favicon error -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Workbench&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <form>
+      <label for="monthYear">Enter Month & Year</label>
+      <input type="month" id="monthYear">
+
+      <label for="rent">Enter Rent</label>
+      <input type="number" id="rent" placeholder="$0.00">
+
+      <label for="util">Enter Utilities</label>
+      <input type="number" id="util" placeholder="$0.00">
+
+      <label for="food">Enter Food Expenses</label>
+      <input type="number" id="food" placeholder="$0.00">
+
+      <label for="other">Enter Other Expenses</label>
+      <input type="number" id="other" placeholder="$0.00">
+      <button class="submitButton">S U B M I T</button>
+    </form>
+
+    <div class="info">
+      <table>
+        <tr>
+          <th>Month & Year</th>
+          <th>Rent</th>
+          <th>Utilities</th>
+          <th>Food</th>
+          <th>Other</th>
+          <th>Monthly Total</th>
+        </tr>
+        <tr id="totals">
+          <td>Totals:</td>
+          <td>$0</td>
+          <td>$0</td>
+          <td>$0</td>
+          <td>$0</td>
+          <td>$0</td>
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>

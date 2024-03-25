@@ -5,28 +5,28 @@ const http = require( "http" ),
       // However, Glitch will install it automatically by looking in your package.json
       // file.
       mime = require( "mime" ),
-      dir  = "public/",
+      dir  = "src/",
       port = 3000
 
 const appdata = [
-  { "model": "toyota", "year": 1999, "mpg": 23 },
-  { "model": "honda", "year": 2004, "mpg": 30 },
-  { "model": "ford", "year": 1987, "mpg": 14} 
+  { "date": "January 2024", "rent": 500, "util": 200, "food": 300, "other": 400, "total": 1400 },
+  { "date": "February 2024", "rent": 500, "util": 190, "food": 290, "other": 399, "total": 1379 },
+  { "date": "March 2024", "rent": 500, "util": 210, "food": 280, "other": 398, "total": 1388 }
 ]
 
 const server = http.createServer( function( request,response ) {
   if( request.method === "GET" ) {
-    handleGet( request, response )    
+    handleGet( request, response )
   }else if( request.method === "POST" ){
-    handlePost( request, response ) 
+    handlePost( request, response )
   }
 })
 
 const handleGet = function( request, response ) {
-  const filename = dir + request.url.slice( 1 ) 
+  const filename = dir + request.url.slice( 1 )
 
   if( request.url === "/" ) {
-    sendFile( response, "public/index.html" )
+    sendFile( response, "src/index.html" )
   }else{
     sendFile( response, filename )
   }
@@ -36,21 +36,30 @@ const handlePost = function( request, response ) {
   let dataString = ""
 
   request.on( "data", function( data ) {
-      dataString += data 
+      dataString += data
   })
 
   request.on( "end", function() {
-    console.log( JSON.parse( dataString ) )
+    if (dataString.length !== 0) {
+      const input = JSON.parse( dataString );
 
-    // ... do something with the data here!!!
+      appdata.push({
+        "date": input.date,
+        "rent": parseInt(input.rent),
+        "util": parseInt(input.util),
+        "food": parseInt(input.food),
+        "other": parseInt(input.other),
+        "total": parseInt(input.rent) + parseInt(input.util) + parseInt(input.food) + parseInt(input.other)
+      });
+    }
 
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
-    response.end("test")
+    response.end(JSON.stringify(appdata))
   })
 }
 
 const sendFile = function( response, filename ) {
-   const type = mime.getType( filename ) 
+   const type = mime.getType( filename )
 
    fs.readFile( filename, function( err, content ) {
 
@@ -62,7 +71,6 @@ const sendFile = function( response, filename ) {
        response.end( content )
 
      }else{
-
        // file not found, error code 404
        response.writeHeader( 404 )
        response.end( "404 Error: File Not Found" )
