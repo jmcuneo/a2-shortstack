@@ -5,14 +5,52 @@
     <meta charset="utf-8">
     <script src="js/main.js"></script>
     <link rel="stylesheet" href="css/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rum+Raisin&display=swap" rel="stylesheet"> 
     
     <!-- get rid of favicon error -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
   <body>
+
+    <h1>How many more credits do your students need?</h1>
+    <p>This website will calculate how many credits your students need to graduate.</p>
+    <p>Please enter one student at a time.</p>
+
     <form>
-      <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
-    </form>
+      <p>
+        <label for="student-name">Student Name:</label>
+        <input type="text" id="student-name" name="student-name">
+      </p>
+      <!-- <p>
+        <label for="year">Class Year:</label>
+        <select id="year" name="year">
+          <option value="First-Year" selected="selected">First-Year</option>
+          <option value="Sophomore">Sophomore</option>
+          <option value="Junior">Junior</option>
+          <option value="Senior">Senior</option>
+        </select>
+      </p> -->
+      <p>
+        <label for="credits">Credits Earned:</label>
+        <input type="text" id="credits" name="credits">
+      </p>
+      <p>
+        <label for="grade">Credits Needed:</label>
+        <input type="text" id="grade" name="grade">
+      </p>
+
+      
+      <button>Submit</button>
+  </form>
+
+  <div id="resultTable">
+    <h2 class="centerText">Your Students</h2>
+    <table id="students" class="center">
+    </table>
+  </div>
+
+  
   </body>
 </html>

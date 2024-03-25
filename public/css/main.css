@@ -1,4 +1,41 @@
 body {
-  background:black;
-  color:white;
+  background:#cc8084;
+  color:black;
+  font-family: "Rum Raisin", sans-serif;
+} 
+table {
+  border-collapse: collapse;
+  border: 5px solid black;
+  background:#ffffff;
 }
+td, th {
+  border: 2px solid black;
+  padding: 10px;
+  text-align: center;
+} 
+p{
+  text-align: center;
+}
+
+form{
+  background:#cd9b9d;
+  color:black;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+h1,h2{
+  text-align: center;
+}
+
+button{
+  background-color: #cc8084;
+  font-family: "Rum Raisin", sans-serif;
+}
+
+.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+

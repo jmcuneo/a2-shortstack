@@ -9,9 +9,14 @@ const http = require( "http" ),
       port = 3000
 
 const appdata = [
-  { "model": "toyota", "year": 1999, "mpg": 23 },
-  { "model": "honda", "year": 2004, "mpg": 30 },
-  { "model": "ford", "year": 1987, "mpg": 14} 
+  { 
+    studentName: 'Esha Bajwa',
+    //credits = credits earned
+    credits : 102,
+    //grade = credits required 
+    grade: 180,
+    creditsLeft: 78
+  }
 ]
 
 const server = http.createServer( function( request,response ) {
@@ -27,9 +32,14 @@ const handleGet = function( request, response ) {
 
   if( request.url === "/" ) {
     sendFile( response, "public/index.html" )
+  }else if (request.url === "/getAppdata"){
+    response.writeHeader(200, { "Content-Type": "text/plain" });
+    response.end(JSON.stringify(appdata));
   }else{
     sendFile( response, filename )
   }
+
+  
 }
 
 const handlePost = function( request, response ) {
@@ -40,10 +50,15 @@ const handlePost = function( request, response ) {
   })
 
   request.on( "end", function() {
-    console.log( JSON.parse( dataString ) )
-
-    // ... do something with the data here!!!
-
+    let newData = JSON.parse(dataString);
+    if (request.url === "/submit") {
+      //server logic and derived field 
+      newData.creditsLeft = newData.grade - newData.credits;
+      appdata.push(newData);
+    //used the submit framework for the delete 
+    } else if (request.url === "/delete") {
+      appdata.splice(newData["deletingResponse"], 1);
+    }
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
     response.end("test")
   })
@@ -71,4 +86,9 @@ const sendFile = function( response, filename ) {
    })
 }
 
+ 
+
+
 server.listen( process.env.PORT || port )
+
+
