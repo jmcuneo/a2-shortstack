@@ -1,4 +1,72 @@
+@font-face {
+  font-family: Nunito;
+  src: url(Nunito-Regular.ttf);
+}
+
 body {
-  background:black;
+  font-family: Nunito, Arial, Helvetica, sans-serif;
+  background:#52473f;
   color:white;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+h1 {
+  font-size: 1.5rem;
+  margin: 5px 0px;
+}
+
+main {
+  display: flex;
+  width: 100vw;
+  min-height: 92vh;
+  color: white;
+}
+
+.panel {
+  width: 50%;
+  height: 100%;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+button {
+  margin: 10px;
+}
+
+label {
+  margin-left: 5px;
+}
+
+
+table, tr {
+  border: 1px solid black;
+  background: white;
+  border-collapse: collapse;
+  width: 90%;
+  text-align: center;
+}
+
+th {
+  background-color: black;
+  color: white;
+}
+
+footer {
+  font-size: 0.75rem;
+}
+
+a {
+  color: white;
 }
