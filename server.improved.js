@@ -10,6 +10,7 @@ const http = require( "http" ),
       dir  = "public/",
       port = 3000
 
+//Base starting data
 const appdata = [
   { "val1": 2, "val2": 2, "op": "+", "output" : 4, "guess" : null},
   { "val1": 3, "val2": 5, "op": "*", "output" : 15, "guess" : null},
@@ -21,13 +22,13 @@ const server = http.createServer( function( request,response ) {
   if( request.method === "GET" ) {
     handleGet( request, response )    
   }else if( request.method === "POST" ){
-    if (request.url === "/submit") {
+    if (request.url === "/submit") { //New item
       handlePost( request, response ) 
-    } else if (request.url === "/refresh"){
+    } else if (request.url === "/refresh"){ //When page refreshes
       sendData(response)
-    } else if (request.url === "/delete") {
+    } else if (request.url === "/delete") { //Delete an item
       deleteData(request, response)
-    } else if (request.url === "/modify") {
+    } else if (request.url === "/modify") { //Modify an item
       modData(request, response)
     }
   }
@@ -35,7 +36,6 @@ const server = http.createServer( function( request,response ) {
 
 const handleGet = function( request, response ) {
   const filename = dir + request.url.slice( 1 ) 
-  //console.log("GET url: " + request.url)
 
   if( request.url === "/" || request.url.includes("?")) {
     //Weird bug was popping up here with extra GET requests being sent after data was modified
@@ -48,6 +48,7 @@ const handleGet = function( request, response ) {
   }
 }
 
+//Handles new item
 const handlePost = function( request, response ) {
   let dataString = ""
 
@@ -59,18 +60,19 @@ const handlePost = function( request, response ) {
     let data = JSON.parse(dataString)
     console.log(data)
 
-    let output = eval(data.val1 + data.op + data.val2) //Switch out of eval to switch case or something
+    let output = eval(data.val1 + data.op + data.val2) //Get correct answer
     let guess = false
-    if(data.guess == output){
+    if(data.guess == output){ //If user guessed, evaluate that guess 
       guess = true
     } else if (data.guess == ''){
       guess = null
     }
     
+    //Add data to table
     appdata.push({val1: parseInt(data.val1), val2: parseInt(data.val2), op: data.op, output, guess})
     //console.log(appdata)
     
-    sendData(response)
+    sendData(response) //Send data back to client
   })
 }
 
@@ -103,6 +105,7 @@ function sendData(response) {
   response.end(JSON.stringify(appdata))
 }
 
+//Delete an item from the table
 function deleteData (request, response) {
   let dataString = ""
 
@@ -111,14 +114,15 @@ function deleteData (request, response) {
   })
 
   request.on("end", function(){
-    data = JSON.parse(dataString)
+    data = JSON.parse(dataString) //Data is just the index of the entry to remove
     console.log("Index for deletion: " + data)
-    let removed = appdata.splice(data, 1)
+    let removed = appdata.splice(data, 1) //Remove from table
     console.log(removed)
-    sendData(response)
+    sendData(response) //Send data back to client
   } )
 }
 
+//Modify data
 function modData (request, response) {
   let dataString = ""
 
@@ -130,36 +134,42 @@ function modData (request, response) {
     let data = JSON.parse(dataString)
     //console.log(data)
 
-    let oldData = appdata[data.index]
-    let comboData = combineData(data, oldData)
+    let oldData = appdata[data.index] //Get currently stored data in server
+    let comboData = combineData(data, oldData) //Combine old and new data
 
+    //If the user didnt assign a correct value, calculate it
     if (comboData.output == null || comboData.output == '') {
-      //Switch out of eval to switch case or something
       comboData.output = eval(comboData.val1 + comboData.op + comboData.val2) 
     }
     
-    appdata[data.index] = comboData
+    appdata[data.index] = comboData //Replace old server data 
     sendData(response)
   })
 }
 
-
+//Combine old and new data
 function combineData (mod, old) {
+  //New instance to store info
   let newData = {val1: null, val2: null, op: null, output: null, guess: null}
   if (mod.output != null) {
+    //If user assigned a new answer, assign here
     newData.output = mod.output
   }
+
+  //Get the most recent values of first value, second value, and the operator
   newData.val1 = pickData(mod, old, "val1")
   newData.val2 = pickData(mod, old, "val2")
   newData.op = pickData(mod, old, "op")
-  console.log("New operator is " + newData.op)
+
   return newData
 }
 
+//Pick the most recent data from old and new
 function pickData (mod, old, valType) {
+  //If data exists in most recent entry (mod), use that
   if (mod[valType] != null && mod[valType] != '') {
     return mod[valType]
-  } else {
+  } else { //Otherwise default to old data
     return old[valType]
   }
 }
