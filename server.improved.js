@@ -8,11 +8,7 @@ const http = require( "http" ),
       dir  = "public/",
       port = 3000
 
-const appdata = [
-  { "model": "toyota", "year": 1999, "mpg": 23 },
-  { "model": "honda", "year": 2004, "mpg": 30 },
-  { "model": "ford", "year": 1987, "mpg": 14} 
-]
+const appdata = []
 
 const server = http.createServer( function( request,response ) {
   if( request.method === "GET" ) {
@@ -33,6 +29,7 @@ const handleGet = function( request, response ) {
 }
 
 const handlePost = function( request, response ) {
+
   let dataString = ""
 
   request.on( "data", function( data ) {
@@ -40,13 +37,30 @@ const handlePost = function( request, response ) {
   })
 
   request.on( "end", function() {
-    console.log( JSON.parse( dataString ) )
+    input = JSON.parse(dataString);
 
-    // ... do something with the data here!!!
+    if ( request.url === "/submit" ) {
+
+      dob = input.dob.split("-");
+      age = 2024 - dob[0] / 1;
+      if (dob[1] > 3) {
+        age -= 1;
+      }
+      
+      appdata.push({name: input.name, age: age, class: input.class / 1, major: input.major});
+
+    } else {
+
+      for (var i = 0; i < input.length; i++) {
+        appdata.splice(input[i]-i-1, 1);
+      }
+
+    }
 
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
-    response.end("test")
+    response.end( JSON.stringify( appdata ) )
   })
+
 }
 
 const sendFile = function( response, filename ) {
