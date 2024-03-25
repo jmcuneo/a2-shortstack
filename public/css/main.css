@@ -8,8 +8,14 @@ a {
 
 }
 #main {
-    margin-top: 10px;
+    display: flex;
+justify-content: center;
 }
-.card {
+#main h1 {
+    font-size: 2.5em;
     margin-bottom: 20px;
+}
+
+.red {
+    color: red;
 }

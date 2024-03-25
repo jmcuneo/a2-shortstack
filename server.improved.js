@@ -10,10 +10,10 @@ const http = require( "http" ),
 
 const appdata = [
 
-  { name: "John", id: "1" },
-  { name: "Paul", id: "2" },
-  { name: "George", id: "3" },
-  { name: "Ringo", id: "4" }
+  { name: "John", id: "1", addedDate: new Date()},
+  { name: "Paul", id: "2", addedDate: new Date()},
+  { name: "George", id: "3", addedDate: new Date()},
+  { name: "Ringo", id: "4", addedDate: new Date()}
 ]
 
 const server = http.createServer( function( request,response ) {
@@ -89,12 +89,13 @@ const handlePost = function( request, response ) {
     // for our data
     dataString = JSON.parse( dataString )
     dataString.id = Math.random().toString(36).substr(2, 9)
+    dataString.addedDate = new Date()
 // add the data to our data array
     appdata.push( dataString )
     console.log( dataString )
     
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
-    response.end(JSON.stringify({ success: true }))
+    response.end(JSON.stringify(dataString))
   })
 }
 
