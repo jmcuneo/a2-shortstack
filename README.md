@@ -5,6 +5,8 @@ Assignment 2 - Short Stack: Basic Two-tier Web Application using HTML/CSS/JS and
 ## [Robotics] Part Calculator Tool
 My site is a calculator that records the parts needed to build a project (in my case, a combat robot) and information about those parts. Before I made this site, I was recording my part list and weight calculations manually and was hoping for a better way to handle this task. With my derived field **Weight**, this process becomes automatic, as long as the user knows the weight per unit (this field is easy to find on a CAD build).
 
+When you are ready to try out the site, go to: https://a2-briannasahagian.glitch.me/
+
 I used a flexbox layout on the site for positioning, with containers for the text and images. The text flexbox has a `flex-direction: column` while the image flexbox has a `flex-direction: row` to reflect the different layout needs.
 
 In order to use the `Add/Modify Part` functionality of the site, the user should simply enter the **Part Name**, **Material**, **Quantity**, and **Weight per Unit** associated with their entry. For instance, one Spinner made of Steel at 0.5lbs per unit. It is important to note that for the **Weight per Unit** field, only numeric values above 0 will be recognized as valid input. For the **Quantity** field specifically, only integer values above 0 will be recognized as valid input. The button will either add a new entry with the specified fields if no parts with the entered **Part Name** exist in the table or will modify the fields of the existing entry that matches the entered **Part Name**.
