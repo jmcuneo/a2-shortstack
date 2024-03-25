@@ -26,6 +26,8 @@ const handleGet = function( request, response ) {
   }else{
     sendFile( response, filename )
   }
+  //response.writeHead("Default");
+  //response.end();
 }
 
 const handlePost = function( request, response ) {
@@ -43,6 +45,7 @@ const handlePost = function( request, response ) {
     // Do something with the data here
 
     appdata.push(finalData);
+
     //console.log(appdata);
     //console.log(finalData);
     
