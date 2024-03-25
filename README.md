@@ -4,6 +4,8 @@ Assignment 2 - Short Stack: Basic Two-tier Web Application using HTML/CSS/JS and
 ## Name list
 I made this website as a people list with function to add, remove, and edit people from the people list. This could be used as a party guest list, attendance list, and more. It also shows the time the person was added to the list as the generated field. There are 4 names in the test data. Just enter the person's name in the box and click submit to add someone to the list. Click delete to delete the person and finally click edit to edit the person's name. 
 
+https://a2-brandonlui.glitch.me
+
 ## Technical Achievements
 - **Tech Achievement 1**: (5 points)Create a single-page app that both provides a form for users to submit data and always shows the current state of the server-side data. To put it another way, when the user submits data, the server should respond sending back the updated data (including the derived field calculated on the server) and the client should then update its data display.
 
