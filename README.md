@@ -2,8 +2,8 @@ Assignment 2 - Short Stack: Basic Two-tier Web Application using HTML/CSS/JS and
 ===
 
 ## Simple To-Do List
-For my project I made a fairly simple to-do list app. The user can input a task name, due date, and color, and an entry will be added to the list on the server.
-The server side calculation determines the number in the priority column of the list. The priority is simply determined by sorting all the items in the list by their due date, with the item at priority 1 being the next item due.    
+For my project I made a fairly simple to-do list app. The user can input a task name, due date, and color, and an entry will be added to the list on the server.  
+The server-side calculation determines the number in the priority column of the list. The priority is simply determined by sorting all the items in the list by their due date, with the item at priority 1 being the next item due.    
 For styling I used CSS flexboxes and a variety of selectors as outlined in the assignment description to style all the main visual elements on the page. I also used the Nunito font from Google Fonts.
 
 ## Technical Achievements
