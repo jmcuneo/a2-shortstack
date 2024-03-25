@@ -9,10 +9,9 @@ const http = require( "http" ),
       port = 3000
 
 const appdata = [
-  { "model": "toyota", "year": 1999, "mpg": 23 },
-  { "model": "honda", "year": 2004, "mpg": 30 },
-  { "model": "ford", "year": 1987, "mpg": 14} 
 ]
+
+var id = 0;
 
 const server = http.createServer( function( request,response ) {
   if( request.method === "GET" ) {
@@ -33,19 +32,85 @@ const handleGet = function( request, response ) {
 }
 
 const handlePost = function( request, response ) {
-  let dataString = ""
 
+	if (request.url === "/get") {
+		response.writeHead( 200, "OK", {"Content-Type": "text/plain" });
+		response.end(JSON.stringify(appdata));
+		return;
+	}
+
+  let dataString = ""
   request.on( "data", function( data ) {
       dataString += data 
   })
 
   request.on( "end", function() {
-    console.log( JSON.parse( dataString ) )
+		let data = JSON.parse(dataString);
+		console.log( data );
+		if (request.url === "/submit") {	
+			let eventDate = new Date(data.date);
+			let currentDate = new Date();
+			currentDate.setHours(0,0,0,0);
+			
+			// time between two dates. it works! but gets slightly off every time they add a leap second?
+			let timeDiff = currentDate.getTime()-eventDate.getTime();
+			let dateDiff = Math.round(timeDiff / (1000 * 3600 * 24));
+			
+			if (data.hasOwnProperty("id")) {
+				var index = -1;
+				for (i=0; i < appdata.length; i++) {
+					if(appdata[i].id === data.id) {
+						index = i;
+						break;
+					}
+				}
+				if (index != -1) {
+					appdata[i] = data;
+					appdata[i].dateDiff = dateDiff;
+				}
+				else {
+					response.writeHead( 200, "OK", {"Content-Type": "text/plain" });
+					response.end("failure!");
+					return;
+				}
+				response.writeHead( 200, "OK", {"Content-Type": "text/plain" });
+				response.end("modified report id" + data.id);
+				return;
+			}
+			
+			// id will always increment and never decrement. prevents race
+			// conditions. i think. i hope.
+			data.id = id;
+			data.dateDiff = dateDiff;
+			id++;
 
-    // ... do something with the data here!!!
+			appdata.push(data);
+			response.writeHead( 200, "OK", {"Content-Type": "text/plain" });
+			response.end("added report id" + id);
 
-    response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
-    response.end("test")
+		}
+
+		else if (request.url === "/delete") {
+			let delid = data.delid;
+			let index = -1;
+			for (i =0; i < appdata.length; i++) {
+				if(appdata[i].id === delid) {
+					index = i;
+					break;
+				}
+			}
+
+			response.writeHead(200, "OK", {"Content-Type": "text/plain"});
+			if (index != -1) {
+				appdata.splice(index, 1);
+				response.end("removed report id" + delid);
+			}
+			else {
+				response.end("failure");
+			}
+
+		}
+
   })
 }
 
@@ -70,5 +135,6 @@ const sendFile = function( response, filename ) {
      }
    })
 }
+
 
 server.listen( process.env.PORT || port )
