@@ -1,9 +1,5 @@
 const http = require( "http" ),
       fs   = require( "fs" ),
-      // IMPORTANT: you must run `npm install` in the directory for this assignment
-      // to install the mime library if you"re testing this on your local machine.
-      // However, Glitch will install it automatically by looking in your package.json
-      // file.
       mime = require( "mime" ),
       dir  = "public/",
       port = 3000
@@ -14,6 +10,7 @@ const appdata = [
   { "Part": "Uprights", "Material": "UHML", "Quantity": 2, "Weight": 0.0871949} 
 ]
 
+/* A function that calls the correct handler based on request type (GET or POST) */
 const server = http.createServer( function( request,response ) {
   if( request.method === "GET" ) {
     handleGet( request, response )    
@@ -22,6 +19,10 @@ const server = http.createServer( function( request,response ) {
   }
 })
 
+/* 
+ * A function that handles all GET requests sent to the server based on request URL
+ * and calls the associated send function (file or array)
+ */
 const handleGet = function( request, response ) {
   const filename = dir + request.url.slice(1)
   if(request.url === "/") {
@@ -33,6 +34,10 @@ const handleGet = function( request, response ) {
   }
 }
 
+/* 
+ * A function that handles all POST requests sent to the server based on request data
+ * and changes the array based on the request type
+ */
 const handlePost = function( request, response ) {
   let dataString = ""
 
@@ -42,27 +47,37 @@ const handlePost = function( request, response ) {
 
   request.on( "end", function() {
     var entry = JSON.parse(dataString)
-    entry_index = arrayIndexOf(entry.part_name, appdata)
+    entry_index = indexOfPartName(entry.part_name, appdata)
+
+    //Add or modify request
     if(entry.type === "add"){
-      new_quantity = parseFloat(entry.new_quantity)
+      new_quantity = parseInt(entry.new_quantity)
       weight_per_unit = parseFloat(entry.weight_per_unit)
       new_entry = {"Part": entry.part_name, "Material": entry.new_material, 
       "Quantity": entry.new_quantity, "Weight": entry.weight_per_unit * entry.new_quantity}
+
+      //Add entry because index is out of bounds for array (not found)
       if(entry_index == appdata.length && (new_quantity > 0 && weight_per_unit > 0)){
         appdata.push(new_entry)
+      //Modify entry because entry is in appdata
       }else if(new_quantity > 0 && weight_per_unit > 0){
         appdata.splice(entry_index, 1, new_entry)
       }
+    //Remove request
     }else{
-      appdata.splice(arrayIndexOf(entry.part_name, appdata), 1)
+      appdata.splice(entry_index, 1)
     }
     console.log(appdata)
-    response.writeHead( 200, "OK", {"Content-Type": "text/plain"})
-    response.end("test")
+    response.writeHeader( 200, "OK", {"Content-Type": "text/plain"})
+    response.end("Appdata modified")
   })
 }
 
-function arrayIndexOf(part_name, arr){
+/* 
+ * A function that locates part_name in the specified array arr
+ * @return: index of located element or arr.length if the element is not found
+ */
+function indexOfPartName(part_name, arr){
   for(let i = 0; i < arr.length; i++){
     if(arr[i].Part === part_name){
       return i;
@@ -71,6 +86,7 @@ function arrayIndexOf(part_name, arr){
   return arr.length;
 }
 
+/* A function that send the requested file to the client to fulfill a GET request */
 const sendFile = function( response, filename ) {
    const type = mime.getType( filename ) 
 
@@ -93,8 +109,9 @@ const sendFile = function( response, filename ) {
    })
 }
 
+/* A function that sends the array arr to the client to fulfill a GET request */
 const sendArr = function(response, arr){
-  response.writeHeader(200, "Fetched Table")
+  response.writeHeader(200, "OK", {"Content-Type": "text/plain"})
   response.end(JSON.stringify(arr))
 }
 

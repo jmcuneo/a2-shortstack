@@ -1,116 +1,39 @@
 Assignment 2 - Short Stack: Basic Two-tier Web Application using HTML/CSS/JS and Node.js  
 ===
+--- 
 
-Due: March 24th, by 11:59 PM.
+## [Robotics] Part Calculator Tool
+My site is a calculator that records the parts needed to build a project (in my case, a combat robot) and information about those parts. Before I made this site, I was recording my part list and weight calculations manually and was hoping for a better way to handle this task. With my derived field **Weight**, this process becomes automatic, as long as the user knows the weight per unit (this field is easy to find on a CAD build).
 
-This assignment aims to introduce you to creating a prototype two-tiered web application. 
-Your application will include the use of HTML, CSS, JavaScript, and Node.js functionality, with active communication between the client and the server over the life of a user session.
+I used a flexbox layout on the site for positioning, with containers for the text and images. The text flexbox has a `flex-direction: column` while the image flexbox has a `flex-direction: row` to reflect the different layout needs.
 
-Baseline Requirements
+In order to use the `Add/Modify Part` functionality of the site, the user should simply enter the **Part Name**, **Material**, **Quantity**, and **Weight per Unit** associated with their entry. For instance, one Spinner made of Steel at 0.5lbs per unit. It is important to note that for the **Weight per Unit** field, only numeric values above 0 will be recognized as valid input. For the **Quantity** field specifically, only integer values above 0 will be recognized as valid input. The button will either add a new entry with the specified fields if no parts with the entered **Part Name** exist in the table or will modify the fields of the existing entry that matches the entered **Part Name**.
+
+To use the `Remove Part` functionality of the site, the user should enter the **Part Name** of the entry they wish to remove. If there is an entry in the table with that name, it will be removed and the table will update. Otherwise, nothing will happen (so spelling is *IMPORTANT*).
+
 ---
-
-There is a large range of application areas and possibilities that meet these baseline requirements. 
-Try to make your application do something useful! A todo list, storing / retrieving high scores for a very simple game... have a little fun with it.
-
-Your application is required to implement the following functionalities (4 pts each, total 20 pts):
-
-- a `Server` which not only serves files, but also maintains a tabular dataset with 3 or more fields related to your application
-- a `Results` functionality which shows the entire dataset residing in the server's memory
-- a `Form/Entry` functionality which allows a user to add or delete data items residing in the server's memory
-- a `Server Logic` which, upon receiving new or modified "incoming" data, includes and uses a function that adds at least one additional derived field to this incoming data before integrating it with the existing dataset
-- the `Derived field` for a new row of data must be computed based on fields already existing in the row. 
-For example, a `todo` dataset with `task`, `priority`, and `creation_date` may generate a new field `deadline` by looking at `creation_date` and `priority`
-
-Your application is required to demonstrate the use of the following concepts:
-
-HTML (4 pts each, total 16 pts):
-- One or more [HTML Forms](https://developer.mozilla.org/en-US/docs/Learn/HTML/Forms), with any combination of form tags appropriate for the user input portion of the application
-- A results page displaying all data currently available on the server. You will most likely use a `<table>` tag for this, but `<ul>` or `<ol>` could also work and might be simpler to work with. Alternatively, you can create a single-page app (see Technical Acheivements) but this is not a requirement.
-- All pages should [validate](https://validator.w3.org)
-- If your app contains multple pages, they should all be accessible from the homepage (index.html)
-
-CSS (4 pts each, total 16 pts):
-- CSS styling of the primary visual elements in the application
-- Various CSS Selector functionality must be demonstrated:
-    - Element selectors
-    - ID selectors
-    - Class selectors
-- CSS positioning and styling of the primary visual elements in the application:
-    - Use of either a CSS grid or flexbox for layout
-    - Rules defining fonts for all text used; no default fonts! Be sure to use a web safe font or a font from a web service like [Google Fonts](http://fonts.google.com/)
-- CSS defined in a maintainable, readable form, in external stylesheets 
-
-JavaScript (4 pts):
-- At minimum, a small amount of front-end JavaScript to get / fetch data from the server; a sample is provided in this repository.
-
-Node.js (4 pts):
-- An HTTP Server that delivers all necessary files and data for the application, and also creates the required `Derived Fields` in your data. 
-A starting point is provided in this repository.
-
-Deliverables
----
-
-1. (5 pts) Fork the starting project code repo. The starter code in the repo may be used or discarded as needed.
-2. (60 pts, detailed above) Implement your project with the above requirements.
-3. Test your project to make sure that when someone goes to your main page, it displays correctly.
-4. (5 pts) Deploy your project to Glitch, and fill in the appropriate fields in your package.json file.
-5. (5 pts) Ensure that your project has the proper naming scheme `a2-FirstnameLastname` so we can find it.
-6. (5 pts) Modify the README to the specifications below, and delete all of the instructions originally found in this README.
-7. (5 pts) Create and submit a Pull Request to the original repo. Be sure to include your name in the pull request.
-
-Acheivements
----
-
-Below are suggested technical and design achievements. You can use these to help customize the assignment to your personal interests. These are recommended acheivements, but feel free to create/implement your own... just make sure you thoroughly describe what you did in your README and why it was challenging. ALL ACHIEVEMENTS MUST BE DESCRIBED IN YOUR README IN ORDER TO GET CREDIT FOR THEM. Remember, the highest grade you can get on any individual assignment is a 100%.
-
-*Technical*
-- (5 points) Create a single-page app that both provides a form for users to submit data and always shows the current state of the server-side data. To put it another way, when the user submits data, the server should respond sending back the updated data (including the derived field calculated on the server) and the client should then update its data display.
-
-- (5 points) In addition to a form enabling adding and deleting data on the server, also add the ability to modify existing data.
-
-*Design/UX*
-- (5 points per person, with a max of 10 points) Test your user interface with other students in the class. Define a specific task for them to complete (ideally something short that takes <10 minutes), and then use the [think-aloud protocol](https://en.wikipedia.org/wiki/Think_aloud_protocol) to obtain feedback on your design (talk-aloud is also fine). Important considerations when designing your study:
-
-1. Make sure you start the study by clearly stating the task that you expect your user to accomplish.
-2. You shouldn't provide any verbal instructions on how to use your interface / accomplish the task you give them. Make sure that your interface is clear enough that users can figure it out without any instruction, or provide text instructions from within the interface itself. 
-3. If users get stuck to the point where they give up, you can then provde instruction so that the study can continue, but make sure to discuss this in your README. You won't lose any points for this... all feedback is good feedback!
-
-You'll need to use sometype of collaborative software that will enable you both to see the test subject's screen and listen to their voice as they describe their thoughts, or conduct the studies in person. After completing each study, briefly (one to two sentences for each question) address the following in your README:
-
-1. Provide the last name of each student you conduct the evaluation with.
-2. What problems did the user have with your design?
-3. What comments did they make that surprised you?
-4. What would you change about the interface based on their feedback?
-
-*You do not need to actually make changes based on their feedback*. This acheivement is designed to help gain experience testing user interfaces. If you run two user studies, you should answer two sets of questions. 
-
-FAQ
----
-**Q: Can I use frameworks for this assignment?**
-
-A: No. We'll discuss them later this term, but for right now, we want to see that you can implement these features yourself instead of outsourcing them to an existing framework or library.
-
-**Q: After I delete some data server-side, the data persists on the client side until I refresh the page.**
-
-A: Make sure the client-side copy of the data also reflects the deletion. The server-side and client-side copies of the data should remain in sync at all times.
-
-**Q: Do I have to implement the specific achievements above?**
-
-A: No. As discussed in the instructions, you are free to implement your own. If you're not sure if they'll qualify, check with the instructor.
-
-**Q: If I do a single page for the technical achievement, will I still get credit for the last two criteria in the base requirements?**
-
-Yes.
-
-
-Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
----
-
-## Your Web Application Title
-Include a very brief summary of your project here. Be sure to include the CSS positioning technique you used, and any required instructions to use your application.
-
 ## Technical Achievements
-- **Tech Achievement 1**: Using a combination of...
+- **Single-Page Application**: On this site, the table responds in real time to `Add Part`, `Modify Part`, and `Remove Part` requests to show the current state of the server-side data. To achieve coordination between the index HTML page, client-side JS, and server-side JS I implemented a few key functions:<br>
+&nbsp; [1] The asynchronous POST request functions in the client-side JS file. `add()` queries the input fields in the add/modify part form for the user input and then sends this information in a POST request to the server. `remove()` does the same with the input field in the remove part form. After sending their POST requests, both functions make a call to the `constructTable()` function (described below) to render the information on the index.html page. Both of these POST request functions are also called in the `window.onload()` function in the event that the associated button is pressed: the add_button triggers `add()` and the remove_button triggers `remove()`.<br>
+&nbsp; [2] The POST and GET handlers in the server-side JS file. `handlePost()` takes and validates the user input for either an add or modify request via `add()`. Then the function changes the appdata array accordingly to reflect the results of the user request. `handleGet()` fetches the appdata array from the server and then sends it back to the client through the `receive()` function.<br>
+&nbsp; [3] The asynchronous GET request function in the client-side JS file. `receive()` sends a GET requests to the server and awaits the response while the server-side `handleGet()` function fetches the appdata array.<br>
+&nbsp; [4] The function in the client-side JS that builds the HTML table. `constructTable()` calls `receive()` to fetch the most current version of the appdata array and then constructs the table entry-by-entry. The function maps each array element to HTML data using table tags `<tr>` and `<td>`. This function is called in the `window.onload()` function to refresh the table when the page is refreshed or opened. This function is also called at the end of the `add()` and `remove()` functions to update the display with the changed data.
 
+This achievement was very challenging to implement, as I had to experiment with rendering the table after `onmouseover()` and `onmouseenter()` events before I could fully grasp how to render the table without manual interaction from the user. It was only after I included the `constructTable()` calls in both the `window.onload()` function and both POST request functions that I was able to get it working.
+- **Modify Functionality**: The site implements a `Modify Part` functionality through the `add()` function. An explanation of how to use the function is in the general summary part of this README. In order to separate the add and modify requests while still using the same client-side JS function, I added a condition to my server `handlePost()` function to determine whether the **Part Name** entered was already in appdata. If the name is not in appdata, the function calls `push()` to add a new entry. If the name is in appdata, the function calls `splice(entry_index, 1, new_entry)` to replace the old entry with the new fields. My function that searches for the **Part Name** in appdata is called `indexOfPartName()` and operates like the native `indexOf()` function except it uses a single field instead of the entire element to identify a matching array index.
+
+I believe that a separate modify_button would have been much easier to implement than the combination button I used to support the `Modify` functionality. However, my choice to combine the functionalities into a single button eliminates a lot of repetition (querying and sending the same fields) that would occur with two separate buttons/POST functions, so I believe the feature was worth the added implementation challenge.
+
+---
 ### Design/Evaluation Achievements
-- **Design Achievement 1**: 
+- **UX Testing and Evaluation**: I tested my UX with two students in the CS4241 class:
+    - [Student 1: **Ni**]<br>
+    &nbsp; [1]: Student 1 did not like that they had to erase the value  of each input field before entering their own information. They suggested that I find a way to put the default text for each field in the background of the input box.<br>
+    &nbsp; [2]: A comment that this student made that surprised me was that they did not know what to do when their entered input did not update the table. The reason their input was failing was because they had left the default text in the **Quantity** and **Weight per Unit** fields; the default text is not numeric so the input was not passing the validation check. I had assumed that users would not have trouble with validation for those fields because of what the default values said, but I realize now that it would be helpful to add instructions on the permitted data types for the numeric fields.<br>
+    &nbsp; [3]: Based on this student's feedback, I would first change the **value** fields for my `<input>` data to **placeholder** so that the default text does not have to be cleared before writing. I learned about this feature when the student suggested I check it out. I would next add in explicit instructions about the type of data that needs to be entered in **Quantity** and **Weight per Unit** fields so that users are not confused as to why the table isn't updated if they type something like 0.3lbs instead of 0.3. Finally, I would add in an error message or alert to let the user know when their input did not pass validation so they know that there is an issue with their entered text.
+    - [Student 2: **Rebello**]<br>
+    &nbsp; [1]: Student 1 did not like that they had to erase the value  of each input field before entering their own information. They suggested that I find a way to put the default text for each field in the background of the input box. This design problem is the same problem that the first student had, so I feel that this is an important design choice for me to revise/address.<br>
+    &nbsp; [2]: A comment that this student made that surprised me was that their images did not load very fast on their machine when they went to my site. I was surprised by this because the images would always load almost immediately on my machine. 
+    ![alt text](image_loading_issues.png)
+    This is an image of the student's display when they reloaded my site (after deleting all the table entries). The student suggested that I decrease the base size of the image files to try and prevent loading issues.<br>
+    &nbsp; [3]: Based on this student's feedback, I am going to switch the **value** fields for my `<input>` data to **placeholder**. Now that two students have both had the same issues with my site, I feel that it is important to change this before final deployment. I also would look into ways to prevent slow image loading when the site is loaded/refreshed. I am not entirely sure what caused this for the student, but it is something I can look into for future sites. Finally, while not a complaint, the student was able to enter a gigantic number into the numeric fields on my site. It may be worth implementing a cap on the input as a further validation check to cover another entry edge case (others I've covered already include 0 and negative numbers).
