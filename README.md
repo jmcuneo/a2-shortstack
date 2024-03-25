@@ -10,7 +10,7 @@ Project Link: https://a2-connorchartier.glitch.me/
     - I have created a single page app that allows the user to input two numbers and select a computation to complete. This then allows them to add, subract, multiply, and divide. The server side data is also displayed to the user at all times in the "Previous Results section".
 
 - **Tech Achievement 2**: Modifing existing data
-    - I did not add the ability to edit the existing data stored in the previous results section.
+    - I do have the ablility to add and delete data on the server, though, I did not add the ability to edit the existing data stored in the previous results section.
 
 ### Design/Evaluation Achievements
 - **Design Achievement 1**: Testing Participant #1
