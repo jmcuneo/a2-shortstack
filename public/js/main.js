@@ -77,18 +77,26 @@ async function yesNoPatternFunc(){
 
             var link="https://github.com/TNWing/a2-TrevorNg/blob/main/public/imgs/" +imgName + "?raw=true";
             document.getElementById("Display").src=link;
-            await wait(200);
-            if (currentKeyPress!=code || !shouldPress){
+            await wait(500);
+            if (shouldPress && currentKeyPress!=code || !shouldPress && currentKeyPress!=0){
                 run=false;
                 break;
             }
+            else{
+                currentKeyPress=0;
+                link="https://github.com/TNWing/a2-TrevorNg/blob/main/public/imgs/0.png?raw=true";
+                document.getElementById("Display").src=link;
+                await wait(300);
+            }
+
         }
         if (run){
             score++;
+            alert ("Your current score is " + score + ". Press okay to continue");
         }
 
     }
-    alert ("Your score is " + score);
+    alert ("Your total score is " + score);
 };
 function wait(ms){
     return new Promise(resolve => {
