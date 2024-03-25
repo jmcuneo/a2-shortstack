@@ -67,8 +67,8 @@ th, td {
   border-color:blanchedalmond
 }
 
-/* Rulesets for images with trex_img id */
-#trex_img {
+/* Rulesets for all images */
+img {
   width: 50%;
   height: 450px;
 }
