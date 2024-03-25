@@ -9,9 +9,11 @@ const http = require( "http" ),
       port = 3000
 
 const appdata = [
-  { "model": "toyota", "year": 1999, "mpg": 23 },
-  { "model": "honda", "year": 2004, "mpg": 30 },
-  { "model": "ford", "year": 1987, "mpg": 14} 
+
+  { name: "John", id: "1" },
+  { name: "Paul", id: "2" },
+  { name: "George", id: "3" },
+  { name: "Ringo", id: "4" }
 ]
 
 const server = http.createServer( function( request,response ) {
@@ -27,12 +29,54 @@ const handleGet = function( request, response ) {
 
   if( request.url === "/" ) {
     sendFile( response, "public/index.html" )
-  }else{
+  }
+  // api 
+  else if( request.url === "/api/getdata" ) {
+    response.writeHead( 200, "OK", {"Content-Type": "text/plain"})
+    response.end( JSON.stringify( appdata ) )
+  }
+  else{
     sendFile( response, filename )
   }
 }
 
 const handlePost = function( request, response ) {
+  if (request.url === "/api/delete") {
+    let dataString = ""
+    request.on( "data", function( data ) {
+      dataString += data 
+    })
+    request.on( "end", function() {
+      dataString = JSON.parse( dataString )
+      console.log(dataString)
+      appdata.splice(appdata.findIndex(x => x.id === dataString.row.id), 1)
+      response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
+      if (appdata.findIndex(x => x.id === dataString.row.id) === -1) {
+        response.end(JSON.stringify({success: true}))
+      } else {
+        response.end(JSON.stringify({success: false}))
+      }
+
+    })
+    return
+  }
+
+  if (request.url === "/api/edit") {
+    let dataString = ""
+    request.on( "data", function( data ) {
+      dataString += data 
+    })
+    request.on( "end", function() {
+      dataString = JSON.parse( dataString )
+      console.log(dataString)
+      appdata[appdata.findIndex(x => x.id === dataString.row.id)].name = dataString.row.newName
+      response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
+      response.end(JSON.stringify({success: true}))
+    })
+    return
+  }
+
+
   let dataString = ""
 
   request.on( "data", function( data ) {
@@ -40,12 +84,17 @@ const handlePost = function( request, response ) {
   })
 
   request.on( "end", function() {
-    console.log( JSON.parse( dataString ) )
-
-    // ... do something with the data here!!!
-
+    // generate a random number for the ID
+    // this is a simple way to generate a unique id
+    // for our data
+    dataString = JSON.parse( dataString )
+    dataString.id = Math.random().toString(36).substr(2, 9)
+// add the data to our data array
+    appdata.push( dataString )
+    console.log( dataString )
+    
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
-    response.end("test")
+    response.end(JSON.stringify({ success: true }))
   })
 }
 

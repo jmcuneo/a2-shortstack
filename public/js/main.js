@@ -8,7 +8,7 @@ const submit = async function( event ) {
   event.preventDefault()
   
   const input = document.querySelector( "#yourname" ),
-        json = { yourname: input.value },
+        json = { name: input.value },
         body = JSON.stringify( json )
 
   const response = await fetch( "/submit", {
@@ -18,10 +18,80 @@ const submit = async function( event ) {
 
   const text = await response.text()
 
-  console.log( "text:", text )
-}
+  input.value = "";
+  if (response.status === 200 ) {
+     window.location.reload();
+    }
+  }
+
+
 
 window.onload = function() {
    const button = document.querySelector("button");
   button.onclick = submit;
 }
+
+ //get data from /api/getdata
+ fetch('/api/getdata')
+ .then(response => response.json())
+ .then(data => {
+   let results = document.getElementById('results');
+   data.forEach(row => {
+     let tr = document.createElement('tr');
+     let td = document.createElement('td');
+     td.textContent = row.name;
+     tr.appendChild(td);
+     let td2 = document.createElement('td');
+     // add delete link
+    let a = document.createElement('a');
+     a.href = '#';
+     a.textContent = 'delete';
+     td2.appendChild(a);
+     td2.onclick = function() {
+       fetch('/api/delete', {
+         method: 'POST',
+         headers: {
+           'Content-Type': 'application/json'
+         },
+         body: JSON.stringify({row})
+       })
+       .then(response => response.json())
+       .then(data => {
+         if (data.success) {
+           tr.remove();
+         }
+       });
+     };
+     tr.appendChild(td2);
+     
+     let td3 = document.createElement('td');
+     let a2 = document.createElement('a');
+     a2.href = '#';
+     a2.textContent = 'edit';
+     td3.appendChild(a2);
+     td3.onclick = function() {
+       let newName = prompt('Enter a new name');
+       if (!newName) {
+         return;
+       }
+       row.newName = newName;
+     
+       fetch('/api/edit', {
+         method: 'POST',
+         headers: {
+           'Content-Type': 'application/json'
+         },
+         body: JSON.stringify({row})
+       })
+       .then(response => response.json())
+       .then(data => {
+         if (data.success) {
+           td.textContent = newName;
+         }
+       });
+     };
+     tr.appendChild(td3);
+
+     results.appendChild(tr);
+   });
+ });
