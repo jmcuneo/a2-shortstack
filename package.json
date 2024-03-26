@@ -1,8 +1,8 @@
 {
-  "name": "",
-  "version": "",
-  "description": "",
-  "author": "",
+  "name": "Storm report form",
+  "version": "1.0",
+  "description": "Weather reporting system for various weather events",
+  "author": "Éamonn Prendergast",
   "scripts": {
     "start": "node server.improved.js"
   },

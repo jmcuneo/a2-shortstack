@@ -5,14 +5,47 @@
     <meta charset="utf-8">
     <script src="js/main.js"></script>
     <link rel="stylesheet" href="css/main.css">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
     <!-- get rid of favicon error -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
   <body>
-    <form>
-      <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
-    </form>
+		<div id="site">
+			<header class="headerandfooter">
+				<h1 id="title">Storm Report Form</h1>
+			</header>
+			<form id ="submission">
+				<select id="type" name="Event">
+					<option value="Tornado">Tornado</option>
+					<option value="Hail">Hail</option>
+					<option value="Lightning">Lightning</option>
+					<option value="Wind">Wind</option>
+				</select>
+				<input type="date" id="event-date" name="Event date">
+				<input type="text" id="x-coord" placeholder="X coordinate">
+				<input type="text" id="y-coord" placeholder="Y coordinate">
+				<textarea id="description" placeholder="description" rows="5" cols="20"></textarea>
+				<button id="submitbutton">submit</button>
+			</form>
+			<h1>Reports</h1>
+			<div id = "report-table-container">
+				<table>
+					<tr id ="toprow">
+						<th id = "idth">id</th>
+						<th>Event Type</th>
+						<th>X coord</th>
+						<th>Y coord</th>
+						<th id="descth">Description</th>
+						<th id="dateth">Date</th>
+						<th>Days since</th>
+						<th id="actionth">Actions</th>
+					</tr>
+				</table>
+			</div>
+			<footer class="headerandfooter">
+				<p>©Éamonn Prendergast 2024</p>
+				<p><a href="mailto:example@example.com">email</a></p>
+			</footer>
+		</div>
   </body>
 </html>
