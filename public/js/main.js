@@ -187,7 +187,7 @@ const startMod = function(id) {
 }
 // different than standard submit. could probably make this one function but
 // i'm too lazy to do that right now. submissions with id are modifications
-const submitmod = async function(id) {
+const submitMod = async function(id) {
 	event.preventDefault();	
 	const type = document.querySelector( "#type" ),
 		date = document.querySelector( "#event-date" ),
