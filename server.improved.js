@@ -30,10 +30,9 @@ mem
 var testParams={//contains the
     gr:[],
     spd:[],
-    mem:[],
 };
-var bestRun=[0,0,0,0];
-var currentRun=[0,0,0,0];
+var bestRun=[0,0,0];
+var currentRun=[0,0,0];
 const server = http.createServer( function( request,response ) {
   if( request.method === "GET" ) {
 
@@ -84,18 +83,19 @@ const handlePost = function( request, response ) {
       request.on( "data", function( data ) {
       let str="";
       str+=data;
-      console.log("JJ");
-
-      console.log("JJ");
       if (str==="START"){
         startGame(request,response);
       }
+      else if (str==="RUN"){
+              getRunData
+              (request,response)
+            }
       else if (str==="PARAM"){
         giveParams(request,response)
       }
       else if (str==="DELETE"){
-          bestRun=[0,0,0,0];
-          finalScore(request,response);
+          bestRun=[0,0,0];
+          getRunData(request,response);
         }
       else if (str==="EVAL"){
         finalScore(request,response);
@@ -115,14 +115,27 @@ function giveParams(request,response){
 
         response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
         var returnVal={'grDelay':testParams.gr[0],'grChance':testParams.gr[1],
-        'spdDelay':testParams.spd[0],
-        'memDelay':testParams.mem[0],'memTime':testParams.mem[1],};
+        'spdDelay':testParams.spd[0],};
         response.end(JSON.stringify(returnVal))
       })
 }
+function getRunData(request,response){
+     request.on( "end", function() {
+
+            response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
+            var returnVal={'S1':bestRun[0],'S2':bestRun[1],
+            'S3':bestRun[2],};
+            response.end(JSON.stringify(returnVal))
+          })
+}
 function finalScore(request,response){
-    currentRun[3]=currentRun[0]+currentRun[1]+currentRun[2];
-    if (currentRun[3]>bestRun[3]){
+    console.log("HELP");
+    currentRun[2]=Number(currentRun[0])+Number(currentRun[1]);
+    console.log("FIN");
+    console.log(currentRun[0]);
+    console.log(currentRun[1]);
+    console.log(currentRun[2])
+    if (currentRun[2]>Number(bestRun[2])){
         bestRun=currentRun;
           request.on( "end", function() {
 
@@ -138,7 +151,7 @@ function finalScore(request,response){
         // ... do something with the data here!!!
 
         response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
-        response.end(currentRun[3])
+        response.end(currentRun[2])
       })
     }
 }
@@ -149,7 +162,7 @@ const startGame=function(request,response){
       dataString += data
   })
   console.log(testParams);
-if (testParams.gr.length==3 && testParams.spd.length==2 && testParams.mem.length==3){
+if (testParams.gr.length==3 && testParams.spd.length==2){
 
   request.on( "end", function() {
 
@@ -171,6 +184,7 @@ if (testParams.gr.length==3 && testParams.spd.length==2 && testParams.mem.length
 }
 const updateScore = async function( request, response,str ){
     params=JSON.parse(str);
+    console.log("SCORING");
     mult=1;
     if (str.ID==0){
         mult=testParams.gr[2]
@@ -178,11 +192,9 @@ const updateScore = async function( request, response,str ){
     else if(str.ID==1){
         mult=testParams.spd[1]
     }
-    else{
-        mult=testParams.mem[2];
-    }
-    currentRun[str.ID]=str.Score*mult;
+    currentRun[params.ID]=1000*Number(params.Score)*Number(mult);
     request.on( "end", function() {
+        response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
     response.end("test")
     })
 }
@@ -191,7 +203,6 @@ const setParams = function( request, response,str ) {
   let dataString = str
   testParams.gr=[];
   testParams.spd=[];
-  testParams.mem=[];
   request.on( "end", function() {
     params=JSON.parse(dataString);
     console.log( JSON.parse( dataString ) )
@@ -203,23 +214,20 @@ const setParams = function( request, response,str ) {
     //every 5% chance added, adds a flat 0.5% score as well as additional score scaling with amt of ms subtracted
     testParams.gr.push(params.grDelay);
     testParams.gr.push(params.grChance);
-    var delayRemoved=500-params.grDelay;
-    var chanceAdded=params.grChance-15;
-    scoreMult=1+ 0.01*(delayRemoved)/10 + 0.005*(chanceAdded)/5 + 0.005*chanceAdded*Math.log((100+delayRemoved)/100);
+    var delayRemoved=1000-Number(params.grDelay);
+    var chanceAdded=Number(params.grChance)-15;
+    console.log(scoreMult);
+    console.log(0.01*delayRemoved/10);
+    console.log(0.005*chanceAdded/5);
+    scoreMult= 1+ 0.01*(delayRemoved)/10 + 0.005*(chanceAdded)/5;
 
     testParams.gr.push(scoreMult);
 
     testParams.spd.push(params.speedDelay);
-    var delayRemoved=300-params.speedDelay;
+    var delayRemoved=550-Number(params.speedDelay);
     scoreMult=1+0.01*delayRemoved/5;
     testParams.spd.push(scoreMult);
-
-    testParams.mem.push(params.memDelay);
-    testParams.mem.push(params.memTime);
-    var delayRemoved=400-params.memDelay;
-    var timeRemoved=200-params.memTime;
-    scoreMult=1+0.01*delayRemoved/10 + 0.005*timeRemoved/5;
-    testParams.mem.push(scoreMult);
+    console.log(testParams)
 
     //with all the params set, we now need to initate the games
     //we tell client to start the games on their end,

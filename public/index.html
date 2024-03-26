@@ -14,17 +14,12 @@
     <br>
     <form id="TestParameters">
       <label for="grDelay">Green-Red Test: Delay Between Arrows(ms)</label>
-      <input type="number"  onkeydown="return false" value= "500" id="grDelay" step="10" min="0" max="500" name="grDelay"><br><br>
+      <input type="number"  onkeydown="return false" value= "1000" id="grDelay" step="10" min="500" max="1000" name="grDelay"><br><br>
       <label for="grChance">Green-Red Test: Chance for Red</label>
       <input type="number"  onkeydown="return false" value= "15" id="grChance" step="5" min="15" max="50" name="grChance"><br><br>
 
       <label for="speedDelay">Speed Test: Delay Between Arrows(ms)</label>
-      <input type="number"  onkeydown="return false" value= "300" id="speedDelay" step="10" min="0" max="300" name="speedDelay"><br><br>
-
-      <label for="memDelay">Memory Test: Delay Between Arrows(ms)</label>
-      <input type="number"  onkeydown="return false" value= "400" id="memDelay" step="10" min="0" max="400" name="memDelay"><br><br>
-      <label for="memTime">Memory Test: Time To Finish(ms per arrow)</label>
-      <input type="number" onkeydown="return false" value= "200" id="memTime" step="5" min="0" max="200"  name="memTime"><br><br>
+      <input type="number"  onkeydown="return false" value= "550" id="speedDelay" step="10" min="300" max="550" name="speedDelay"><br><br>
 
       <input id="submitParams" type="submit" value="Submit">
       <input id="startGame" type="submit" value="Start Game">
@@ -42,10 +37,6 @@
       <tr>
         <td>Speed Test</td>
         <td id="Score2">0</td>
-      </tr>
-      <tr>
-        <td>Memory Test</td>
-        <td id="Score3">0</td>
       </tr>
       <tr>
         <td>Total</td>

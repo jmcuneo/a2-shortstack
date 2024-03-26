@@ -53,7 +53,7 @@ async function updateParameters() {
     const parent=(document.getElementById("TestParameters"));
     const json = { grDelay: parent.querySelector("#grDelay").value,grChance:parent.querySelector("#grChance").value,
     speedDelay:parent.querySelector("#speedDelay").value,
-    memDelay:parent.querySelector("#memDelay").value,memTime:parent.querySelector("#memTime").value},
+    },
     body = JSON.stringify( json )
 
   const response = await fetch( "/submit", {
@@ -78,10 +78,11 @@ async function updateScore(testNum,score) {
 
   const text = await response.text()
   testNum++;
-  if (testNum<3){
+  if (testNum<2){
     playGames(testNum)
   }
   else{
+  console.log("DONE");
     currentlyPlaying=false;
     //ask server to calculate final score
     const response2 = await fetch( "/submit", {
@@ -90,7 +91,8 @@ async function updateScore(testNum,score) {
             body:"EVAL"
         })
         const text2=await response2.text();
-        if (text2==="Y"){
+        console.log(text2);
+        if (text2.charAt(0)=="Y"){
             alert("NEW RECORD!");
             updateBestScore();
         }
@@ -104,15 +106,14 @@ async function updateBestScore(){
     const response = await fetch( "/submit", {
         method:
         "POST",
-        body:"START"
+        body:"RUN"
     })
 
     const text = await response.text()
     var scores=JSON.parse(text);
-    document.getElementById("Score1").text=scores.S1;
-    document.getElementById("Score2").text=scores.S2;
-    document.getElementById("Score3").text=scores.S3;
-    document.getElementById("Score4").text=scores.S4;
+    document.getElementById("Score1").innerHTML=scores.S1;
+    document.getElementById("Score2").innerHTML=scores.S2;
+    document.getElementById("Score4").innerHTML=scores.S3;
 }
 const requestToStart= async function( event ) {
 
@@ -142,6 +143,7 @@ async function playGames(testNum){
     await wait(2000);
     document.getElementById("Display").src="https://github.com/TNWing/a2-TrevorNg/blob/main/public/imgs/0.png?raw=true";
     await wait(650);
+    console.log("GAME # " + testNum);
     switch(testNum){
         case 0:{
             yesNoPatternFunc();
@@ -149,10 +151,6 @@ async function playGames(testNum){
         }
         case 1:{
             speedPatternFunc();
-            break;
-        }
-        case 2:{
-            memoryPatternFunc();
             break;
         }
     }
@@ -216,7 +214,6 @@ async function yesNoPatternFunc(){
             await wait(Number(currentRunParams.grDelay));
 
             if (shouldPress && currentKeyPress!=code || !shouldPress && currentKeyPress!=0){
-                console.log("bad");
                 run=false;
                 break;
             }
@@ -226,7 +223,6 @@ async function yesNoPatternFunc(){
                 document.getElementById("Display").src=link;
                 await wait(300);
             }
-            console.log("HELP");
         }
         if (run){
             score++;
@@ -246,18 +242,22 @@ async function speedPatternFunc(){
     var isRed=false;
     while (run){
         //pattern gen
-        var code=Math.floor(Math.random()*4);
-        currentKeyPress=0;
+        var code=Math.floor(Math.random()*4)+1;
+
         var imgName=""
         if (isRed){
-            imgName=(code-36).toString() + "red.png";
+            imgName=(code).toString() + "red.png";
         }
         else{
-            imgName=(code-36).toString() + ".png";
+            imgName=(code).toString() + ".png";
         }
+        code+=36;
         var link="https://github.com/TNWing/a2-TrevorNg/blob/main/public/imgs/" +imgName + "?raw=true";
         document.getElementById("Display").src=link;
+        console.log(Number(currentRunParams.spdDelay));
         await wait(Number(currentRunParams.spdDelay));
+        console.log(currentKeyPress);
+        console.log(code);
         if (currentKeyPress!=code){
             run=false;
             break;
@@ -265,6 +265,7 @@ async function speedPatternFunc(){
         else{
             score++;
             isRed=!isRed;
+            currentKeyPress=0;
         }
     }
         document.getElementById("Display").src="https://github.com/TNWing/a2-TrevorNg/blob/main/public/imgs/0.png?raw=true";
@@ -272,53 +273,7 @@ async function speedPatternFunc(){
     updateScore(1,score);
 };
 
-var memVarHelper=false;
-//score is equal to size of the last memory pattern successfully done
-async function memoryPatternFunc(){
-    var length=1;
-    var run=true;
-    var score=0;
-    while (run){
-        currentKeyPress=0;
-        length++;
-        var pattern=[]
-        for (let i=0;i<length;i++){
-            var code=Math.floor(Math.random()*4);
-            pattern.push(code);
-            var imgName=(code-36).toString() + ".png";
-            var link="https://github.com/TNWing/a2-TrevorNg/blob/main/public/imgs/" +imgName + "?raw=true";
-            document.getElementById("Display").src=link;
-            await wait(Number(currentRunParams.memTime));
-             document.getElementById("Display").src="https://github.com/TNWing/a2-TrevorNg/blob/main/public/imgs/0.png?raw=true";
-        }
 
-        document.getElementById("Display").src="https://github.com/TNWing/a2-TrevorNg/blob/main/public/imgs/go.png?raw=true";
-        await wait(2500);
-        currentKeyPress=0;
-        prevKey=0;
-        for(let i=0;i<pattern.length;i++){
-           var input=await memHelper(prevKey);
-           if (input!=pattern[i]){
-                run=false;
-                break;
-           }
-        }
-        if (run){
-        score++;
-        }
-    }
-        document.getElementById("Display").src="https://github.com/TNWing/a2-TrevorNg/blob/main/public/imgs/0.png?raw=true";
-        await(1500);
-    updateScore(2,score);
-};
-
-
-async function memHelper(prevKey){
-    while (prevKey==currentKeyPress){
-
-    }
-    return currentKeyPress;
-}
 /*
 left arrow	37	ArrowLeft	ArrowLeft
 up arrow	38	ArrowUp	ArrowUp
@@ -341,10 +296,10 @@ async function deleteData(){
     })
     const text = await response.text()
     var scores=JSON.parse(text);
-    document.getElementById("Score1").text=scores.S1;
-    document.getElementById("Score2").text=scores.S2;
-    document.getElementById("Score3").text=scores.S3;
-    document.getElementById("Score4").text=scores.S4;
+    console.log(scores);
+    document.getElementById("Score1").innerHTML=scores.S1;
+    document.getElementById("Score2").innerHTML=scores.S2;
+    document.getElementById("Score4").innerHTML=scores.S3;
   }
 }
 
