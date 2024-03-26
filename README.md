@@ -4,15 +4,55 @@
 
 Ronak Wani: https://a2-ronakwani.glitch.me
 
-## Technical Achivements
-
-**HTML Features:**
-
+## Technical Achivements   
+   
+**HTML Features:**   
+- Used HTML forms for user input  
+- Displayed all the data currently available on the server using the "<table>" tag.  
+- Validated HTML pages  
+- Changed the title, h1 header, body. Added Google Fonts.  
+- Created a dropdown menu for choosing the transportation mode.
+- Created Submit and Confirm buttons.
+- Created a div container for the table.
+- Created HTML footer.
+- Added the main.js file to the HTML page.     
+       
 **CSS Styles:**
+- Used various CSS selectors like Element selectors, ID selectors, and Class selectors
+for styling.
+- Used #F08080FF for background color
+- Used #000000FF for body and table text
+- Used #DEB887FF for table row styling
+- Used #FF0000E2 for submit button background
+- Used #FFFFFFFF for submit button text color
+- Used Outfit Google font for h1 header
+- Used Libre Franklin Google font for body text
+- Used flexbox layout for div container of table and footer
+- Used justify-content to evenly space the rows in table
+- Used justify-content and align-items to center the footer
 
-**Javascript:**
+**Javascript:**   
+- Implemented GET in asynchronous window.onload to show the data
+is persistent even on page reload and is erased only when the server is restarted
+- Used JavaScript to handle the form submission without a page reload.
+- Created a JSON object (json) containing the extracted form data. 
+- Stringify the JSON object using JSON.stringify() to prepare it 
+for sending via HTTP request.   
+- All the functions (submit, del, modify, NewData, display, and window.onload)
+utilize asynchronous operations using async and await keywords. T
+that allows the code to perform tasks of fetching data 
+from the server without blocking the main thread.
+
 
 **Server/Node.js:**
+- Besides implementing GET and POST request handler
+- Also incorporated PUT and DELETE request handlers
+- Created server logic and derived field by calculating the cost for transportation
+- I found implementing PUT and DELETE requests challenging as they were not
+specifically covered in the class
+- I do not allow the user to change the First, Middle and Last Names.
+- For PUT request implementation, I use custom data attributes and linear search
+- I find the entry to be updated in the table by searching for it using FirstName and LastName of the user
 
 ## Design Achievements
 
