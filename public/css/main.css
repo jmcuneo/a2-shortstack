@@ -1,4 +1,73 @@
+/* styles.css */
 body {
-  background:black;
-  color:white;
+  background-image: url("https://cdn.glitch.global/6fa1f22f-66ec-4115-a43d-6d55a9c83d85/background1.jpeg?v=1711423910835");
+  color: white;
+  font-family: "Roboto", sans-serif;
+  font-weight: 100;
+  font-style: normal;
+  /* Not needed for this/??
+    margin: 0;
+    padding: 0;
+  */
+}
+
+header {
+  background-color: #444444;
+  color: white;
+  text-align: center;
+  padding: 20px 0;
+}
+
+/* Centered Flex Box */
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+form {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+input[type="text"] {
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+}
+
+button {
+  padding: 8px 16px;
+  font-size: 16px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+#todoList {
+  width: 1000px;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  padding: 10px;
+  list-style-type: disc;
+}
+
+.todoItem {
+  margin-bottom: 5px;
+  word-wrap: break-word;
+  /* Trying to text wrap here, not working at the moment*/
+}
+
+/* Highlight completed tasks */
+.completed {
+  background-color: lightgreen;
 }

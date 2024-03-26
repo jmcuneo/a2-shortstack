@@ -1,27 +1,62 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 
-const submit = async function( event ) {
-  // stop form submission from trying to load
-  // a new .html page for displaying results...
-  // this was the original browser behavior and still
-  // remains to this day
-  event.preventDefault()
-  
-  const input = document.querySelector( "#yourname" ),
-        json = { yourname: input.value },
-        body = JSON.stringify( json )
+document.addEventListener("DOMContentLoaded", function () {
+  const todoForm = document.getElementById("todoForm");
+  const todoInput = document.getElementById("todoInput");
+  const todoList = document.getElementById("todoList");
 
-  const response = await fetch( "/submit", {
-    method:"POST",
-    body 
-  })
+  // Adding a new to-do task
+  function addTodoItem(todoText) {
+    const todoItem = document.createElement("li");
+    todoItem.classList.add("todoItem");
+    todoItem.innerHTML = `
+            <span>${todoText}</span>
+            <button class="completeBtn">Complete</button>
+            <button class="deleteBtn">Delete</button>
+            <button class="editBtn">Edit</button>
+        `;
+    todoList.appendChild(todoItem);
+  }
 
-  const text = await response.text()
+  // Event listener for form submission
+  todoForm.addEventListener("submit", function (event) {
+    event.preventDefault();
+    const todoText = todoInput.value.trim();
+    if (todoText !== "") {
+      addTodoItem(todoText);
+      todoInput.value = "";
+    }
+  });
 
-  console.log( "text:", text )
-}
+  // Event delegation for complete, delete, and edit buttons
+  todoList.addEventListener("click", function (event) {
+    const target = event.target;
 
-window.onload = function() {
-   const button = document.querySelector("button");
-  button.onclick = submit;
-}
+    if (target.classList.contains("completeBtn")) {
+      markAsCompleted(target.parentNode);
+    } else if (target.classList.contains("deleteBtn")) {
+      deleteTodoItem(target.parentNode);
+    } else if (target.classList.contains("editBtn")) {
+      editTodoItem(target.parentNode);
+    }
+  });
+
+  // Marking as Complete function
+  function markAsCompleted(todoItem) {
+    todoItem.classList.toggle("completed");
+  }
+
+  // Deleting function
+  function deleteTodoItem(todoItem) {
+    todoList.removeChild(todoItem);
+  }
+
+  // Editing function
+  function editTodoItem(todoItem) {
+    const span = todoItem.querySelector("span");
+    const newText = prompt("Edit task:", span.textContent);
+    if (newText !== null && newText.trim() !== "") {
+      span.textContent = newText;
+    }
+  }
+});
