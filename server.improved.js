@@ -36,11 +36,14 @@ const handleGet = function(request, response)
   if (request.url === "/") {
     sendFile(response, "public/index.html");
   } else if (request.url === "/display") {
-    response.writeHead( 200, "OK", {"Content-Type": "text/plain" });
+    // Fetching data for table
+    response.writeHead(200, "OK", {"Content-Type": "text/plain"});
     response.end(JSON.stringify(gpaData));
   } else if (request.url === "/gpa") {
-    response.writeHead( 200, "OK", {"Content-Type": "text/plain" });
-    response.end(gpa.toString());
+    // Fetching GPA value
+    response.writeHead(200, "OK", {"Content-Type": "text/plain"});
+    let roundedGpa = Math.round(gpa * 100) / 100;
+    response.end(roundedGpa.toString());
   } else {
     sendFile(response, filename);
   }
@@ -56,11 +59,18 @@ const handlePost = function(request, response)
   if (request.url === "/submit")
   {
     request.on("end", function() {  
-      // ... do something with the data here!!!
       gpaData[gpaData.length] = JSON.parse(dataString);
-  
-      response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
+      response.writeHead(200, "OK", {"Content-Type": "text/plain"});
       response.end(JSON.stringify(gpaData[gpaData.length - 1]));
+      gpa = calculateGpa(gpaData);
+    })
+  } else if (request.url === "/delete")
+  {
+    request.on("end", function() {  
+      let entryToDelete = Number(JSON.parse(dataString));
+      response.writeHead(200, "OK", {"Content-Type": "text/plain"});
+      gpaData.splice(entryToDelete - 1, 1);
+      response.end(JSON.stringify(entryToDelete));
       gpa = calculateGpa(gpaData);
     })
   }

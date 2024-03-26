@@ -5,18 +5,29 @@
     <meta charset="utf-8">
     <script src="js/main.js"></script>
     <link rel="stylesheet" href="css/main.css">
-    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide">
+    <link rel="stylesheet", href="https://fonts.googleapis.com/css2?family=Fugaz+One&display=swap">
     <!-- get rid of favicon error -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
+  <h1>
+    GPA Calculator
+  </h1>
   <body>
     <form>
-      <input type="text" id="class" value="Class"><br>
-      <input type="text" id="grade" value="Grade"><br>
-      <input type="text" id="credits" value="Credits">
-      <button id="submit">Submit Entry</button>
+      <label><b></b>Class:</b></label>
+      <input type="text" id="class"><br>
+      <label><b>Grade</b> (A, B, C, F):</label>
+      <input type="text" id="grade"><br>
+      <label><b>Credits</b> (whole numbers only):</label>
+      <input type="text" id="credits"><br>
+      <button id="submit">Submit Entry</button><br>
+      <button id="delete">Delete Last Entry</button>
     </form>
-    <h2>Table</h2>
+    <p id="gpa">
+      GPA: 
+    </p>
+    <h2>Class List</h2>
     <table id="table">
       <tr>
         <th>Class</th>
@@ -24,8 +35,5 @@
         <th>Credits</th>
       </tr>
     </table>
-    <p id="gpa">
-      Current GPA
-    </p>
   </body>
 </html>

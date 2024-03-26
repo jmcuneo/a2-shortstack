@@ -6,6 +6,8 @@ window.onload = function()
   getData();
   const submitButton = document.getElementById("submit");
   submitButton.onclick = submit;
+  const deleteButton = document.getElementById("delete");
+  deleteButton.onclick = deleteLastEntry;
 }
 
 // Submit a new entry to the GPA data
@@ -33,6 +35,25 @@ const submit = async function(event)
   const text = await response.text();
   const newData = JSON.parse(text);
   addToTable(newData);
+}
+
+const deleteLastEntry = async function(event)
+{
+  event.preventDefault(event);
+
+  const rowCount = document.getElementsByClassName("row").length;
+  const body = JSON.stringify(rowCount);
+  const response = await fetch("/delete",
+  {
+    method:"POST",
+    body
+  });
+
+  const table = document.getElementById("table");
+  if (rowCount > 0)
+  {
+    table.deleteRow(rowCount);
+  }
 }
 
 // Obtain the GPA table data from the server 
@@ -73,24 +94,17 @@ const addToTable = function(newData)
   let table = document.getElementById("table");
   let numRows = table.rows.length;
   let row = table.insertRow(numRows);
+  row.className = "row";
 
   // Create cels
   let classCell = row.insertCell(0);
   classCell.innerHTML = newData.class;
   let gradeCell = row.insertCell(1);
-  gradeCell.innerHTML = newData.grade;
+  gradeCell.innerHTML = newData.grade.toUpperCase();
   let creditsCell = row.insertCell(2);
   creditsCell.innerHTML = newData.credits;
-  
-  // Add delete button to row
-  let deleteCell = row.insertCell(3);
-  let deleteButton = document.createElement("button");
-  deleteButton.textContent = "Delete Entry";
-  deleteButton.id = `delete${numRows}`;
-  console.log(deleteButton.id);
-  deleteCell.appendChild(deleteButton);
 
-  // Optain the new GPA
+  // Upadte the GPA
   getGpa();
 }
 

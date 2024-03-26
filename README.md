@@ -90,6 +90,8 @@ Sample Readme (delete the above when you're ready to submit, and modify the belo
 ## Your Web Application Title
 Include a very brief summary of your project here. Be sure to include the CSS positioning technique you used, and any required instructions to use your application.
 
+The application is a basic GPA calculator, where the user can input classes, the grade they recieved, and how many credits the class was worth, and are then given their GPA, rounded to the nearest hundreths place. A CSS grid was used for the table layout.
+
 ## Technical Achievements
 - **Tech Achievement 1**: Using a combination of...
 
