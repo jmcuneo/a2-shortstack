@@ -1,13 +1,13 @@
-/** Element Selector: **/
+/** Element Selector: body styling**/
 body {
   background:lightcoral;
   color:black;
 }
-/** Element Selector: **/
+/** Element Selector: h1 styling **/
 h1{
   color: black;
 }
-/** Element Selector: **/
+/** Element Selector: common button styling for all buttons in the website**/
 button{
     padding-top: 5px;
     padding-bottom: 5px;
@@ -18,7 +18,7 @@ button{
     font-size: 20px;
     display: inline-block;
 }
-/** Element Selector: **/
+/** Element Selector: input styling**/
 input{
   display: inline-block;
   margin-top: 20px;
@@ -29,7 +29,7 @@ input{
   padding-right: 20px;
   text-align: left;
 }
-/** ID Selector: **/
+/** ID Selector: To style div containing the table using flexbox**/
 #booking_details{
     display: flex;
     justify-content: space-evenly;
@@ -63,7 +63,7 @@ table, th, td{
 tr{
     background: burlywood;
 }
-/** Class Selector: **/
+/** Class Selector: Created a CSS class for Submit button styling**/
 .submit{
   left:45%;
   -ms-transform: translate(50%, 50%);
@@ -74,13 +74,14 @@ tr{
   margin-top: 25px;
   align-self: center;
 }
-/** Class Selector: **/
+/** Class Selector: Google Font used for the body of the website**/
 .libre-franklin-body-text{
   font-family: "Libre Franklin", sans-serif;
   font-optical-sizing: auto;
   font-weight: bold;
   font-style: normal;
 }
+/** ID Selector: To style the confirm button**/
 #Confirm{
     display:none;
     left:35%;
@@ -89,7 +90,7 @@ tr{
     position: absolute;
     margin-top: 28px;
 }
-/** Class Selector: **/
+/** Class Selector: Google Font used for h1 header**/
 .outfit-header-font{
   font-family: "Outfit", sans-serif;
   font-optical-sizing: auto;
