@@ -310,4 +310,5 @@ window.onload = function() {
     button2.onclick = requestToStart;
     var delBut=document.getElementById("delData");
     delBut.onclick=deleteData;
+    updateBestScore();
 }
