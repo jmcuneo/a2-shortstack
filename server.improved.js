@@ -25,7 +25,11 @@ const handleGet = function( request, response ) {
 
   if( request.url === "/" ) {
     sendFile( response, "public/index.html" )
-  }else{
+  }else if ( request.url === "/data"){
+    response.writeHead(200, "OK", {"Content-Type": "text/plain" });
+    response.end(JSON.stringify(appdata));
+  }
+  else{
     sendFile( response, filename )
   }
 }
@@ -46,7 +50,7 @@ const handlePost = function( request, response ) {
     console.log(precalc);
 
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
-    response.end("test")
+    response.end(JSON.stringify(precalc));
   })
 }
   //sends file back to client(callback)

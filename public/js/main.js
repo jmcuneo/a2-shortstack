@@ -20,9 +20,7 @@ const submit = async function( event ) {
     console.log(json)
   })
 
-  const text = await response.text()
 
-  console.log( "text:", text )
   let orderForm = document.getElementById("order");
 
   
@@ -40,16 +38,31 @@ const add = async function( event ) {
   let selected = document.getElementById("itemSelect");
 
   let text = selected.options[selected.selectedIndex].text;
+  if(selected.options[selected.selectedIndex].value === 0){}
+  else{
+    localStorage.setItem(text, parseInt(localStorage.getItem(text)) +1);
 
-  localStorage.setItem(text, parseInt(localStorage.getItem(text)) +1);
+    if(document.getElementById(text) === null){
+      //Adds the item to the order form
+      let item = document.createElement("div");
+      item.setAttribute("id", text);
 
-  if(document.getElementById(text) === null){
-    //Adds the item to the order form
-    let item = document.createElement("div");
-    item.setAttribute("id", text);
+      item.innerHTML = text.concat(" ") + localStorage.getItem(text);
 
-    item.innerHTML = text.concat(" ") + localStorage.getItem(text);
+      let remove = document.createElement('button');
+      //Button to remove order items after adding
+      remove.addEventListener('click', function(){
+        item.remove();
+      });
+      remove.innerText = "Remove item";
+      item.appendChild(remove);
+      
+      document.querySelector("#order").appendChild(item);  
 
+    }else{
+    let item = document.getElementById(text);
+
+    item.innerHTML =  text.concat(" ") + localStorage.getItem(text);
     let remove = document.createElement('button');
     //Button to remove order items after adding
     remove.addEventListener('click', function(){
@@ -57,21 +70,8 @@ const add = async function( event ) {
     });
     remove.innerText = "Remove item";
     item.appendChild(remove);
-    
-    document.querySelector("#order").appendChild(item);  
-
-  }else{
-  let item = document.getElementById(text);
-
-  item.innerHTML =  text.concat(" ") + localStorage.getItem(text);
-  let remove = document.createElement('button');
-  //Button to remove order items after adding
-  remove.addEventListener('click', function(){
-    item.remove();
-  });
-  remove.innerText = "Remove item";
-  item.appendChild(remove);
 }
+  }
   selected.value = 0; 
 
 
