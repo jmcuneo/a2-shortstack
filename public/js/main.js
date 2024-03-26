@@ -287,7 +287,7 @@ document.addEventListener("keydown", (event) => {
   // do something
 });
 
-async function deleteData(){
+async function deleteData(event){
   if (!currentlyPlaying){
     const response = await fetch( "/submit", {
         method:

@@ -4,14 +4,6 @@
   <head>
     <title>CS4241 Assignment 2</title>
     <meta charset="utf-8">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; font-src 'self' https://fonts.gstatic.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline';">
-    <meta http-equiv="Content-Security-Policy"
-          content="
-      worker-src blob:;
-      child-src blob: gap:;
-      img-src 'self' blob: data:;
-      default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: gap: content:">
-
     <script src="js/main.js"></script>
     <link rel="stylesheet" href="css/main.css">
     
@@ -56,6 +48,6 @@
         <td id="Score4">0</td>
       </tr>
     </table>
-    <button style="color:red" class="centeredObj" >DELETE SCORE DATA</button>
+    <button button id="delData" style="color:red" class="centeredObj" >DELETE SCORE DATA</button>
   </body>
 </html>
