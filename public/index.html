@@ -8,11 +8,15 @@
     
     <!-- get rid of favicon error -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rakkas&family=Tac+One&display=swap" rel="stylesheet">
   </head>
+  <h1>Welcome to The Arrow Trials</h1>
   <body>
-    <img id="Display" src="https://github.com/TNWing/a2-TrevorNg/blob/main/public/imgs/0.png?raw=true" width="500" height="500"></img>
+    <img class="centeredObj" id="Display" src="https://github.com/TNWing/a2-TrevorNg/blob/main/public/imgs/0.png?raw=true" width="500" height="500"></img>
     <br>
-    <form id="TestParameters">
+    <form style="color:green" id="TestParameters">
       <label for="grDelay">Green-Red Test: Delay Between Arrows(ms)</label>
       <input type="number"  onkeydown="return false" value= "1000" id="grDelay" step="10" min="500" max="1000" name="grDelay"><br><br>
       <label for="grChance">Green-Red Test: Chance for Red</label>
@@ -24,8 +28,8 @@
       <input id="submitParams" type="submit" value="Submit">
       <input id="startGame" type="submit" value="Start Game">
     </form>
-    <p>BEST RUN</p>
-    <table style="font-family: Madimi One, sans-serif;">
+    <h1>RESULTS OF THE BEST RUN</h1>
+    <table>
       <tr>
         <th>Tests</th>
         <th>Scores</th>
@@ -43,6 +47,6 @@
         <td id="Score4">0</td>
       </tr>
     </table>
-    <button id="delData" >DELETE SCORE DATA</button>
+    <button style="color:red" class="centeredObj" >DELETE SCORE DATA</button>
   </body>
 </html>
