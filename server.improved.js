@@ -23,11 +23,14 @@ const handleGet = function( request, response ) {
 
   if( request.url === "/" ) {
     sendFile( response, "public/index.html" )
-  }else{
-    sendFile( response, filename )
   }
-  //response.writeHead("Default");
-  //response.end();
+  else if (request.url === "/getArray"){
+    response.writeHead( 200, "OK", {"Content-Type": "application/json" })
+    response.end(JSON.stringify(appdata))
+  }
+else{
+  sendFile( response, filename )
+}
 }
 
 const handlePost = function( request, response ) {
@@ -41,16 +44,32 @@ const handlePost = function( request, response ) {
   request.on( "end", function( ) {
     //console.log( JSON.parse( dataString ) );
     const finalData = JSON.parse( dataString ); 
-
-    // Do something with the data here
-
-    appdata.push(finalData);
-
-    //console.log(appdata);
+    var method = finalData.method;
     //console.log(finalData);
-    
-    response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
-    response.end(JSON.stringify(finalData))
+    if (method === "/delete"){
+      appdata.pop(finalData.index);
+      response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
+      response.end("Bye bye!")
+    }
+    else if (method === "/add") {
+      appdata.push(finalData.string)
+      response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
+      response.end(JSON.stringify("Added"))
+    }
+    else if (method === "/submit") {
+      appdata.push(finalData.string)
+      response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
+      response.end(JSON.stringify("Submitted!"))
+    }
+    else if (method === "/edit") {
+      appdata[finalData.index] = finalData.content;
+      response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
+      response.end(JSON.stringify("Edited!"))
+    }
+    else {
+      response.writeHead( 400, {"Content-Type": "text/plain" })
+      response.end("Yikes")
+    }
   })
 }
 

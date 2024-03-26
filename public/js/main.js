@@ -1,85 +1,135 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
-var count = 1; //variable for counting entries in data table
 
-const submit = async function( event ) {
+
+const submit = async function (event) {
   // stop form submission from trying to load
   // a new .html page for displaying results...
   // this was the original browser behavior and still
   // remains to this day
   event.preventDefault()
-  
+
   //getting input from user
   //front string and backstring are from textbox 
   //they get concatenated together
   //calculate string length
   //send string to json and then to body
-  const frontString = document.querySelector( "#frontstring" ).value,
-        backString = document.querySelector("#backstring").value,
-        concatenatedString = frontString + ' ' + backString,
-        stringLength = concatenatedString.length - 1,
-        json = { concatenatedString },
-        body = JSON.stringify( json )
-
-  const response = await fetch( "/submit", {
-    method:"POST",
-    body
+ 
+  const frontString = document.querySelector("#frontstring").value,
+    backString = document.querySelector("#backstring").value,
+    concatenatedString = frontString + ' ' + backString,
+    stringLength = concatenatedString.length - 1;
+    var method = "/submit";
+    body = JSON.stringify({method: method, string : concatenatedString} )
+  //addData(concatenatedString);
+  const response = await fetch("/submit", {
+    method: "POST",
+    body : body
   })
-  
+
   const text = await response.text();
   //get table element to be modified
-  const tableElement = document.getElementById('responseTable');
-  //create appropriate spots in table element
-  const nextRow = document.createElement('tr');
-  const cell1 = document.createElement('td');
-  const cell2 = document.createElement('td');
-  const cell3 = document.createElement('td');
-  const cell4 = document.createElement('td');
-  const cell5 = document.createElement('td');
-  const delButton = document.createElement('button');
-  const editButton = document.createElement('button');
-  delButton.textContent = 'Delete Row';
-  editButton.textContent = 'Edit Row';
-  
-  //add count to left-most table cell and increment count
-  cell1.textContent = count;
-  count++;
-  
-  //parsedData = JSON.parse(body);
-  
-  //add user input to cells
-  cell2.textContent = concatenatedString;
-  cell3.textContent = stringLength;
 
-  //build edit and delete button functionality
-  delButton.addEventListener('click',function() {
-    tableElement.removeChild(nextRow);
-  });
-  editButton.addEventListener('click', function() {
-     let buttonNum = count;
-     const newInput = prompt('Enter new value: ');
-     concatenatedString = newInput;
-     stringLength = newInput.length - 1;
-     this.cell2.textContent = concatenatedString;
-     this.cell3.textContent = stringLength;
-  });
-
-  //append buttons to cells
-  cell4.appendChild(delButton);
-  cell5.appendChild(editButton);
-
-  //append cells to the new row
-  nextRow.appendChild(cell1);
-  nextRow.appendChild(cell2);
-  nextRow.appendChild(cell3);
-  nextRow.appendChild(cell4);
-  nextRow.appendChild(cell5);
-
-  //append row to table
-  tableElement.appendChild(nextRow);
-  
+  updateTable();
 }
 
-window.onload = function() {
+async function addData(combinedString){
+  const method = "/add";
+  const response = await fetch("/add", {
+    method: "POST",
+    body: JSON.stringify({method: method , string: combinedString})
+  })
+  updateTable();
+}
+
+async function updateTable() {
+
+  const response = await fetch("/getArray")
+  let currentArray = await response.json();
+  console.log("Hola!");
+  console.log(currentArray);
+
+  const tableElement = document.getElementById('responseTable');
+  let count = 0;
+  tableElement.innerHTML = ''; // Clear existing table contents
+
+   // Create table header row
+   const headerRow = document.createElement('tr');
+   const headers = ['Entry Number', 'Combined String', 'String Length', 'Delete', 'Edit'];
+   headers.forEach(headerText => {
+     const headerCell = document.createElement('th');
+     headerCell.textContent = headerText;
+     headerRow.appendChild(headerCell);
+   });
+   tableElement.appendChild(headerRow);
+ 
+   // Populate table with data
+   currentArray.forEach((entry, index) => {
+     const row = document.createElement('tr');
+ 
+     // Entry Number
+     const cell1 = document.createElement('td');
+     cell1.textContent = index + 1; // Index starts from 0, so add 1 for display
+     row.appendChild(cell1);
+ 
+     // Combined String
+     const cell2 = document.createElement('td');
+     cell2.textContent = entry;
+     row.appendChild(cell2);
+ 
+     // String Length
+     const cell3 = document.createElement('td');
+     cell3.textContent = entry.length;
+     row.appendChild(cell3);
+ 
+     // Delete Button
+     const cell4 = document.createElement('td');
+     const deleteButton = document.createElement('button');
+     deleteButton.textContent = 'Delete';
+     deleteButton.addEventListener('click', function () {
+       deleteEntry(index);
+     });
+     cell4.appendChild(deleteButton);
+     row.appendChild(cell4);
+ 
+     // Edit Button
+     const cell5 = document.createElement('td');
+     const editButton = document.createElement('button');
+     editButton.textContent = 'Edit';
+     editButton.addEventListener('click', function () {
+      const newInput = prompt('Enter new value: ');
+      editEntry(index, newInput);
+     });
+     cell5.appendChild(editButton);
+     row.appendChild(cell5);
+ 
+     // Append the row to the table
+     tableElement.appendChild(row);
+   });
+}
+
+async function deleteEntry(index){
+  const method = "/delete";
+  //const markedString = currentArray[index];
+  const response = await fetch("/delete", {
+    method: "POST",
+    body: JSON.stringify({method: method , index: index})
+  })
+  updateTable();
+}
+
+async function editEntry(index, content){
+  const method = "/edit";
+  const response = await fetch("/edit", {
+    method: "POST",
+    body: JSON.stringify({method: method , index: index, content: content})
+  })
+  updateTable();
+}
+
+
+
+window.onload = function () {
+  updateTable();
   const button = document.querySelector("button");
   button.onclick = submit;
 }
