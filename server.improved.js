@@ -34,22 +34,17 @@ else{
 }
 
 const handlePost = function( request, response ) {
-  //console.log("POSTING");
   let dataString = ""
-
   request.on( "data", function( data ) {
       dataString += data 
   })
 
-  request.on( "end", function( ) {
-    //console.log( JSON.parse( dataString ) );
+  request.on( "end", function( ) { 
     const finalData = JSON.parse( dataString ); 
-    var method = finalData.method;
-    //console.log(finalData);
+    var method = finalData.method;   
     if (method === "/delete"){
       const targetIndex = finalData.index;
       appdata.splice(targetIndex, 1);
-      //appdata.pop(finalData.index);
       response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
       response.end("Bye bye!")
     }
@@ -77,22 +72,16 @@ const handlePost = function( request, response ) {
 
 const sendFile = function( response, filename ) {
    const type = mime.getType( filename ) 
-
    fs.readFile( filename, function( err, content ) {
-
      // if the error = null, then we"ve loaded the file successfully
      if( err === null ) {
-
        // status code: https://httpstatuses.com
        response.writeHeader( 200, { "Content-Type": type })
        response.end( content )
-
      }else{
-
        // file not found, error code 404
        response.writeHeader( 404 )
        response.end( "404 Error: File Not Found" )
-
      }
    })
 }
