@@ -25,6 +25,13 @@ const submit = async function(event)
   const gradeInput = document.querySelector("#grade");
   const creditsInput = document.querySelector("#credits");
 
+  // Ensure a correct value
+  if (classInput.value === "" || gradeInput.value === "" || 
+    creditsInput.value === "" || isNaN(Number(creditsInput.value)))
+  {
+    return;
+  }
+
   const json = {class: classInput.value, grade: gradeInput.value, credits: creditsInput.value};
   const body = JSON.stringify(json);
 
@@ -39,9 +46,16 @@ const submit = async function(event)
   addToTable(newData);
 }
 
+// Adjust the most recent entry
 const adjustLastEntry = async function(event)
 {
   event.preventDefault(event);
+
+  const rowCount = document.getElementsByClassName("row").length;
+  if (rowCount <= 0)
+  {
+    return;
+  }
 
   const classInput = document.querySelector("#class");
   const gradeInput = document.querySelector("#grade");
@@ -59,17 +73,22 @@ const adjustLastEntry = async function(event)
   const text = await response.text();
   const newData = JSON.parse(text);
 
-  const rowCount = document.getElementsByClassName("row").length;
   const table = document.getElementById("table");
   table.deleteRow(rowCount);
   addToTable(newData);
 }
 
+// Delete the most recent entry
 const deleteLastEntry = async function(event)
 {
   event.preventDefault(event);
 
   const rowCount = document.getElementsByClassName("row").length;
+  if (rowCount <= 0)
+  {
+    return;
+  }
+
   const body = JSON.stringify(rowCount);
   const response = await fetch("/delete",
   {
@@ -77,11 +96,8 @@ const deleteLastEntry = async function(event)
     body
   });
 
-  const table = document.getElementById("table");
-  if (rowCount > 0)
-  {
-    table.deleteRow(rowCount);
-  }
+  table.deleteRow(rowCount);
+  getGpa();
 }
 
 // Obtain the GPA table data from the server 
