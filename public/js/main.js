@@ -10,7 +10,7 @@ const submit = async function (event) {
     backString = document.querySelector("#backstring").value,
     concatenatedString = frontString + ' ' + backString; //putting the inputs together into one string variable
     var method = "/submit"; //creating method flag
-    body = JSON.stringify({method: method, string : concatenatedString} ) //creating body, which will contain the desired method and required data, in this case submit and the string
+    let body = JSON.stringify({method: method, string : concatenatedString} ) //creating body, which will contain the desired method and required data, in this case submit and the string
   const response = await fetch("/submit", { //POST the body
     method: "POST",
     body : body
