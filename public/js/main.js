@@ -8,6 +8,8 @@ window.onload = function()
   submitButton.onclick = submit;
   const deleteButton = document.getElementById("delete");
   deleteButton.onclick = deleteLastEntry;
+  const adjustButton = document.getElementById("adjust");
+  adjustButton.onclick = adjustLastEntry;
 }
 
 // Submit a new entry to the GPA data
@@ -34,6 +36,32 @@ const submit = async function(event)
 
   const text = await response.text();
   const newData = JSON.parse(text);
+  addToTable(newData);
+}
+
+const adjustLastEntry = async function(event)
+{
+  event.preventDefault(event);
+
+  const classInput = document.querySelector("#class");
+  const gradeInput = document.querySelector("#grade");
+  const creditsInput = document.querySelector("#credits");
+
+  const json = {class: classInput.value, grade: gradeInput.value, credits: creditsInput.value};
+  const body = JSON.stringify(json);
+
+  const response = await fetch("/adjust",
+  {
+    method:"POST",
+    body
+  });
+
+  const text = await response.text();
+  const newData = JSON.parse(text);
+
+  const rowCount = document.getElementsByClassName("row").length;
+  const table = document.getElementById("table");
+  table.deleteRow(rowCount);
   addToTable(newData);
 }
 

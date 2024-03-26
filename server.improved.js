@@ -64,6 +64,14 @@ const handlePost = function(request, response)
       response.end(JSON.stringify(gpaData[gpaData.length - 1]));
       gpa = calculateGpa(gpaData);
     })
+  } else if (request.url === "/adjust")
+  {
+    request.on("end", function() {  
+      gpaData[gpaData.length - 1] = JSON.parse(dataString);
+      response.writeHead(200, "OK", {"Content-Type": "text/plain"});
+      response.end(JSON.stringify(gpaData[gpaData.length - 1]));
+      gpa = calculateGpa(gpaData);
+    })
   } else if (request.url === "/delete")
   {
     request.on("end", function() {  

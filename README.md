@@ -93,7 +93,8 @@ Include a very brief summary of your project here. Be sure to include the CSS po
 The application is a basic GPA calculator, where the user can input classes, the grade they recieved, and how many credits the class was worth, and are then given their GPA, rounded to the nearest hundreths place. A CSS grid was used for the table layout.
 
 ## Technical Achievements
-- **Tech Achievement 1**: Using a combination of...
+- **Tech Achievement 1**: Using a combination of headers, paragraphs, tables, buttons, input boxes, and labels.
 
 ### Design/Evaluation Achievements
-- **Design Achievement 1**: 
+- **Used color palette**: Utilized all colors in a palette from color.adobe.com. A screenshot of the palette is in the img directory.
+- **Used fonts from Google Fonts**: The site uses the Autowide and Fugaz fonts from Google Fonts.
