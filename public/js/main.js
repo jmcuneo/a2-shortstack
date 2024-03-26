@@ -1,12 +1,17 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
-
+/**
+ * This function is called when the user clicks the submit button.
+ * It will take the values from the form fields and send them to the server.
+ * It sends a POST request to the server with the form data.
+ * @param event The submit event.
+ * @returns {Promise<void>}
+ */
 const submit = async function( event ) {
   // stop form submission from trying to load
   // a new .html page for displaying results...
   // this was the original browser behavior and still
   // remains to this day
   event.preventDefault();
-  
   const FirstName = document.querySelector( "#FirstName" ),
       MiddleName = document.querySelector( "#MiddleName" ),
       LastName = document.querySelector( "#LastName" ),
@@ -33,6 +38,13 @@ const submit = async function( event ) {
   display(JSON.parse(text));
   console.log( "text:" + JSON.parse(text) );
 }
+
+/**
+ * This function is called when the user clicks the delete button.
+ * It sends a DELETE request to the server with the uid of the item to delete.
+ * @param uid Unique ID of the item to delete.
+ * @returns {Promise<void>}
+ */
 async function del(uid){
     console.log(uid)
     const response = await fetch( "/submit", {
@@ -42,6 +54,12 @@ async function del(uid){
     const text = await response.text();
     display(JSON.parse(text));
 }
+
+/**
+ * This function is called when the user clicks the update button.
+ * @param uid Unique ID of the item to update.
+ * @returns {Promise<void>}
+ */
 async function modify(uid) {
     console.log("hello" + document.getElementById("email_attribute"));
     document.getElementById("Email").value = uid.getAttribute("email_attribute");
@@ -50,6 +68,11 @@ async function modify(uid) {
     document.getElementById("Confirm").style.display="block";
 }
 
+/**
+ * This function gets the newData from the form fields and sends it to the display function.
+ * @returns {Promise<void>}
+ * @constructor
+ */
 async function NewData(){
     const FirstName = document.querySelector( "#FirstName" ),
         MiddleName = document.querySelector( "#MiddleName" ),
@@ -77,6 +100,12 @@ async function NewData(){
     display(JSON.parse(text));
     console.log("updated here for NewData"+JSON.stringify(text))
 }
+
+/**
+ * This function displays the data in the table.
+ * @param object The object to display in the table.
+ * @returns {Promise<void>}
+ */
 async function display(object){
     console.log("updated here for display"+JSON.stringify(object));
     let table = document.querySelector("#data_body");
@@ -98,6 +127,11 @@ async function display(object){
     }
 }
 
+/**
+ * This function is called when the window loads.
+ * It send a GET request to the server to get the data to display.
+ * @returns {Promise<void>}
+ */
 window.onload = async function() {
     const button = document.querySelector("#Submit");
     button.onclick = submit;

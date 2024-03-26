@@ -21,7 +21,11 @@ const server = http.createServer( function( request,response ) {
     handlePut( request, response );
   }
 })
-
+/**
+ * This function handles the GET requests. It sends the index.html file to the client.
+ * @param request The request object
+ * @param response The response object
+ */
 const handleGet = function( request, response ) {
   const filename = dir + request.url.slice( 1 )
 
@@ -37,7 +41,12 @@ const handleGet = function( request, response ) {
   }
 }
 
-
+/**
+ * This function handles the POST requests. It reads the data from the POST request
+ * and sends it to the console. It then sends a response back to the client.
+ * @param request The request object
+ * @param response The response object
+ */
 
 const handlePost = function( request, response ) {
   let dataString = ""
@@ -54,6 +63,11 @@ const handlePost = function( request, response ) {
     response.end(JSON.stringify(details))
   })
 }
+/**
+ * This function handles the PUT requests.
+ * @param request The request object
+ * @param response The response object
+ */
 const handlePut = function( request, response ) {
         let dataString = ""
         request.on( "data", function( data ) {
@@ -73,6 +87,11 @@ const handlePut = function( request, response ) {
             response.end(JSON.stringify(details))
         })
 }
+/**
+ * This function handles the DELETE requests.
+ * @param request The request object
+ * @param response The response object
+ */
 const handleDelete = function(request, response){
     let dataString = ""
     request.on( "data", function( data ) {
@@ -87,6 +106,13 @@ const handleDelete = function(request, response){
     })
 
 }
+
+/**
+ * Implemented to demonstrate server logic and derived field baseline requirement.
+ * This function calculates the cost of the trip based on the mode of transport.
+ * @param Transport
+ * @returns {number}
+ */
 function cost(Transport){
     switch (Transport){
         case 'Lyft':
@@ -115,6 +141,12 @@ function cost(Transport){
     }
     return 10;
 }
+
+/**
+ * This function sends the file to the client. If the file is not found, it sends a 404 error.
+ * @param response
+ * @param filename
+ */
 const sendFile = function( response, filename ) {
    const type = mime.getType( filename )
 
