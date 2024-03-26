@@ -1,29 +1,164 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
-var scoreObj={//contains the top 3 best scores of a given category
-    memScore:[null,null,null],
-    suddenScore:[null,null,null],
-    switchScore:[null,null,null],
+//move some of this stuff to server.improved.js
+
+//client (this script) should handle the following
+//making changes to the display elements
+//sending input to server
+const requestOptions={
+    hostname:"",
+    port:3000,
+    path:"",
+    method:"POST",
+    headers:{
+    },
 };
+
+var currentRunParams;
+var currentlyPlaying=false;
 var currentKeyPress=0;
-const submit = async function( event ) {
+async function askForFile(filename) {
+  // stop form submission from trying to load
+  // a new .html page for displaying results...
+  // this was the original browser behavior and still
+  // remains to this day
+
+  if (currentlyPlaying){
+
+    var response = await fetch( "/submit", {
+      method:"GET",
+      url:"public/imgs/"+filename,
+    })
+
+    var fileLink= await response.text();
+    }
+}
+
+async function getParamsForRun(){
+    if (!currentlyPlaying){
+      const response = await fetch( "/submit", {
+        method:"POST",
+        body:"PARAM"
+      })
+       const text = await response.text()
+       currentRunParams=JSON.parse(text);
+    }
+}
+
+async function updateParameters() {
   // stop form submission from trying to load
   // a new .html page for displaying results...
   // this was the original browser behavior and still
   // remains to this day
   event.preventDefault()
-  
-  const input = document.querySelector( "#yourname" ),
-        json = { yourname: input.value },
-        body = JSON.stringify( json )
+    const parent=(document.getElementById("TestParameters"));
+    const json = { grDelay: parent.querySelector("#grDelay").value,grChance:parent.querySelector("#grChance").value,
+    speedDelay:parent.querySelector("#speedDelay").value,
+    memDelay:parent.querySelector("#memDelay").value,memTime:parent.querySelector("#memTime").value},
+    body = JSON.stringify( json )
 
   const response = await fetch( "/submit", {
     method:"POST",
-    body 
+    body
   })
 
   const text = await response.text()
 
-  console.log( "text:", text )
+  return text;
+
+}
+
+async function updateScore(testNum,score) {
+    const json = { 'ID':testNum,'Score':score},
+    body = JSON.stringify( json )
+
+  const response = await fetch( "/submit", {
+    method:"POST",
+    body
+  })
+
+  const text = await response.text()
+  testNum++;
+  if (testNum<3){
+    playGames(testNum)
+  }
+  else{
+  currentlyPlaying=false;
+    //ask server to calculate final score
+    const response2 = await fetch( "/submit", {
+            method:
+            "POST",
+            body:"EVAL"
+        })
+        const text2=await response2.text();
+        if (text2==="Y"){
+            alert("NEW RECORD!");
+            updateBestScore();
+        }
+        else{
+            alert("You got " + text2 + " points. Not a new record unfortunately");
+        }
+  }
+
+}
+
+async function updateBestScore(){
+    const response = await fetch( "/submit", {
+        method:
+        "POST",
+        body:"START"
+    })
+
+    const text = await response.text()
+    var scores=JSON.parse(text);
+    document.getElementById("Score1").text=scores.S1;
+    document.getElementById("Score2").text=scores.S2;
+    document.getElementById("Score3").text=scores.S3;
+    document.getElementById("Score4").text=scores.S4;
+}
+const requestToStart= async function( event ) {
+
+  event.preventDefault()
+  if (!currentlyPlaying){
+    const response = await fetch( "/submit", {
+        method:
+        "POST",
+        body:"START"
+    })
+
+    const text = await response.text()
+    console.log(text);
+    if (text.localeCompare("Y")==0){
+        //player has submitted params and is ready
+        await getParamsForRun();
+        currentlyPlaying=true;
+        playGames(0);
+    }
+  }
+}
+
+
+async function playGames(testNum){
+    switch(testNum){
+        case 0:{
+            yesNoPatternFunc();
+            break;
+        }
+        case 1:{
+            speedPatternFunc();
+            break;
+        }
+        case 2:{
+            memoryPatternFunc();
+            break;
+        }
+    }
+}
+
+
+function wait(ms){
+    return new Promise(resolve => {
+        setTimeout(resolve, ms);
+    });
 }
 
 
@@ -49,12 +184,8 @@ async function yesNoPatternFunc(){
             for (let l=0;l<length;l++){
                 var i=r*length + l;
                 var current=pattern[l];
-                if (Math.floor(Math.random()*3)==0){
+                if (Math.floor(Math.random()*100)<=Number(currentRunParams.grChance)){
                    current+=100;
-                }
-                else{
-
-
                 }
                 keyList.push(current);
             }
@@ -62,7 +193,7 @@ async function yesNoPatternFunc(){
 
         //then, start to display the pattern
         for (let i=0;i<keyList.length;i++){
-            console.log("IMAGE # " + i);
+            console.log("IMG #"+i);
             var code=keyList[i];
             var imgName="";
             var shouldPress=true;
@@ -77,7 +208,8 @@ async function yesNoPatternFunc(){
 
             var link="https://github.com/TNWing/a2-TrevorNg/blob/main/public/imgs/" +imgName + "?raw=true";
             document.getElementById("Display").src=link;
-            await wait(500);
+            console.log(currentRunParams);
+            await wait(Number(currentRunParams.grDelay));
             if (shouldPress && currentKeyPress!=code || !shouldPress && currentKeyPress!=0){
                 run=false;
                 break;
@@ -96,46 +228,87 @@ async function yesNoPatternFunc(){
         }
 
     }
-    alert ("Your total score is " + score);
-};
-function wait(ms){
-    return new Promise(resolve => {
-        setTimeout(resolve, ms);
-    });
-}
 
-function startTest(){
-    if (document.getElementById("tests")){
-        console.log(document.getElementById("tests").value);
-        switch(document.getElementById("tests").value){
-            case '0':{
-                yesNoPatternFunc();
-                break;
-            }
-            case '1':{
-                break;
-            }
-            case '2':{
-                break;
-            }
-            default:{
-                break;
-            }
-        }
-    }
-}
-window.addEventListener('load',	(event) =>
-document.getElementById("TestStart").addEventListener("click",startTest));
+    updateScore(0,score);
+};
 
 //constantly switches keys, lowest time frame for success
 //score is equal to # of correct keys pressed in a row
-function constantSwitchPatternFunc(){
+async function speedPatternFunc(){
+    var score=0;
+    var run=true;
+    var isRed=false;
+    while (run){
+        //pattern gen
+        var code=Math.floor(Math.random()*4);
+        currentKeyPress=0;
+        var imgName=""
+        if (isRed){
+            imgName=(code-36).toString() + "red.png";
+        }
+        else{
+            imgName=(code-36).toString() + ".png";
+        }
+        var link="https://github.com/TNWing/a2-TrevorNg/blob/main/public/imgs/" +imgName + "?raw=true";
+        document.getElementById("Display").src=link;
+        await wait(Number(currentRunParams.spdDelay));
+        if (currentKeyPress!=code){
+            run=false;
+            break;
+        }
+        else{
+            score++;
+            isRed=!isRed;
+        }
+    }
+    updateScore(1,score);
 };
 
+var memVarHelper=false;
 //score is equal to size of the last memory pattern successfully done
-function memoryPatternFunc(){
+async function memoryPatternFunc(){
+    var length=1;
+    var run=true;
+    var score=0;
+    while (run){
+        currentKeyPress=0;
+        length++;
+        var pattern=[]
+        for (let i=0;i<length;i++){
+            var code=Math.floor(Math.random()*4);
+            pattern.push(code);
+            var imgName=(code-36).toString() + ".png";
+            var link="https://github.com/TNWing/a2-TrevorNg/blob/main/public/imgs/" +imgName + "?raw=true";
+            document.getElementById("Display").src=link;
+            await wait(Number(currentRunParams.memTime));
+             document.getElementById("Display").src="https://github.com/TNWing/a2-TrevorNg/blob/main/public/imgs/0.png?raw=true";
+        }
 
+        document.getElementById("Display").src="https://github.com/TNWing/a2-TrevorNg/blob/main/public/imgs/go.png?raw=true";
+        await wait(2500);
+        currentKeyPress=0;
+        prevKey=0;
+        for(let i=0;i<pattern.length;i++){
+           var input=await memHelper(prevKey);
+           if (input!=pattern[i]){
+                run=false;
+                break;
+           }
+        }
+        if (run){
+        score++;
+        }
+    }
+    updateScore(2,score);
 };
+
+
+async function memHelper(prevKey){
+    while (prevKey==currentKeyPress){
+
+    }
+    return currentKeyPress;
+}
 /*
 left arrow	37	ArrowLeft	ArrowLeft
 up arrow	38	ArrowUp	ArrowUp
@@ -148,29 +321,28 @@ document.addEventListener("keydown", (event) => {
 
   // do something
 });
-function readInput(input){
+
+async function deleteData(){
+  if (!currentlyPlaying){
+    const response = await fetch( "/submit", {
+        method:
+        "POST",
+        body:"DELETE"
+    })
+    const text = await response.text()
+    var scores=JSON.parse(text);
+    document.getElementById("Score1").text=scores.S1;
+    document.getElementById("Score2").text=scores.S2;
+    document.getElementById("Score3").text=scores.S3;
+    document.getElementById("Score4").text=scores.S4;
+  }
 }
 
-function clearScoreFunc(index){
-    switch(index){
-        case 0:{
-            scoreObj.suddenScore=[null,null,null];
-            break;
-        }
-        case 1:{
-            scoreObj.switchScore=[null,null,null];
-            break;
-        }
-        case 2:{
-            scoreObj.memScore=[null,null,null];
-            break;
-        }
-        default:{
-            break;
-        }
-    }
-};
 window.onload = function() {
-   const button = document.querySelector("button");
-  button.onclick = submit;
+   const button = document.getElementById("submitParams");
+  button.onclick = updateParameters;
+  const button2 = document.getElementById("startGame");
+    button2.onclick = requestToStart;
+    var delBut=document.getElementById("delData");
+    delBut.onclick=deleteData;
 }
