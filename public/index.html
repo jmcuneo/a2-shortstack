@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -8,11 +9,46 @@
     
     <!-- get rid of favicon error -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rakkas&family=Tac+One&display=swap" rel="stylesheet">
   </head>
+
   <body>
-    <form>
-      <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
+  <h1>Welcome to The Arrow Trials</h1>
+    <img alt="ArrowImg" class="centeredObj" id="Display" src="https://github.com/TNWing/a2-TrevorNg/blob/main/public/imgs/0.png?raw=true" width="500" height="500">
+    <br>
+    <form style="color:green" id="TestParameters">
+      <label for="grDelay">Green-Red Test: Delay Between Arrows(ms)</label>
+      <input type="number"  onkeydown="return false" value= "1000" id="grDelay" step="10" min="500" max="1000" name="grDelay"><br><br>
+      <label for="grChance">Green-Red Test: Chance for Red</label>
+      <input type="number"  onkeydown="return false" value= "15" id="grChance" step="5" min="15" max="50" name="grChance"><br><br>
+
+      <label for="speedDelay">Speed Test: Delay Between Arrows(ms)</label>
+      <input type="number"  onkeydown="return false" value= "550" id="speedDelay" step="10" min="300" max="550" name="speedDelay"><br><br>
+
+      <input id="submitParams" type="submit" value="Submit">
+      <input id="startGame" type="submit" value="Start Game">
     </form>
+    <h1>RESULTS OF THE BEST RUN</h1>
+    <table>
+      <tr>
+        <th>Tests</th>
+        <th>Scores</th>
+      </tr>
+      <tr>
+        <td>Green-Red Test</td>
+        <td id="Score1">0</td>
+      </tr>
+      <tr>
+        <td>Speed Test</td>
+        <td id="Score2">0</td>
+      </tr>
+      <tr>
+        <td>Total</td>
+        <td id="Score4">0</td>
+      </tr>
+    </table>
+    <button id="delData" style="color:red" class="centeredObj" >DELETE SCORE DATA</button>
   </body>
 </html>
