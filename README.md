@@ -8,7 +8,7 @@ Ronak Wani: https://a2-ronakwani.glitch.me
    
 **HTML Features:**   
 - Used HTML forms for user input  
-- Displayed all the data currently available on the server using the "<table>" tag.  
+- Displayed all the data currently available on the server.  
 - Validated HTML pages  
 - Changed the title, h1 header, body. Added Google Fonts.  
 - Created a dropdown menu for choosing the transportation mode.
@@ -42,7 +42,6 @@ for sending via HTTP request.
 utilize asynchronous operations using async and await keywords. T
 that allows the code to perform tasks of fetching data 
 from the server without blocking the main thread.
-
 
 **Server/Node.js:**
 - Besides implementing GET and POST request handler
