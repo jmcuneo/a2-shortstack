@@ -47,7 +47,9 @@ const handlePost = function( request, response ) {
     var method = finalData.method;
     //console.log(finalData);
     if (method === "/delete"){
-      appdata.pop(finalData.index);
+      const targetIndex = finalData.index;
+      appdata.splice(targetIndex, 1);
+      //appdata.pop(finalData.index);
       response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
       response.end("Bye bye!")
     }
