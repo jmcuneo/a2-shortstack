@@ -27,10 +27,17 @@ const handleGet = function( request, response ) {
 
   if( request.url === "/" ) {
     sendFile( response, "public/index.html" );
-  }else{
+  }
+  else if( request.url === "/display" ){
+      response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
+      response.end(JSON.stringify(details))
+  }
+  else{
     sendFile( response, filename )
   }
 }
+
+
 
 const handlePost = function( request, response ) {
   let dataString = ""
@@ -48,18 +55,23 @@ const handlePost = function( request, response ) {
   })
 }
 const handlePut = function( request, response ) {
-    let dataString = ""
-    request.on( "data", function( data ) {
-        dataString += data
-    })
-
-    request.on( "end", function() {
-        console.log( JSON.parse( dataString ) )
-        let save = JSON.parse(dataString)
-        details[save] =
-        response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
-        response.end(JSON.stringify(details))
-    })
+        let dataString = ""
+        request.on( "data", function( data ) {
+            dataString += data
+        })
+        request.on( "end", function() {
+            console.log( JSON.parse( dataString ) )
+            let save = JSON.parse(dataString)
+            for(let i=0;i<details.length;i++){
+                if(details[i].FirstName===save.FirstName && details[i].LastName===save.LastName){
+                    details[i]=save;
+                    details[i].cost=cost(save.Transport);
+                    break;
+                }
+            }
+            response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
+            response.end(JSON.stringify(details))
+        })
 }
 const handleDelete = function(request, response){
     let dataString = ""
@@ -68,10 +80,8 @@ const handleDelete = function(request, response){
     })
 
     request.on( "end", function() {
-        console.log( JSON.parse( dataString ) )
         let index=JSON.parse(dataString)
         details.splice(index, 1)
-        console.log(details)
         response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
         response.end(JSON.stringify(details))
     })

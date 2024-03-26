@@ -81,6 +81,14 @@ tr{
   font-weight: bold;
   font-style: normal;
 }
+#Confirm{
+    display:none;
+    left:35%;
+    -ms-transform: translate(50%, 50%);
+    transform: translate(50%, 50%);
+    position: absolute;
+    margin-top: 28px;
+}
 /** Class Selector: **/
 .outfit-header-font{
   font-family: "Outfit", sans-serif;
