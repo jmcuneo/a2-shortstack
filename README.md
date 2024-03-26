@@ -1,5 +1,4 @@
 ## Arrow Trials
-Include a very brief summary of your project here. Be sure to include the CSS positioning technique you used, and any required instructions to use your application.
 This page has a short game, consisting of two tests.
 Test 1: You are given a pattern of arrows (up,left,right,down). You must press the corresponding arrow key when the green arrow shows up, but do nothing when the red shows up.
 
