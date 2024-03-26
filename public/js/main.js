@@ -82,7 +82,7 @@ async function updateScore(testNum,score) {
     playGames(testNum)
   }
   else{
-  currentlyPlaying=false;
+    currentlyPlaying=false;
     //ask server to calculate final score
     const response2 = await fetch( "/submit", {
             method:
@@ -98,7 +98,6 @@ async function updateScore(testNum,score) {
             alert("You got " + text2 + " points. Not a new record unfortunately");
         }
   }
-
 }
 
 async function updateBestScore(){
@@ -138,6 +137,11 @@ const requestToStart= async function( event ) {
 
 
 async function playGames(testNum){
+
+    document.getElementById("Display").src="https://github.com/TNWing/a2-TrevorNg/blob/main/public/imgs/go.png?raw=true";
+    await wait(2000);
+    document.getElementById("Display").src="https://github.com/TNWing/a2-TrevorNg/blob/main/public/imgs/0.png?raw=true";
+    await wait(650);
     switch(testNum){
         case 0:{
             yesNoPatternFunc();
@@ -208,9 +212,11 @@ async function yesNoPatternFunc(){
 
             var link="https://github.com/TNWing/a2-TrevorNg/blob/main/public/imgs/" +imgName + "?raw=true";
             document.getElementById("Display").src=link;
-            console.log(currentRunParams);
+            console.log(Number(currentRunParams.grDelay));
             await wait(Number(currentRunParams.grDelay));
+
             if (shouldPress && currentKeyPress!=code || !shouldPress && currentKeyPress!=0){
+                console.log("bad");
                 run=false;
                 break;
             }
@@ -220,15 +226,15 @@ async function yesNoPatternFunc(){
                 document.getElementById("Display").src=link;
                 await wait(300);
             }
-
+            console.log("HELP");
         }
         if (run){
             score++;
-            alert ("Your current score is " + score + ". Press okay to continue");
         }
 
     }
-
+    document.getElementById("Display").src="https://github.com/TNWing/a2-TrevorNg/blob/main/public/imgs/0.png?raw=true";
+    await(1500);
     updateScore(0,score);
 };
 
@@ -261,6 +267,8 @@ async function speedPatternFunc(){
             isRed=!isRed;
         }
     }
+        document.getElementById("Display").src="https://github.com/TNWing/a2-TrevorNg/blob/main/public/imgs/0.png?raw=true";
+        await(1500);
     updateScore(1,score);
 };
 
@@ -299,6 +307,8 @@ async function memoryPatternFunc(){
         score++;
         }
     }
+        document.getElementById("Display").src="https://github.com/TNWing/a2-TrevorNg/blob/main/public/imgs/0.png?raw=true";
+        await(1500);
     updateScore(2,score);
 };
 

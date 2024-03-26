@@ -84,26 +84,29 @@ const handlePost = function( request, response ) {
       request.on( "data", function( data ) {
       let str="";
       str+=data;
-      if (str==="START"){
-      startGame(request,response);
-          }
-          else if (str==="PARAM"){
-            giveParams(request,response)
-          }
-          else if (str==="DELETE"){
-              bestRun=[0,0,0,0];
-              finalScore(request,response);
-            }
-          else if (str==="EVAL"){
-            finalScore(request,response);
-          }
+      console.log("JJ");
 
-          else if (JSON.parse(str).ID!=null){
-                updateScore(request,response,str);
-          }
-          else{
-              setParams(request,response,str);
-          }
+      console.log("JJ");
+      if (str==="START"){
+        startGame(request,response);
+      }
+      else if (str==="PARAM"){
+        giveParams(request,response)
+      }
+      else if (str==="DELETE"){
+          bestRun=[0,0,0,0];
+          finalScore(request,response);
+        }
+      else if (str==="EVAL"){
+        finalScore(request,response);
+      }
+
+      else if (JSON.parse(str).ID!=null){
+        updateScore(request,response,str);
+      }
+      else{
+          setParams(request,response,str);
+      }
       })
 }
 
@@ -166,7 +169,7 @@ if (testParams.gr.length==3 && testParams.spd.length==2 && testParams.mem.length
           })
     }
 }
-const updateScore = function( request, response,str ){
+const updateScore = async function( request, response,str ){
     params=JSON.parse(str);
     mult=1;
     if (str.ID==0){
@@ -179,6 +182,9 @@ const updateScore = function( request, response,str ){
         mult=testParams.mem[2];
     }
     currentRun[str.ID]=str.Score*mult;
+    request.on( "end", function() {
+    response.end("test")
+    })
 }
 
 const setParams = function( request, response,str ) {
