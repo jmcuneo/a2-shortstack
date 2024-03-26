@@ -9,9 +9,7 @@ const http = require( "http" ),
       port = 3000
 
 const appdata = [
-  { "model": "toyota", "year": 1999, "mpg": 23 },
-  { "model": "honda", "year": 2004, "mpg": 30 },
-  { "model": "ford", "year": 1987, "mpg": 14} 
+ 
 ]
 
 const server = http.createServer( function( request,response ) {
@@ -40,9 +38,12 @@ const handlePost = function( request, response ) {
   })
   //data reaches its end
   request.on( "end", function() {
-    console.log( JSON.parse( dataString ) )
+    console.log( JSON.parse( dataString ) );
+    let precalc = JSON.parse(dataString);
+    precalc["cost"] = parseFloat(precalc["breakfast"]) *10.5 + parseFloat(precalc["coffee"]) * 2.5;
+    appdata.push(precalc)
 
-    // ... do something with the data here!!!
+    console.log(precalc);
 
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
     response.end("test")
