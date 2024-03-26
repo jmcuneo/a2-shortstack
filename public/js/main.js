@@ -116,11 +116,13 @@ async function display(object){
         <td>${object[i].LastName}</td> <td >${object[i].Email}</td>
          <td id="start">${object[i].StartLocation}</td> <td id="dest"> ${object[i].Destination}</td>
          <td id="travel"> ${object[i].Transport}</td> <td> ${object[i].cost}</td>
-         <td><button email_attribute=${object[i].Email} 
-            start_attribute=${object[i].StartLocation} 
-            dest_attribute=${object[i].Destination}
-            transport_attribute=${object[i].Transport}
-            onclick="modify(this)" id="update">Update</button></td>
+         <td><button onclick="modify(this)" id="update" 
+        ${object[i].Email ? `email_attribute="${object[i].Email}"` : ''}
+        ${object[i].StartLocation ? `start_attribute="${object[i].StartLocation}"` : ''}
+        ${object[i].Destination ? `dest_attribute="${object[i].Destination}"` : ''}
+        ${object[i].Transport ? `transport_attribute="${object[i].Transport}"` : ''}
+        >Update</button></td>
+
          <td><button del_attribute=${i} onclick="del(${i})" id="delete">Delete</button></td>`
         let entries = `<tr>${elements}</tr>`
         table.innerHTML += entries;
