@@ -13,4 +13,10 @@ Users can add reports, modify them, and delete them.
 Creating UI that would allow for easy modification of data on the client side was difficult at first. I decided to reuse the original submission form for this.
 
 ### Design/Evaluation Achievements
-- **Design Achievement 1**: User interface test with... 
+- **Design Achievement 1**: User interface test with Shiu:
+
+1. Problems: did not like that form can be submitted with empty details - suggested adding required fields. Did not like that form didn't clear on submit.
+
+2. No particularly suprising comments, but he liked that the modification and submit form were the same.
+
+3. Make the submission form clear on submission. (I did implement this) Some CSS styling changes to make the website more visually appealing. Perhaps make the description field and date field mandatory for submission.

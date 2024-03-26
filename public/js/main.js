@@ -28,6 +28,7 @@ const submit = async function( event ) {
 	console.log(text);
 
 	getReports();
+	clearForm();
 }
 
 const getReports = async function( ) {
@@ -93,7 +94,7 @@ const getReports = async function( ) {
 		modbutton.classList.add("delmodbutton");
 		modbutton.innerHTML = "mod";
 		modbutton.addEventListener('click', function() {
-			startmod(element.id)
+			startMod(element.id)
 		});
 		delbutton.classList.add("delmodbutton");
 		deltddiv.classList.add("actionstd");
@@ -133,7 +134,7 @@ const del = async function(id) {
 
 }
 
-const startmod = function(id) {
+const startMod = function(id) {
 	modifying = true;
 	submitbutton = document.querySelector("#submitbutton");
 	submitbutton.style.visibility = "hidden";
@@ -145,13 +146,13 @@ const startmod = function(id) {
 	let modbutton = document.createElement("button");
 	modbutton.innerHTML = "modify";
 	modbutton.addEventListener('click', function() {
-		submitmod(id);
+		submitMod(id);
 	});
 
 	let cancelbutton = document.createElement("button");
 	cancelbutton.innerHTML = "cancel";
 	cancelbutton.addEventListener('click', function() {
-		endmod()
+		endMod()
 	});
 
 	modbutton.id = "modify-button";
@@ -204,11 +205,11 @@ const submitmod = async function(id) {
   const text = await response.text();
 	console.log(text);
 	
-	endmod();
+	endMod();
 	getReports();
 }
 
-const endmod = function() {
+const endMod = function() {
 	modifying = false;
 	submitbutton = document.querySelector("#submitbutton");
 	submitbutton.style.visibility = "visible";
@@ -222,6 +223,11 @@ const endmod = function() {
 	modbutton.remove();
 	cancelbutton.remove();
 
+	clearForm();
+
+}
+
+const clearForm = function() {
 	let typesel = document.querySelector("#type");
 	typesel.value = "Tornado";
 	let dateinput = document.querySelector("#event-date");
