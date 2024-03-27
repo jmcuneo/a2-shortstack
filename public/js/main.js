@@ -1,6 +1,6 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 
-const headers = ["Class", "Task", "Time", "Date Added"]
+const headers = ["Class", "Task", "Due", "Date Added"]
 
 const populateHeaders = function()
 {
