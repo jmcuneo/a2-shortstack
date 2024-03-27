@@ -41,32 +41,46 @@ const submit = async function (event) {
     body: JSON.stringify(newEntry),
   });
   const text = await response.json();
-  const justAdded = text[text.length - 1];
-  makeGuestList(text, justAdded);
+  const appdata = text.appdata;
+  const suggestdata = text.suggestdata;
+  const justAdded = appdata[appdata.length - 1];
+
+  for (let i = 0; i < suggestdata.length; i++) {
+    if (
+      suggestdata[i].Sitem == justAdded.item &&
+      suggestdata[i].Sqty == justAdded.qty
+    ) {
+      console.log("in for loop");
+      bring(i);
+      remove(appdata.length);
+      console.log(
+        "item removed from bring and added to appdata: ",
+        suggestdata[i]
+      );
+    }
+  }
+  makeGuestList(appdata);
   addToTable(justAdded);
-  console.log("text:", text);
+  console.log("text:", justAdded);
 };
 
 /**
  * Check the array and compare to the name just entered - if name already in the array, do not add to list
- * If the name is not in the array, add to list
+ * If the name is not in the array, add to list -> use set for uniqeness
  */
-const makeGuestList = function (array, item) {
-  let nameCount = 0;
-  for (let i = 0; i < array.length; i++) {
-    if (item.name == array[i].name) {
-      nameCount++;
+const makeGuestList = function (array) {
+  const uniqueNamesSet = new Set();
+  const list = document.getElementById("guestList");
+  list.innerHTML = ""; // Clear the existing list if needed
+  array.forEach((obj) => {
+    if (!uniqueNamesSet.has(obj.name)) {
+      // Check if the name already exists in the set
+      uniqueNamesSet.add(obj.name); // Add the name to the set
+      const li = document.createElement("li");
+      li.innerHTML = obj.name; // Use the name property of the object
+      list.appendChild(li);
     }
-  }
-  if (nameCount <= 1) {
-    const list = document.getElementById("guestList");
-    const li = document.createElement("li");
-    li.setAttribute("id", "guestName");
-    li.innerHTML = item.name;
-    list.appendChild(li);
-  } else {
-    console.log("Cannot Add to List");
-  }
+  });
 };
 
 //entry object
@@ -86,14 +100,14 @@ const createSuggest = function (item, qty) {
   return suggest;
 };
 
-const clearSuggest = function(array){
+const clearSuggest = function (array) {
   console.log(!!document.getElementById("suggestRow"));
-  if(!!document.getElementById("suggestRow")){
+  if (!!document.getElementById("suggestRow")) {
     for (let i = 0; i < array.length - 1; i++) {
-      console.log("clearingtable. length: ", array.length)
+      console.log("clearingtable. length: ", array.length);
       document.getElementById("suggestRow").remove();
     }
-  }else{
+  } else {
     return;
   }
 };
@@ -134,7 +148,6 @@ const addToTable = function (entry) {
   removeButton.addEventListener("click", function (event) {
     event.preventDefault();
   });
-
   resetTextBoxes();
 };
 
@@ -142,7 +155,7 @@ const addToTable = function (entry) {
 const resetTextBoxes = function () {
   document.querySelector("#yourname").value = "";
   document.querySelector("#youritem").value = "";
-  document.querySelector("#itemPrice").value = ""; //new
+  document.querySelector("#itemPrice").value = "";
   document.querySelector("#numItems").value = "";
   document.querySelector("#suggestItem").value = "";
   document.querySelector("#suggestQty").value = "";
@@ -168,8 +181,8 @@ const refreshPage = async function () {
   const suggestdata = text.suggestdata;
   for (let i = 0; i < appdata.length; i++) {
     addToTable(appdata[i]);
-    makeGuestList(appdata, appdata[i]);
   }
+  makeGuestList(appdata);
   clearSuggest(suggestdata);
   makeTable(suggestdata);
   document.getElementById("yourname").focus(); //put cursor in first input box
@@ -222,6 +235,7 @@ const suggest = async function (event) {
   clearSuggest(text);
   makeTable(text); //implement second table
   console.log("suggest:", text);
+  resetTextBoxes();
 };
 
 const bring = async function (entryIndex) {
@@ -234,9 +248,9 @@ const bring = async function (entryIndex) {
   const suggestdata = text.suggestdata;
   addToTable(appdata[appdata.length - 1]);
   console.log(suggestdata);
-  
+
   for (let i = 0; i <= suggestdata.length; i++) {
-    console.log("clearingtable")
+    console.log("clearingtable");
     document.getElementById("suggestRow").remove();
   }
   clearSuggest(suggestdata);

@@ -58,8 +58,12 @@ const handleSubmit = function (request, response) {
     const dataObject = JSON.parse(dataString);
     const updatedObject = calculateDerived(dataObject);
     appdata.push(updatedObject);
+    let bothArrays = {
+      appdata: appdata,
+      suggestdata: suggestdata
+    };
     response.writeHead(200, "OK", { "Content-Type": "text/plain" });
-    response.end(JSON.stringify(appdata)); //send array back to client
+    response.end(JSON.stringify(bothArrays)); //send array back to client
   });
 };
 
