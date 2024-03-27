@@ -14,6 +14,29 @@ const appdata = [
   { "model": "ford", "year": 1987, "mpg": 14} 
 ]
 
+const todoList = []
+
+// Server logic function
+const inputData = function(input) 
+{
+  // Adds derived field
+  let currentDate = new Date()
+  input.push(currentDate.toDateString())
+
+  // Modifies data if appropriate
+  for(let i = 0; i < todoList.length; i++)
+  {
+    if(todoList[i][1] === input[1])
+    {
+      todoList[i] = input
+      return
+    }
+  }
+
+  // Adds data
+  todoList.push(input)
+}
+
 const server = http.createServer( function( request,response ) {
   if( request.method === "GET" ) {
     handleGet( request, response )    
@@ -40,12 +63,12 @@ const handlePost = function( request, response ) {
   })
 
   request.on( "end", function() {
-    console.log( JSON.parse( dataString ) )
+    let input = JSON.parse(dataString)
 
-    // ... do something with the data here!!!
+    inputData(input.data)
 
-    response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
-    response.end("test")
+    response.writeHead( 200, "OK", {"Content-Type": "text/plain"})
+    response.end(JSON.stringify(todoList))
   })
 }
 

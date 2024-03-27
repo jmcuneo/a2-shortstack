@@ -1,5 +1,18 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 
+const headers = ["Class", "Task", "Time", "Date Added"]
+
+const populateHeaders = function()
+{
+  tableHead = document.getElementById("dataHead")
+  tableHead.innerHTML = ""
+  headers.forEach(element => {
+    let cell = document.createElement("th")
+    cell.textContent = element
+    tableHead.appendChild(cell)
+  })
+}
+
 const submit = async function( event ) {
   // stop form submission from trying to load
   // a new .html page for displaying results...
@@ -7,21 +20,37 @@ const submit = async function( event ) {
   // remains to this day
   event.preventDefault()
   
-  const input = document.querySelector( "#yourname" ),
-        json = { yourname: input.value },
-        body = JSON.stringify( json )
+  const course = document.querySelector( "#class" ),
+        task = document.querySelector("#task"),
+        time = document.querySelector("#time"),
+        json = {data: [course.value, task.value, time.value]
+               },
+        body = JSON.stringify(json)
 
-  const response = await fetch( "/submit", {
+  await fetch( "/submit", {
     method:"POST",
     body 
   })
+  .then(response => response.json())
+  .then(response => {
+    table = document.getElementById("dataBody")
+    table.innerHTML = ""
+    populateHeaders()
+    response.forEach(rowData => {
+      let row = document.createElement("tr")
 
-  const text = await response.text()
-
-  console.log( "text:", text )
+      rowData.forEach(cellData => {
+        let cell = document.createElement("td")
+        cell.textContent = cellData
+        row.appendChild(cell)
+      })
+      table.appendChild(row)
+    })
+  })
 }
 
 window.onload = function() {
    const button = document.querySelector("button");
   button.onclick = submit;
+  populateHeaders()
 }
