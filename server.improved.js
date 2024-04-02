@@ -9,10 +9,11 @@ const http = require( "http" ),
       port = 3000
 
 const appdata = [
-  { "model": "toyota", "year": 1999, "mpg": 23 },
-  { "model": "honda", "year": 2004, "mpg": 30 },
-  { "model": "ford", "year": 1987, "mpg": 14} 
+  { "model": "toyota", "year": 1999, "mpg": 23, "shelf_life":10, "expire_year": 2009 },
+  { "model": "honda", "year": 2004, "mpg": 30, "shelf_life":15, "expire_year": 2019 },
+  { "model": "ford", "year": 1987, "mpg": 14, "shelf_life":5, "expire_year": 1992 } 
 ]
+
 
 const server = http.createServer( function( request,response ) {
   if( request.method === "GET" ) {
@@ -25,10 +26,19 @@ const server = http.createServer( function( request,response ) {
 const handleGet = function( request, response ) {
   const filename = dir + request.url.slice( 1 ) 
 
-  if( request.url === "/" ) {
-    sendFile( response, "public/index.html" )
-  }else{
-    sendFile( response, filename )
+  
+  // if( request.url === "/" ) {
+  //   sendFile( response, "public/index.html" )
+  // }else{
+  //   sendFile( response, filename )
+  // }
+  if (request.url === "/appdata") {
+    response.writeHead(200, { "Content-Type": "application/json" });
+    response.end(JSON.stringify(appdata));
+  } else if (request.url === "/") {
+    sendFile(response, "public/index.html");
+  } else {
+    sendFile(response, filename);
   }
 }
 
@@ -40,9 +50,14 @@ const handlePost = function( request, response ) {
   })
 
   request.on( "end", function() {
-    console.log( JSON.parse( dataString ) )
-
+    let thisData = JSON.parse( dataString )
+    // console.log( JSON.parse( dataString ) )
+    console.log( thisData )
+    // console.log( thisData["yourname"] )
+    appdata.push(thisData)
+    console.log(appdata)
     // ... do something with the data here!!!
+    // appdata
 
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
     response.end("test")
