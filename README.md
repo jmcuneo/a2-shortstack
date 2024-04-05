@@ -10,6 +10,7 @@ this is a to-do list with separate server side and client side javascript files,
 - **Design Achievement 1**: Styled content in various ways including: through multiple css selectors such as element, class, and index
 - **Design Achievement 2**: Used flexbox to align items in a grid and center them
 - **Design Achievement 3**: Tested my site with 2 classmates:
+
 lastname: Huang
 This user thought I could add a bit more for my css styles to make the site look better
 This user said they did not like how I built the site where you need to put a digit in the input for priority
