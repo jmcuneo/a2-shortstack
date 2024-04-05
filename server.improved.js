@@ -9,9 +9,7 @@ const http = require( "http" ),
       port = 3000
 
 const appdata = [
-  { "model": "toyota", "year": 1999, "mpg": 23 },
-  { "model": "honda", "year": 2004, "mpg": 30 },
-  { "model": "ford", "year": 1987, "mpg": 14} 
+  { "yourname": "To-Do:" }
 ]
 
 const server = http.createServer( function( request,response ) {
@@ -19,6 +17,10 @@ const server = http.createServer( function( request,response ) {
     handleGet( request, response )    
   }else if( request.method === "POST" ){
     handlePost( request, response ) 
+  } else if( request.method === "DELETE" ) {
+    handleDelete( request, response );
+  } else if (request.method === "PUT") {
+    handlePut(request, response);
   }
 })
 
@@ -40,14 +42,54 @@ const handlePost = function( request, response ) {
   })
 
   request.on( "end", function() {
-    console.log( JSON.parse( dataString ) )
+     console.log( JSON.parse( dataString ) )
+    appdata.push(JSON.parse(dataString))
 
-    // ... do something with the data here!!!
-
-    response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
-    response.end("test")
+    response.writeHead( 200, "OK", {"Content-Type": "text/plain" }) //"text/plain"
+    response.end(JSON.stringify(appdata))
   })
 }
+
+const handleDelete = function( request, response ) {
+  let dataString = ""
+
+  request.on( "data", function( data ) {
+      dataString += data 
+  })
+
+  request.on( "end", function() {
+    const delItem = JSON.parse(dataString).index
+
+    appdata.splice(delItem, 1)
+
+    response.writeHead( 200, "OK", {"Content-Type": "text/plain" }) //"text/plain"
+    response.end(JSON.stringify(appdata))
+  })
+}
+
+const handlePut = function(request, response) {
+  let dataString = ""
+
+  request.on("data", function(data) {
+    dataString += data
+  });
+
+  request.on("end", function() {
+    const { index, newText } = JSON.parse(dataString)
+
+    
+    if (index >= 0 && index < appdata.length) {
+      
+      appdata[index].yourname = newText
+      //also update priority if text if the first character is changed
+      appdata[index].priority = getPriorityText(newText.charAt(0))
+    }
+  
+
+    response.writeHead(200, "OK", { "Content-Type": "text/plain" })
+    response.end(JSON.stringify(appdata))
+  });
+};
 
 const sendFile = function( response, filename ) {
    const type = mime.getType( filename ) 
@@ -69,6 +111,27 @@ const sendFile = function( response, filename ) {
 
      }
    })
+}
+
+//helper function to create a unique derived field for each input
+function getPriorityText(firstCharacter) {
+  switch (firstCharacter) {
+    case "0":
+    case "1":
+    case "2":
+    case "3":
+      return "Low priority"
+    case "4":
+    case "5":
+    case "6":
+      return "Medium priority"
+    case "7":
+    case "8":
+    case "9":
+      return "High priority"
+    default:
+      return "N/A"
+  }
 }
 
 server.listen( process.env.PORT || port )
