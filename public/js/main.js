@@ -1,5 +1,6 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 let selectedItem = 0;
+
 function screenToView() {
     const makeWorkOutWindow = document.getElementById("make-workout-window");
     const viewWorkoutWindow = document.getElementById("view-workout-window");
@@ -24,48 +25,64 @@ function screenToMake() {
     }
 }
 
-function deleteWorkout() {
-    fetch("/" + selectedItem,
+async function deleteWorkout() {
+    const json = {
+        uuid: localStorage.getItem('sessionToken'),
+        postId: selectedItem
+    }
+
+    const response = await fetch("/delete",
+        {
+            method: "POST",
+            body: JSON.stringify(json)
+        }).then(response => {
+        console.log(response);
+    })
+
+    fetch("/delete/" + selectedItem,
         {
             method: 'DELETE',
         })
         .then(res => res.json())
         .then(data => {
-            console.log(data)
+            populateSidebar();
+            populateTable();
+            window.location.href = '/index.html';
         })
         .catch(error => {
             console.error(error)
         })
-    populateSidebar();
-    populateTable();
-    screenToMake();
+
 }
 
-function editWorkout() {
-    const title = document.getElementById("title-edit");
-    const desc = document.getElementById("description-edit");
-    fetch("/" + selectedItem,
+async function editWorkout() {
+    const titleInput = document.getElementById("title-edit")
+    const descInput = document.getElementById("description-edit")
+    const typeInput = document.getElementById("workoutType-edit")
+    const json = {
+        title: titleInput.value,
+        description: descInput.value,
+        type: typeInput.value,
+        uuid: localStorage.getItem('sessionToken'),
+        postId: selectedItem
+    }
+
+    console.log(json);
+    const response = await fetch("/edit_workout",
         {
-            method: 'POST',
-            body: JSON.stringify({
-                type: "edit",
-                title: title.value,
-                description: desc.value
-            })
-        })
-        .then(res => res.json())
-        .then(data => {
-            console.log(data)
-        })
-        .catch(error => {
-            console.error(error)
-        })
+            method: "POST",
+            body: JSON.stringify(json)
+        }).then(response => {
+        console.log(response);
+    })
+
     populateSidebar();
     populateTable();
     screenToMake();
 }
 
-function screenToEdit(elementId) {
+async function screenToEdit(elementId) {
+
     selectedItem = elementId;
     const makeWorkOutWindow = document.getElementById("make-workout-window");
     const viewWorkoutWindow = document.getElementById("view-workout-window");
@@ -77,119 +94,160 @@ function screenToEdit(elementId) {
         editWorkoutWindow.style.display = "flex"
     }
 
-    fetch("/get_workouts")
+    const json = {
+        uuid: localStorage.getItem('sessionToken')
+    }
+    const response = await fetch("/get_workouts",
+        {
+            method: "POST",
+            body: JSON.stringify(json)
+        })
         .then(res => res.json())
         .then(data => {
             const workout = data[elementId];
             const titleEntry = document.getElementById("title-edit");
             const descEntry = document.getElementById("description-edit");
-            titleEntry.value = workout.title;
-            descEntry.value = workout.description;
+            const typeEntry = document.getElementById("workoutType-edit")
+            console.log(workout.workout_type);
+            typeEntry.value = workout.workout_type;
+            titleEntry.value = workout.workout_title;
+            descEntry.value = workout.workout_description;
         })
         .catch(error => {
             console.error(error);
         })
 }
 
-function populateTable() {
-  fetch("/get_workouts")
-      .then(res => res.json())
-      .then(data => {
-        const tableBody = document.getElementById("table-body");
-        tableBody.innerHTML = ""
-        data.forEach(workout => {
-          const row = tableBody.insertRow();
-
-          const title = row.insertCell(0);
-          const desc = row.insertCell(1);
-          const time = row.insertCell(2);
-
-          title.textContent = workout.title;
-          desc.textContent = workout.description;
-          time.textContent = workout.time;
+async function populateTable() {
+    const json = {
+        uuid: localStorage.getItem('sessionToken')
+    }
+    const response = await fetch("/get_workouts",
+        {
+            method: "POST",
+            body: JSON.stringify(json)
         })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            const tableBody = document.getElementById("table-body");
+            tableBody.innerHTML = ""
+            data.forEach(workout => {
+                const row = tableBody.insertRow();
 
-      })
-      .catch(error => {
-        console.error("ERROR: " + error);
-      })
+                const title = row.insertCell(0);
+                const desc = row.insertCell(1);
+                const time = row.insertCell(2);
+
+                title.textContent = workout.workout_title;
+                desc.textContent = workout.workout_description;
+                time.textContent = workout.workout_type;
+            })
+
+        })
+        .catch(error => {
+            console.error("ERROR: " + error);
+        })
 }
 
-function populateSidebar() {
-  fetch("/get_workouts")
-      .then(res => res.json())
-      .then(data => {
-        const sidebar = document.getElementById("workout-list");
-        let id = 0;
-        sidebar.innerHTML = "";
-        data.forEach(workout => {
-          const sidebarElement = document.createElement('div');
-          sidebarElement.classList.add('sidebar-entry');
-          sidebarElement.innerText = workout.title;
-          sidebarElement.id = id;
-          sidebarElement.addEventListener("click", () => {
-              screenToEdit(sidebarElement.id);
-          })
-          id +=1;
-          sidebar.appendChild(sidebarElement);
-        })
 
-      })
-      .catch(error => {
-        console.error("ERROR: " + error);
-      })
+async function populateSidebar() {
+
+    const json = {
+        uuid: localStorage.getItem('sessionToken')
+    }
+    const response = await fetch("/get_workouts",
+        {
+            method: "POST",
+            body: JSON.stringify(json)
+        })
+        .then(res => res.json())
+        .then(data => {
+            const sidebar = document.getElementById("workout-list");
+            let id = 0;
+            sidebar.innerHTML = "";
+            data.forEach(workout => {
+                const sidebarElement = document.createElement('div');
+                sidebarElement.classList.add('sidebar-entry', 'bg-dark', 'text-white', 'rounded-5');
+                sidebarElement.innerText = workout.workout_title;
+                sidebarElement.id = id;
+                sidebarElement.addEventListener("click", () => {
+                    screenToEdit(sidebarElement.id);
+                })
+                id += 1;
+                sidebar.appendChild(sidebarElement);
+            })
+
+        })
+        .catch(error => {
+            console.error("ERROR: " + error);
+        })
 }
 
-const submit = async function( event ) {
-  // stop form submission from trying to load
-  // a new .html page for displaying results...
-  // this was the original browser behavior and still
-  // remains to this day
-  event.preventDefault()
-
-  const titleInput = document.getElementById( "title" ),
-      descInput = document.getElementById("description")
-      json = {
+const createWorkout = async function (event) {
+    // stop form submission from trying to load
+    // a new .html page for displaying results...
+    // this was the original browser behavior and still
+    // remains to this day
+    //   event.preventDefault();
+    const titleInput = document.getElementById("title")
+    const descInput = document.getElementById("description")
+    const typeInput = document.getElementById("workoutType")
+    const json = {
         title: titleInput.value,
-        description: descInput.value
-      },
-      body = JSON.stringify( json )
+        description: descInput.value,
+        type: typeInput.value,
+        uuid: localStorage.getItem('sessionToken'),
+    }
 
-  const response = await fetch( "/submit", {
-    method:"POST",
-    body
-  })
+    console.log(json);
+    const response = await fetch("/create_workout",
+        {
+            method: "POST",
+            body: JSON.stringify(json)
+        }).then(response => {
+        console.log(response);
+    })
 
     titleInput.value = ""
     descInput.value = ""
-  const text = await response.text()
-  populateTable();
-  populateSidebar();
+    const text = await response.text();
+    console.log(text);
+    populateTable();
+    populateSidebar();
 }
 
-window.onload = function() {
-  populateTable();
-  populateSidebar();
-  const button = document.getElementById("submit-button");
-  const newListButton = document.getElementById("make-workout");
-  const viewWorkoutButton = document.getElementById("view-workout");
-  const editButton = document.getElementById("edit-button");
-  const deleteButton = document.getElementById("delete-button");
-  newListButton.addEventListener("click", () => {
-    screenToMake()
-  });
-  viewWorkoutButton.addEventListener("click", () => {
-    screenToView()
-  });
+window.onload = function () {
+    console.log("Loading | Session Token: " + localStorage.getItem('sessionToken'));
+    populateTable();
+    populateSidebar();
+    const submitButton = document.getElementById("submit-button");
+    const newListButton = document.getElementById("make-workout");
+    const viewWorkoutButton = document.getElementById("view-workout");
+    const editButton = document.getElementById("edit-button");
+    const deleteButton = document.getElementById("delete-button");
+
+
+    newListButton.addEventListener("click", () => {
+        screenToMake()
+    });
+    viewWorkoutButton.addEventListener("click", () => {
+        screenToView()
+    });
     editButton.addEventListener("click", () => {
         editWorkout()
     });
     deleteButton.addEventListener("click", () => {
         deleteWorkout()
     });
+    submitButton.addEventListener("click", () => {
+        createWorkout()
+    });
 
 
-  button.onclick = submit;
+    // Login Page
+
+
 }
 
 
