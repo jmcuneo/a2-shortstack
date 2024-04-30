@@ -13,22 +13,26 @@
     <h1>Help Keep Track of Your Chores!</h1>
     <form>
       <label for="chore">Name of Chore:</label>
-      <input type="text" id="chore" value=""><br>
+      <input type="text" id="chore" value="chore"><br>
       <label for="rating">Rating of Pain (Between 1-6, 1 eh, 6 hate):</label>
-      <input type="number" id="rating" value="" min="1" max="6"><br>
+      <input type="number" id="rating" value="3" min="1" max="6"><br>
       <label for="length">How many days has it been since the last time this chore has been completed?</label>
-      <input type="number" id="length" value=""><br>
+      <input type="number" id="length" value="20"><br>
       <label for="finished">Chore Completed?</label>
       <input type="checkbox" id="finished" value=""><br><br>
-      <button>Submit</button>
+      <button>Submit</button><br>
 
       <table>
+        <thead>
         <tr>
           <th>Chore</th>
           <th>Pain Scale</th>
           <th>Length</th>
           <th>Completed</th>
+          <th>Priority</th>
         </tr>
+        </thead>
+        <tbody id ="trow"></tbody>
       </table>
     </form>
   </body>
