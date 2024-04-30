@@ -9,15 +9,17 @@ const http = require( "http" ),
       port = 3000
 
 const appdata = [
-  { "assignment": "Quiz 1", "pointsEarned": 9, "pointsAvailable": 10, "grade": "90%" },
-  { "assignment": "Quiz 2", "pointsEarned": 10, "pointsAvailable": 10, "grade": "100%" },
+  { "assignment": "Quiz 1", "pointsEarned": 9, "pointsAvailable": 10, "grade": "90.00%" },
+  { "assignment": "Quiz 2", "pointsEarned": 10, "pointsAvailable": 10, "grade": "100.00%" },
 ]
 
 const server = http.createServer( function( request,response ) {
   if( request.method === "GET" ) {
     handleGet( request, response )    
-  }else if( request.method === "POST" ){
+  }else if( request.method === "POST" ) {
     handlePost( request, response ) 
+  }else if( request.method === "DELETE" ) {
+    handleDelete( request, response )
   }
 })
 
@@ -46,13 +48,62 @@ const handlePost = function( request, response ) {
     var entry = JSON.parse( dataString )
     console.log(entry)
 
-    let grade = parseFloat((entry.pointsEarned / entry.pointsAvailable) * 100).toFixed(2) + "%"
-    entry.grade = grade
+    var counter = 0
+    var count = -1
+    for(const a in appdata) {
+      if(appdata[a].assignment === entry.assignment) {
+        count = counter
+      } else {
+        counter++
+      }
+    }
 
-    appdata.push(entry)
+    if(count !== -1) {
+      appdata[count].pointsEarned = entry.pointsEarned
+      appdata[count].pointsAvailable = entry.pointsAvailable
 
-    response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
+      let grade = parseFloat((entry.pointsEarned / entry.pointsAvailable) * 100).toFixed(2) + "%"
+      appdata[count].grade = grade
+    } else {
+      let grade = parseFloat((entry.pointsEarned / entry.pointsAvailable) * 100).toFixed(2) + "%"
+      entry.grade = grade
+
+      appdata.push(entry)
+    }
+
+    response.writeHead( 200, "OK", {"Content-Type": "text/plain"})
     response.end("New entry added")
+  })
+}
+
+const handleDelete = function( request, response ) {
+  let dataString = ""
+
+  request.on( "data", function( data ) {
+    dataString += data
+  })
+
+  request.on( "end", function() {
+    var entry = JSON.parse( dataString )
+
+    var counter = 0
+    var count = -1
+    for(const a in appdata) {
+      if(appdata[a].assignment === entry.assignment) {
+        count = counter
+      } else {
+        counter++
+      }
+    }
+
+    if(counter !== -1) {
+      appdata.splice(count, 1)
+      response.writeHead( 200, "OK", {"Content-Type": "text/plain"})
+      response.end("Entry deleted")
+    } else {
+      response.writeHead( 400 )
+      response.end("Entry not deleted")
+    }
   })
 }
 

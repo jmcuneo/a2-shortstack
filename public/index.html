@@ -10,16 +10,31 @@
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
   <body>
-    <table id="datatable"></table>
+    <header>
+      <h1>Average Grade Calculator</h1>
+    </header>
 
-    <form>
-      <label>Assignment:</label>
-      <input type="text" id="assignment" placeholder="assignment name here"><br>
-      <label>Points Earned:</label>
-      <input type="text" id="pointsEarned" placeholder="points earned"><br>
-      <label>Points Available:</label>
-      <input type="text" id="pointsAvailable" placeholder="points available"><br>
-      <button id="submit">submit</button>
-    </form>
+    <div class="grid-container">
+      <div class="data-container">
+        <table id="avggrade">
+          <tr>
+            <th>Average Grade:</th>
+          </tr>
+        </table>
+        <table id="datatable"></table>
+      </div>
+      <div class="form-container">
+        <form>
+          <h2>Add or Modify Data:</h2>
+          <label>Assignment:</label>
+          <input type="text" id="assignment" placeholder="assignment name here"><br>
+          <label>Points Earned:</label>
+          <input type="text" id="pointsEarned" placeholder="points earned"><br>
+          <label>Points Available:</label>
+          <input type="text" id="pointsAvailable" placeholder="points available"><br>
+          <button id="submit">Submit</button>
+        </form>
+      </div>
+    </div>
   </body>
 </html>

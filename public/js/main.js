@@ -11,7 +11,7 @@ const submit = async function( event ) {
         pointsEarned = document.querySelector( "#pointsEarned" ),
         pointsAvailable = document.querySelector( "#pointsAvailable" ),
         json = { assignment: assignment.value, pointsEarned: pointsEarned.value, pointsAvailable: pointsAvailable.value },
-        body = JSON.stringify( json )
+        body = JSON.stringify(json)
 
   const response = await fetch( "/submit", {
     method:"POST",
@@ -19,8 +19,9 @@ const submit = async function( event ) {
   })
 
   const text = await response.text()
-  console.log( "text:", text )
+  console.log( text )
   getData()
+  calculateTotalGrade()
   clearForm()
 }
 
@@ -70,6 +71,14 @@ async function createTable(d) {
     var gradeCell = row.insertCell()
     gradeCell.id = "gradeCell"
 
+    var deleteButton = document.createElement('button')
+    deleteButton.type = "button"
+    deleteButton.innerHTML = "Delete"
+    
+    deleteButton.onclick = function(){deleteEntry(entry);};
+
+    row.appendChild(deleteButton)
+
     assignmentCell.innerHTML = entry.assignment
     pointsEarnedCell.innerHTML = entry.pointsEarned
     pointsAvailableCell.innerHTML = entry.pointsAvailable
@@ -83,19 +92,47 @@ async function calculateTotalGrade() {
   })
   const text = await response.text()
 
+  const data = JSON.parse(text)
+
   var count = 0;
   var count2 = 0;
-  for(const grade of text) {
-    count += grade.pointsEarned
-    count2 += grade.pointsAvailable
+  for(const entry of data) {
+    count += parseInt(entry.pointsEarned)
+    count2 += parseInt(entry.pointsAvailable)
   }
 
-  averageGrade = count/count2
-  console.log(averageGrade)
+  let averageGrade = parseFloat((count / count2) * 100).toFixed(2) + "%"
+  count = 0;
+  count2 = 0
+  
+  var table = document.querySelector("#avggrade")
+  table.innerHTML = ''
+  var row = table.insertRow()
+  const title = row.insertCell()
+  title.innerHTML = "Average Grade:"
+  const avg = row.insertCell()
+  avg.innerHTML = averageGrade
+}
+
+async function deleteEntry(entry) {
+  const assignment = entry.assignment,
+        json = { "assignment": assignment },
+        body = JSON.stringify(json)
+
+  const response = await fetch( "", {
+    method:"DELETE",
+    body
+  })
+
+  const text = await response.text()
+  console.log(text)
+  clearForm()
+  getData()
+  calculateTotalGrade()
 }
 
 window.onload = function() {
-    const submitButton = document.querySelector("button#submit");
+  const submitButton = document.querySelector("button#submit");
   submitButton.onclick = submit;
   getData()
   calculateTotalGrade()
