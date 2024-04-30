@@ -1,4 +1,25 @@
 body {
-  background:black;
+  background:rgb(190, 34, 225);
   color:white;
+  font-family: 'Lucida Console';
+}
+
+label {
+  font-family:'Lucida Console';
+}
+
+#datatable {
+  align-self: center;
+  margin-top: 60px;
+  margin-bottom: 60px;
+  margin-left: auto;
+  margin-right: auto;
+  background: purple;
+  padding: 10px 20px;
+}
+
+td {
+  text-align: center;
+  margin: 0px 0px;
+  padding: 10px 20px;
 }

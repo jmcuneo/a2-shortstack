@@ -9,9 +9,8 @@ const http = require( "http" ),
       port = 3000
 
 const appdata = [
-  { "model": "toyota", "year": 1999, "mpg": 23 },
-  { "model": "honda", "year": 2004, "mpg": 30 },
-  { "model": "ford", "year": 1987, "mpg": 14} 
+  { "assignment": "Quiz 1", "pointsEarned": 9, "pointsAvailable": 10, "grade": "90%" },
+  { "assignment": "Quiz 2", "pointsEarned": 10, "pointsAvailable": 10, "grade": "100%" },
 ]
 
 const server = http.createServer( function( request,response ) {
@@ -27,6 +26,9 @@ const handleGet = function( request, response ) {
 
   if( request.url === "/" ) {
     sendFile( response, "public/index.html" )
+  }else if( request.url === "/appdata" ) {
+    response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
+    response.end( JSON.stringify(appdata) )
   }else{
     sendFile( response, filename )
   }
@@ -40,12 +42,17 @@ const handlePost = function( request, response ) {
   })
 
   request.on( "end", function() {
-    console.log( JSON.parse( dataString ) )
 
-    // ... do something with the data here!!!
+    var entry = JSON.parse( dataString )
+    console.log(entry)
+
+    let grade = parseFloat((entry.pointsEarned / entry.pointsAvailable) * 100).toFixed(2) + "%"
+    entry.grade = grade
+
+    appdata.push(entry)
 
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" })
-    response.end("test")
+    response.end("New entry added")
   })
 }
 
