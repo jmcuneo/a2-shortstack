@@ -10,9 +10,9 @@ const submit = async function( event ) {
   
   const val1 = document.querySelector("#chore"),
         val2 = document.querySelector("#rating"),
-        val3 = document.querySelector("#length"),
+        val3 = document.querySelector("#length"), 
         val4 = document.querySelector("#finished").checked,
-        val5 = calculatePriority(val2, val3),
+        val5 = calculatePriority(val2.value, val3.value),
         json = {chore: val1.value, rating: val2.value, length: val3.value, finished: val4, priority: val5},
         body = JSON.stringify( json )
 
@@ -24,10 +24,7 @@ const submit = async function( event ) {
   const text = await response.text()
 
   localStorage.setItem("dataRow", body);
-  //dataArray.push(body);
-  //console.log(body);
   appData.push(json);
-  //console.log(appData.length);
   displayData()
 }
 
@@ -41,6 +38,7 @@ function displayData() {
   let tbody = document.getElementById("trow");
   const table = document.getElementById("table");
 
+
   let taskObject = localStorage.getItem("dataRow");
   let parsedObject = JSON.parse(taskObject);
 
@@ -51,25 +49,27 @@ function displayData() {
 }
 
 function calculatePriority(rating, length) {
-  // calculate rating * length
-  // sort the chores based on that calculation somehow
-  // then make the priority like 1st, 2nd, 3rd, etc.
-  // this probably requires some sort of array
-  return rating * length;
+
+  let prior = parseInt(rating) * parseInt(length);
+  console.log(prior);
+  return prior;
 
 }
 
-function displayTable() {
+async function displayTable() {
+  const response = await fetch("/refresh", {
+    method:"GET"
+  })
+  const text = await response.text()
+  // console.log("refresh occured !?")
+  // console.log(text)
   
   let tbody = document.getElementById("trow");
-  const table = document.getElementById("table");
 
-  let taskObject = localStorage.getItem("dataRow");
-  let parsedObject = JSON.parse(taskObject);
-  appData.forEach((element) => {
-    tbody.innerHTML += "<tr><td>" + element.chore + "</td><td>" + element.rating 
-    + "</td><td>" + element.length + "</td><td>" 
-    + element.finished + "</td><td>" + element.priority +"</td></tr>";
-  });
-}
-
+  obj = JSON.parse(text);
+  for (let index = 0; index < obj.length; index++) {
+    const element = obj[index];
+      tbody.innerHTML += "<tr><td>" + element.chore + "</td><td>" + element.rating 
+      + "</td><td>" + element.length + "</td><td>" 
+      + element.finished + "</td><td>" + element.priority +"</td></tr>";
+}}

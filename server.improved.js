@@ -23,7 +23,9 @@ const handleGet = function( request, response ) {
 
   if( request.url === "/" ) {
     sendFile( response, "public/index.html" )
-  }else{
+  } else if (request.url === "/refresh") {
+    refresh(response)
+  } else{
     sendFile( response, filename )
   }
 }
@@ -37,12 +39,8 @@ const handlePost = function( request, response ) {
 
   request.on( "end", function() {
     let parsedObject = JSON.parse(dataString);
-    //console.log( JSON.parse( dataString ) )
     appdata.push(parsedObject)
-    console.log(appdata);
-
-
-
+    //console.log(appdata); 
 
     // ... do something with the data here!!!
 
@@ -71,6 +69,12 @@ const sendFile = function( response, filename ) {
 
      }
    })
+}
+
+function refresh(response) {
+  console.log(appdata)
+  response.writeHead(200, {"Content-Type": "text/json"})
+  response.end(JSON.stringify(appdata))
 }
 
 server.listen( process.env.PORT || port )
