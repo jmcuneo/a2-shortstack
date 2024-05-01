@@ -10,9 +10,36 @@
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
   <body>
+    <h1>Help Keep Track of Your Chores!</h1>
     <form>
-      <input type="text" id="yourname" value="your name here">
-      <button>submit</button>
+      <label for="chore"><strong>Name of Chore:</strong></label>
+      <input type="text" id="chore" value="chore"><br>
+      <label for="rating"><strong>Hatred Rating:</strong></label>
+      <input type="number" id="rating" value="3" min="1" max="6"><br>
+      <label for="length"><strong>Length:</strong></label>
+      <input type="number" id="length" value="20"><br>
+      <label for="finished"><strong>Finished?</strong> </label>
+      <input type="checkbox" id="finished" value=""><br>
+      
+      <p><strong>Hatred Rating:</strong> (Between 1-6, 1 you don't mind it, 6 you hate doing it)</p>
+      <p><strong>Length: </strong> How many days has it been since the last time this chore has been completed?</p>
+      <p><strong>Priority: </strong> The higher the number, the faster your should complete that chore!</p>
+      <p><strong>Finished?:</strong>Have you finished the chore?</p>
+      <button>Submit</button><br><br>
+      
+      <table>
+        <thead>
+        <tr>
+          <th>Chore</th>
+          <th>Pain Scale</th>
+          <th>Length</th>
+          <th>Completed</th>
+          <th>Priority</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody id ="trow"></tbody>
+      </table>
     </form>
   </body>
 </html>

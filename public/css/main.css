@@ -1,4 +1,28 @@
 body {
-  background:black;
-  color:white;
+  background:pink;
+  color:black;
+  font-family:'Courier New', Courier, monospace;
+}
+
+table, th, td {
+  border: 2px solid palevioletred;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+h1 {
+  text-align: center;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+button {
+  font-family:'Courier New', Courier, monospace;
+  font-weight: bold;
+  border: 2px solid palevioletred;
+  background: lightskyblue;
+}
+
+input {
+  border: 1px solid palevioletred;
+  font-family: 'Courier New', Courier, monospace;
 }

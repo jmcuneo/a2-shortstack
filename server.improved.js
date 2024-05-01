@@ -8,16 +8,12 @@ const http = require( "http" ),
       dir  = "public/",
       port = 3000
 
-const appdata = [
-  { "model": "toyota", "year": 1999, "mpg": 23 },
-  { "model": "honda", "year": 2004, "mpg": 30 },
-  { "model": "ford", "year": 1987, "mpg": 14} 
-]
+const appdata = []
 
 const server = http.createServer( function( request,response ) {
-  if( request.method === "GET" ) {
+  if ( request.method === "GET" ) {
     handleGet( request, response )    
-  }else if( request.method === "POST" ){
+  } else if( request.method === "POST" ){
     handlePost( request, response ) 
   }
 })
@@ -25,9 +21,13 @@ const server = http.createServer( function( request,response ) {
 const handleGet = function( request, response ) {
   const filename = dir + request.url.slice( 1 ) 
 
-  if( request.url === "/" ) {
+  if ( request.url === "/" ) {
     sendFile( response, "public/index.html" )
-  }else{
+  } else if (request.url === "/refresh") {
+    refresh(response)
+  } else if (request.url === "/delete") {
+    deleteRow(response)
+  } else{
     sendFile( response, filename )
   }
 }
@@ -40,7 +40,9 @@ const handlePost = function( request, response ) {
   })
 
   request.on( "end", function() {
-    console.log( JSON.parse( dataString ) )
+    let parsedObject = JSON.parse(dataString);
+    appdata.push(parsedObject)
+    //console.log(appdata); 
 
     // ... do something with the data here!!!
 
@@ -69,6 +71,16 @@ const sendFile = function( response, filename ) {
 
      }
    })
+}
+
+function refresh(response) {
+  console.log(appdata)
+  response.writeHead(200, {"Content-Type": "text/json"})
+  response.end(JSON.stringify(appdata))
+}
+
+function deleteRow(response) {
+  // something should hypothetically exist here but yawning emoji
 }
 
 server.listen( process.env.PORT || port )
