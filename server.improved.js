@@ -11,9 +11,9 @@ const http = require( "http" ),
 const appdata = []
 
 const server = http.createServer( function( request,response ) {
-  if( request.method === "GET" ) {
+  if ( request.method === "GET" ) {
     handleGet( request, response )    
-  }else if( request.method === "POST" ){
+  } else if( request.method === "POST" ){
     handlePost( request, response ) 
   }
 })
@@ -21,10 +21,12 @@ const server = http.createServer( function( request,response ) {
 const handleGet = function( request, response ) {
   const filename = dir + request.url.slice( 1 ) 
 
-  if( request.url === "/" ) {
+  if ( request.url === "/" ) {
     sendFile( response, "public/index.html" )
   } else if (request.url === "/refresh") {
     refresh(response)
+  } else if (request.url === "/delete") {
+    deleteRow(response)
   } else{
     sendFile( response, filename )
   }
@@ -75,6 +77,10 @@ function refresh(response) {
   console.log(appdata)
   response.writeHead(200, {"Content-Type": "text/json"})
   response.end(JSON.stringify(appdata))
+}
+
+function deleteRow(response) {
+  // something should hypothetically exist here but yawning emoji
 }
 
 server.listen( process.env.PORT || port )

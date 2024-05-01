@@ -44,8 +44,8 @@ function displayData() {
 
     tbody.innerHTML += "<tr><td>" + parsedObject.chore + "</td><td>" + parsedObject.rating 
     + "</td><td>" + parsedObject.length + "</td><td>" 
-    + parsedObject.finished + "</td><td>" + parsedObject.priority +"</td></tr>";
-    
+    + parsedObject.finished + "</td><td>" + parsedObject.priority +  "</td><td>" + "<button onclick='deleteRow(this)'>Delete</button>" + "</td></tr>";
+   
 }
 
 function calculatePriority(rating, length) {
@@ -71,5 +71,10 @@ async function displayTable() {
     const element = obj[index];
       tbody.innerHTML += "<tr><td>" + element.chore + "</td><td>" + element.rating 
       + "</td><td>" + element.length + "</td><td>" 
-      + element.finished + "</td><td>" + element.priority +"</td></tr>";
+      + element.finished + "</td><td>" + element.priority +  "</td><td>" + "<button onclick='deleteRow(this)'>Delete</button>" + "</td></tr>";
+   
 }}
+
+function deleteRow(row) {
+  console.log("delete :/")
+}

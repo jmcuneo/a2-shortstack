@@ -106,8 +106,12 @@ Yes.
 Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
 ---
 
-## Your Web Application Title
+## Keep Track of your chores!
+Link: https://a2-lucawol.glitch.me
+
 Include a very brief summary of your project here. Be sure to include the CSS positioning technique you used, and any required instructions to use your application.
+
+I made a web app to help you keep track of any chores you may forget to do. Using an input form, you can write down the name of the chore, rate how much you dislike doing said chore, the amount of time since you've last completed said chore, and if you have completed the chore. It then goes onto a table displaying all the information, and includes a calculated priority by multiplying the rating and the time since last completed. The larger the number, the higher the chore should be on your priority list.
 
 ## Technical Achievements
 - **Tech Achievement 1**: Using a combination of...
